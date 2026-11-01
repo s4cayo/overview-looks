@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<!-- === ACCOUNT v1 START === --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"><!-- === ACCOUNT v1 END === -->
 <style>
 :root {
   --ink: #060509;
@@ -1600,6 +1601,91 @@ main { gap: 24px; }
   .seg-anchor { margin-bottom: -21px; }
 }
 /* === READ v1 END === */
+/* === ACCOUNT v1 START === */
+/* Account v1 = AB-overview's Account tab, self-contained (acc- prefix). AB's font + colours as tokens; light when <html data-theme="light">. */
+.acc{--acc-panel:rgba(17,12,30,.62);--acc-line:rgba(255,255,255,.08);--acc-line-hi:rgba(255,255,255,.14);
+  --acc-fg:#efeaf7;--acc-fg-2:#b0a7c3;--acc-fg-3:#7d7491;--acc-gold:#d8c49a;--acc-ok:#5fd3a8;
+  --acc-sales:#a275e0;--acc-spend:#d8c49a;--acc-chart-dot:#0c0916;--acc-cell:rgba(14,10,24,.92);
+  --acc-f:"Inter Tight","Segoe UI",system-ui,sans-serif;--acc-ease:cubic-bezier(.2,.8,.2,1);
+  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:stretch;min-width:0;
+  font:14px/1.45 var(--acc-f);color:var(--acc-fg);letter-spacing:normal;text-align:start;text-transform:none;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+:root[data-theme="light"] .acc{--acc-panel:#ffffff;--acc-line:rgba(24,16,40,.085);--acc-line-hi:rgba(24,16,40,.15);
+  --acc-fg:#1b1428;--acc-fg-2:#554e66;--acc-fg-3:#878197;--acc-gold:#9a7b3c;--acc-ok:#18946a;
+  --acc-sales:#550da6;--acc-spend:#b89c62;--acc-chart-dot:#ffffff;--acc-cell:#fff}
+.acc *,.acc *::before,.acc *::after{box-sizing:border-box}
+.acc .acc-panel{position:relative;background:var(--acc-panel);border:1px solid var(--acc-line);border-radius:22px;padding:18px;min-width:0;margin:0;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);display:flex;flex-direction:column;gap:14px;transition:border-color .25s,box-shadow .25s}
+.acc .acc-panel:hover{border-color:rgba(162,117,224,.24)}
+:root[data-theme="light"] .acc .acc-panel{background:#fff;box-shadow:0 1px 2px rgba(24,16,40,.05),0 10px 28px -18px rgba(40,20,80,.22);backdrop-filter:none;-webkit-backdrop-filter:none}
+.acc .acc-ph{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;min-height:28px;flex-wrap:wrap;margin:0;padding:0}
+.acc .acc-h2{display:flex;align-items:center;gap:10px;margin:0;padding:0;font:600 15px var(--acc-f);letter-spacing:-.005em;color:inherit;text-transform:none}
+.acc .acc-hic{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;color:var(--acc-gold);background:rgba(216,196,154,.08);border:1px solid rgba(216,196,154,.16);flex:none;margin:0}
+.acc .acc-hic svg{width:14px;height:14px}
+.acc .acc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--acc-fg-2);margin:0}
+.acc .acc-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.acc .acc-legend b{font-weight:500;color:var(--acc-fg);margin-left:4px}
+.acc .acc-chart-box{flex:1;display:flex;min-height:0}
+.acc .acc-chart{width:100%;height:auto;display:block;overflow:visible;align-self:center}
+.acc .acc-chart text{fill:var(--acc-fg-3);font:10.5px var(--acc-f)}
+.acc .acc-chart .acc-draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:acc-draw 1.1s cubic-bezier(.3,.7,.2,1) .1s forwards}
+.acc .acc-chart .acc-fade{opacity:0;animation:acc-fade .7s ease .4s forwards}
+@keyframes acc-draw{to{stroke-dashoffset:0}}
+@keyframes acc-fade{to{opacity:1}}
+@keyframes acc-grow{from{transform:scaleX(0)}}
+.acc .acc-cstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--acc-line);border-radius:14px;overflow:hidden;margin:0}
+.acc .acc-cstats > div{background:var(--acc-cell);padding:10px 14px;min-width:0}
+.acc .acc-cstats span{display:block;font-size:11.5px;color:var(--acc-fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc .acc-cstats b{font:400 18px var(--acc-f);white-space:nowrap;color:inherit;letter-spacing:normal}
+.acc .acc-cstats b small{font-size:10px;color:var(--acc-gold);margin-right:4px;letter-spacing:.1em}
+.acc .acc-flowbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;margin:0}
+.acc .acc-flowbar span{display:block;height:100%;transform-origin:left;animation:acc-grow .9s var(--acc-ease) both}
+.acc .acc-receipt{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px dashed var(--acc-line-hi);border-radius:14px;padding:4px 16px;display:flex;flex-direction:column;justify-content:space-between;flex:1;margin:0}
+:root[data-theme="light"] .acc .acc-receipt{background:#fbfafd}
+.acc .acc-rrow{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--acc-line);margin:0}
+.acc .acc-rrow:first-child{border-top:0}
+.acc .acc-rrow i{width:10px;height:10px;border-radius:3px}
+.acc .acc-rrow .acc-nm small{display:block;font-size:11.5px;color:var(--acc-fg-3)}
+.acc .acc-rrow .acc-am{font:400 14px var(--acc-f);white-space:nowrap;text-align:right}
+.acc .acc-rrow .acc-am.acc-neg{color:var(--acc-fg-2)}
+.acc .acc-rrow.acc-total{border-top:1px solid var(--acc-line-hi);padding:12px 0 10px}
+.acc .acc-rrow.acc-total .acc-nm{font:600 14.5px var(--acc-f)}
+.acc .acc-rrow.acc-total .acc-am{font-size:20px;color:var(--acc-ok)}
+@media (max-width:1020px){.acc{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:860px){
+  .acc .acc-panel{padding:15px;border-radius:18px}
+  .acc .acc-cstats > div{padding:9px 10px}
+  .acc .acc-cstats b{font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){.acc *,.acc *::before,.acc *::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}}
+/* === ACCOUNT v1 END === */
+/* === ACTIONS v1 START === */
+/* Actions v1 = J's round quick actions, self-contained (qa1- prefix). J's colours as tokens; light when <html data-theme="light">. */
+.qa1{--qa1-fg:#efeaf7;--qa1-fg-2:#b0a7c3;--qa1-line-hi:rgba(255,255,255,.14);--qa1-purple:#550da6;--qa1-gold:#d8c49a;--qa1-loss:#ff8a7a;--qa1-ink:#07060c;
+  --qa1-f:"Geist","Segoe UI",system-ui,sans-serif;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:2px 0 0;margin:0 auto;width:100%;max-width:593px;min-width:0;box-sizing:border-box;
+  font:14px/1.45 var(--qa1-f);-webkit-font-smoothing:antialiased;letter-spacing:normal;text-transform:none}
+:root[data-theme="light"] .qa1{--qa1-fg:#1b1428;--qa1-fg-2:#5b5170;--qa1-line-hi:rgba(40,20,70,.16);--qa1-gold:#9a7b3c;--qa1-loss:#b8382b;--qa1-ink:#f4f1f8}
+.qa1 .qa1-b{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0;margin:0;cursor:pointer;font:400 12px/1.45 var(--qa1-f);color:var(--qa1-fg-2);min-width:0;width:auto;height:auto;box-shadow:none;border-radius:0;letter-spacing:normal;text-transform:none}
+.qa1 .qa1-o{position:relative;box-sizing:border-box;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+  border:1px solid var(--qa1-line-hi);color:var(--qa1-fg);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 10px 24px -14px rgba(0,0,0,.9);transition:transform .25s,background .25s,box-shadow .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.qa1 .qa1-o svg{width:21px;height:21px;display:inline;margin:0}
+.qa1 .qa1-b:hover .qa1-o{transform:translateY(-3px);background:rgba(124,63,193,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 16px 30px -14px rgba(85,13,166,.9)}
+.qa1 .qa1-b:hover{color:var(--qa1-fg)}
+.qa1 .qa1-b:focus-visible{outline:2px solid var(--qa1-gold);outline-offset:3px;border-radius:6px}
+.qa1 .qa1-ai .qa1-o{background:linear-gradient(140deg,#6b1ccc,var(--qa1-purple) 60%,#3e0880);border-color:rgba(216,196,154,.45);color:var(--qa1-gold);box-shadow:0 12px 28px -12px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)}
+.qa1 .qa1-badge::after{content:"9";position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:99px;background:var(--qa1-loss);color:#1a0806;font:600 10px/18px var(--qa1-f);text-align:center;box-shadow:0 0 0 3px var(--qa1-ink)}
+:root[data-theme="light"] .qa1 .qa1-o{background:#fff;box-shadow:0 1px 2px rgba(40,20,70,.06),0 10px 22px -14px rgba(40,20,80,.35)}
+:root[data-theme="light"] .qa1 .qa1-b:hover .qa1-o{background:#f3ecfb}
+:root[data-theme="light"] .qa1 .qa1-ai .qa1-o{background:linear-gradient(140deg,#6b1ccc,var(--qa1-purple) 60%,#3e0880);color:#f0dfb8}
+:root[data-theme="light"] .qa1 .qa1-badge::after{color:#fff}
+@media (max-width:1180px){.qa1{max-width:560px}}
+@media (max-width:560px){.qa1{gap:2px}.qa1 .qa1-o{width:54px;height:54px}}
+@media (prefers-reduced-motion:reduce){.qa1 .qa1-o{transition-duration:.001s!important}}
+/* === ACTIONS v1 END === */
+
+/* Actions v1 placement (V): 14px under the carousel dots, as in J */
+.cards-sec > .qa1{margin-top:14px}
 </style>
 </head>
 <body>
@@ -1764,6 +1850,15 @@ main { gap: 24px; }
   </div>
 </div>
 <!-- === CARDS v2 END === -->
+      <!-- === ACTIONS v1 START === -->
+<div class="qa1" role="group" aria-label="Quick actions">
+  <button class="qa1-b" type="button" data-qa1="restock"><span class="qa1-o qa1-badge"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span>Restock</button>
+  <button class="qa1-b" type="button" data-qa1="meta"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 3v18h18M7 15l4-4 3 3 6-7"/></svg></span>Meta ads</button>
+  <button class="qa1-b" type="button" data-qa1="orders"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Orders</button>
+  <button class="qa1-b" type="button" data-qa1="shipping"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g></svg></span>Shipping</button>
+  <button class="qa1-b qa1-ai" type="button" data-qa1="ai"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>Ask AI</button>
+</div>
+<!-- === ACTIONS v1 END === -->
       </section>
 
       <section class="pulse rise" style="animation-delay:.12s" aria-label="Key numbers">
@@ -1809,15 +1904,6 @@ main { gap: 24px; }
       </section>
     </section>
 
-    <!-- J's round quick actions: each jumps to its tab -->
-    <div class="qas rise" style="animation-delay:.2s" role="group" aria-label="Quick actions">
-      <button class="qa" type="button" data-go="products"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg><span class="badge">9</span></span>Restock</button>
-      <button class="qa" type="button" data-go="ads"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M7 15l4-4 3 3 6-7"/></svg></span>Meta ads</button>
-      <button class="qa" type="button" data-go="sales"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Orders</button>
-      <button class="qa" type="button" data-go="orders"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Shipping</button>
-      <button class="qa ai" type="button" id="qaAsk"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>Ask AI</button>
-    </div>
-
     <div class="seg-anchor" id="segAnchor" aria-hidden="true"></div>
     <div class="seg-wrap rise" id="segWrap" style="animation-delay:.2s">
       <div class="seg" id="seg" role="tablist" aria-label="Dashboard sections">
@@ -1830,30 +1916,36 @@ main { gap: 24px; }
       </div>
     </div>
 
-    <!-- ACCOUNT: where the money went (flowing money), sales vs spend, profit ROAS gauge -->
+    <!-- ACCOUNT: AB's Account tab (Account v1) -->
     <section class="pane on" id="p-account" role="tabpanel" aria-labelledby="t-account" tabindex="0">
       <h2 class="sr">Account</h2>
-      <div class="g12">
-      <!-- === MONEY v2 START === -->
-      <section class="panel s12 mv2-panel"><div class="mv2" data-mv2 role="region" aria-label="Where the money went"></div></section>
-      <!-- === MONEY v2 END === -->
-          <div class="panel s7 rise" style="animation-delay:0.10s">
-            <div class="ph"><h2><span class="h-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg></span>Sales vs spend</h2>
-              <div class="legend"><span><i style="background:#a275e0"></i>Revenue</span><span><i style="background:#7cc4ff"></i>Meta spend</span></div></div>
-            <div class="chart-box" id="chartBox"><svg class="chart" id="chart" viewBox="0 0 520 260" role="img" aria-label="Daily revenue and Meta spend"></svg><div class="ctip" id="ctip"></div></div>
-          </div>
-          <div class="panel s5 rise" style="animation-delay:0.15s">
-            <div class="ph"><h2><span class="h-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/></svg></span>Profit ROAS</h2><span class="pill warn">Below break-even</span></div>
-            <div class="gauge">
-              <div><div class="gk">Profit ROAS</div><div class="gv">1.44x</div></div>
-              <div class="track-wrap">
-                <div class="track"><div class="fill"></div><div class="be"><span>Break-even 1.65x</span></div></div>
-                <div class="scale"><span>0x</span><span>1.5x</span><span>3x</span></div>
-              </div>
-            </div>
-            <p class="g-note">Each <b>EGP 1</b> on Meta brings back <b>EGP 1.44</b> of profit. Break-even is <b>1.65x</b>.</p>
-          </div>
-      </div>
+      <!-- === ACCOUNT v1 START === -->
+<div class="acc" data-acc>
+  <div class="acc-panel">
+    <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg></span>Sales vs spend</h2>
+      <div class="acc-legend"><span><i style="background:var(--acc-sales)"></i>Revenue</span><span><i style="background:var(--acc-spend)"></i>Meta spend<b>EGP 106,807</b></span></div></div>
+    <div class="acc-chart-box"><svg class="acc-chart" id="acc-chart" viewBox="0 0 640 230" role="img" aria-label="Daily revenue and Meta spend"></svg></div>
+    <div class="acc-cstats">
+      <div><span>Best day · Thu, Oct 29</span><b><small>EGP</small>39,600</b></div>
+      <div><span>Avg. revenue / day</span><b><small>EGP</small>34,785</b></div>
+      <div><span>Avg. spend / day</span><b><small>EGP</small>15,258</b></div>
+    </div>
+  </div>
+  <div class="acc-panel">
+    <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 1 .7V2l-1 .7-3-2-3 2-3-2-3 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Where the money went</h2></div>
+    <div class="acc-flowbar"><span style="flex:72897;background:#7c3fc1"></span><span style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
+    <div class="acc-receipt">
+      <div class="acc-rrow"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue<small>after cancellations</small></span><span class="acc-am">EGP 253,113</span></div>
+      <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg">− 72,897</span></div>
+      <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend</span><span class="acc-am acc-neg">− 106,807</span></div>
+      <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg">− 17,718</span></div>
+      <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees</span><span class="acc-am acc-neg">− 9,020</span></div>
+      <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Net profit</span><span class="acc-am">EGP 46,671</span></div>
+    </div>
+  </div>
+</div>
+<!-- === ACCOUNT v1 END === -->
+
     </section>
 
     <!-- SALES: buyer cities map + recent orders -->
@@ -2185,48 +2277,6 @@ main { gap: 24px; }
   requestAnimationFrame(placeInd); document.fonts && document.fonts.ready.then(placeInd);
   if ("IntersectionObserver" in window) new IntersectionObserver(([en]) => $("#segWrap").classList.toggle("stuck", !en.isIntersecting && en.boundingClientRect.top < 0), { threshold: 0 }).observe(anchor);
   $$("[data-go]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); showTab(a.dataset.go); }));
-  $("#qaAsk").addEventListener("click", () => { const a = $("#askBar"); a.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); a.classList.remove("ping"); void a.offsetWidth; a.classList.add("ping"); });
-
-  /* ---------- chart with hover ---------- */
-  const chartEl = $("#chart"), ctip = $("#ctip");
-  let cx = null, cy = null, CW = 520, CH = 260;
-  const buildChart = () => {
-    const mob = innerWidth < 640; CW = mob ? 360 : 520; CH = mob ? 270 : 320;
-    chartEl.setAttribute("viewBox", `0 0 ${CW} ${CH}`);
-    const L = mob ? 44 : 36, R = 10, T = 72, B = mob ? 30 : 24, max = 45000;
-    cx = i => L + i * (CW - L - R) / 6; cy = v => T + (1 - v / max) * (CH - T - B);
-    const line = a => a.map((v,i) => `${i ? "L" : "M"}${cx(i).toFixed(1)} ${cy(v).toFixed(1)}`).join(" ");
-    let g = "";
-    [0,15000,30000,45000].forEach(v => g += `<line x1="${L}" x2="${CW-R}" y1="${cy(v)}" y2="${cy(v)}" style="stroke:var(--line-hi)" stroke-dasharray="${v?'3 4':''}"/><text x="${L-8}" y="${cy(v)+3.5}" text-anchor="end">${v/1000}k</text>`);
-    days.forEach((d,i) => g += `<text x="${cx(i)}" y="${CH-6}" text-anchor="middle">${d}</text>`);
-    g += `<line class="guide fade" id="guide" x1="0" x2="0" y1="${T}" y2="${cy(0)}" stroke="rgba(162,117,224,.5)" stroke-dasharray="2 3"/>`;
-    g += `<path class="fade" d="${line(rev)} L${cx(6)} ${cy(0)} L${cx(0)} ${cy(0)}Z" fill="url(#revG)"/>`;
-    g += `<path class="fade" d="${line(sp)} L${cx(6)} ${cy(0)} L${cx(0)} ${cy(0)}Z" fill="url(#spG)"/>`;
-    g += `<path class="draw" d="${line(sp)}" fill="none" stroke="#7cc4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-    g += `<path class="draw" d="${line(rev)}" fill="none" stroke="#a275e0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>`;
-    rev.forEach((v,i) => g += `<circle class="fade" cx="${cx(i)}" cy="${cy(v)}" r="3" style="fill:var(--ink)" stroke="#a275e0" stroke-width="2"/>`);
-    g += `<circle class="pd fade" id="pdR" r="6" fill="#a275e0" stroke="#f2eafb" stroke-width="2"/><circle class="pd fade" id="pdS" r="4.5" fill="#7cc4ff" style="stroke:var(--ink)" stroke-width="2"/>`;
-    const step = (CW - L - R) / 6;
-    days.forEach((d,i) => g += `<rect class="hz" data-i="${i}" x="${cx(i) - step/2}" y="0" width="${step}" height="${CH}"/>`);
-    chartEl.innerHTML = g;
-    chartEl.querySelectorAll(".hz").forEach(r => { r.addEventListener("pointerenter", () => showDay(+r.dataset.i)); r.addEventListener("click", () => showDay(+r.dataset.i)); });
-    chartEl.addEventListener("pointerleave", () => showDay(5));
-    showDay(5);
-  };
-  const showDay = i => {
-    const gd = $("#guide"); if (!gd) return;
-    gd.setAttribute("x1", cx(i)); gd.setAttribute("x2", cx(i));
-    $("#pdR").setAttribute("cx", cx(i)); $("#pdR").setAttribute("cy", cy(rev[i]));
-    $("#pdS").setAttribute("cx", cx(i)); $("#pdS").setAttribute("cy", cy(sp[i]));
-    const box = chartEl.getBoundingClientRect(), k = box.width / CW;
-    let left = cx(i) * k; const half = 70; left = Math.max(half, Math.min(box.width - half, left));
-    ctip.style.left = left + "px"; ctip.style.top = (cy(rev[i]) * k - 12) + "px";
-    ctip.innerHTML = `<b>${days[i]} · Oct ${dates[i]}</b><div><i style="background:#a275e0"></i>EGP ${fmtN(rev[i])}</div><div><i style="background:#7cc4ff"></i>EGP ${fmtN(sp[i])}</div>`;
-  };
-  buildChart();
-  hook("account", () => buildChart());
-  { let lastW = innerWidth, rzT; addEventListener("resize", () => { if (innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rzT); rzT = setTimeout(() => { if (activeTab === "account") buildChart(); }, 150); }); }
-  ctip.style.opacity = 0; setTimeout(() => { ctip.style.transition += ", opacity .5s"; ctip.style.opacity = 1; showDay(5); }, 450);
 
   /* ---------- products / abandoned / stock / returns ---------- */
   /* ---------- SALES: recent orders statement ---------- */
@@ -2391,8 +2441,11 @@ main { gap: 24px; }
     if (g === "inventory") { showTab("products"); openStock(); return; }
     if (g === "overview") scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" }); });
   document.addEventListener("nv2:ask", () => { const a = $("#askBar"); a.classList.remove("ping"); void a.offsetWidth; a.classList.add("ping"); });
-  /* Restock quick action -> Products tab with the low-stock planner open */
-  { const rq = $('.qa[data-go="products"]'); if (rq) rq.addEventListener("click", openStock); }
+  /* Actions v1 (round quick actions) -> V's tabs, the low-stock planner and the ask bar */
+  document.addEventListener("qa1:action", e => { const g = e.detail.go;
+    if (g === "ai") { const a = $("#askBar"); a.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); a.classList.remove("ping"); void a.offsetWidth; a.classList.add("ping"); return; }
+    const t = { restock: "products", meta: "ads", orders: "sales", shipping: "orders" }[g]; if (!t) return;
+    showTab(t); if (g === "restock") openStock(); });
 
   if (/[?&]tab=(\w+)/.test(location.search)) { const t = RegExp.$1; if ($("#p-" + t)) requestAnimationFrame(() => showTab(t, { scroll: false })); }
 
@@ -3031,6 +3084,41 @@ main { gap: 24px; }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 /* === CITIES v2 END === */
+</script>
+<script>
+/* === ACCOUNT v1 START === */
+/* Account v1: AB's Sales vs spend chart, drawn once into #acc-chart */
+(function(){
+  var el=document.getElementById('acc-chart');if(!el)return;
+  var rev=[31200,33400,35100,36800,34200,39600,33195],sp=[14200,14900,15300,16100,15400,16800,14107];
+  var days=["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"];
+  var sm=innerWidth<560,W=sm?360:640,H=sm?220:230;
+  el.setAttribute("viewBox","0 0 "+W+" "+H);
+  var L=sm?30:40,R=12,T=30,B=24,max=45000;
+  var x=function(i){return L+i*(W-L-R)/6},y=function(v){return T+(1-v/max)*(H-T-B)};
+  var line=function(a){return a.map(function(v,i){return (i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)}).join(" ")};
+  var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".42"/><stop offset="1" stop-color="#a275e0" stop-opacity="0"/></linearGradient>'
+    +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".22"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient></defs>';
+  [0,15000,30000,45000].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v?"3 4":"")+'"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+(v/1000)+'k</text>'});
+  days.forEach(function(d,i){g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="middle">'+(sm?d.slice(4):d)+'</text>'});
+  g+='<path class="acc-fade" d="'+line(rev)+' L'+x(6)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-revG)"/>';
+  g+='<path class="acc-fade" d="'+line(sp)+' L'+x(6)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-spG)"/>';
+  g+='<path class="acc-draw" d="'+line(sp)+'" fill="none" style="stroke:var(--acc-spend)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+  g+='<path class="acc-draw" d="'+line(rev)+'" fill="none" style="stroke:var(--acc-sales)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
+  rev.forEach(function(v,i){g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i===5?4.5:3)+'" style="fill:'+(i===5?"var(--acc-sales)":"var(--acc-chart-dot)")+';stroke:var(--acc-sales)" stroke-width="2"/>'});
+  el.innerHTML=g;
+})();
+/* === ACCOUNT v1 END === */
+</script>
+<script>
+/* === ACTIONS v1 START === */
+/* Actions v1: every button announces itself; the page decides where it goes */
+(function(){
+  document.querySelectorAll('.qa1 [data-qa1]').forEach(function(b){
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();
+      b.dispatchEvent(new CustomEvent('qa1:action',{bubbles:true,detail:{go:b.dataset.qa1}}))})});
+})();
+/* === ACTIONS v1 END === */
 </script>
 </body>
 </html>

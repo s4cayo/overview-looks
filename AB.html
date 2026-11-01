@@ -648,6 +648,33 @@ h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px va
 :root[data-theme="light"] .ctl.icon .sun { display: block; } :root[data-theme="light"] .ctl.icon .moon { display: none; }
 @media (max-width: 600px) { .nc { --cw: min(440px, 80vw); margin: 0 -16px; } }
 @media (max-width: 560px) { .car-nav { grid-template-columns: minmax(0,1fr); row-gap: 8px; } .car-nav::before { display: none; } .car-nav .hint, .car-ctl { justify-self: center; } }
+/* === ACTIONS v1 START === */
+/* Actions v1 = J's round quick actions, self-contained (qa1- prefix). J's colours as tokens; light when <html data-theme="light">. */
+.qa1{--qa1-fg:#efeaf7;--qa1-fg-2:#b0a7c3;--qa1-line-hi:rgba(255,255,255,.14);--qa1-purple:#550da6;--qa1-gold:#d8c49a;--qa1-loss:#ff8a7a;--qa1-ink:#07060c;
+  --qa1-f:"Geist","Segoe UI",system-ui,sans-serif;
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:2px 0 0;margin:0 auto;width:100%;max-width:593px;min-width:0;box-sizing:border-box;
+  font:14px/1.45 var(--qa1-f);-webkit-font-smoothing:antialiased;letter-spacing:normal;text-transform:none}
+:root[data-theme="light"] .qa1{--qa1-fg:#1b1428;--qa1-fg-2:#5b5170;--qa1-line-hi:rgba(40,20,70,.16);--qa1-gold:#9a7b3c;--qa1-loss:#b8382b;--qa1-ink:#f4f1f8}
+.qa1 .qa1-b{display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;padding:0;margin:0;cursor:pointer;font:400 12px/1.45 var(--qa1-f);color:var(--qa1-fg-2);min-width:0;width:auto;height:auto;box-shadow:none;border-radius:0;letter-spacing:normal;text-transform:none}
+.qa1 .qa1-o{position:relative;box-sizing:border-box;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+  border:1px solid var(--qa1-line-hi);color:var(--qa1-fg);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 10px 24px -14px rgba(0,0,0,.9);transition:transform .25s,background .25s,box-shadow .25s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.qa1 .qa1-o svg{width:21px;height:21px;display:inline;margin:0}
+.qa1 .qa1-b:hover .qa1-o{transform:translateY(-3px);background:rgba(124,63,193,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 16px 30px -14px rgba(85,13,166,.9)}
+.qa1 .qa1-b:hover{color:var(--qa1-fg)}
+.qa1 .qa1-b:focus-visible{outline:2px solid var(--qa1-gold);outline-offset:3px;border-radius:6px}
+.qa1 .qa1-ai .qa1-o{background:linear-gradient(140deg,#6b1ccc,var(--qa1-purple) 60%,#3e0880);border-color:rgba(216,196,154,.45);color:var(--qa1-gold);box-shadow:0 12px 28px -12px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)}
+.qa1 .qa1-badge::after{content:"9";position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;border-radius:99px;background:var(--qa1-loss);color:#1a0806;font:600 10px/18px var(--qa1-f);text-align:center;box-shadow:0 0 0 3px var(--qa1-ink)}
+:root[data-theme="light"] .qa1 .qa1-o{background:#fff;box-shadow:0 1px 2px rgba(40,20,70,.06),0 10px 22px -14px rgba(40,20,80,.35)}
+:root[data-theme="light"] .qa1 .qa1-b:hover .qa1-o{background:#f3ecfb}
+:root[data-theme="light"] .qa1 .qa1-ai .qa1-o{background:linear-gradient(140deg,#6b1ccc,var(--qa1-purple) 60%,#3e0880);color:#f0dfb8}
+:root[data-theme="light"] .qa1 .qa1-badge::after{color:#fff}
+@media (max-width:1180px){.qa1{max-width:560px}}
+@media (max-width:560px){.qa1{gap:2px}.qa1 .qa1-o{width:54px;height:54px}}
+@media (prefers-reduced-motion:reduce){.qa1 .qa1-o{transition-duration:.001s!important}}
+/* === ACTIONS v1 END === */
+
+/* Actions v1 placement (AB): 14px under the carousel dots, as in J */
+@media (max-width:860px){.cards-sec > .qa1{margin-top:2px}}
 </style>
 </head>
 <body>
@@ -722,6 +749,15 @@ h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px va
             </div>
           </div>
         </div>
+        <!-- === ACTIONS v1 START === -->
+<div class="qa1" role="group" aria-label="Quick actions">
+  <button class="qa1-b" type="button" data-qa1="restock"><span class="qa1-o qa1-badge"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span>Restock</button>
+  <button class="qa1-b" type="button" data-qa1="meta"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 3v18h18M7 15l4-4 3 3 6-7"/></svg></span>Meta ads</button>
+  <button class="qa1-b" type="button" data-qa1="orders"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Orders</button>
+  <button class="qa1-b" type="button" data-qa1="shipping"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g></svg></span>Shipping</button>
+  <button class="qa1-b qa1-ai" type="button" data-qa1="ai"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>Ask AI</button>
+</div>
+<!-- === ACTIONS v1 END === -->
       </section>
 
       <div class="k-grid rise" style="animation-delay:.14s">
@@ -765,15 +801,6 @@ h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px va
         <a class="ask" href="#"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span><span class="t">Ask the assistant<br><small>“Why is profit ROAS below break-even?”</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </section>
-
-    <!-- ================= 3 · QUICK ACTIONS ================= -->
-    <div class="actions rise" style="animation-delay:.22s" role="group" aria-label="Quick actions">
-      <button class="qa" type="button" data-go="products"><span class="o badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span>Restock</button>
-      <button class="qa" type="button" data-go="ads"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18M7 15l4-4 3 3 6-7"/></svg></span>Meta ads</button>
-      <button class="qa" type="button" data-go="sales"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Orders</button>
-      <button class="qa" type="button" data-go="orders"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>Shipping</button>
-      <button class="qa ai" type="button"><span class="o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 17l.7 1.8 1.8.7-1.8.7L19 22l-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>Ask AI</button>
-    </div>
 
     <!-- ================= 4 · STICKY TABS ================= -->
     <section class="tabs-sec rise" style="animation-delay:.26s" aria-label="Details">
@@ -1116,6 +1143,11 @@ h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px va
     });
   });
   $$("[data-go]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); e.stopPropagation(); showTab(a.dataset.go, true); }));
+  /* Actions v1 (round quick actions) → AB's tabs and the "Ask the assistant" bar */
+  document.addEventListener("qa1:action", e => { const g = e.detail.go;
+    if (g === "ai") { const a = $(".att-panel .ask"); if (a) { a.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); a.focus({ preventScroll: true }); } return; }
+    const t = { restock: "products", meta: "ads", orders: "sales", shipping: "orders" }[g]; if (!t) return;
+    showTab(t, true); });
   if ("IntersectionObserver" in window) new IntersectionObserver(([en]) => tabbar.classList.toggle("stuck", !en.isIntersecting && en.boundingClientRect.top < 0), { threshold: 0 }).observe(sentinel);
   placeInd(); document.fonts && document.fonts.ready.then(placeInd);
   $(".tabs-sec").style.minHeight = (innerHeight - 20) + "px"; // lets the tab bar reach the top even on a short panel
@@ -1290,6 +1322,16 @@ h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px va
     requestAnimationFrame(step);
   });
 })();
+</script>
+<script>
+/* === ACTIONS v1 START === */
+/* Actions v1: every button announces itself; the page decides where it goes */
+(function(){
+  document.querySelectorAll('.qa1 [data-qa1]').forEach(function(b){
+    b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();
+      b.dispatchEvent(new CustomEvent('qa1:action',{bubbles:true,detail:{go:b.dataset.qa1}}))})});
+})();
+/* === ACTIONS v1 END === */
 </script>
 </body>
 </html>
