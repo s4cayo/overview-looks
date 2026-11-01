@@ -610,7 +610,7 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
 .cv2-cur{font-size:calc(var(--cv2-u) * 4.6);font-weight:500;opacity:.7;margin-right:calc(var(--cv2-u) * 1.6);letter-spacing:0}
 /* quiet stat tiles: no outline, a soft fill, room inside */
 .cv2-tiles{margin-top:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--cv2-u) * 2.6)}
-.cv2-ads .cv2-tiles{grid-template-columns:minmax(0,.8fr) minmax(0,1.45fr)}
+.cv2-ads .cv2-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
 .cv2-tiles > div{display:flex;flex-direction:column;justify-content:center;gap:calc(var(--cv2-u) * .7);min-width:0;padding:calc(var(--cv2-u) * 2.3) calc(var(--cv2-u) * 3);border-radius:calc(var(--cv2-u) * 2.8);
   background:var(--cv2-tile,var(--cv2-soft))}
 .cv2-tk{font-size:max(12px,calc(var(--cv2-u) * 2.6));line-height:1.25;opacity:.72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -647,7 +647,6 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
   repeating-radial-gradient(circle at 100% 50%,rgba(216,180,108,.08) 0 .5px,transparent 1px 7px),
   linear-gradient(160deg,#1c1a17 0%,#0b0a09 60%,#14110b 100%);
   box-shadow:0 30px 60px -24px rgba(0,0,0,.9),0 0 0 1px rgba(216,180,108,.4) inset}
-.cv2-ads .cv2-front::before{content:"";position:absolute;left:0;right:0;top:14%;opacity:.5;height:1px;background:linear-gradient(90deg,transparent,rgba(216,180,108,.55),transparent)}
 .cv2-ads .cv2-fn{background:rgba(216,180,108,.1);color:#f3e6c8;box-shadow:0 0 0 1px rgba(216,180,108,.32) inset}
 .cv2-ship{--cv2-fg:#211437;--cv2-fg-g:#0b6e48;--cv2-fg-w:#7a4c00;--cv2-fg-b:#a3241a;--cv2-tagc:#7a4c00;--cv2-tagbg:rgba(255,255,255,.55);
   --cv2-mut:rgba(33,20,55,.72);--cv2-hair:rgba(60,20,110,.18);--cv2-soft:rgba(255,255,255,.4);--cv2-tile:rgba(255,255,255,.34);--cv2-lnkbg:#550da6;--cv2-lnk:#fff}
@@ -728,7 +727,7 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
 .cv2-narrow .cv2-row b{font-size:13px}
 .cv2-narrow .cv2-row b small{font-size:12px}
 
-/* ads back: ROAS lead + purchases, best / worst ad, spend per day */
+/* ads back (round 7): three key stats, best / worst ad (creative), the balance runway */
 .cv2-lead2{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
 .cv2-stat{display:flex;flex-direction:column;align-items:flex-end;flex:none}
 .cv2-adl{display:flex;flex-direction:column;gap:6px}
@@ -745,7 +744,7 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
 .cv2-narrow .cv2-ret b{font-size:13px}
 .cv2-narrow .cv2-act{font-size:12px;padding:4px 7px}
 
-/* courier back: delivery success, three figures, the call list */
+/* courier back (round 7): your cash with Bosta (payout / stuck), delivery success */
 .cv2-ok{display:flex;flex-direction:column;gap:7px}
 .cv2-okbar{display:block;height:8px;border-radius:99px;background:rgba(60,20,110,.14);overflow:hidden}
 .cv2-okbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#0b6e48,#2fa774);transform-origin:left}
@@ -764,6 +763,90 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
 .cv2-dots button::before{content:"";display:block;width:6px;height:6px;border-radius:9px;background:var(--cv2-dot);transition:width .35s,background .35s}
 .cv2-dots button[aria-selected="true"]::before{width:16px;background:var(--cv2-dot-on)}
 .cv2-dots button:hover::before{background:var(--cv2-dot-on)}
+/* ---- round 7 ---- */
+/* the turned-away front never takes a click meant for the back (a hidden face can still win the hit test) */
+.cv2-is-open .cv2-front{pointer-events:none}
+/* sales front (§3b): Cancelled & returned (count + "orders", its value on a quiet line under it) · Orders · Average order */
+.cv2-sales .cv2-tiles{grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr) minmax(0,1fr)}
+@media (max-width:600px){.cv2-sales .cv2-tiles{grid-template-columns:minmax(0,1.58fr) minmax(0,.72fr) minmax(0,1fr)}.cv2-sales .cv2-tiles > div{padding:6px}}
+.cv2-tv small.cv2-un{font-size:max(12px,.62em);font-weight:500;margin:0 0 0 .35em;letter-spacing:0}
+.cv2-tq{font-size:max(12px,calc(var(--cv2-u) * 2.5));line-height:1.2;opacity:.62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ads front: the ROAS change sits beside the ROAS figure */
+.cv2-tv small.cv2-dt{font-size:max(12px,.62em);font-weight:600;opacity:1;margin:0 0 0 .55em;letter-spacing:0}
+/* courier front: four plain figures, number over label, no boxes — a hairline between them */
+.cv2-ship .cv2-q4{grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
+.cv2-q4 > div{background:none;padding:0 0 0 calc(var(--cv2-u) * 3.2);border-radius:0;gap:calc(var(--cv2-u) * .4);box-shadow:inset 1px 0 0 var(--cv2-hair)}
+.cv2-q4 > div:first-child{padding-left:0;box-shadow:none}
+.cv2-q4 .cv2-tv{font-size:max(15px,calc(var(--cv2-u) * 4.4))}
+.cv2-q4 .cv2-tk{opacity:.78}
+/* sales back: one left edge and one number column — the rows sit in a box like the three tiles above them */
+.cv2-sales .cv2-d3 > div{padding:9px 14px}
+.cv2-sales .cv2-rows{padding:2px 14px;border-radius:12px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
+.cv2-sales .cv2-row{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px}
+.cv2-sales .cv2-row{padding:3px 0}
+.cv2-sales .cv2-row b{font-variant-numeric:tabular-nums}
+.cv2-sales .cv2-foot{padding-left:14px}
+.cv2-narrow.cv2-sales .cv2-d3 > div{padding:3px 8px}
+.cv2-narrow.cv2-sales .cv2-rows{padding:1px 8px;border-radius:10px}
+.cv2-narrow.cv2-sales .cv2-row{padding:1px 0;column-gap:8px}
+/* narrow: profit margin and new / returning share one row so the back keeps the front's height */
+.cv2-nrow{display:none!important}
+.cv2-narrow .cv2-wrow{display:none!important}
+.cv2-narrow .cv2-nrow{display:grid!important;grid-template-columns:auto auto minmax(0,1fr) auto}
+.cv2-nrow .cv2-lab + b + .cv2-lab{text-align:right}
+.cv2-narrow.cv2-sales .cv2-foot{padding-left:8px}
+/* ads back: three stats (wide) / one line (narrow); creative thumbnails; runway */
+.cv2-k3n{display:none}
+.cv2-narrow .cv2-wide3{display:none}
+.cv2-narrow .cv2-k3n{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;line-height:1.3;color:var(--cv2-mut);white-space:nowrap}
+.cv2-k3n b{font-size:14px;font-weight:600;color:var(--cv2-fg);font-variant-numeric:tabular-nums}
+.cv2-ads .cv2-d3 > div{padding:8px 14px}
+.cv2-ads .cv2-adr{grid-template-columns:64px 30px minmax(0,1fr) auto auto}
+.cv2-th{width:30px;height:30px;border-radius:8px;position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.cv2-thv{background:linear-gradient(150deg,#e8c9a6 0%,#b77a8f 45%,#4d2a5e 100%)}
+.cv2-thv::after{content:"";position:absolute;left:50%;top:50%;margin:-5px 0 0 -3px;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent rgba(255,255,255,.92)}
+.cv2-thc{background:linear-gradient(150deg,#8f8a80 0%,#5b564d 60%,#3a362f 100%)}
+.cv2-thc::before,.cv2-thc::after{content:"";position:absolute;top:8px;bottom:8px;width:7px;border-radius:2px;background:rgba(255,255,255,.8)}
+.cv2-thc::before{left:7px}.cv2-thc::after{left:16px;opacity:.55}
+.cv2-run{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t b" "r b" "s b";column-gap:16px;row-gap:5px;align-items:center;min-width:0}
+.cv2-runt{grid-area:t;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-runbar{grid-area:r;display:block;height:5px;border-radius:99px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair);overflow:hidden}
+.cv2-runbar i{display:block;height:100%;width:45%;border-radius:99px;background:linear-gradient(90deg,var(--cv2-fg-w),color-mix(in srgb,var(--cv2-fg-w) 55%,transparent))}
+.cv2-is-open .cv2-runbar i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both;transform-origin:left}
+.cv2-runs{grid-area:s}
+.cv2-run .cv2-lnk{grid-area:b}
+.cv2-narrow .cv2-ads .cv2-adr,.cv2-narrow.cv2-ads .cv2-adr{grid-template-columns:36px 20px minmax(0,1fr) auto auto;column-gap:7px}
+.cv2-narrow .cv2-th{width:20px;height:20px;border-radius:5px}
+.cv2-narrow .cv2-thv::after{margin:-4px 0 0 -2px;border-width:4px 0 4px 6px}
+.cv2-narrow .cv2-thc::before,.cv2-narrow .cv2-thc::after{top:5px;bottom:5px;width:5px}
+.cv2-narrow .cv2-thc::before{left:4px}.cv2-narrow .cv2-thc::after{left:11px}
+.cv2-narrow .cv2-run{grid-template-areas:"t t" "r r" "s b";row-gap:3px;column-gap:8px}
+.cv2-narrow .cv2-runbar{height:4px}
+/* courier back: the cash split (one number column) and delivery success */
+.cv2-cash{display:flex;flex-direction:column;padding:2px 14px;border-radius:12px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
+.cv2-cr{display:grid;grid-template-columns:minmax(0,1fr) 110px 108px;column-gap:14px;align-items:center;padding:7px 0;border-top:1px solid var(--cv2-hair);min-width:0}
+.cv2-cr:first-child{border-top:0}
+.cv2-crt{display:flex;flex-direction:column;min-width:0;padding-left:12px;position:relative}
+.cv2-crt::before{content:"";position:absolute;left:0;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--c,transparent)}
+.cv2-crh .cv2-crt{padding-left:0}
+.cv2-crt b{font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-crh .cv2-crt b{font-weight:500;color:var(--cv2-mut)}
+.cv2-cra{font-size:15px;font-weight:600;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cv2-crh .cv2-cra{font-size:17px}
+.cv2-cr .cv2-lnk{justify-self:end}
+.cv2-okh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;min-width:0}
+.cv2-okh .cv2-p{white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.cv2-okh .cv2-p b{font-size:15px}
+.cv2-narrow .cv2-cash{padding:0 8px;border-radius:10px}
+.cv2-narrow .cv2-cr{grid-template-columns:minmax(0,1fr) 84px 74px;column-gap:6px;padding:3px 0}
+.cv2-narrow .cv2-cr .cv2-lnk svg{display:none}
+.cv2-narrow .cv2-crt{padding-left:0}
+.cv2-narrow .cv2-crt::before{display:none}
+.cv2-narrow .cv2-crt b{font-size:13px}
+.cv2-narrow .cv2-cra{font-size:13px}
+.cv2-narrow .cv2-crh .cv2-cra{font-size:14px}
+.cv2-narrow .cv2-cr .cv2-fp{font-size:12px;line-height:1.2}
+.cv2-narrow .cv2-okh .cv2-p b{font-size:13px}
 @keyframes cv2grow{from{transform:scaleX(0)}}
 @media (max-width:600px){.cv2{--cv2-cw:min(440px,80vw)}.cv2-stage{height:calc(var(--cv2-cw) / 1.586 + 52px)}}
 @media (prefers-reduced-motion:reduce){.cv2 *,.cv2 *::before,.cv2 *::after{animation:none!important;transition-duration:.001s!important;transition-delay:0s!important}}
@@ -1038,7 +1121,7 @@ footer { text-align: center; font: 500 9px var(--f-serif); letter-spacing: .4em;
    and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
    Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
    attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
-   Page hooks: "nv2:period" (detail.key; also calls window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
+   Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
    "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
 .nv2-top,.nv2-dock,.nv2-sheet,.nv2-scrim{--nv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
   --nv2-bg:#060509;--nv2-panel:#0f0d15;--nv2-panel2:#17141f;--nv2-line:rgba(255,255,255,.08);--nv2-line2:rgba(255,255,255,.14);--nv2-fg:#eceaf3;--nv2-mut:#9693a6;
@@ -1630,7 +1713,43 @@ main { gap: 24px; }
 @media (max-width:560px){.qa1{gap:2px}.qa1 .qa1-o{width:54px;height:54px}}
 @media (prefers-reduced-motion:reduce){.qa1 .qa1-o{transition-duration:.001s!important}}
 /* === ACTIONS v1 END === */
+/* === PERIODS v1 START === */
+/* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
+[data-per-down] > span:first-child svg{transform:scaleY(-1)}
+/* === PERIODS v1 END === */
 </style>
+<script>
+/* === PERIODS v1 START === */
+/* Periods v1 (round 7) — ONE dataset for every date period (today = Fri, Oct 30, the last day of the sample) and ONE
+   place that re-renders the page when the date picker changes: NAV v2 calls perSet(key) on every pick.
+   perSet(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'. It calls, in order,
+     pv2SetPeriod(key)  PRODUCTS v2   (top products + low-stock planner)
+     cv2SetPeriod(P)    CARDS v2      (card fronts + backs)
+     puSetPeriod(P)     PULSE v1      (Store pulse, N/K/J)
+     accSetPeriod(P)    ACCOUNT v1    (Sales vs spend + Where the money went)
+   then fills the look's own markup through data attributes
+     data-per-t="key"             textContent = P.t[key] (a data-count on the same element is re-targeted)
+     data-per-cls="key:good:bad"  class `good` when P.tone[key] === 'g', else `bad`
+     data-per-flip="key"          attribute data-per-down while that figure went down (its arrow icon flips)
+     data-per-w="key"             style.flex = P.w[key]
+   and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
+   PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you keep EGP 7,597. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you keep EGP 6,748. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
+PER.cur='7d';
+window.perSet=function(key){
+  var P=PER[key];if(!P)return;PER.cur=key;
+  var call=function(f,a){if(typeof window[f]==='function'){try{window[f](a)}catch(e){console.warn(f,e)}}};
+  call('pv2SetPeriod',key);call('cv2SetPeriod',P);call('puSetPeriod',P);call('accSetPeriod',P);
+  var all=function(s){return [].slice.call(document.querySelectorAll(s))};
+  all('[data-per-t]').forEach(function(e){var v=P.t[e.getAttribute('data-per-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-per-cls]').forEach(function(e){var a=e.getAttribute('data-per-cls').split(':'),g=P.tone[a[0]]==='g';e.classList.toggle(a[1],g);e.classList.toggle(a[2],!g)});
+  all('[data-per-flip]').forEach(function(e){e.toggleAttribute('data-per-down',!!P.flip[e.getAttribute('data-per-flip')])});
+  all('[data-per-w]').forEach(function(e){var v=P.w[e.getAttribute('data-per-w')];if(v!=null)e.style.flex=String(v)});
+  document.dispatchEvent(new CustomEvent('per:change',{detail:{key:key,P:P}}));
+};
+/* === PERIODS v1 END === */
+</script>
 </head>
 <body>
 <div class="field" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -1728,73 +1847,86 @@ main { gap: 24px; }
     <section class="hero" aria-label="Cards and key numbers">
       <div class="card-col rise" style="animation-delay:.06s">
 <!-- === CARDS v2 START === -->
-<!-- Cards v2: Sales / Meta Ads / Courier carousel. Copy this whole block + the CSS block + the JS block.
-     Back-of-card links fire a bubbling "cv2:action" event (detail.go) — hook it to the page's tab switcher. -->
-<div class="cv2" id="cv2" role="region" aria-roledescription="carousel" aria-label="Sales, Meta ads and courier cards">
+<!-- Cards v2: Sales / Ads / Courier carousel. Copy this whole block + the CSS block + the JS block.
+     Back-of-card links fire a bubbling "cv2:action" event (detail.go) — hook it to the page's tab switcher.
+     Every period figure carries data-cv2-t="key" (text), data-cv2-tone / data-cv2-w / data-cv2-aria: see cv2SetPeriod. -->
+<div class="cv2" id="cv2" role="region" aria-roledescription="carousel" aria-label="Sales, ads and courier cards">
   <div class="cv2-stage" data-front="sales">
 
     <!-- SALES -->
     <div class="cv2-card cv2-sales" data-key="sales" tabindex="0" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Sales card. Profit you keep EGP 46,671. Margin 18.4%, 175 orders, average order EGP 1,391. Press Enter for details.">
+         data-cv2-aria="s_aria" aria-label="Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
           <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671">46,671</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
-          <div class="cv2-tiles"><div><span class="cv2-tk">Margin</span><span class="cv2-tv cv2-g">18.4%</span></div><div><span class="cv2-tk">Orders</span><span class="cv2-tv">175</span></div><div><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span><span class="cv2-tv"><small>EGP</small>1,391</span></div></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671" data-cv2-t="s_profit">46,671</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk"><span class="cv2-tw">Cancelled &amp; returned</span><span class="cv2-tn">Cancelled/returned</span></span><span class="cv2-tv cv2-wcol"><span data-cv2-t="s_fail">21</span><small class="cv2-un">orders</small></span><span class="cv2-tq" data-cv2-t="s_failv">EGP 29,750</span></div><div><span class="cv2-tk">Orders</span><span class="cv2-tv" data-cv2-t="s_orders">175</span></div><div><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span><span class="cv2-tv"><small>EGP</small><span data-cv2-t="s_aov">1,446</span></span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt">This week vs last week</div><div class="cv2-bs">Oct 24–30 compared with Oct 17–23</div></div>
+          <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt" data-cv2-t="s_title">This week vs last week</div><div class="cv2-bs" data-cv2-t="s_sub">Oct 24–30 compared with Oct 17–23</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-d3"><div><span class="cv2-lab">Profit</span><span class="cv2-big cv2-gc">▲ 8.1%</span></div><div><span class="cv2-lab">Orders</span><span class="cv2-big cv2-gc">▲ 9.4%</span></div><div><span class="cv2-lab">Revenue</span><span class="cv2-big cv2-gc">▲ 12.4%</span></div></div>
+          <div class="cv2-d3"><div><span class="cv2-lab">Profit</span><span class="cv2-big cv2-gc" data-cv2-t="s_dprofit" data-cv2-tone="profit">▲ 8.1%</span></div><div><span class="cv2-lab">Orders</span><span class="cv2-big cv2-gc" data-cv2-t="s_dorders" data-cv2-tone="orders">▲ 9.4%</span></div><div><span class="cv2-lab">Revenue</span><span class="cv2-big cv2-gc" data-cv2-t="s_drev" data-cv2-tone="rev">▲ 12.4%</span></div></div>
           <div class="cv2-rows">
-            <div class="cv2-row"><span class="cv2-lab">Best day</span><b>Thu, Oct 29 <small>·</small> EGP 39,600</b></div>
-            <div class="cv2-row"><span class="cv2-lab">Best seller</span><b>Layla Tiered Ruffle Maxi <small>· 27 sold</small></b></div>
-            <div class="cv2-row"><span class="cv2-lab"><span class="cv2-wide">New vs returning customers</span><span class="cv2-nar">New / returning</span></span><b>128 <small>/</small> 47</b></div>
+            <div class="cv2-row"><span class="cv2-lab" data-cv2-t="s_bestlab">Best day</span><b><span data-cv2-t="s_besta">Thu, Oct 29</span> <small>·</small> <span data-cv2-t="s_bestb">EGP 39,600</span></b></div>
+            <div class="cv2-row cv2-wrow"><span class="cv2-lab">Profit margin</span><b><span data-cv2-t="s_margin">18.4%</span> <small>of net sales</small></b></div>
+            <div class="cv2-row"><span class="cv2-lab">Best seller</span><b>Layla Tiered Ruffle Maxi <small>· <span data-cv2-t="s_sold">27 sold</span></small></b></div>
+            <div class="cv2-row cv2-wrow"><span class="cv2-lab">New vs returning customers</span><b><span data-cv2-t="s_new">128</span> <small>/</small> <span data-cv2-t="s_ret">47</span></b></div>
+            <div class="cv2-row cv2-nrow"><span class="cv2-lab">Profit margin</span><b data-cv2-t="s_margin">18.4%</b><span class="cv2-lab">New / returning</span><b><span data-cv2-t="s_new">128</span> <small>/</small> <span data-cv2-t="s_ret">47</span></b></div>
           </div>
-          <div class="cv2-foot"><span class="cv2-p"><span class="cv2-wide">Ads need to bring <b>EGP 1.65</b> per EGP 1 to break even —&nbsp;now&nbsp;<b class="cv2-wc">1.44</b></span><span class="cv2-nar">Break-even <b>1.65</b> · now <b class="cv2-wc">1.44</b></span></span><a class="cv2-lnk" href="#" data-cv2-go="ads">Review Meta <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cv2-foot"><span class="cv2-p"><span class="cv2-wide">Ads need to bring <b>EGP <span data-cv2-t="s_be">1.65</span></b> per EGP 1 to break even —&nbsp;now&nbsp;<b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span><span class="cv2-nar">Break-even <b data-cv2-t="s_be">1.65</b> · now <b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span></span><a class="cv2-lnk" href="#" data-cv2-go="account">Review account <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
 
-    <!-- META ADS -->
+    <!-- ADS (Meta, TikTok, ...) -->
     <div class="cv2-card cv2-ads" data-key="ads" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Ads card, Meta and TikTok. Meta spend EGP 106,807. Cost per purchase EGP 526. Tired ad set Broad, Women 25 to 44. Press Enter for details.">
+         data-cv2-aria="a_aria" aria-label="Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
           <div class="cv2-top"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><span class="cv2-ttw" role="img" aria-label="TikTok"><svg class="cv2-tt" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="cv2-nm">Ads</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Meta spend</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="106807">106,807</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
-          <div class="cv2-tiles"><div><span class="cv2-tk"><span class="cv2-tw">Cost per purchase</span><span class="cv2-tn">Per purchase</span></span><span class="cv2-tv"><small>EGP</small>526</span></div><div><span class="cv2-tk">Tired ad set</span><span class="cv2-tv cv2-txt cv2-bc">Broad · Women 25–44</span></div></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Ad spend</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="106807" data-cv2-t="a_spend">106,807</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk">ROAS</span><span class="cv2-tv"><span data-cv2-t="a_roas">2.37x</span><small class="cv2-dt cv2-gc" data-cv2-t="a_droas" data-cv2-tone="roas">▲ 5.7%</small></span></div><div><span class="cv2-tk"><span class="cv2-tw">Cost per purchase</span><span class="cv2-tn">Per purchase</span></span><span class="cv2-tv"><small>EGP</small><span data-cv2-t="a_cpp">526</span></span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">This week on Meta</div><div class="cv2-bs">Spent EGP 106,807</div></div>
+          <div class="cv2-bh"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><div class="cv2-bhx"><div class="cv2-bt" data-cv2-t="a_title">This week on ads</div><div class="cv2-bs" data-cv2-t="a_sub">Oct 24–30 · spent EGP 106,807</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-lead2"><div class="cv2-lead"><span class="cv2-big cv2-hero">2.37x</span><span class="cv2-p">Revenue ROAS · <b class="cv2-gc">▲ 5.7%</b><span class="cv2-wide"> vs last week</span></span></div>
-            <div class="cv2-stat"><span class="cv2-lab">Purchases</span><span class="cv2-big">203</span></div></div>
+          <div class="cv2-d3 cv2-wide3"><div><span class="cv2-lab">Purchases</span><span class="cv2-big" data-cv2-t="a_purch">203</span></div><div><span class="cv2-lab">Reach</span><span class="cv2-big" data-cv2-t="a_reach">420,500</span></div><div><span class="cv2-lab">Clicks</span><span class="cv2-big" data-cv2-t="a_clicks">17,800</span></div></div>
+          <div class="cv2-k3n"><span><b data-cv2-t="a_purch">203</b> purchases</span><span><b data-cv2-t="a_reachk">420.5k</b> reach</span><span><b data-cv2-t="a_clicksk">17.8k</b> clicks</span></div>
           <div class="cv2-adl">
-            <div class="cv2-adr" style="--c:var(--cv2-fg-g)"><span class="cv2-lab"><span class="cv2-wide">Best ad</span><span class="cv2-nar">Best</span></span><b class="cv2-cn">Satin Edit · Video 3</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b>4.10</b></span><span class="cv2-act">Scale</span></div>
-            <div class="cv2-adr" style="--c:var(--cv2-fg-b)"><span class="cv2-lab"><span class="cv2-wide">Worst ad</span><span class="cv2-nar">Worst</span></span><b class="cv2-cn">Retarget · Carousel 2</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b>0.90</b></span><span class="cv2-act">Pause</span></div>
+            <div class="cv2-adr" style="--c:var(--cv2-fg-g)"><span class="cv2-lab"><span class="cv2-wide">Best ad</span><span class="cv2-nar">Best</span></span><span class="cv2-th cv2-thv" aria-hidden="true"></span><b class="cv2-cn">Satin Edit · Video 3</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_best">4.10</b></span><span class="cv2-act">Scale</span></div>
+            <div class="cv2-adr" style="--c:var(--cv2-fg-b)"><span class="cv2-lab"><span class="cv2-wide">Worst ad</span><span class="cv2-nar">Worst</span></span><span class="cv2-th cv2-thc" aria-hidden="true"></span><b class="cv2-cn">Retarget · Carousel 2</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_worst">0.90</b></span><span class="cv2-act">Pause</span></div>
           </div>
-          <div class="cv2-foot"><span class="cv2-p"><b>EGP 15,258</b>/day<span class="cv2-wide"> · balance lasts</span><span class="cv2-nar"> ·</span> <b class="cv2-wc">~6 days</b><span class="cv2-wide"> (EGP 96,400)</span></span><a class="cv2-lnk" href="#" data-cv2-go="ads"><span class="cv2-wide">Open Ads Manager</span><span class="cv2-nar">Ads Manager</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cv2-run">
+            <span class="cv2-p cv2-runt">Balance <b>EGP 96,400</b> lasts until <b class="cv2-wc">Fri, Nov 6</b></span>
+            <span class="cv2-runbar" role="img" aria-label="Ad balance runs out on Fri, Nov 6"><i></i></span>
+            <span class="cv2-fp cv2-runs">at about EGP 15,258 a day</span>
+            <a class="cv2-lnk" href="#" data-cv2-go="ads">Ads Manager <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
         </div></div>
       </div>
     </div>
 
     <!-- COURIER -->
     <div class="cv2-card cv2-ship" data-key="ship" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, EGP 38k stuck 7+ days, 7 returned. Press Enter for details.">
+         data-cv2-aria="c_aria" aria-label="Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
           <div class="cv2-top"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><span class="cv2-nm">Courier</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
           <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Cash to collect</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="58300">58,300</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave cv2-truck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg></span></div>
-          <div class="cv2-tiles"><div><span class="cv2-tk">In transit</span><span class="cv2-tv">38</span></div><div><span class="cv2-tk"><span class="cv2-tw">Stuck 7+ days</span><span class="cv2-tn">Stuck 7d+</span></span><span class="cv2-tv cv2-wcol"><small>EGP</small>38k</span></div><div><span class="cv2-tk">Returned</span><span class="cv2-tv cv2-bc">7</span></div></div>
+          <div class="cv2-tiles cv2-q4"><div><span class="cv2-tv">38</span><span class="cv2-tk">In transit</span></div><div><span class="cv2-tv" data-cv2-t="c_deliv">121</span><span class="cv2-tk">Delivered</span></div><div><span class="cv2-tv cv2-bc" data-cv2-t="c_ret">7</span><span class="cv2-tk">Returned</span></div><div><span class="cv2-tv cv2-wcol"><small>EGP</small>38k</span><span class="cv2-tk"><span class="cv2-tw">Stuck 7+ days</span><span class="cv2-tn">Stuck 7d+</span></span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">Delivery health</div><div class="cv2-bs">128 finished · 38 in transit</div></div>
+          <div class="cv2-bh"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">Your cash with Bosta</div><div class="cv2-bs">Cash today · <span data-cv2-t="c_sub">Deliveries Oct 24–30</span></div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-ok"><div class="cv2-lead"><span class="cv2-big cv2-hero cv2-gc">94.5%</span><span class="cv2-p">delivered<span class="cv2-wide"> · <b>121</b> of <b>128</b> finished</span><span class="cv2-nar"> · 121 of 128</span></span></div>
-            <span class="cv2-okbar" role="img" aria-label="94.5% delivered"><i style="width:94.5%"></i></span></div>
-          <div class="cv2-d3"><div><span class="cv2-lab"><span class="cv2-wide">Average time to deliver</span><span class="cv2-nar">Avg. delivery</span></span><span class="cv2-big">2.4 <small>days</small></span></div><div><span class="cv2-lab"><span class="cv2-wide">Refused at the door</span><span class="cv2-nar">Refused</span></span><span class="cv2-big">5</span><span class="cv2-fp cv2-wide">EGP 450 lost shipping</span></div><div><span class="cv2-lab"><span class="cv2-wide">Next Bosta payout</span><span class="cv2-nar">Payout Nov 2</span></span><span class="cv2-big"><small>EGP</small>20,300</span><span class="cv2-fp cv2-wide">Sun, Nov 2</span></div></div>
-          <div class="cv2-call"><span class="cv2-p"><b class="cv2-wc">9<span class="cv2-wide"> parcels</span></b> stuck 7+ days · <b>EGP 38,000</b><span class="cv2-wide"> — needs a call</span></span><a class="cv2-lnk" href="#" data-cv2-go="orders">Call list <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cv2-cash">
+            <div class="cv2-cr cv2-crh"><span class="cv2-crt"><b>Cash to collect</b></span><span class="cv2-cra">EGP 58,300</span><span></span></div>
+            <div class="cv2-cr" style="--c:var(--cv2-fg-g)"><span class="cv2-crt"><b>Next payout</b><span class="cv2-fp"><span class="cv2-wide">Mon, Nov 2 · on its way to you</span><span class="cv2-nar">Mon, Nov 2</span></span></span><span class="cv2-cra cv2-gc">EGP 20,300</span><span></span></div>
+            <div class="cv2-cr" style="--c:var(--cv2-fg-w)"><span class="cv2-crt"><b>Stuck 7+ days</b><span class="cv2-fp"><span class="cv2-wide">9 parcels · call these customers</span><span class="cv2-nar">9 parcels</span></span></span><span class="cv2-cra cv2-wc">EGP 38,000</span><a class="cv2-lnk" href="#" data-cv2-go="orders">Call list <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          </div>
+          <div class="cv2-ok">
+            <div class="cv2-okh"><span class="cv2-p"><span class="cv2-wide">Delivery success </span><span class="cv2-nar">Delivered </span><b class="cv2-gc" data-cv2-t="c_ok">94.5%</b><span class="cv2-mut"> · <span data-cv2-t="c_okof">121 of 128</span><span class="cv2-wide"> delivered</span></span></span><span class="cv2-p"><span class="cv2-wide">Average </span><span class="cv2-nar">Avg. </span><b data-cv2-t="c_days">2.4</b> days<span class="cv2-wide"> to deliver</span></span></div>
+            <span class="cv2-okbar" role="img" aria-label="Delivery success"><i data-cv2-w="ok" style="width:94.5%"></i></span>
+          </div>
         </div></div>
       </div>
     </div>
@@ -1802,7 +1934,7 @@ main { gap: 24px; }
   </div>
   <div class="cv2-nav">
     <div class="cv2-dots" role="tablist" aria-label="Cards">
-      <button type="button" role="tab" data-cv2-dot="0" aria-label="Sales" aria-selected="true"></button><button type="button" role="tab" data-cv2-dot="1" aria-label="Meta ads" aria-selected="false"></button><button type="button" role="tab" data-cv2-dot="2" aria-label="Courier" aria-selected="false"></button>
+      <button type="button" role="tab" data-cv2-dot="0" aria-label="Sales" aria-selected="true"></button><button type="button" role="tab" data-cv2-dot="1" aria-label="Ads" aria-selected="false"></button><button type="button" role="tab" data-cv2-dot="2" aria-label="Courier" aria-selected="false"></button>
     </div>
   </div>
 </div>
@@ -1825,22 +1957,22 @@ main { gap: 24px; }
   <div class="pu-kg">
     <div class="pu-kt">
       <span class="pu-k"><span class="pu-ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Revenue</span>
-      <span class="pu-v"><small>EGP</small><span data-count="243495">243,495</span></span>
-      <span class="pu-s"><span class="pu-pill pu-g">▲ 12.4%</span>vs prior</span>
+      <span class="pu-v"><small>EGP</small><span data-count="253113" data-pu-t="p_rev">253,113</span></span>
+      <span class="pu-s"><span class="pu-pill pu-g" data-pu-t="p_drev" data-pu-tone="rev">▲ 12.4%</span><span data-pu-t="vs">vs previous 7 days</span></span>
       <div class="pu-viz"><svg class="pu-spark" viewBox="0 0 120 40" preserveAspectRatio="none" id="pu-rev" data-pu-c="--pu-acc" aria-hidden="true"></svg></div>
     </div>
     <div class="pu-kt" style="--pu-glow:color-mix(in srgb,var(--pu-c2) 20%,transparent)">
       <span class="pu-k"><span class="pu-ki pu-c2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg></span>Revenue ROAS</span>
-      <span class="pu-v"><span data-count="2.37" data-dec="2">2.37</span>x</span>
-      <span class="pu-s"><span class="pu-pill pu-g">▲ 5.7%</span>vs prior</span>
+      <span class="pu-v"><span data-count="2.37" data-dec="2" data-pu-t="p_roas">2.37</span>x</span>
+      <span class="pu-s"><span class="pu-pill pu-g" data-pu-t="p_droas" data-pu-tone="roas">▲ 5.7%</span><span data-pu-t="vs">vs previous 7 days</span></span>
       <div class="pu-viz"><svg class="pu-spark" viewBox="0 0 120 40" preserveAspectRatio="none" id="pu-roas" data-pu-c="--pu-c2" aria-hidden="true"></svg></div>
     </div>
     <div class="pu-kt">
       <span class="pu-k"><span class="pu-ki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>Valid orders</span>
-      <span class="pu-v" data-count="175">175</span>
-      <span class="pu-s">161 web · 14 admin</span>
+      <span class="pu-v" data-count="175" data-pu-t="p_orders">175</span>
+      <span class="pu-s" data-pu-t="p_split">161 web · 14 admin</span>
       <div class="pu-viz"><div class="pu-mbars" id="pu-mbars" aria-hidden="true"></div>
-        <div class="pu-split" aria-hidden="true"><i style="flex:161"></i><i style="flex:14"></i></div></div>
+        <div class="pu-split" aria-hidden="true"><i data-pu-w="web" style="flex:161"></i><i data-pu-w="admin" style="flex:14"></i></div></div>
     </div>
     <div class="pu-kt" style="--pu-glow:color-mix(in srgb,var(--pu-warn) 18%,transparent)">
       <span class="pu-k"><span class="pu-ki pu-wn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg></span>Ad account balance</span>
@@ -1856,9 +1988,9 @@ main { gap: 24px; }
         <div class="panel att-panel rise" style="animation-delay:.26s">
           <div class="ph"><span class="eyebrow">Needs attention <span class="cnt">3</span></span></div>
           <div class="att">
-            <div class="att-row"><span class="att-ic g"><svg><use href="#i-up"/></svg></span><div><b>Revenue grew 12.4%</b><small>EGP 243,495 vs the 7 days before</small></div><button class="link" type="button" data-go="sales" data-focus="recentPanel">Review orders<svg><use href="#i-arrow"/></svg></button></div>
-            <div class="att-row"><span class="att-ic g"><svg><use href="#i-up"/></svg></span><div><b>Revenue ROAS improved 5.7%</b><small>Now 2.37x on Meta spend</small></div><button class="link" type="button" data-go="ads" data-focus="healthPanel">Review Meta<svg><use href="#i-arrow"/></svg></button></div>
-            <div class="att-row"><span class="att-ic w"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V4M17 9l-5-5-5 5"/></svg></span><div><b>Meta spend up 6.3%</b><small>EGP 106,807 this week</small></div><button class="link" type="button" data-go="ads" data-focus="fundPanel">Review Meta<svg><use href="#i-arrow"/></svg></button></div>
+            <div class="att-row" data-per-flip="rev"><span class="att-ic g" data-per-cls="rev:g:w"><svg><use href="#i-up"/></svg></span><div><b data-per-t="at_rev">Revenue grew 12.4%</b><small data-per-t="at_revsub">EGP 253,113 vs the previous 7 days</small></div><button class="link" type="button" data-go="sales" data-focus="recentPanel">Review orders<svg><use href="#i-arrow"/></svg></button></div>
+            <div class="att-row" data-per-flip="roas"><span class="att-ic g" data-per-cls="roas:g:w"><svg><use href="#i-up"/></svg></span><div><b data-per-t="at_roas">Revenue ROAS improved 5.7%</b><small data-per-t="at_roassub2">Now 2.37x on Meta spend</small></div><button class="link" type="button" data-go="ads" data-focus="healthPanel">Review Meta<svg><use href="#i-arrow"/></svg></button></div>
+            <div class="att-row" data-per-flip="spend"><span class="att-ic w" data-per-cls="spend:g:w"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V4M17 9l-5-5-5 5"/></svg></span><div><b data-per-t="at_spend">Meta spend up 6.3%</b><small data-per-t="at_spendsub">EGP 106,807 this week</small></div><button class="link" type="button" data-go="ads" data-focus="fundPanel">Review Meta<svg><use href="#i-arrow"/></svg></button></div>
           </div>
           <a class="ask" href="#" id="askBar"><span class="o"><svg><use href="#i-spark"/></svg></span><span class="t">Ask the assistant<br><small>“Why is profit ROAS below break-even?”</small></span><svg><use href="#i-arrow"/></svg></a>
         </div>
@@ -1886,24 +2018,24 @@ main { gap: 24px; }
 <div class="acc" data-acc>
   <div class="acc-panel">
     <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg></span>Sales vs spend</h2>
-      <div class="acc-legend"><span><i style="background:var(--acc-sales)"></i>Revenue</span><span><i style="background:var(--acc-spend)"></i>Meta spend<b>EGP 106,807</b></span></div></div>
+      <div class="acc-legend"><span><i style="background:var(--acc-sales)"></i>Revenue</span><span><i style="background:var(--acc-spend)"></i>Meta spend<b data-acc-t="acc_spend">EGP 106,807</b></span></div></div>
     <div class="acc-chart-box"><svg class="acc-chart" id="acc-chart" viewBox="0 0 640 230" role="img" aria-label="Daily revenue and Meta spend"></svg></div>
     <div class="acc-cstats">
-      <div><span>Best day · Thu, Oct 29</span><b><small>EGP</small>39,600</b></div>
-      <div><span>Avg. revenue / day</span><b><small>EGP</small>34,785</b></div>
-      <div><span>Avg. spend / day</span><b><small>EGP</small>15,258</b></div>
+      <div><span data-acc-t="acc_c1">Best day · Thu, Oct 29</span><b><small>EGP</small><span data-acc-t="acc_v1">39,600</span></b></div>
+      <div><span data-acc-t="acc_c2">Avg. revenue / day</span><b><small>EGP</small><span data-acc-t="acc_v2">36,159</span></b></div>
+      <div><span data-acc-t="acc_c3">Avg. spend / day</span><b><small>EGP</small><span data-acc-t="acc_v3">15,258</span></b></div>
     </div>
   </div>
   <div class="acc-panel">
     <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 1 .7V2l-1 .7-3-2-3 2-3-2-3 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Where the money went</h2></div>
-    <div class="acc-flowbar"><span style="flex:72897;background:#7c3fc1"></span><span style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
+    <div class="acc-flowbar"><span data-acc-w="f_cogs" style="flex:72897;background:#7c3fc1"></span><span data-acc-w="f_sp" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="f_comm" style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="f_fees" style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="f_profit" style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
     <div class="acc-receipt">
-      <div class="acc-rrow"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue<small>after cancellations</small></span><span class="acc-am">EGP 253,113</span></div>
-      <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg">− 72,897</span></div>
-      <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend</span><span class="acc-am acc-neg">− 106,807</span></div>
-      <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg">− 17,718</span></div>
-      <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees</span><span class="acc-am acc-neg">− 9,020</span></div>
-      <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Net profit</span><span class="acc-am">EGP 46,671</span></div>
+      <div class="acc-rrow"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue<small>after cancellations</small></span><span class="acc-am" data-acc-t="acc_rev">EGP 253,113</span></div>
+      <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg" data-acc-t="acc_cogs">− 72,897</span></div>
+      <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend</span><span class="acc-am acc-neg" data-acc-t="acc_sp">− 106,807</span></div>
+      <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg" data-acc-t="acc_comm">− 17,718</span></div>
+      <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees</span><span class="acc-am acc-neg" data-acc-t="acc_fees">− 9,020</span></div>
+      <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Net profit</span><span class="acc-am" data-acc-t="acc_profit">EGP 46,671</span></div>
     </div>
   </div>
 </div>
@@ -2340,7 +2472,7 @@ main { gap: 24px; }
 <!-- === NAV v2 END (dock + sheets) === -->
 <script>
 /* === NAV v2 START === */
-/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.pv2SetPeriod + "nv2:period",
+/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
    theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
    (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go). */
 (function(){
@@ -2348,7 +2480,7 @@ main { gap: 24px; }
   var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
-  var PERIODS=[['today','Today','Oct 31','Today'],['yesterday','Yesterday','Oct 30','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–31','Month']];
+  var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
   var period='7d';
   /* ---- popovers ---- */
   var openPop=null;
@@ -2364,7 +2496,7 @@ main { gap: 24px; }
   }
   paintDates();
   top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
-    if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
+    if(window.perSet)window.perSet(period);else if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
   /* ---- theme ---- */
   var key=top.dataset.nv2Store||'theme',html=document.documentElement;
   function syncTheme(){var dark=html.dataset.theme!=='light';$$('[data-nv2-theme]').forEach(function(b){b.setAttribute('aria-checked',String(dark))})}
@@ -2492,6 +2624,19 @@ main { gap: 24px; }
   function boot(){[].slice.call(document.querySelectorAll('.cv2')).forEach(init)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
+/* cv2SetPeriod(P) — round 7: re-fills every card, front and back, from ONE period of the page's dataset.
+   P.t    strings by key:  [data-cv2-t="key"] gets the text; [data-cv2-aria="key"] gets the aria-label;
+                           a [data-cv2-count] on the same element is re-targeted so a later count-up lands on it
+   P.tone "g" | "w" by key: [data-cv2-tone="key"] gets cv2-gc (good, green) or cv2-wc (watch, amber)
+   P.w    numbers by key:  [data-cv2-w="key"] gets that width in %
+   Keys the dataset does not carry are left as they are (cash, transit and stuck are point-in-time). */
+window.cv2SetPeriod=function(P){
+  if(!P)return;var all=function(s){return [].slice.call(document.querySelectorAll('.cv2 '+s))};
+  all('[data-cv2-t]').forEach(function(e){var v=P.t&&P.t[e.getAttribute('data-cv2-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-cv2-count'))e.setAttribute('data-cv2-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-cv2-aria]').forEach(function(e){var v=P.t&&P.t[e.getAttribute('data-cv2-aria')];if(v!=null)e.setAttribute('aria-label',v)});
+  all('[data-cv2-tone]').forEach(function(e){var v=P.tone&&P.tone[e.getAttribute('data-cv2-tone')];if(!v)return;e.classList.toggle('cv2-gc',v==='g');e.classList.toggle('cv2-wc',v!=='g')});
+  all('[data-cv2-w]').forEach(function(e){var v=P.w&&P.w[e.getAttribute('data-cv2-w')];if(v!=null)e.style.width=v+'%'});
+};
 /* === CARDS v2 END === */
 
 </script>
@@ -2520,11 +2665,11 @@ main { gap: 24px; }
   ];
   /* period dataset: units sold, returns and shipped per product (order as PR); sizes are spread from the 7-day mix */
   var pv2Periods={
-    today:    {label:'Today',range:'Oct 31',days:1,phrase:'today',u:[4,3,5,0,2,0],r:[0,0,0,0,0,0],s:[4,3,5,0,2,0],pm:[1,1,1,1,1,1]},
-    yesterday:{label:'Yesterday',range:'Oct 30',days:1,phrase:'yesterday',u:[3,5,4,3,0,2],r:[0,1,0,1,0,0],s:[3,6,4,4,0,2],pm:[1,1,1,1,1,1]},
+    today:    {label:'Today',range:'Oct 30',days:1,phrase:'today',u:[4,3,5,0,2,0],r:[0,0,0,0,0,0],s:[4,3,5,0,2,0],pm:[1,1,1,1,1,1]},
+    yesterday:{label:'Yesterday',range:'Oct 29',days:1,phrase:'yesterday',u:[3,5,4,3,0,2],r:[0,1,0,1,0,0],s:[3,6,4,4,0,2],pm:[1,1,1,1,1,1]},
     '7d':     {label:'Last 7 days',range:'Oct 24–30',days:7,phrase:'last 7 days',u:[27,30,24,23,15,12],r:[3,6,2,5,1,1],s:[32,36,25,27,17,14],pm:[1,1,1,1,1,1]},
     '30d':    {label:'Last 30 days',range:'Oct 1–30',days:30,phrase:'last 30 days',u:[116,118,101,92,66,46],r:[13,23,8,20,4,4],s:[138,140,105,108,75,53],pm:[1.01,.985,1,1.02,.99,1]},
-    month:    {label:'This month',range:'Oct 1–31',days:31,phrase:'this month',u:[120,121,106,92,68,46],r:[13,23,8,20,4,4],s:[142,143,110,108,77,53],pm:[1.01,.985,1,1.02,.99,1]}
+    month:    {label:'This month',range:'Oct 1–30',days:30,phrase:'this month',u:[116,118,101,92,66,46],r:[13,23,8,20,4,4],s:[138,140,105,108,75,53],pm:[1.01,.985,1,1.02,.99,1]}
   };
   /* largest-remainder split of total over the weights; always adds up exactly */
   function spread(total,w){var W=sum(w)||1,raw=w.map(function(x){return x/W*total}),out=raw.map(Math.floor),left=total-sum(out);
@@ -2976,52 +3121,85 @@ main { gap: 24px; }
 </script>
 <script>
 /* === PULSE v1 START === */
-/* Store pulse (from V): sparklines + daily order bars. Same data and drawing as V's pulse. */
+/* Store pulse (from V): sparklines + daily order bars. Same drawing as V's pulse.
+   puSetPeriod(P) — round 7: re-fills the pulse from one period of the page's dataset (Periods v1): [data-pu-t="key"]
+   gets P.t[key], [data-pu-tone="key"] pu-g / pu-w from P.tone, [data-pu-w="key"] flex from P.w, and the revenue / ROAS
+   sparklines + order bars are redrawn from P.s (7 days, 30 days, or eight three-hour slots for one day). The balance
+   sparkline is point-in-time and stays. Without a dataset the pulse draws its own 7 days. */
 (function(){
-  var rev=[31200,33400,35100,36800,34200,39600,33195],sp=[14200,14900,15300,16100,15400,16800,14107],od=[22,24,25,27,24,29,24];
+  var rev=[32640,34915,36702,38388,35551,39600,35317],sp=[14186,14912,15327,16093,15384,16796,14109],od=[22,24,25,27,24,29,24];
   var FILL={"--pu-acc":.42,"--pu-c2":.2,"--pu-warn":.25};
   function spark(id,vals){
     var el=document.getElementById(id);if(!el)return;
-    var v=el.getAttribute('data-pu-c'),c='var('+v+')',g='pu-g-'+id;
-    var mn=Math.min.apply(0,vals),mx=Math.max.apply(0,vals);
-    var d=vals.map(function(x,i){return (i?'L':'M')+(i*120/6).toFixed(1)+' '+(36-(x-mn)/(mx-mn)*30).toFixed(1)}).join(' ');
+    var v=el.getAttribute('data-pu-c'),c='var('+v+')',g='pu-g-'+id,n=vals.length-1||1;
+    var mn=Math.min.apply(0,vals),mx=Math.max.apply(0,vals),rg=(mx-mn)||1;
+    var d=vals.map(function(x,i){return (i?'L':'M')+(i*120/n).toFixed(1)+' '+(36-(x-mn)/rg*30).toFixed(1)}).join(' ');
     el.innerHTML='<defs><linearGradient id="'+g+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:'+c+'" stop-opacity="'+FILL[v]+'"/><stop offset="1" style="stop-color:'+c+'" stop-opacity="0"/></linearGradient></defs>'+
       '<path class="pu-fade" d="'+d+' L120 40 L0 40Z" fill="url(#'+g+')"/>'+
       '<path class="pu-draw" d="'+d+'" fill="none" style="stroke:'+c+'" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>';
   }
-  spark('pu-rev',rev);
-  spark('pu-roas',rev.map(function(x,i){return x/sp[i]}));
+  function bars(o){
+    var mb=document.getElementById('pu-mbars'),omx=Math.max.apply(0,o);if(!mb)return;
+    mb.style.gridTemplateColumns='repeat('+o.length+',minmax(0,1fr))';mb.style.gap=o.length>10?'2px':'';
+    mb.innerHTML=o.map(function(x,i){return '<i class="'+(x===omx?'pu-hi':'')+'" style="height:'+(x/omx*100)+'%;animation-delay:'+(.2+i*.35/o.length).toFixed(3)+'s"></i>'}).join('');
+  }
+  function draw(s){spark('pu-rev',s.rev);spark('pu-roas',s.roas);bars(s.od)}
+  var P0=window.PER&&PER[PER.cur];
+  draw(P0?P0.s:{rev:rev,od:od,roas:rev.map(function(x,i){return x/sp[i]})});
   var bal=[],b=96400;for(var i=6;i>=0;i--){bal.unshift(b);b+=sp[i]}
   spark('pu-bal',bal);
-  var mb=document.getElementById('pu-mbars'),omx=Math.max.apply(0,od);
-  if(mb)mb.innerHTML=od.map(function(x,i){return '<i class="'+(x===omx?'pu-hi':'')+'" style="height:'+(x/omx*100)+'%;animation-delay:'+(.2+i*.05)+'s"></i>'}).join('');
+  window.puSetPeriod=function(P){
+    if(!P)return;var all=function(s){return [].slice.call(document.querySelectorAll('.pu '+s))};
+    all('[data-pu-t]').forEach(function(e){var v=P.t[e.getAttribute('data-pu-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+    all('[data-pu-tone]').forEach(function(e){var g=P.tone[e.getAttribute('data-pu-tone')]==='g';e.classList.toggle('pu-g',g);e.classList.toggle('pu-w',!g)});
+    all('[data-pu-w]').forEach(function(e){var v=P.w[e.getAttribute('data-pu-w')];if(v!=null)e.style.flex=String(v)});
+    draw(P.s);
+  };
 })();
-/* === PULSE v1 END === */
+/*=== PULSE v1 END === */
 </script>
 <script>
 /* === ACCOUNT v1 START === */
-/* Account v1: AB's Sales vs spend chart, drawn once into #acc-chart */
+/* Account v1: AB's Sales vs spend chart, drawn into #acc-chart.
+   accSetPeriod(P) — round 7: re-fills the Account tab from one period of the page's dataset (Periods v1):
+   [data-acc-t="key"] gets P.t[key] (legend, the three figures under the chart, every receipt row), [data-acc-w="key"]
+   the flow bar's flex from P.w, and the chart is redrawn from P.s — one point per day (7 or 30), or eight three-hour
+   slots for a one-day period. The receipt always adds up: net revenue − four costs = net profit (periods.md). */
 (function(){
   var el=document.getElementById('acc-chart');if(!el)return;
-  var rev=[31200,33400,35100,36800,34200,39600,33195],sp=[14200,14900,15300,16100,15400,16800,14107];
-  var days=["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"];
-  var sm=innerWidth<560,W=sm?360:640,H=sm?220:230;
-  el.setAttribute("viewBox","0 0 "+W+" "+H);
-  var L=sm?30:40,R=12,T=30,B=24,max=45000;
-  var x=function(i){return L+i*(W-L-R)/6},y=function(v){return T+(1-v/max)*(H-T-B)};
-  var line=function(a){return a.map(function(v,i){return (i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)}).join(" ")};
-  var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".42"/><stop offset="1" stop-color="#a275e0" stop-opacity="0"/></linearGradient>'
-    +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".22"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient></defs>';
-  [0,15000,30000,45000].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v?"3 4":"")+'"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+(v/1000)+'k</text>'});
-  days.forEach(function(d,i){g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="middle">'+(sm?d.slice(4):d)+'</text>'});
-  g+='<path class="acc-fade" d="'+line(rev)+' L'+x(6)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-revG)"/>';
-  g+='<path class="acc-fade" d="'+line(sp)+' L'+x(6)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-spG)"/>';
-  g+='<path class="acc-draw" d="'+line(sp)+'" fill="none" style="stroke:var(--acc-spend)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-  g+='<path class="acc-draw" d="'+line(rev)+'" fill="none" style="stroke:var(--acc-sales)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
-  rev.forEach(function(v,i){g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i===5?4.5:3)+'" style="fill:'+(i===5?"var(--acc-sales)":"var(--acc-chart-dot)")+';stroke:var(--acc-sales)" stroke-width="2"/>'});
-  el.innerHTML=g;
+  var DEF={x:["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],rev:[32640,34915,36702,38388,35551,39600,35317],sp:[14186,14912,15327,16093,15384,16796,14109],unit:"day"};
+  function nice(v){var s=v/3,p=Math.pow(10,Math.floor(Math.log10(s))),m=s/p;return (m<=1?1:m<=1.5?1.5:m<=2?2:m<=2.5?2.5:m<=3?3:m<=4?4:m<=5?5:10)*p}
+  function k(v){return (v>=1000?+(v/1000).toFixed(1):v)+(v>=1000?'k':'')}
+  function draw(S){
+    var rev=S.rev,sp=S.sp,n=rev.length,last=n-1||1,hour=S.unit==="hour";
+    var sm=innerWidth<560,W=sm?360:640,H=sm?220:230;
+    el.setAttribute("viewBox","0 0 "+W+" "+H);
+    el.setAttribute("aria-label",(hour?"Revenue and Meta spend by three-hour slot":"Daily revenue and Meta spend")+", "+S.x[0]+" to "+S.x[n-1]);
+    var L=sm?30:40,R=12,T=30,B=24,step=nice(Math.max.apply(0,rev.concat(sp))*1.04),max=step*3;
+    var x=function(i){return L+i*(W-L-R)/last},y=function(v){return T+(1-v/max)*(H-T-B)};
+    var line=function(a){return a.map(function(v,i){return (i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)}).join(" ")};
+    var best=rev.indexOf(Math.max.apply(0,rev)),every=n>8?(sm?10:5):1;
+    var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".42"/><stop offset="1" stop-color="#a275e0" stop-opacity="0"/></linearGradient>'
+      +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".22"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient></defs>';
+    [0,step,step*2,max].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v?"3 4":"")+'"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+k(v)+'</text>'});
+    S.x.forEach(function(d,i){if(i%every&&i!==n-1)return;if(n>8&&i!==n-1&&n-1-i<every*.6)return;g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(n>8&&i===n-1?'end':'middle')+'">'+(sm&&!hour&&n<=8?d.slice(4):d)+'</text>'});
+    g+='<path class="acc-fade" d="'+line(rev)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-revG)"/>';
+    g+='<path class="acc-fade" d="'+line(sp)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-spG)"/>';
+    g+='<path class="acc-draw" d="'+line(sp)+'" fill="none" style="stroke:var(--acc-spend)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+    g+='<path class="acc-draw" d="'+line(rev)+'" fill="none" style="stroke:var(--acc-sales)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
+    rev.forEach(function(v,i){if(n>8&&i!==best)return;g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i===best?4.5:3)+'" style="fill:'+(i===best?"var(--acc-sales)":"var(--acc-chart-dot)")+';stroke:var(--acc-sales)" stroke-width="2"/>'});
+    el.innerHTML=g;
+  }
+  var P0=window.PER&&PER[PER.cur];
+  draw(P0?P0.s:DEF);
+  window.accSetPeriod=function(P){
+    if(!P)return;var all=function(s){return [].slice.call(document.querySelectorAll('.acc '+s))};
+    all('[data-acc-t]').forEach(function(e){var v=P.t[e.getAttribute('data-acc-t')];if(v!=null)e.textContent=v});
+    all('[data-acc-w]').forEach(function(e){var v=P.w[e.getAttribute('data-acc-w')];if(v!=null)e.style.flex=String(v)});
+    draw(P.s);
+  };
 })();
-/* === ACCOUNT v1 END === */
+/*=== ACCOUNT v1 END === */
 </script>
 <script>
 /* === ACTIONS v1 START === */
