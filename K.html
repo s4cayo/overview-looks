@@ -435,6 +435,45 @@ main { min-width: 0; padding: 18px 28px 48px 12px; display: flex; flex-direction
 @keyframes cv2grow{from{transform:scaleX(0)}}
 @media (max-width:600px){.cv2{--cv2-cw:min(440px,80vw)}.cv2-stage{height:calc(var(--cv2-cw) / 1.586 + 52px)}}
 @media (prefers-reduced-motion:reduce){.cv2 *,.cv2 *::before,.cv2 *::after{animation:none!important;transition-duration:.001s!important;transition-delay:0s!important}}
+/* ---- round 8 ---- */
+/* §1 Sales front: the profit already in the owner's pocket, with what is still on its way under it */
+.cv2-way{font-size:max(12px,calc(var(--cv2-u) * 2.7));line-height:1.2;margin-top:calc(var(--cv2-u) * 1.4);color:var(--cv2-fg-g);font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+/* §3 Sales front tiles: one value line ("21 · EGP 29.8k"), the label under it, one baseline (widths as before: equal
+   widths cut "Cancelled & returned" short on every screen) */
+.cv2-sales .cv2-tiles.cv2-st{grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr) minmax(0,1fr)}
+.cv2-st > div{justify-content:flex-start;gap:calc(var(--cv2-u) * .4)}
+.cv2-st .cv2-tv small.cv2-sv{font-size:max(12px,.64em);font-weight:500;opacity:.78;margin:0;letter-spacing:0}
+.cv2-st .cv2-tk{opacity:.72}
+@media (max-width:600px){.cv2-sales .cv2-tiles.cv2-st{grid-template-columns:minmax(0,1.58fr) minmax(0,.72fr) minmax(0,1fr)}.cv2-sales .cv2-st > div{padding:6px}}
+/* §2 Ads marks: Meta and TikTok as plain marks — no tile behind either, same centre line, TikTok a little quieter */
+.cv2-ads .cv2-fn.cv2-meta{width:auto;height:auto;background:none;box-shadow:none;border-radius:0;color:#f3e6c8}
+.cv2 .cv2-meta svg.cv2-mk{width:calc(var(--cv2-u) * 6.6);height:auto}
+.cv2-ads .cv2-top .cv2-ttw{margin-left:calc(var(--cv2-u) * .4);opacity:.6}
+.cv2 .cv2-ttw svg.cv2-tt{width:max(13px,calc(var(--cv2-u) * 4.3));height:max(13px,calc(var(--cv2-u) * 4.3))}
+.cv2-bh .cv2-fn.cv2-meta{width:auto;height:auto}
+.cv2-bh .cv2-fn.cv2-meta svg.cv2-mk{width:28px}
+/* §4 Ads back: stats / two ad rows in one quiet box / runway sentence + bar, Ads Manager on the right under it */
+.cv2-ads .cv2-adl{gap:0;padding:0 14px;border-radius:12px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
+.cv2-ads .cv2-adr{grid-template-columns:30px minmax(0,1fr) 104px 92px;column-gap:12px;padding:6px 0;border-radius:0;background:none;box-shadow:none;border-top:1px solid var(--cv2-hair)}
+.cv2-ads .cv2-adr:first-child{border-top:0}
+.cv2-ads .cv2-ret{text-align:right}
+.cv2-ads .cv2-d3 > div{padding:6px 14px}
+.cv2-ads .cv2-act{justify-self:end;padding:0;border-radius:0;background:none;box-shadow:none;font-size:12.5px;font-weight:600;color:var(--c);white-space:nowrap}
+.cv2-ads .cv2-run{grid-template-areas:"t t" "r r" "s b";row-gap:6px;padding-left:14px}
+.cv2-ads .cv2-runs{min-height:0}
+.cv2-narrow.cv2-ads .cv2-adl,.cv2-narrow .cv2-ads .cv2-adl{padding:0 8px;border-radius:10px}
+.cv2-narrow.cv2-ads .cv2-adr,.cv2-narrow .cv2-ads .cv2-adr{grid-template-columns:20px minmax(0,1fr) auto 40px;column-gap:8px;padding:4px 0}
+.cv2-narrow.cv2-ads .cv2-act,.cv2-narrow .cv2-ads .cv2-act{font-size:12px}
+.cv2-narrow.cv2-ads .cv2-run,.cv2-narrow .cv2-ads .cv2-run{padding-left:8px;row-gap:3px}
+/* 360-379px phones: every back keeps the front's 181.6px height — tighter spacing only, no content change (the round-7
+   backs ran 8-20px over at 360px: Sales' break-even line wrapped under the button, Ads and Courier were cut at the bottom) */
+@media (max-width:379px){
+  .cv2-narrow .cv2-bk{padding:8px 13px 8px;gap:4px}
+  .cv2-narrow .cv2-lnk svg.cv2-i{display:none}
+  .cv2-narrow.cv2-ads .cv2-adr,.cv2-narrow .cv2-ads .cv2-adr{padding:2px 0}
+  .cv2-narrow .cv2-cr{padding:2px 0}
+  .cv2-narrow.cv2-sales .cv2-d3 > div{padding:2px 8px}
+}
 /* === CARDS v2 END === */
 
 
@@ -861,6 +900,43 @@ main { min-width: 0; padding: 18px 28px 48px 12px; display: flex; flex-direction
 .nv2-sug .nv2-i{color:var(--nv2-acc)}
 .nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
 @media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
+   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
+   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
+   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+.nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
+  background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
+.nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
+.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
+.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
+  -webkit-tap-highlight-color:transparent;transition:background .2s}
+.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
+.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
+@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
+.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
+.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
+.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
+.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
+.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
+.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
+.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
+.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
+.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
+.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
+.nv2-mh .nv2-i{width:16px;height:16px}
+.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
+.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+.nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nv2-mbtn .nv2-i{width:22px;height:22px}
+.nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.nv2-mask .nv2-i{width:20px;height:20px}
+html.nv2-lock,html.nv2-lock body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
 
 
@@ -1453,125 +1529,52 @@ body:has(.pv2-scrim.pv2-on) .tabbar { z-index: 0; }
 }
 
 /* === ADS v2 START === */
-/* ADS v2 — "Is Meta paying you back?" section at the top of the Ads tab. Root class is av2-root (V and J already use a bare .av2 for avatars). Self-contained: every class,
-   id and variable is prefixed av2-. Theme: light when <html data-theme="light"> (or .av2-root[data-av2-theme="light"]).
-   Plain and professional: figures, simple horizontal bars, one table-like list — no decoration.
-   Layout: 2 columns when the block is ≥ 760px wide (container query), stacked below that.
+/* ADS v2 — "Is Meta paying you back?" at the top of the Ads tab. Round 8: every box is a receipt in the Receipt v1 layout
+   (the same font, sizes and row structure as ACCOUNT v1's "Where the money went"): dot · label + sub-label · amount,
+   hairlines, one highlighted total, one plain note under it. Root is .av2-root.rc (V and J use a bare .av2 for avatars).
+   Theme: light when <html data-theme="light">. 2 columns when the block is ≥ 760px wide (container query), stacked below.
    Live hook: window.av2Update({spend,sales,rr,ppp,cpo,aov}) — null restores the actual figures. */
-.av2-root{
-  --av2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-  --av2-bg:#111017; --av2-line:rgba(255,255,255,.1); --av2-box:rgba(255,255,255,.025); --av2-boxl:rgba(255,255,255,.08);
-  --av2-fg:#eceaf3; --av2-mut:#a7a3b6; --av2-gold:#f0d48e; --av2-ad:#d8b46c; --av2-cost:#8f8aa3;
-  --av2-good:#45d09a; --av2-warn:#f2b64f; --av2-bad:#f06571; --av2-track:rgba(255,255,255,.07); --av2-tick:rgba(236,234,243,.75);
-  --av2-pg:#7fe8bd; --av2-pgbg:rgba(69,208,154,.13); --av2-pw:#f6d58c; --av2-pwbg:rgba(242,182,79,.13); --av2-pb:#ff9d8f; --av2-pbbg:rgba(240,101,113,.14);
-  --av2-lnk:#c4a3f2; --av2-acc:#a275e0;
-  container-type:inline-size;position:relative;margin:0 0 18px;padding:24px 26px 26px;border-radius:20px;
-  background:var(--av2-bg);border:1px solid var(--av2-line);color:var(--av2-fg);
-  font-family:var(--av2-font);font-size:14px;line-height:1.4;font-weight:400;letter-spacing:normal;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;min-width:0;overflow:hidden}
-[data-theme="light"] .av2-root,.av2-root[data-av2-theme="light"]{
-  --av2-bg:#fff; --av2-line:rgba(20,10,40,.1); --av2-box:#fbfafd; --av2-boxl:rgba(20,10,40,.08);
-  --av2-fg:#17141f; --av2-mut:#5f5b6c; --av2-gold:#8a5a12; --av2-ad:#b88a3c; --av2-cost:#9d98ad;
-  --av2-good:#0b7a50; --av2-warn:#8a5600; --av2-bad:#b42a1f; --av2-track:rgba(20,10,40,.07); --av2-tick:rgba(23,20,31,.65);
-  --av2-pg:#0b5a3a; --av2-pgbg:#d5f5e6; --av2-pw:#6b4300; --av2-pwbg:#fbeac2; --av2-pb:#8a1d12; --av2-pbbg:#ffdcd6;
-  --av2-lnk:#550da6; --av2-acc:#7c3fc1}
-.av2-root *,.av2-root *::before,.av2-root *::after{box-sizing:border-box;margin:0;padding:0;font-family:inherit}
+.av2-root{--av2-panel:rgba(17,12,30,.62);--av2-lnk:#c4a3f2;
+  container-type:inline-size;position:relative;margin:0 0 18px;padding:22px 24px 24px;border-radius:22px;
+  background:var(--av2-panel);border:1px solid var(--rc-line);overflow:hidden}
+:root[data-theme="light"] .av2-root{--av2-panel:#fff;--av2-lnk:#550da6;box-shadow:0 1px 2px rgba(24,16,40,.05),0 10px 28px -18px rgba(40,20,80,.22)}
+.av2-root *{margin:0;padding:0}
 :where(.av2-root) a{color:inherit;text-decoration:none}
-.av2-root svg.av2-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.av2-root :focus-visible{outline:2px solid var(--av2-acc);outline-offset:3px;border-radius:8px}
+.av2-root svg.av2-i{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.av2-root :focus-visible{outline:2px solid var(--rc-acc);outline-offset:3px;border-radius:8px}
 
 /* header */
-.av2-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;margin-bottom:20px}
+.av2-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-bottom:18px}
 .av2-hl{min-width:0;max-width:720px}
-.av2-kick{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--av2-mut)}
-.av2-title{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
-.av2-sub{font-size:14.5px;line-height:1.5;color:var(--av2-mut);margin-top:6px}
-.av2-sub b{color:var(--av2-fg);font-weight:600}
-.av2-be{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-.av2-be span{font-size:12.5px;color:var(--av2-mut);white-space:nowrap}
-.av2-be b{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.av2-kick{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--rc-fg-3)}
+.av2-title{display:block;font:600 20px/1.25 var(--rc-f);letter-spacing:-.015em;margin-top:4px}
+.av2-sub{font-size:14px;line-height:1.5;color:var(--rc-fg-2);margin-top:4px}
+.av2-sub b{color:var(--rc-fg);font-weight:600}
+.av2-be{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.av2-be span{font-size:11.5px;color:var(--rc-fg-3);white-space:nowrap}
+.av2-be b{font:400 20px var(--rc-f);color:var(--rc-gold)}
 
-/* grid of boxes */
-.av2-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
-@container (min-width:760px){.av2-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}}
-.av2-box{display:flex;flex-direction:column;gap:16px;padding:20px 22px;border-radius:14px;background:var(--av2-box);border:1px solid var(--av2-boxl);min-width:0}
-.av2-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;color:var(--av2-mut)}
-.av2-h .av2-hr{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-weight:500}
-.av2-tick{display:inline-block;width:0;height:13px;border-left:2px dashed var(--av2-tick)}
-.av2-lab{font-size:13px;color:var(--av2-mut);line-height:1.35}
-.av2-num{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
-.av2-num small{font-size:13px;font-weight:500;letter-spacing:0;color:var(--av2-mut);margin-right:4px}
-.av2-good{color:var(--av2-good)} .av2-warn{color:var(--av2-warn)} .av2-bad{color:var(--av2-bad)}
+/* four receipts */
+.av2-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+@container (min-width:760px){.av2-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px 28px}}
+.av2-box{min-width:0}
+.av2-box .rc-receipt{justify-content:flex-start}
+.av2-root .rc-flow{position:relative;overflow:visible}
+.av2-root .rc-flow > i:first-child{border-radius:99px 0 0 99px}
+.av2-root .rc-flow > i:last-of-type{border-radius:0 99px 99px 0}
+.av2-root .rc-flow em{position:absolute;top:-3px;bottom:-3px;width:0;border-left:2px solid var(--rc-fg)}
+.av2-go .rc-flow > i{animation:av2grow .8s cubic-bezier(.2,.8,.2,1) .15s both;transform-origin:left}
+.av2-root .rc-row.rc-total .rc-am.av2-bad{color:var(--rc-bad)}
+.av2-root .rc-row.rc-total .rc-am.av2-warn{color:var(--rc-warn)}
+.av2-act{cursor:pointer}
+.av2-lnk{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--av2-lnk)}
+.av2-act:hover .av2-lnk svg.av2-i{transform:translateX(3px)}
+.av2-act:hover .rc-nm{color:var(--rc-fg)}
 
-/* what EGP 1 earns: three figures, then one bar that splits the sales */
-.av2-flow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
-.av2-node{display:flex;flex-direction:column;gap:4px;min-width:0}
-.av2-node .av2-num.av2-hero{color:var(--av2-gold)}
-.av2-root svg.av2-arw{width:18px;height:18px;color:var(--av2-mut)}
-.av2-split{display:flex;flex-direction:column;gap:8px}
-.av2-sbar{position:relative;display:flex;height:12px;border-radius:6px;background:var(--av2-track);overflow:visible}
-.av2-sbar i{display:block;height:100%;transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.av2-sbar i:first-child{border-radius:6px 0 0 6px}
-.av2-sbar i:last-of-type{border-radius:0 6px 6px 0}
-.av2-sbar em{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px solid var(--av2-fg);transition:left .5s cubic-bezier(.2,.8,.2,1)}
-.av2-leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--av2-mut)}
-.av2-leg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.av2-leg b{color:var(--av2-fg);font-weight:600}
-.av2-sw{width:10px;height:10px;border-radius:3px;flex:none}
-.av2-note{font-size:14px;line-height:1.5;color:var(--av2-mut);padding-top:14px;border-top:1px solid var(--av2-boxl)}
-.av2-note b{color:var(--av2-fg);font-weight:600}
-
-/* campaigns, per EGP 1 — a tidy list: name · bar · value · verdict */
-.av2-camps{display:flex;flex-direction:column}
-.av2-camp{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px 14px;padding:12px 0;border-top:1px solid var(--av2-boxl)}
-.av2-camp:first-child{border-top:0;padding-top:0}
-.av2-ct{min-width:0;display:flex;flex-direction:column;gap:2px}
-.av2-ct b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.av2-ct .av2-lab{font-size:12.5px}
-.av2-cv{font-size:18px;font-weight:600;white-space:nowrap;text-align:right;min-width:64px}
-.av2-pill{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;text-align:center;min-width:112px}
-.av2-pg{color:var(--av2-pg);background:var(--av2-pgbg)} .av2-pw{color:var(--av2-pw);background:var(--av2-pwbg)} .av2-pb{color:var(--av2-pb);background:var(--av2-pbbg)}
-.av2-camp .av2-bar{grid-column:1 / -1}
-.av2-bar{position:relative;display:block;height:8px;border-radius:4px;background:var(--av2-track);min-width:0}
-.av2-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;transform-origin:left;transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.av2-go .av2-bar i,.av2-go .av2-sbar i{animation:av2grow .8s cubic-bezier(.2,.8,.2,1) .15s both}
-.av2-bar em{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--av2-tick)}
-.av2-foot{font-size:13.5px;line-height:1.5;color:var(--av2-mut)}
-.av2-foot b{color:var(--av2-fg);font-weight:600}
-
-/* cost per order vs average order */
-.av2-cmp{display:flex;flex-direction:column;gap:14px}
-.av2-cmpr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:6px 14px}
-.av2-cmpr .av2-bar{grid-column:1 / -1}
-.av2-cmpr .av2-num{font-size:22px}
-.av2-share{font-size:14.5px;line-height:1.5;color:var(--av2-mut);padding-top:14px;border-top:1px solid var(--av2-boxl)}
-.av2-share b{color:var(--av2-fg);font-weight:600}
-.av2-share .av2-num{font-size:22px;margin-right:6px;color:var(--av2-warn)}
-
-/* actions */
-.av2-acts{display:flex;flex-direction:column}
-.av2-act{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--av2-boxl)}
-.av2-act:first-child{border-top:0;padding-top:0}
-.av2-act > span{flex:1;min-width:0;font-size:15px;line-height:1.45}
-.av2-act > span b{font-weight:600}
-.av2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;color:var(--av2-lnk);flex:none}
-.av2-root .av2-act > b svg.av2-i{width:15px;height:15px;transition:transform .2s}
-.av2-act:hover > b svg.av2-i{transform:translateX(3px)}
-.av2-act:hover > span{color:var(--av2-fg)}
-
-/* phone / narrow */
 @container (max-width:560px){
-  .av2-title{font-size:21px}
-  .av2-box{padding:16px}
-  .av2-flow{gap:6px}
-  .av2-num{font-size:20px}
-  .av2-node .av2-num{line-height:1.25}
-  .av2-node .av2-num small{display:block;font-size:12px;line-height:1.3;margin:0 0 2px}
-  .av2-root svg.av2-arw{width:14px;height:14px}
-  .av2-camp{grid-template-columns:minmax(0,1fr) auto}
-  .av2-pill{grid-column:1 / -1;justify-self:start;min-width:0;grid-row:3}
-  .av2-cv{font-size:17px}
-  .av2-act{flex-direction:column;align-items:flex-start;gap:6px}
   .av2-be{align-items:flex-start}
+  .av2-title{font-size:19px}
+  .av2-act .rc-nm small{white-space:normal}
 }
 @media (max-width:600px){.av2-root{padding:18px 14px 16px;border-radius:18px}}
 @keyframes av2grow{from{transform:scaleX(0)}}
@@ -1579,59 +1582,41 @@ body:has(.pv2-scrim.pv2-on) .tabbar { z-index: 0; }
 /* === ADS v2 END === */
 /* === CITIES v2 START === */
 /* Cities v2 — "Sales by location": ranked rows grouped by country (Egypt first), no map — a map has to zoom out the
-   moment an order comes from abroad. Each row: rank · country code · city + country · orders · share · bar.
-   Tap a row → revenue from there, average order, top product. Egypt shows its top 5; the rest fold behind a toggle.
-   Self-contained, ct2- prefix, neutral styling (sits inside each look's own panel). THEME: light when
-   <html data-theme="light"> or .ct2[data-ct2-theme="light"]. Rendered by the CITIES v2 script from CT2_DATA. */
-.ct2{--ct2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-  --ct2-fg:#eceaf3;--ct2-mut:#a7a3b6;--ct2-line:rgba(255,255,255,.08);--ct2-soft:rgba(255,255,255,.04);--ct2-track:rgba(255,255,255,.07);
-  --ct2-bar:linear-gradient(90deg,#7c3fc1,#b48cf0);--ct2-bar2:linear-gradient(90deg,#5d5872,#8f8aa3);--ct2-acc:#a275e0;--ct2-cc:#d7c6f5;--ct2-ccbg:rgba(162,117,224,.14);
-  container-type:inline-size;font-family:var(--ct2-font);color:var(--ct2-fg);font-variant-numeric:tabular-nums;min-width:0}
-[data-theme="light"] .ct2,.ct2[data-ct2-theme="light"]{--ct2-fg:#17141f;--ct2-mut:#5f5b6c;--ct2-line:rgba(20,10,40,.09);--ct2-soft:rgba(85,13,166,.04);--ct2-track:rgba(20,10,40,.07);
-  --ct2-bar:linear-gradient(90deg,#550da6,#8f5ad6);--ct2-bar2:linear-gradient(90deg,#8d88a0,#b3aec4);--ct2-acc:#550da6;--ct2-cc:#4a0b93;--ct2-ccbg:rgba(85,13,166,.08)}
-.ct2 *,.ct2 *::before,.ct2 *::after{box-sizing:border-box;margin:0;padding:0}
-:where(.ct2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
-.ct2 :focus-visible{outline:2px solid var(--ct2-acc);outline-offset:2px;border-radius:8px}
-.ct2-sum{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--ct2-line);font-size:13.5px;color:var(--ct2-mut)}
-.ct2-sum b{color:var(--ct2-fg);font-weight:600}
-.ct2-sum span{font-size:12.5px}
-.ct2-grp{display:flex;align-items:center;gap:10px;padding:16px 0 6px;font-size:13px;color:var(--ct2-mut)}
-.ct2-grp b{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ct2-fg)}
-.ct2-grp em{margin-left:auto;font-style:normal;white-space:nowrap}
-.ct2-cc{display:inline-grid;place-items:center;min-width:30px;height:20px;padding:0 5px;border-radius:5px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--ct2-cc);background:var(--ct2-ccbg);flex:none}
-.ct2-row{border-radius:12px;transition:background .2s}
-.ct2-row:hover,.ct2-row.ct2-open{background:var(--ct2-soft)}
-.ct2-r{display:grid;grid-template-columns:22px 30px minmax(0,1fr) auto 52px;align-items:center;column-gap:10px;row-gap:7px;width:100%;padding:10px 8px;border-radius:12px}
-.ct2-n{font-size:12.5px;font-weight:600;color:var(--ct2-mut);text-align:center}
-.ct2-nm{min-width:0;display:flex;align-items:baseline;gap:7px}
-.ct2-nm b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.ct2-nm small{font-size:12.5px;color:var(--ct2-mut);white-space:nowrap}
-.ct2-o{font-size:14px;font-weight:600;white-space:nowrap;text-align:right}
-.ct2-o small{font-size:12.5px;font-weight:400;color:var(--ct2-mut)}
-.ct2-p{font-size:14px;color:var(--ct2-mut);text-align:right;white-space:nowrap}
-.ct2-bar{grid-column:3 / -1;height:6px;border-radius:99px;background:var(--ct2-track);overflow:hidden}
-.ct2-bar i{display:block;height:100%;border-radius:99px;background:var(--ct2-bar);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.ct2-other .ct2-bar i{background:var(--ct2-bar2)}
-.ct2-pre .ct2-bar i{transform:scaleX(0)}
-.ct2-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}
-.ct2-open .ct2-det{grid-template-rows:1fr}
-.ct2-det > div{overflow:hidden}
-.ct2-dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;padding:2px 8px 14px 72px}
-.ct2-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.ct2-dl span{font-size:12.5px;color:var(--ct2-mut)}
-.ct2-dl b{font-size:15px;font-weight:600;line-height:1.3}
-.ct2-dl b small{font-size:12px;font-weight:500;color:var(--ct2-mut);margin-right:3px}
-.ct2-more[hidden]{display:none}
-.ct2-tog{display:inline-flex;align-items:center;gap:6px;margin:6px 0 0 8px;padding:7px 12px;border-radius:99px;font-size:13px;font-weight:600;color:var(--ct2-acc);box-shadow:inset 0 0 0 1px var(--ct2-line)}
-.ct2-tog:hover{box-shadow:inset 0 0 0 1px var(--ct2-acc)}
-.ct2-tog svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
-.ct2-tog[aria-expanded="true"] svg{transform:rotate(180deg)}
-@container (max-width:520px){
-  .ct2-r{grid-template-columns:20px 30px minmax(0,1fr) auto 46px;column-gap:8px;padding:10px 4px}
-  .ct2-nm{flex-direction:column;gap:0}
-  .ct2-o small{display:none}
-  .ct2-dl{grid-template-columns:repeat(2,minmax(0,1fr));padding:2px 8px 14px 62px}
-  .ct2-dl div:last-child{grid-column:1 / -1}
+   moment an order comes from abroad. Round 8: one receipt in the Receipt v1 layout (ACCOUNT v1's "Where the money
+   went"): dot · city + country · orders with the share under it, one thin bar per row, hairlines, country rows as
+   section lines, one highlighted total. Tap a row → revenue from there, average order, top product. Egypt shows its
+   top 5; the rest fold behind a toggle. The root is .ct2.rc (Receipt v1 supplies font, colours and row metrics).
+   Rendered by the CITIES v2 script from CT2_DATA. */
+.ct2{container-type:inline-size;display:flex;flex-direction:column;gap:12px}
+.ct2 :where(button){font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit;margin:0;padding:0}
+.ct2 :focus-visible{outline:2px solid var(--rc-acc);outline-offset:2px;border-radius:8px}
+.ct2 .ct2-sum{display:flex;align-items:baseline;justify-content:space-between;gap:6px 14px;flex-wrap:wrap;margin:0;font-size:13px;color:var(--rc-fg-2)}
+.ct2 .ct2-sum b{color:var(--rc-fg);font-weight:600}
+.ct2 .ct2-grp{display:flex;align-items:baseline;gap:10px;padding:12px 0 6px;border-top:1px solid var(--rc-line-hi);font-size:11.5px;color:var(--rc-fg-3)}
+.ct2 .ct2-grp:first-child{border-top:0;padding-top:8px}
+.ct2 .ct2-grp b{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--rc-fg-2)}
+.ct2 .ct2-grp em{margin-left:auto;font-style:normal;white-space:nowrap}
+.ct2 .ct2-row{border-top:1px solid var(--rc-line)}
+.ct2 .ct2-grp + .ct2-row{border-top:0}
+.ct2 .ct2-more[hidden]{display:none}
+.ct2 .ct2-r.rc-row{width:100%;border-top:0;row-gap:7px}
+.ct2 .ct2-r:hover .rc-nm,.ct2 .ct2-open .rc-nm{color:var(--rc-acc)}
+.ct2 .ct2-r .rc-am{line-height:1.3}
+.ct2 .ct2-r .rc-am small{font-size:11.5px}
+.ct2 .ct2-pre .rc-bar b,.ct2.ct2-pre .rc-bar b{transform:scaleX(0)!important}
+.ct2 .ct2-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}
+.ct2 .ct2-open .ct2-det{grid-template-rows:1fr}
+.ct2 .ct2-det > div{overflow:hidden}
+.ct2 .ct2-dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 14px;padding:0 0 12px 22px}
+.ct2 .ct2-dl div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.ct2 .ct2-dl span{font-size:11.5px;color:var(--rc-fg-3)}
+.ct2 .ct2-dl b{font-size:14px;font-weight:400;line-height:1.35}
+.ct2 .ct2-tog{display:inline-flex;align-items:center;gap:6px;padding:9px 0 11px 22px;border-top:1px solid var(--rc-line);width:100%;font-size:13px;font-weight:600;color:var(--rc-acc)}
+.ct2 .ct2-tog svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.ct2 .ct2-tog[aria-expanded="true"] svg{transform:rotate(180deg)}
+@container (max-width:420px){
+  .ct2 .ct2-dl{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ct2 .ct2-dl div:last-child{grid-column:1 / -1}
 }
 @media (prefers-reduced-motion:reduce){.ct2 *{transition:none!important}}
 /* === CITIES v2 END === */
@@ -1823,6 +1808,40 @@ main { gap: 24px; }
   .acc .acc-cstats b{font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){.acc *,.acc *::before,.acc *::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}}
+/* round 8: "Where the money went" shows BOTH profits — Estimated (all orders) and Collected (in your pocket) — as a
+   two-way switch whose buttons carry both totals, the chosen receipt under it (both receipts share one grid cell, so
+   switching never changes the height), and the difference highlighted underneath: "Still on the way". The chart beside
+   it fills the panel's height instead of floating in it. */
+.acc{--acc-warn:#f2c46d;--acc-way:rgba(216,196,154,.08);--acc-way-line:rgba(216,196,154,.3)}
+:root[data-theme="light"] .acc{--acc-warn:#8a5600;--acc-way:rgba(154,123,60,.07);--acc-way-line:rgba(154,123,60,.32)}
+.acc .acc-chart-box{position:relative;aspect-ratio:640 / 230}
+.acc .acc-chart-box .acc-chart{position:absolute;inset:0;height:100%}
+@media (max-width:559px){.acc .acc-chart-box{aspect-ratio:360 / 220}}
+/* the two columns need room for the receipts: below 1180px the panels stack (was 1020px) */
+@media (max-width:1180px){.acc{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:1181px){.acc .acc-chart-box{aspect-ratio:auto;min-height:230px}}
+.acc .acc-sw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--acc-line);margin:0}
+.acc .acc-swb{appearance:none;-webkit-appearance:none;border:0;margin:0;font:inherit;color:var(--acc-fg-2);background:none;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  padding:8px 12px;border-radius:11px;text-align:left;min-width:0;transition:background .2s,color .2s,box-shadow .2s}
+.acc .acc-swb span{font:600 13px var(--acc-f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.acc .acc-swb span small{font-weight:400;font-size:11.5px;color:var(--acc-fg-3);margin-left:6px}
+.acc .acc-swb b{font:400 18px var(--acc-f);color:var(--acc-fg);white-space:nowrap}
+.acc .acc-swb[aria-selected="true"]{background:var(--acc-cell);color:var(--acc-fg);box-shadow:0 0 0 1px var(--acc-line-hi)}
+.acc .acc-swb:hover{color:var(--acc-fg)}
+.acc .acc-swb:focus-visible{outline:2px solid var(--acc-sales);outline-offset:2px}
+.acc .acc-views{display:grid;flex:1;min-height:0}
+.acc .acc-view{grid-area:1 / 1;display:flex;flex-direction:column;gap:12px;min-width:0;transition:opacity .2s}
+.acc .acc-view.acc-off{visibility:hidden;opacity:0}
+.acc .acc-why{margin:0;font-size:12.5px;line-height:1.45;color:var(--acc-fg-2)}
+.acc .acc-rrow.acc-sub{border-top:1px solid var(--acc-line-hi)}
+.acc .acc-rrow.acc-sub .acc-nm{font-weight:600}
+.acc .acc-rrow.acc-total .acc-am.acc-loss,.acc .acc-swb b.acc-loss{color:var(--acc-warn)}
+.acc .acc-way{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 16px;border-radius:14px;background:var(--acc-way);border:1px solid var(--acc-way-line);margin:0}
+.acc .acc-way i{width:10px;height:10px;border-radius:3px;background:var(--acc-gold)}
+.acc .acc-way .acc-nm{font-weight:600}
+.acc .acc-way .acc-nm small{display:block;font-weight:400;font-size:11.5px;color:var(--acc-fg-3)}
+.acc .acc-way .acc-am{font:400 18px var(--acc-f);color:var(--acc-gold);white-space:nowrap;text-align:right}
+@media (max-width:860px){.acc .acc-swb{padding:7px 10px}.acc .acc-swb b{font-size:16px}.acc .acc-swb span small{display:block;margin:0}.acc .acc-way{padding:10px 14px}}
 /* === ACCOUNT v1 END === */
 /* === ACTIONS v1 START === */
 /* Actions v1 = J's round quick actions, self-contained (qa1- prefix). J's colours as tokens; light when <html data-theme="light">. */
@@ -1855,6 +1874,54 @@ main { gap: 24px; }
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
 /* === PERIODS v1 END === */
+/* === RECEIPT v1 START === */
+/* Receipt v1 (round 8) — the layout system of ACCOUNT v1's "Where the money went", for every list that reads like
+   a statement (Sales by location, the Ads section, Order health, Returns). Same font, sizes and colours as ACCOUNT v1:
+   Inter Tight 14px/1.45 · heading 600 15px with a 28px icon tile · rows = dot · label + 11.5px sub-label ·
+   right-aligned amount 400 14px, hairline dividers · one highlighted total (600 14.5px label, 20px amount).
+   Self-contained (rc- prefix); light when <html data-theme="light">. */
+.rc{--rc-line:rgba(255,255,255,.08);--rc-line-hi:rgba(255,255,255,.14);--rc-fg:#efeaf7;--rc-fg-2:#b0a7c3;--rc-fg-3:#7d7491;
+  --rc-gold:#d8c49a;--rc-ok:#5fd3a8;--rc-warn:#f2c46d;--rc-bad:#f08a80;--rc-acc:#a275e0;--rc-track:rgba(255,255,255,.07);
+  --rc-box:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+  --rc-f:"Inter Tight","Segoe UI",system-ui,sans-serif;
+  font:14px/1.45 var(--rc-f);color:var(--rc-fg);letter-spacing:normal;text-transform:none;text-align:start;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;min-width:0}
+:root[data-theme="light"] .rc{--rc-line:rgba(24,16,40,.085);--rc-line-hi:rgba(24,16,40,.15);--rc-fg:#1b1428;--rc-fg-2:#554e66;--rc-fg-3:#878197;
+  --rc-gold:#9a7b3c;--rc-ok:#18946a;--rc-warn:#8a5600;--rc-bad:#b42a1f;--rc-acc:#550da6;--rc-track:rgba(24,16,40,.07);--rc-box:#fbfafd}
+.rc *,.rc *::before,.rc *::after{box-sizing:border-box}
+.rc .rc-ph{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;min-height:28px;flex-wrap:wrap;margin:0;padding:0}
+.rc .rc-h2{display:flex;align-items:center;gap:10px;margin:0;padding:0;font:600 15px var(--rc-f);letter-spacing:-.005em;color:inherit;text-transform:none}
+.rc .rc-hic{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;color:var(--rc-gold);background:rgba(216,196,154,.08);border:1px solid rgba(216,196,154,.16);flex:none;margin:0}
+.rc .rc-hic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rc .rc-tag{font-size:12px;color:var(--rc-fg-3);white-space:nowrap}
+.rc .rc-receipt{background:var(--rc-box);border:1px dashed var(--rc-line-hi);border-radius:14px;padding:4px 16px;display:flex;flex-direction:column;margin:0}
+.rc .rc-row{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:10px 0;border-top:1px solid var(--rc-line);margin:0}
+.rc .rc-row:first-child{border-top:0}
+.rc .rc-row > i{width:10px;height:10px;border-radius:3px;background:var(--c,var(--rc-fg-3))}
+.rc .rc-nm{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.rc .rc-nm small{display:block;font-size:11.5px;color:var(--rc-fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc .rc-am{font:400 14px var(--rc-f);white-space:nowrap;text-align:right}
+.rc .rc-am small{display:block;font-size:11.5px;color:var(--rc-fg-3)}
+.rc .rc-am.rc-neg{color:var(--rc-fg-2)}
+.rc .rc-am.rc-bad{color:var(--rc-bad)} .rc .rc-am.rc-warn{color:var(--rc-warn)} .rc .rc-am.rc-ok{color:var(--rc-ok)}
+.rc .rc-row.rc-sub{border-top:1px solid var(--rc-line-hi)}
+.rc .rc-row.rc-sub .rc-nm{font-weight:600}
+.rc .rc-row.rc-total{border-top:1px solid var(--rc-line-hi);padding:12px 0 10px}
+.rc .rc-row.rc-total .rc-nm{font:600 14.5px var(--rc-f)}
+.rc .rc-row.rc-total .rc-am{font-size:20px;color:var(--rc-ok)}
+.rc .rc-row.rc-total .rc-am.rc-plain{color:inherit}
+.rc .rc-row.rc-total .rc-am.rc-warn{color:var(--rc-warn)} .rc .rc-row.rc-total .rc-am.rc-bad{color:var(--rc-bad)}
+.rc .rc-bar{grid-column:2 / -1;display:block;height:3px;border-radius:99px;background:var(--rc-track);overflow:hidden}
+.rc .rc-bar b{display:block;height:100%;border-radius:99px;background:var(--c,var(--rc-acc));transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.rc .rc-flow{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;margin:0;background:var(--rc-track)}
+.rc .rc-flow > i{display:block;height:100%;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.rc .rc-note{margin:0;font-size:12.5px;line-height:1.45;color:var(--rc-fg-2)}
+.rc .rc-note b{font-weight:600;color:var(--rc-fg)}
+.rc .rc-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+@media (max-width:860px){.rc .rc-receipt{padding:2px 14px}}
+@media (prefers-reduced-motion:reduce){.rc *{transition:none!important;animation:none!important}}
+.rc .rc-row.rc-total .rc-nm small{font-weight:400}
+/* === RECEIPT v1 END === */
 </style>
 <script>
 /* === PERIODS v1 START === */
@@ -1872,8 +1939,9 @@ main { gap: 24px; }
      data-per-w="key"             style.flex = P.w[key]
    and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
    PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
-   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md). */
-window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you keep EGP 7,597. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you keep EGP 6,748. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md), extended in round 8 by
+   scratchpad/edits8/profit.py with estimated vs collected profit (profit-model.md). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you collected EGP −7,449, plus EGP 15,046 on the way. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 40,739","est_grossn":"27 orders, before discounts","est_disc":"− 1,172","est_canc":"− 2,800","est_cancn":"7.4% · 2 orders","est_ret":"− 1,450","est_retn":"1 order","est_net":"EGP 35,317","est_profit":"EGP 7,597","est_tab":"EGP 7,597","col_net":"EGP 35,317","col_held":"− 24,000","col_cash":"EGP 11,317","col_cogs":"− 3,174","col_ads":"− 14,109","col_comm":"− 792","col_fees":"− 691","col_feesn":"19 delivered parcels","col_profit":"EGP −7,449","col_tab":"EGP −7,449","way":"EGP 15,046","way_line":"EGP 15,046 still on the way","s_col":"−7,449","s_way":"15,046","s_failk":"EGP 4,250","s_col_tone":"w"},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w","col":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"c_cogs":3174,"c_ads":14109,"c_comm":792,"c_fees":691,"c_profit":0,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you collected EGP −3,774, plus EGP 10,522 on the way. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 45,164","est_grossn":"32 orders, before discounts","est_disc":"− 1,314","est_canc":"− 2,800","est_cancn":"6.2% · 2 orders","est_ret":"− 1,450","est_retn":"1 order","est_net":"EGP 39,600","est_profit":"EGP 6,748","est_tab":"EGP 6,748","col_net":"EGP 39,600","col_held":"− 17,500","col_cash":"EGP 22,100","col_cogs":"− 6,580","col_ads":"− 16,796","col_comm":"− 1,547","col_fees":"− 951","col_feesn":"21 delivered parcels","col_profit":"EGP −3,774","col_tab":"EGP −3,774","way":"EGP 10,522","way_line":"EGP 10,522 still on the way","s_col":"−3,774","s_way":"10,522","s_failk":"EGP 4,250","s_col_tone":"w"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"c_cogs":6580,"c_ads":16796,"c_comm":1547,"c_fees":951,"c_profit":0,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you collected EGP 11,687, plus EGP 34,984 on the way. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 291,263","est_grossn":"196 orders, before discounts","est_disc":"− 8,400","est_canc":"− 19,600","est_cancn":"7.1% · 14 orders","est_ret":"− 10,150","est_retn":"7 orders","est_net":"EGP 253,113","est_profit":"EGP 46,671","est_tab":"EGP 46,671","col_net":"EGP 253,113","col_held":"− 58,300","col_cash":"EGP 194,813","col_cogs":"− 56,107","col_ads":"− 106,807","col_comm":"− 13,637","col_fees":"− 6,575","col_feesn":"121 delivered parcels","col_profit":"EGP 11,687","col_tab":"EGP 11,687","way":"EGP 34,984","way_line":"EGP 34,984 still on the way","s_col":"11,687","s_way":"34,984","s_failk":"EGP 29.8k","s_col_tone":"g"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"c_cogs":56107,"c_ads":106807,"c_comm":13637,"c_fees":6575,"c_profit":11687,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you collected EGP 165,991, plus EGP 33,393 on the way. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 1,191,285","est_grossn":"802 orders, before discounts","est_disc":"− 34,435","est_canc":"− 74,200","est_cancn":"6.6% · 53 orders","est_ret":"− 44,950","est_retn":"31 orders","est_net":"EGP 1,037,700","est_profit":"EGP 199,384","est_tab":"EGP 199,384","col_net":"EGP 1,037,700","col_held":"− 58,300","col_cash":"EGP 979,400","col_cogs":"− 274,274","col_ads":"− 438,100","col_comm":"− 68,558","col_fees":"− 32,477","col_feesn":"498 delivered parcels","col_profit":"EGP 165,991","col_tab":"EGP 165,991","way":"EGP 33,393","way_line":"EGP 33,393 still on the way","s_col":"165,991","s_way":"33,393","s_failk":"EGP 119.2k","s_col_tone":"g"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"c_cogs":274274,"c_ads":438100,"c_comm":68558,"c_fees":32477,"c_profit":165991,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you collected EGP 165,991, plus EGP 33,393 on the way. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 1,191,285","est_grossn":"802 orders, before discounts","est_disc":"− 34,435","est_canc":"− 74,200","est_cancn":"6.6% · 53 orders","est_ret":"− 44,950","est_retn":"31 orders","est_net":"EGP 1,037,700","est_profit":"EGP 199,384","est_tab":"EGP 199,384","col_net":"EGP 1,037,700","col_held":"− 58,300","col_cash":"EGP 979,400","col_cogs":"− 274,274","col_ads":"− 438,100","col_comm":"− 68,558","col_fees":"− 32,477","col_feesn":"498 delivered parcels","col_profit":"EGP 165,991","col_tab":"EGP 165,991","way":"EGP 33,393","way_line":"EGP 33,393 still on the way","s_col":"165,991","s_way":"33,393","s_failk":"EGP 119.2k","s_col_tone":"g"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"c_cogs":274274,"c_ads":438100,"c_comm":68558,"c_fees":32477,"c_profit":165991,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
 PER.cur='7d';
 window.perSet=function(key){
   var P=PER[key];if(!P)return;PER.cur=key;
@@ -1979,17 +2047,17 @@ window.perSet=function(key){
 
     <!-- SALES -->
     <div class="cv2-card cv2-sales" data-key="sales" tabindex="0" role="group" aria-roledescription="card" aria-expanded="false"
-         data-cv2-aria="s_aria" aria-label="Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.">
+         data-cv2-aria="s_aria" aria-label="Sales card. Profit you collected EGP 11,687, plus EGP 34,984 on the way. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
           <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671" data-cv2-t="s_profit">46,671</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
-          <div class="cv2-tiles"><div><span class="cv2-tk"><span class="cv2-tw">Cancelled &amp; returned</span><span class="cv2-tn">Cancelled/returned</span></span><span class="cv2-tv cv2-wcol"><span data-cv2-t="s_fail">21</span><small class="cv2-un">orders</small></span><span class="cv2-tq" data-cv2-t="s_failv">EGP 29,750</span></div><div><span class="cv2-tk">Orders</span><span class="cv2-tv" data-cv2-t="s_orders">175</span></div><div><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span><span class="cv2-tv"><small>EGP</small><span data-cv2-t="s_aov">1,446</span></span></div></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Profit you collected</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="11687" data-cv2-t="s_col">11,687</span></div><div class="cv2-way">+ EGP <span data-cv2-t="s_way">34,984</span> on the way</div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
+          <div class="cv2-tiles cv2-st"><div><span class="cv2-tv"><span class="cv2-wc" data-cv2-t="s_fail">21</span><small class="cv2-sv"> · <span data-cv2-t="s_failk">EGP 29.8k</span></small></span><span class="cv2-tk"><span class="cv2-tw">Cancelled &amp; returned</span><span class="cv2-tn">Cancelled/returned</span></span></div><div><span class="cv2-tv" data-cv2-t="s_orders">175</span><span class="cv2-tk">Orders</span></div><div><span class="cv2-tv"><small>EGP</small><span data-cv2-t="s_aov">1,446</span></span><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
           <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt" data-cv2-t="s_title">This week vs last week</div><div class="cv2-bs" data-cv2-t="s_sub">Oct 24–30 compared with Oct 17–23</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-d3"><div><span class="cv2-lab">Profit</span><span class="cv2-big cv2-gc" data-cv2-t="s_dprofit" data-cv2-tone="profit">▲ 8.1%</span></div><div><span class="cv2-lab">Orders</span><span class="cv2-big cv2-gc" data-cv2-t="s_dorders" data-cv2-tone="orders">▲ 9.4%</span></div><div><span class="cv2-lab">Revenue</span><span class="cv2-big cv2-gc" data-cv2-t="s_drev" data-cv2-tone="rev">▲ 12.4%</span></div></div>
+          <div class="cv2-d3"><div><span class="cv2-lab">Est. profit</span><span class="cv2-big cv2-gc" data-cv2-t="s_dprofit" data-cv2-tone="profit">▲ 8.1%</span></div><div><span class="cv2-lab">Orders</span><span class="cv2-big cv2-gc" data-cv2-t="s_dorders" data-cv2-tone="orders">▲ 9.4%</span></div><div><span class="cv2-lab">Revenue</span><span class="cv2-big cv2-gc" data-cv2-t="s_drev" data-cv2-tone="rev">▲ 12.4%</span></div></div>
           <div class="cv2-rows">
             <div class="cv2-row"><span class="cv2-lab" data-cv2-t="s_bestlab">Best day</span><b><span data-cv2-t="s_besta">Thu, Oct 29</span> <small>·</small> <span data-cv2-t="s_bestb">EGP 39,600</span></b></div>
             <div class="cv2-row cv2-wrow"><span class="cv2-lab">Profit margin</span><b><span data-cv2-t="s_margin">18.4%</span> <small>of net sales</small></b></div>
@@ -2017,13 +2085,13 @@ window.perSet=function(key){
           <div class="cv2-d3 cv2-wide3"><div><span class="cv2-lab">Purchases</span><span class="cv2-big" data-cv2-t="a_purch">203</span></div><div><span class="cv2-lab">Reach</span><span class="cv2-big" data-cv2-t="a_reach">420,500</span></div><div><span class="cv2-lab">Clicks</span><span class="cv2-big" data-cv2-t="a_clicks">17,800</span></div></div>
           <div class="cv2-k3n"><span><b data-cv2-t="a_purch">203</b> purchases</span><span><b data-cv2-t="a_reachk">420.5k</b> reach</span><span><b data-cv2-t="a_clicksk">17.8k</b> clicks</span></div>
           <div class="cv2-adl">
-            <div class="cv2-adr" style="--c:var(--cv2-fg-g)"><span class="cv2-lab"><span class="cv2-wide">Best ad</span><span class="cv2-nar">Best</span></span><span class="cv2-th cv2-thv" aria-hidden="true"></span><b class="cv2-cn">Satin Edit · Video 3</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_best">4.10</b></span><span class="cv2-act">Scale</span></div>
-            <div class="cv2-adr" style="--c:var(--cv2-fg-b)"><span class="cv2-lab"><span class="cv2-wide">Worst ad</span><span class="cv2-nar">Worst</span></span><span class="cv2-th cv2-thc" aria-hidden="true"></span><b class="cv2-cn">Retarget · Carousel 2</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_worst">0.90</b></span><span class="cv2-act">Pause</span></div>
+            <div class="cv2-adr" style="--c:var(--cv2-fg-g)"><span class="cv2-th cv2-thv" aria-hidden="true"></span><b class="cv2-cn">Satin Edit · Video 3</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_best">4.10</b></span><span class="cv2-act"><span class="cv2-wide">Best · </span>scale</span></div>
+            <div class="cv2-adr" style="--c:var(--cv2-fg-b)"><span class="cv2-th cv2-thc" aria-hidden="true"></span><b class="cv2-cn">Retarget · Carousel 2</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b data-cv2-t="a_worst">0.90</b></span><span class="cv2-act"><span class="cv2-wide">Worst · </span>pause</span></div>
           </div>
           <div class="cv2-run">
-            <span class="cv2-p cv2-runt">Balance <b>EGP 96,400</b> lasts until <b class="cv2-wc">Fri, Nov 6</b></span>
+            <span class="cv2-p cv2-runt">Balance <b>EGP 96,400</b> lasts until <b class="cv2-wc">Fri, Nov 6</b><span class="cv2-mut cv2-wide"> · about EGP 15,258 a day</span></span>
             <span class="cv2-runbar" role="img" aria-label="Ad balance runs out on Fri, Nov 6"><i></i></span>
-            <span class="cv2-fp cv2-runs">at about EGP 15,258 a day</span>
+            <span class="cv2-fp cv2-runs"><span class="cv2-nar">about EGP 15,258 a day</span></span>
             <a class="cv2-lnk" href="#" data-cv2-go="ads">Ads Manager <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div></div>
@@ -2146,17 +2214,45 @@ window.perSet=function(key){
       <div><span data-acc-t="acc_c3">Avg. spend / day</span><b><small>EGP</small><span data-acc-t="acc_v3">15,258</span></b></div>
     </div>
   </div>
-  <div class="acc-panel">
+  <div class="acc-panel acc-money">
     <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 1 .7V2l-1 .7-3-2-3 2-3-2-3 2z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>Where the money went</h2></div>
-    <div class="acc-flowbar"><span data-acc-w="f_cogs" style="flex:72897;background:#7c3fc1"></span><span data-acc-w="f_sp" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="f_comm" style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="f_fees" style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="f_profit" style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
-    <div class="acc-receipt">
-      <div class="acc-rrow"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue<small>after cancellations</small></span><span class="acc-am" data-acc-t="acc_rev">EGP 253,113</span></div>
-      <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg" data-acc-t="acc_cogs">− 72,897</span></div>
-      <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend</span><span class="acc-am acc-neg" data-acc-t="acc_sp">− 106,807</span></div>
-      <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg" data-acc-t="acc_comm">− 17,718</span></div>
-      <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees</span><span class="acc-am acc-neg" data-acc-t="acc_fees">− 9,020</span></div>
-      <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Net profit</span><span class="acc-am" data-acc-t="acc_profit">EGP 46,671</span></div>
+    <div class="acc-sw" role="tablist" aria-label="Which profit">
+      <button type="button" class="acc-swb" role="tab" id="acc-tab-est" aria-controls="acc-v-est" aria-selected="false" tabindex="-1" data-acc-view="est"><span>Estimated<small>all orders</small></span><b data-acc-t="est_tab">EGP 46,671</b></button>
+      <button type="button" class="acc-swb" role="tab" id="acc-tab-col" aria-controls="acc-v-col" aria-selected="true" tabindex="0" data-acc-view="col"><span>Collected<small>in your pocket</small></span><b data-acc-t="col_tab" data-acc-tone="col">EGP 11,687</b></button>
     </div>
+    <div class="acc-views">
+      <div class="acc-view acc-off" id="acc-v-est" role="tabpanel" aria-labelledby="acc-tab-est" aria-hidden="true">
+        <p class="acc-why">What lands in your pocket once every order on the way is delivered, after the usual cancellations and returns.</p>
+        <div class="acc-flowbar"><span data-acc-w="f_cogs" style="flex:72897;background:#7c3fc1"></span><span data-acc-w="f_sp" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="f_comm" style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="f_fees" style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="f_profit" style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
+        <div class="acc-receipt">
+          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Ordered<small data-acc-t="est_grossn">196 orders, before discounts</small></span><span class="acc-am" data-acc-t="est_gross">EGP 291,263</span></div>
+          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Discounts</span><span class="acc-am acc-neg" data-acc-t="est_disc">− 8,400</span></div>
+          <div class="acc-rrow"><i style="background:#f06571"></i><span class="acc-nm">Expected cancellations<small data-acc-t="est_cancn">7.1% · 14 orders</small></span><span class="acc-am acc-neg" data-acc-t="est_canc">− 19,600</span></div>
+          <div class="acc-rrow"><i style="background:#f2c46d"></i><span class="acc-nm">Expected returns<small data-acc-t="est_retn">7 orders</small></span><span class="acc-am acc-neg" data-acc-t="est_ret">− 10,150</span></div>
+          <div class="acc-rrow acc-sub"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue</span><span class="acc-am" data-acc-t="acc_rev">EGP 253,113</span></div>
+          <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg" data-acc-t="acc_cogs">− 72,897</span></div>
+          <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend</span><span class="acc-am acc-neg" data-acc-t="acc_sp">− 106,807</span></div>
+          <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg" data-acc-t="acc_comm">− 17,718</span></div>
+          <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees</span><span class="acc-am acc-neg" data-acc-t="acc_fees">− 9,020</span></div>
+          <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Estimated profit</span><span class="acc-am" data-acc-t="acc_profit">EGP 46,671</span></div>
+        </div>
+      </div>
+      <div class="acc-view" id="acc-v-col" role="tabpanel" aria-labelledby="acc-tab-col" aria-hidden="false">
+        <p class="acc-why">Cash Bosta has already paid you, minus everything already spent. Ads are paid upfront, so this runs behind.</p>
+        <div class="acc-flowbar"><span data-acc-w="c_cogs" style="flex:56107;background:#7c3fc1"></span><span data-acc-w="c_ads" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="c_comm" style="flex:13637;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="c_fees" style="flex:6575;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="c_profit" style="flex:11687;background:var(--acc-ok);animation-delay:.4s"></span></div>
+        <div class="acc-receipt">
+          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Net revenue<small>all orders</small></span><span class="acc-am" data-acc-t="col_net">EGP 253,113</span></div>
+          <div class="acc-rrow"><i style="background:#f2c46d"></i><span class="acc-nm">Still with Bosta<small>not paid out yet</small></span><span class="acc-am acc-neg" data-acc-t="col_held">− 58,300</span></div>
+          <div class="acc-rrow acc-sub"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Cash collected</span><span class="acc-am" data-acc-t="col_cash">EGP 194,813</span></div>
+          <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)<small>of the collected orders</small></span><span class="acc-am acc-neg" data-acc-t="col_cogs">− 56,107</span></div>
+          <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Meta spend<small>all of it, paid upfront</small></span><span class="acc-am acc-neg" data-acc-t="col_ads">− 106,807</span></div>
+          <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of the cash</small></span><span class="acc-am acc-neg" data-acc-t="col_comm">− 13,637</span></div>
+          <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees<small data-acc-t="col_feesn">121 delivered parcels</small></span><span class="acc-am acc-neg" data-acc-t="col_fees">− 6,575</span></div>
+          <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Collected profit</span><span class="acc-am" data-acc-t="col_profit" data-acc-tone="col">EGP 11,687</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc-way"><i></i><span class="acc-nm">Still on the way<small>estimated − collected · arrives as Bosta pays, next payout Mon, Nov 2 · EGP 20,300</small></span><span class="acc-am" data-acc-t="way">EGP 34,984</span></div>
   </div>
 </div>
 <!-- === ACCOUNT v1 END === -->
@@ -2168,7 +2264,7 @@ window.perSet=function(key){
       <div class="panel full">
             <div class="ph"><div class="ttl"><span class="h-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><span class="kick">Buyers</span><h2>Buyer cities</h2></div></div><span class="label">Tap a city</span></div>
 <!-- === CITIES v2 START === -->
-<div class="ct2" data-ct2 role="region" aria-label="Sales by location"></div>
+<div class="ct2 rc" data-ct2 role="region" aria-label="Sales by location"></div>
 <!-- === CITIES v2 END === -->
       </div>
       <div class="panel full">
@@ -2181,7 +2277,7 @@ window.perSet=function(key){
     <!-- ADS -->
     <section class="pane" id="p-ads" role="tabpanel" aria-labelledby="t-ads" tabindex="0" hidden>
 <!-- === ADS v2 START === -->
-<section class="av2-root" id="av2" aria-labelledby="av2-title">
+<section class="av2-root rc" id="av2" aria-labelledby="av2-title">
   <div class="av2-hd">
     <div class="av2-hl">
       <span class="av2-kick">Ads · last 7 days</span>
@@ -2192,49 +2288,44 @@ window.perSet=function(key){
   </div>
   <div class="av2-grid">
 
-    <article class="av2-box av2-earn">
-      <h3 class="av2-h">What EGP 1 of ads earns</h3>
-      <div class="av2-flow" role="img" data-av2-flowlabel aria-label="EGP 1 spent brings EGP 2.37 in sales and leaves EGP 0.44 profit">
-        <div class="av2-node"><span class="av2-lab">You spend</span><span class="av2-num"><small>EGP</small>1</span></div>
-        <svg class="av2-i av2-arw" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <div class="av2-node"><span class="av2-lab">Sales back</span><span class="av2-num av2-hero"><small>EGP</small><span data-av2="rr">2.37</span></span></div>
-        <svg class="av2-i av2-arw" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <div class="av2-node"><span class="av2-lab">Profit left</span><span class="av2-num av2-warn" data-av2-pcls><small>EGP</small><span data-av2="ppp">0.44</span></span></div>
+    <article class="av2-box rc-col">
+      <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>What EGP 1 of ads earns</h3></div>
+      <div class="rc-flow" aria-hidden="true"><i data-av2-seg="ad" style="width:42.2%;background:#d8c49a"></i><i data-av2-seg="cost" style="width:39.4%;background:#8a7f9e"></i><i data-av2-seg="pr" style="width:18.4%;background:var(--rc-ok)"></i><em data-av2-salesmark style="display:none"></em></div>
+      <div class="rc-receipt" role="img" data-av2-flowlabel aria-label="EGP 1 spent brings EGP 2.37 in sales and leaves EGP 0.44 profit">
+        <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Sales back<small>for every EGP 1 on Meta</small></span><span class="rc-am">EGP <span data-av2="rr">2.37</span></span></div>
+        <div class="rc-row" style="--c:#d8c49a"><i></i><span class="rc-nm">The ad itself</span><span class="rc-am rc-neg">− 1.00</span></div>
+        <div class="rc-row" style="--c:#8a7f9e"><i></i><span class="rc-nm">Product, commission, Bosta</span><span class="rc-am rc-neg">− <span data-av2="oth">0.93</span></span></div>
+        <div class="rc-row rc-total" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Profit left</span><span class="rc-am av2-warn" data-av2-pcls>EGP <span data-av2="ppp">0.44</span></span></div>
       </div>
-      <div class="av2-split">
-        <div class="av2-sbar" aria-hidden="true"><i data-av2-seg="ad" style="width:42.2%;background:var(--av2-ad)"></i><i data-av2-seg="cost" style="width:39.4%;background:var(--av2-cost)"></i><i data-av2-seg="pr" style="width:18.4%;background:var(--av2-good)"></i><em data-av2-salesmark style="left:100%;display:none"></em></div>
-        <div class="av2-leg"><span><i class="av2-sw" style="background:var(--av2-ad)"></i>Ad spend <b>1.00</b></span><span><i class="av2-sw" style="background:var(--av2-cost)"></i>Product, commission, Bosta <b data-av2="oth">0.93</b></span><span><i class="av2-sw" style="background:var(--av2-good)"></i>Profit <b data-av2="ppp2">0.44</b></span></div>
-      </div>
-      <p class="av2-note" data-av2="note">Break-even is <b>1.65x</b> — you are above it on sales, but profit per pound is thin. Product cost, commission and Bosta eat the rest.</p>
+      <p class="rc-note" data-av2="note">Break-even is <b>1.65x</b> — you are above it on sales, but profit per pound is thin.</p>
     </article>
 
-    <article class="av2-box av2-campbox">
-      <h3 class="av2-h">Campaigns · sales per EGP 1 <span class="av2-hr"><i class="av2-tick"></i>break-even 1.65</span></h3>
-      <div class="av2-camps">
-        <div class="av2-camp"><div class="av2-ct"><b>Satin Edit · Advantage+</b></div><span class="av2-cv">3.40</span><span class="av2-pill av2-pg">Scale</span>
-          <span class="av2-bar"><i style="width:97.1%;background:var(--av2-good)"></i><em style="left:47.1%"></em></span></div>
-        <div class="av2-camp"><div class="av2-ct"><b>Broad · Women 25–44</b><span class="av2-lab">frequency 4.1</span></div><span class="av2-cv">2.10</span><span class="av2-pill av2-pw">Refresh creative</span>
-          <span class="av2-bar"><i style="width:60%;background:var(--av2-warn)"></i><em style="left:47.1%"></em></span></div>
-        <div class="av2-camp"><div class="av2-ct"><b>Retarget · 30 days</b></div><span class="av2-cv av2-bad">1.20</span><span class="av2-pill av2-pb">Cut</span>
-          <span class="av2-bar"><i style="width:34.3%;background:var(--av2-bad)"></i><em style="left:47.1%"></em></span></div>
+    <article class="av2-box rc-col">
+      <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>Campaigns</h3><span class="rc-tag">sales per EGP 1 · break-even 1.65</span></div>
+      <div class="rc-receipt">
+        <div class="rc-row" style="--c:var(--rc-ok)"><i></i><span class="rc-nm">Satin Edit · Advantage+<small>Scale it</small></span><span class="rc-am rc-ok">3.40</span></div>
+        <div class="rc-row" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Broad · Women 25–44<small>Seen 4.1 times · new creative</small></span><span class="rc-am rc-warn">2.10</span></div>
+        <div class="rc-row" style="--c:var(--rc-bad)"><i></i><span class="rc-nm">Retarget · 30 days<small>Below break-even · cut</small></span><span class="rc-am rc-bad">1.20</span></div>
+        <div class="rc-row rc-total" style="--c:#a275e0"><i></i><span class="rc-nm">All campaigns</span><span class="rc-am rc-plain">2.37</span></div>
       </div>
-      <p class="av2-foot"><b>Broad · Women 25–44</b> has reached the same people 4.1 times on average — new creative before more budget.</p>
+      <p class="rc-note"><b>Broad · Women 25–44</b> reaches the same people 4.1 times — new creative before more budget.</p>
     </article>
 
-    <article class="av2-box av2-cpobox">
-      <h3 class="av2-h">Cost per order vs average order</h3>
-      <div class="av2-cmp">
-        <div class="av2-cmpr"><span class="av2-lab">Ads cost per order</span><span class="av2-num av2-warn"><small>EGP</small><span data-av2="cpo">526</span></span><span class="av2-bar"><i data-av2-cpobar style="width:37.8%;background:var(--av2-ad)"></i></span></div>
-        <div class="av2-cmpr"><span class="av2-lab">Average order</span><span class="av2-num"><small>EGP</small><span data-av2="aov">1,391</span></span><span class="av2-bar"><i style="width:100%;background:var(--av2-acc)"></i></span></div>
+    <article class="av2-box rc-col">
+      <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>Cost per order vs average order</h3></div>
+      <div class="rc-receipt">
+        <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Average order</span><span class="rc-am">EGP <span data-av2="aov">1,391</span></span></div>
+        <div class="rc-row" style="--c:#d8c49a"><i></i><span class="rc-nm">Ads cost per order<small>paid to Meta</small></span><span class="rc-am rc-neg">EGP <span data-av2="cpo">526</span></span></div>
+        <div class="rc-row rc-total" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Share paid back to Meta<small>of each order's value</small></span><span class="rc-am rc-warn"><span data-av2="share">38</span>%</span></div>
       </div>
-      <p class="av2-share"><span class="av2-num"><span data-av2="share">38</span>%</span>Each order pays <b data-av2="share2">38%</b> of its value back to Meta.</p>
+      <p class="rc-note">Each order pays <b data-av2="share2">38%</b> of its value back to Meta.</p>
     </article>
 
-    <article class="av2-box av2-dobox">
-      <h3 class="av2-h">What to do next</h3>
-      <div class="av2-acts">
-        <a class="av2-act" href="#" data-av2-go="adsmanager"><span>Move <b>EGP 5,000/day</b> from Retarget to Satin Edit</span><b>Open Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
-        <a class="av2-act" href="#" data-av2-go="topup"><span>Ad balance lasts <b>~6 days</b> (EGP 96,400)</span><b>Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+    <article class="av2-box rc-col">
+      <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>What to do next</h3></div>
+      <div class="rc-receipt">
+        <a class="rc-row av2-act" href="#" data-av2-go="adsmanager" style="--c:var(--rc-ok)"><i></i><span class="rc-nm">Move EGP 5,000/day to Satin Edit<small>from Retarget · 30 days</small></span><span class="rc-am av2-lnk">Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="rc-row av2-act" href="#" data-av2-go="topup" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Ad balance lasts ~6 days<small>EGP 96,400 left</small></span><span class="rc-am av2-lnk">Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       </div>
     </article>
 
@@ -2335,26 +2426,31 @@ window.perSet=function(key){
       </section>
 
       <section class="osec otwo">
-        <div>
-          <div class="ph"><div class="ttl"><div><span class="kick">Orders</span><h2>Order health</h2></div></div><span class="label">Placed → kept</span></div>
-          <div class="orows">
-            <div><span>Placed</span><b>196</b><em>182 web · 14 admin</em></div>
-            <div><span>Paid &amp; kept</span><b class="g">164</b></div>
-            <div><span>Cancelled</span><b class="bd">14</b><em>7.1% cancel rate</em></div>
-            <div><span>Returned</span><b class="w">7</b><em>4.2% of parcels</em></div>
-          </div>
-        </div>
-        <div>
-          <div class="ph"><div class="ttl"><div><span class="kick">Returns</span><h2>Most returned</h2></div></div><span class="label">returned / sold</span></div>
-          <div class="orows">
-            <div><span>Salma Puff-Sleeve</span><b class="bd">18.5%</b><em>5 of 27</em></div>
-            <div><span>Nour Satin Slip</span><b class="bd">17%</b><em>6 of 36</em></div>
-            <div><span>Layla Tiered Ruffle</span><b>9.4%</b><em>3 of 32</em></div>
-            <div><span>Jasmine Wrap</span><b>8%</b><em>2 of 25</em></div>
-          </div>
-          <p class="osz">Sizes returned most <b>XS 16.7%</b> · <b>XXL 10.6%</b> · <b>XL 7.4%</b></p>
-        </div>
-      </section>
+<!-- === ORDERS v1 START === -->
+<!-- Orders v1 (round 8): Order health + Returns as two receipts (Receipt v1 layout). Two children of the look's .otwo grid. -->
+<div class="rc rc-col" aria-labelledby="ohr-h1">
+  <div class="rc-ph"><h2 class="rc-h2" id="ohr-h1"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Order health</h2><span class="rc-tag">196 placed</span></div>
+  <div class="rc-receipt">
+    <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Orders placed<small>182 web · 14 admin</small></span><span class="rc-am">196</span></div>
+    <div class="rc-row" style="--c:#f06571"><i></i><span class="rc-nm">Cancelled<small>7.1% of orders</small></span><span class="rc-am rc-neg">− 14</span></div>
+    <div class="rc-row" style="--c:#f2c46d"><i></i><span class="rc-nm">Returned<small>4.2% of 166 parcels</small></span><span class="rc-am rc-neg">− 7</span></div>
+    <div class="rc-row rc-total" style="--c:#5fd3a8"><i></i><span class="rc-nm">Kept orders<small>161 web · 14 admin</small></span><span class="rc-am">175</span></div>
+  </div>
+  <p class="rc-note"><b>164</b> of them are paid and kept so far.</p>
+</div>
+<div class="rc rc-col" aria-labelledby="ohr-h2">
+  <div class="rc-ph"><h2 class="rc-h2" id="ohr-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></span>Returns</h2><span class="rc-tag">Returned / sold</span></div>
+  <div class="rc-receipt">
+    <div class="rc-row" style="--c:#f06571"><i></i><span class="rc-nm">Salma Puff-Sleeve<small>5 of 27 came back</small></span><span class="rc-am rc-bad">18.5%</span></div>
+    <div class="rc-row" style="--c:#f06571"><i></i><span class="rc-nm">Nour Satin Slip<small>6 of 36 came back</small></span><span class="rc-am rc-bad">17%</span></div>
+    <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Layla Tiered Ruffle<small>3 of 32 came back</small></span><span class="rc-am">9.4%</span></div>
+    <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Jasmine Wrap<small>2 of 25 came back</small></span><span class="rc-am">8%</span></div>
+    <div class="rc-row rc-total" style="--c:var(--rc-fg-3)"><i></i><span class="rc-nm">All orders<small>7 of 166 parcels</small></span><span class="rc-am rc-plain">4.2%</span></div>
+  </div>
+  <p class="rc-note">Sizes returned most: <b>XS 16.7%</b> · <b>XXL 10.6%</b> · <b>XL 7.4%</b></p>
+</div>
+<!-- === ORDERS v1 END === -->
+        </section>
 
       <section class="osec">
         <div class="ph"><div class="ttl"><div><span class="kick">Recovery</span><h2>Abandoned checkouts</h2></div></div><a class="link" href="#">Recover →</a></div>
@@ -2585,28 +2681,32 @@ window.perSet=function(key){
   <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
 </nav>
 <div class="nv2-scrim"></div>
-<section class="nv2-sheet" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="nv2-grab" aria-hidden="true"></div>
-  <div class="nv2-sh"><h2>Menu</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-  <button type="button" class="nv2-sw"><span class="nv2-mark">FN</span>Frill N Wear<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-  <div class="nv2-grp"><h6>Operate</h6>
-    <a href="#" aria-current="page" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Overview</a>
-    <a href="#" data-nv2-go="brands"><svg class="nv2-i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>All brands</a>
-    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Orders</a>
-    <a href="#" data-nv2-go="orders"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Shipping</a>
-    <a href="#" data-nv2-go="inventory"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>Inventory</a>
-    <a href="#" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>Products</a>
-  </div>
-  <div class="nv2-grp"><h6>Grow</h6>
-    <a href="#" data-nv2-go="ads"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></svg>Meta Ads</a>
-    <a href="#" data-nv2-go="adsmanager"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Ads Manager</a>
-    <a href="#" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Assistant</a>
-    <a href="#" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Competitors</a>
-  </div>
-  <div class="nv2-grp"><h6>Workspace</h6>
-    <a href="#" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg>Connections</a>
-    <a href="#" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Workspace settings</a>
-    <a href="#" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Admin</a>
+<section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="nv2-ml" aria-label="Sections">
+    <a href="#" class="nv2-mr" aria-current="page" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" data-nv2-go="products">Products</a><a href="#" data-nv2-go="inventory">Inventory</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
+    </div>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Assistant</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
+    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
+  </nav>
+  <div class="nv2-mbar">
+    <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
+    <button type="button" class="nv2-mbtn" data-nv2-close aria-label="Close menu"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
 </section>
 <section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
@@ -2624,7 +2724,10 @@ window.perSet=function(key){
 /* === NAV v2 START === */
 /* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
    theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
-   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go). */
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go).
+   Round 8: the Menu is full screen (Shopify-like): its groups open in place (accordion), the page behind does not
+   scroll, and it closes on ✕, Esc, the browser's back (one history entry while open), a swipe down from the top of
+   the list, or a tap on an item. */
 (function(){
   var top=document.querySelector('.nv2-top');if(!top)return;
   var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
@@ -2674,10 +2777,22 @@ window.perSet=function(key){
     document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
     var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
   /* ---- sheets ---- */
-  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null;
-  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');if(scrim)scrim.classList.add('nv2-on');
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null,pushed=false,skipPop=false;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');
+    var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
+    if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
     var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
-  function closeSheet(){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+    document.documentElement.classList.remove('nv2-lock');
+    if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
+  /* menu: groups open in place; a swipe down from the top of the list closes it */
+  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
+    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
+    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
+    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
   document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
   if(scrim)scrim.addEventListener('click',closeSheet);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
@@ -3207,8 +3322,8 @@ window.cv2SetPeriod=function(P){
 </script>
 <script>
 /* === CITIES v2 START === */
-/* Cities v2 behaviour: renders CT2_DATA into every [data-ct2]; rows toggle their detail (one open at a time);
-   Egypt shows its top 5, the toggle shows the rest. 175 valid orders, shares add to 100%, revenue to EGP 243,495. */
+/* Cities v2 behaviour: renders CT2_DATA into every [data-ct2] as one receipt (round 8); rows toggle their detail (one
+   open at a time); Egypt shows its top 5, the toggle shows the rest. 175 valid orders, shares add to 100%, revenue to EGP 243,495. */
 (function(){
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var TOTAL=175;
@@ -3224,30 +3339,32 @@ window.cv2SetPeriod=function(P){
   var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
   var pct=function(n){return (n/TOTAL*100).toFixed(1)+'%'};
   var CHEV='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg>';
+  /* the dot: the brand purple, quieter down the ranking; "Other cities" grey */
+  var dot=function(rank,other){return other?'var(--rc-fg-3)':'color-mix(in srgb,var(--rc-acc) '+Math.max(35,100-(rank-1)*9)+'%,transparent)'};
   function init(root){
     if(root.dataset.ct2Ready)return;root.dataset.ct2Ready='1';
     var max=0,rank=0,h='';
     CT2_DATA.forEach(function(g){g.rows.forEach(function(r){if(!r[5]&&r[1]>max)max=r[1]})});
-    h+='<div class="ct2-sum"><div><b>'+TOTAL+'</b> orders from <b>'+CT2_DATA.length+'</b> countries</div><span>Orders · share of orders</span></div>';
+    h+='<div class="ct2-sum"><span><b>'+TOTAL+'</b> orders from <b>'+CT2_DATA.length+'</b> countries</span><span class="rc-tag">Orders · share of orders</span></div><div class="rc-receipt">';
     CT2_DATA.forEach(function(g){
       var n=g.rows.reduce(function(a,r){return a+r[1]},0),more=g.rows.length-SHOW;
-      h+='<div class="ct2-grp"><span class="ct2-cc">'+g.cc+'</span><b>'+g.c+'</b><em>'+n+' orders · '+pct(n)+'</em></div>';
+      h+='<div class="ct2-grp"><b>'+g.c+'</b><em>'+n+' orders · '+pct(n)+'</em></div>';
       g.rows.forEach(function(r,i){
         var other=!!r[5],hide=more>0&&i>=SHOW;if(!other)rank++;
         h+='<div class="ct2-row'+(other?' ct2-other':'')+(hide?' ct2-more':'')+'"'+(hide?' hidden':'')+'>'
-          +'<button type="button" class="ct2-r" aria-expanded="false" aria-label="'+r[0]+', '+g.c+': '+r[1]+' orders, '+pct(r[1])+'. Show details">'
-          +'<span class="ct2-n">'+(other?'·':rank)+'</span><span class="ct2-cc">'+g.cc+'</span>'
-          +'<span class="ct2-nm"><b>'+r[0]+'</b><small>'+(g.short||g.c)+'</small></span>'
-          +'<span class="ct2-o">'+r[1]+'<small> orders</small></span><span class="ct2-p">'+pct(r[1])+'</span>'
-          +'<span class="ct2-bar" aria-hidden="true"><i style="width:'+Math.max(2,r[1]/max*100).toFixed(1)+'%"></i></span></button>'
+          +'<button type="button" class="rc-row ct2-r" aria-expanded="false" aria-label="'+r[0]+', '+g.c+': '+r[1]+' orders, '+pct(r[1])+'. Show details" style="--c:'+dot(rank,other)+'">'
+          +'<i></i><span class="rc-nm">'+r[0]+'<small>'+(other?'the rest of '+(g.short||g.c):(g.short||g.c))+'</small></span>'
+          +'<span class="rc-am">'+r[1]+' orders<small>'+pct(r[1])+'</small></span>'
+          +'<span class="rc-bar" aria-hidden="true"><b style="transform:scaleX('+Math.max(.02,r[1]/max).toFixed(3)+')"></b></span></button>'
           +'<div class="ct2-det"><div><div class="ct2-dl">'
-          +'<div><span>Revenue from here</span><b><small>EGP</small>'+fmt(r[2])+'</b></div>'
-          +'<div><span>Average order</span><b><small>EGP</small>'+fmt(r[2]/r[1])+'</b></div>'
+          +'<div><span>Revenue from here</span><b>EGP '+fmt(r[2])+'</b></div>'
+          +'<div><span>Average order</span><b>EGP '+fmt(r[2]/r[1])+'</b></div>'
           +'<div><span>Top product</span><b>'+r[3]+' · '+r[4]+' sold</b></div>'
           +'</div></div></div></div>';
       });
       if(more>0)h+='<button type="button" class="ct2-tog" aria-expanded="false" data-ct2-more="'+more+'" data-ct2-c="'+g.c+'">Show '+more+' more in '+g.c+CHEV+'</button>';
     });
+    h+='<div class="rc-row rc-total" style="--c:var(--rc-acc)"><i></i><span class="rc-nm">All locations</span><span class="rc-am rc-plain">'+TOTAL+' orders</span></div></div>';
     root.innerHTML=h;
     root.addEventListener('click',function(e){
       var t=e.target.closest('.ct2-tog');
@@ -3311,28 +3428,39 @@ window.cv2SetPeriod=function(P){
 <script>
 /* === ACCOUNT v1 START === */
 /* Account v1: AB's Sales vs spend chart, drawn into #acc-chart.
-   accSetPeriod(P) — round 7: re-fills the Account tab from one period of the page's dataset (Periods v1):
+   accSetPeriod(P) — re-fills the Account tab from one period of the page's dataset (Periods v1):
    [data-acc-t="key"] gets P.t[key] (legend, the three figures under the chart, every receipt row), [data-acc-w="key"]
-   the flow bar's flex from P.w, and the chart is redrawn from P.s — one point per day (7 or 30), or eight three-hour
-   slots for a one-day period. The receipt always adds up: net revenue − four costs = net profit (periods.md). */
+   the flow bars' flex from P.w, [data-acc-tone="key"] acc-loss while P.tone[key] is "w" (a collected profit below zero),
+   and the chart is redrawn from P.s — one point per day (7 or 30), or eight three-hour slots for a one-day period.
+   Round 8: "Where the money went" has two receipts — Estimated (all orders) and Collected (in your pocket) — behind a
+   two-way switch ([data-acc-view]); both add up exactly and Estimated − Collected = "Still on the way" (edits8/profit-model.md).
+   On a wide screen the chart takes the height of the panel beside it (its box is measured; a ResizeObserver redraws). */
 (function(){
   var el=document.getElementById('acc-chart');if(!el)return;
+  var box=el.parentNode,last=null,lastH=0,lastW=0;
   var DEF={x:["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],rev:[32640,34915,36702,38388,35551,39600,35317],sp:[14186,14912,15327,16093,15384,16796,14109],unit:"day"};
   function nice(v){var s=v/3,p=Math.pow(10,Math.floor(Math.log10(s))),m=s/p;return (m<=1?1:m<=1.5?1.5:m<=2?2:m<=2.5?2.5:m<=3?3:m<=4?4:m<=5?5:10)*p}
   function k(v){return (v>=1000?+(v/1000).toFixed(1):v)+(v>=1000?'k':'')}
+  function size(){
+    var sm=innerWidth<560,W=sm?360:640,H=sm?220:230,r=box.getBoundingClientRect();
+    /* wide layout: draw in the box's own pixels, so the chart fills the panel's height with the same 10.5px labels */
+    if(getComputedStyle(box).aspectRatio==='auto'&&r.width>0&&r.height>0){W=Math.round(r.width);H=Math.round(r.height)}
+    return [W,H,sm];
+  }
   function draw(S){
-    var rev=S.rev,sp=S.sp,n=rev.length,last=n-1||1,hour=S.unit==="hour";
-    var sm=innerWidth<560,W=sm?360:640,H=sm?220:230;
+    last=S;
+    var rev=S.rev,sp=S.sp,n=rev.length,lst=n-1||1,hour=S.unit==="hour";
+    var d=size(),W=d[0],H=d[1],sm=d[2];lastH=H;lastW=W;
     el.setAttribute("viewBox","0 0 "+W+" "+H);
     el.setAttribute("aria-label",(hour?"Revenue and Meta spend by three-hour slot":"Daily revenue and Meta spend")+", "+S.x[0]+" to "+S.x[n-1]);
     var L=sm?30:40,R=12,T=30,B=24,step=nice(Math.max.apply(0,rev.concat(sp))*1.04),max=step*3;
-    var x=function(i){return L+i*(W-L-R)/last},y=function(v){return T+(1-v/max)*(H-T-B)};
+    var x=function(i){return L+i*(W-L-R)/lst},y=function(v){return T+(1-v/max)*(H-T-B)};
     var line=function(a){return a.map(function(v,i){return (i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)}).join(" ")};
     var best=rev.indexOf(Math.max.apply(0,rev)),every=n>8?(sm?10:5):1;
     var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".42"/><stop offset="1" stop-color="#a275e0" stop-opacity="0"/></linearGradient>'
       +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".22"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient></defs>';
     [0,step,step*2,max].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v?"3 4":"")+'"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+k(v)+'</text>'});
-    S.x.forEach(function(d,i){if(i%every&&i!==n-1)return;if(n>8&&i!==n-1&&n-1-i<every*.6)return;g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(n>8&&i===n-1?'end':'middle')+'">'+(sm&&!hour&&n<=8?d.slice(4):d)+'</text>'});
+    S.x.forEach(function(dd,i){if(i%every&&i!==n-1)return;if(n>8&&i!==n-1&&n-1-i<every*.6)return;g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(n>8&&i===n-1?'end':'middle')+'">'+(sm&&!hour&&n<=8?dd.slice(4):dd)+'</text>'});
     g+='<path class="acc-fade" d="'+line(rev)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-revG)"/>';
     g+='<path class="acc-fade" d="'+line(sp)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-spG)"/>';
     g+='<path class="acc-draw" d="'+line(sp)+'" fill="none" style="stroke:var(--acc-spend)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
@@ -3342,10 +3470,21 @@ window.cv2SetPeriod=function(P){
   }
   var P0=window.PER&&PER[PER.cur];
   draw(P0?P0.s:DEF);
+  /* the wide layout stretches the chart's box to the receipt panel: redraw when its height really changes */
+  if('ResizeObserver' in window){var tm=0;new ResizeObserver(function(){clearTimeout(tm);tm=setTimeout(function(){var z=size();if(last&&(Math.abs(z[1]-lastH)>3||Math.abs(z[0]-lastW)>3))draw(last)},120)}).observe(box)}
+  /* the Estimated / Collected switch */
+  var acc=el.closest('.acc');
+  function pick(v,focus){
+    [].slice.call(acc.querySelectorAll('[data-acc-view]')).forEach(function(b){var on=b.getAttribute('data-acc-view')===v;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;if(on&&focus)b.focus()});
+    [].slice.call(acc.querySelectorAll('.acc-view')).forEach(function(p){var on=p.id==='acc-v-'+v;p.classList.toggle('acc-off',!on);p.setAttribute('aria-hidden',String(!on))});
+  }
+  acc.addEventListener('click',function(e){var b=e.target.closest('[data-acc-view]');if(b)pick(b.getAttribute('data-acc-view'))});
+  acc.addEventListener('keydown',function(e){var b=e.target.closest('[data-acc-view]');if(!b||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;e.preventDefault();pick(b.getAttribute('data-acc-view')==='est'?'col':'est',true)});
   window.accSetPeriod=function(P){
     if(!P)return;var all=function(s){return [].slice.call(document.querySelectorAll('.acc '+s))};
     all('[data-acc-t]').forEach(function(e){var v=P.t[e.getAttribute('data-acc-t')];if(v!=null)e.textContent=v});
     all('[data-acc-w]').forEach(function(e){var v=P.w[e.getAttribute('data-acc-w')];if(v!=null)e.style.flex=String(v)});
+    all('[data-acc-tone]').forEach(function(e){e.classList.toggle('acc-loss',(P.tone||{})[e.getAttribute('data-acc-tone')]==='w')});
     draw(P.s);
   };
 })();
