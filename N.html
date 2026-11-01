@@ -202,88 +202,107 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .cv2-ship .cv2-tag i{box-shadow:none}
 .cv2-ship .cv2-flipbtn{background:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(85,13,166,.2) inset}
 
-/* ---- backs: roomy, px-sized (labels ≥13, values ≥18, hero ≥32) ---- */
-.cv2-bk{position:absolute;top:0;left:0;width:var(--cv2-ow,640px);padding:26px 28px 28px;display:flex;flex-direction:column;gap:22px;color:var(--cv2-fg);cursor:auto;user-select:text;-webkit-user-select:text}
-.cv2-narrow .cv2-bk{padding:22px 20px 24px;gap:20px}
-.cv2-bh{display:flex;align-items:center;gap:12px}
-.cv2-bh .cv2-fn{width:38px;height:38px;border-radius:11px;font-size:13px}
-.cv2-bt{font-size:18px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
-.cv2-bs{font-size:13px;color:var(--cv2-mut);margin-top:2px}
-.cv2-close{margin-left:auto;display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 15px;border-radius:99px;font-size:14px;font-weight:600;
+/* ---- backs: EXACTLY the front's height (the card only gets wider when it flips). Everything fits inside it:
+   labels 13px, values 20px, one hero 30px (narrow cards: 12 / 16 / 26). No inner scrolling. ---- */
+.cv2-bk{position:absolute;top:0;left:0;width:var(--cv2-ow,640px);height:100%;padding:18px 24px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;
+  color:var(--cv2-fg);cursor:auto;user-select:text;-webkit-user-select:text;overflow:hidden}
+.cv2-narrow .cv2-bk{padding:11px 14px 12px;gap:6px}
+.cv2-nar{display:none}
+.cv2-narrow .cv2-nar{display:inline}
+.cv2-narrow .cv2-wide{display:none}
+.cv2-bh{display:flex;align-items:center;gap:12px;min-width:0}
+.cv2-bh .cv2-fn{width:34px;height:34px;border-radius:10px;font-size:13px}
+.cv2-narrow .cv2-bh .cv2-fn{display:none}
+.cv2-bhx{flex:1;min-width:0}
+.cv2-bt{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-bs{font-size:13px;line-height:1.3;color:var(--cv2-mut);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-narrow .cv2-bt{font-size:14px}
+.cv2-narrow .cv2-bs{font-size:12px;margin-top:0}
+.cv2-close{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 14px;border-radius:99px;font-size:13.5px;font-weight:600;
   background:var(--cv2-soft);box-shadow:0 0 0 1px var(--cv2-hair) inset;color:var(--cv2-fg);flex:none}
 .cv2 .cv2-close svg.cv2-i{width:15px;height:15px}
 .cv2-close:hover{background:color-mix(in srgb,var(--cv2-soft) 60%,rgba(255,255,255,.25))}
-.cv2-blk{display:flex;flex-direction:column;gap:16px;padding-top:22px;border-top:1px solid var(--cv2-hair)}
-.cv2-h{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cv2-mut);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.cv2-h .cv2-hr{margin-left:auto;letter-spacing:.02em;text-transform:none;font-weight:500;display:inline-flex;align-items:center;gap:7px}
-.cv2-p{font-size:15px;line-height:1.5;color:var(--cv2-fg)}
+.cv2-narrow .cv2-close{width:30px;height:30px;padding:0}
+.cv2-narrow .cv2-close span{display:none}
+.cv2-p{font-size:14px;line-height:1.4;color:var(--cv2-fg)}
 .cv2-p b{font-weight:600}
+.cv2-narrow .cv2-p{font-size:13px}
 .cv2-mut{color:var(--cv2-mut)}
 .cv2-gc{color:var(--cv2-fg-g)} .cv2-wc{color:var(--cv2-fg-w)} .cv2-bc{color:var(--cv2-fg-b)}
-.cv2-big{font-size:20px;font-weight:600;letter-spacing:-.015em;font-variant-numeric:tabular-nums;line-height:1.1;white-space:nowrap}
-.cv2-big small{font-size:13px;font-weight:500;opacity:.75;margin-right:5px;letter-spacing:0}
-.cv2-big.cv2-hero{font-size:40px;letter-spacing:-.03em}
-.cv2-lab{font-size:13px;color:var(--cv2-mut);line-height:1.35}
+.cv2-big{font-size:20px;font-weight:600;letter-spacing:-.015em;font-variant-numeric:tabular-nums;line-height:1.15;white-space:nowrap}
+.cv2-big small{font-size:12px;font-weight:500;opacity:.75;margin-right:4px;letter-spacing:0}
+.cv2-big.cv2-hero{font-size:30px;letter-spacing:-.03em;line-height:1}
+.cv2-narrow .cv2-big{font-size:16px}
+.cv2-narrow .cv2-big.cv2-hero{font-size:26px}
+.cv2-lab{font-size:13px;color:var(--cv2-mut);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-narrow .cv2-lab{font-size:12px}
+.cv2-lnk{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;white-space:nowrap;padding:7px 13px;border-radius:99px;background:var(--cv2-lnkbg);color:var(--cv2-lnk);flex:none}
+.cv2 .cv2-lnk svg.cv2-i{width:15px;height:15px;transition:transform .2s}
+.cv2-lnk:hover svg.cv2-i{transform:translateX(3px)}
+.cv2-narrow .cv2-lnk{font-size:12.5px;padding:4px 10px}
 
 /* sales back: EGP 100 split */
-.cv2-lead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.cv2-split{display:flex;height:40px;border-radius:12px;overflow:hidden;gap:3px}
+.cv2-lead{display:flex;align-items:baseline;gap:10px;min-width:0}
+.cv2-lead .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-split{display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px;flex:none}
+.cv2-narrow .cv2-split{height:10px;border-radius:6px}
 .cv2-split i{display:block;height:100%;transform-origin:left}
 .cv2-is-open .cv2-split i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
 .cv2-split i.cv2-keep{box-shadow:0 0 0 2px #a6f5d2 inset}
-.cv2-leg{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px 14px}
-.cv2-narrow .cv2-leg{grid-template-columns:repeat(3,minmax(0,1fr))}
-.cv2-leg > div{display:flex;flex-direction:column;gap:5px;min-width:0}
-.cv2-leg .cv2-big{font-size:24px}
-.cv2-sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:0}
-.cv2-two{display:grid;grid-template-columns:1fr 1fr;gap:16px 28px}
-.cv2-two > div{display:flex;flex-direction:column;gap:6px;min-width:0}
-.cv2-two .cv2-big{font-size:30px}
+.cv2-leg{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:12px}
+.cv2-narrow .cv2-leg{gap:6px}
+.cv2-leg > div{display:flex;flex-direction:column;gap:1px;min-width:0;padding-top:5px;border-top:3px solid var(--sw)}
+.cv2-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.cv2-foot .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ads back: funnel view → cart → checkout → purchase, best / worst campaign */
-.cv2-fun{display:flex;flex-direction:column;gap:10px}
-.cv2-fr{position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:54px;padding:10px 16px;border-radius:12px;background:var(--cv2-soft);overflow:hidden}
-.cv2-fr::before{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--cv2-fw);background:linear-gradient(90deg,rgba(216,180,108,.45),rgba(216,180,108,.1));transform-origin:left}
-.cv2-is-open .cv2-fr::before{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
-.cv2-fr > *{position:relative}
-.cv2-fl{font-size:15px;font-weight:500;white-space:nowrap}
-.cv2-fv{display:flex;align-items:baseline;gap:10px;font-size:22px;font-weight:600;letter-spacing:-.015em;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cv2-fv em{font-style:normal;font-size:13px;font-weight:500;color:var(--cv2-mut);letter-spacing:0}
-.cv2-fr.cv2-last{min-height:66px;box-shadow:inset 0 0 0 1px rgba(246,213,140,.35)}
-.cv2-fr.cv2-last .cv2-fv{font-size:34px;letter-spacing:-.03em;color:#f6d58c}
-.cv2-cmpn{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:14px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
+/* ads back: funnel in four steps, best / worst campaign */
+.cv2-fun{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cv2-fs{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--cv2-soft);min-width:0}
+.cv2-narrow .cv2-fun{gap:6px}
+.cv2-narrow .cv2-fs{padding:6px 8px;gap:0}
+.cv2-fp{font-size:12px;color:var(--cv2-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-fb{display:block;height:5px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:5px}
+.cv2-fb i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#a87a33,#f0d48e);transform-origin:left}
+.cv2-is-open .cv2-fb i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
+.cv2-fs.cv2-last{box-shadow:inset 0 0 0 1px rgba(246,213,140,.4)}
+.cv2-fs.cv2-last .cv2-big{color:#f6d58c;font-size:26px;line-height:1}
+.cv2-narrow .cv2-fs.cv2-last .cv2-big{font-size:19px}
+.cv2-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cv2-narrow .cv2-two{gap:6px}
+.cv2-cmpn{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px;padding:10px 14px;border-radius:12px;background:var(--cv2-soft);min-width:0}
 .cv2-cmpn.cv2-best{box-shadow:inset 3px 0 0 var(--cv2-fg-g),inset 0 0 0 1px var(--cv2-hair)}
 .cv2-cmpn.cv2-worst{box-shadow:inset 3px 0 0 var(--cv2-fg-b),inset 0 0 0 1px var(--cv2-hair)}
-.cv2-cn{font-size:16px;font-weight:600;line-height:1.3}
-.cv2-two .cv2-cmpn .cv2-big{font-size:32px;letter-spacing:-.03em;margin-top:4px}
+.cv2-cmpn .cv2-lab{grid-column:1}
+.cv2-cn{grid-column:1;font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cv2-cmpn .cv2-big{grid-column:2;grid-row:1 / span 2;font-size:24px;letter-spacing:-.02em}
+.cv2-narrow .cv2-cmpn{padding:6px 8px 6px 10px;column-gap:6px}
+.cv2-narrow .cv2-cn{font-size:12px}
+.cv2-narrow .cv2-cmpn .cv2-big{font-size:18px}
 
-/* shipping back: cash by age */
-.cv2-age{display:grid;grid-template-columns:1fr 1fr 1.35fr;gap:12px}
-.cv2-narrow .cv2-age{grid-template-columns:1fr 1fr}
-.cv2-narrow .cv2-age .cv2-old{grid-column:1 / -1;order:-1}
-.cv2-age > div{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:14px;background:var(--cv2-soft);min-width:0}
+/* shipping back: cash by age, next payout, returns */
+.cv2-age{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:10px}
+.cv2-age > div{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--cv2-soft);min-width:0}
+.cv2-narrow .cv2-age{gap:6px}
+.cv2-narrow .cv2-age > div{padding:6px 8px}
+.cv2-narrow .cv2-age .cv2-big small{display:none}
 .cv2-age .cv2-old{background:rgba(163,36,26,.12);box-shadow:inset 0 0 0 1.5px rgba(163,36,26,.45)}
-.cv2-age .cv2-big{font-size:24px}
-.cv2-age .cv2-old .cv2-big{font-size:34px;color:var(--cv2-fg-b)}
-.cv2-agebar{height:6px;border-radius:99px;background:rgba(60,20,110,.12);overflow:hidden;margin-top:4px}
+.cv2-age .cv2-old .cv2-big{font-size:24px;color:var(--cv2-fg-b);line-height:1.05}
+.cv2-narrow .cv2-age .cv2-old .cv2-big{font-size:18px}
+.cv2-agebar{display:block;height:5px;border-radius:99px;background:rgba(60,20,110,.12);overflow:hidden;margin-top:4px}
 .cv2-agebar i{display:block;height:100%;border-radius:99px;background:#550da6;transform-origin:left}
 .cv2-old .cv2-agebar i{background:var(--cv2-fg-b)}
 .cv2-is-open .cv2-agebar i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .4s both}
-.cv2-date{display:flex;align-items:center;gap:14px}
-.cv2-cal{width:54px;flex:none;border-radius:12px;overflow:hidden;text-align:center;background:rgba(255,255,255,.6);box-shadow:0 0 0 1px var(--cv2-hair)}
-.cv2-cal span{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#550da6;padding:3px 0}
-.cv2-cal b{display:block;font-size:24px;font-weight:600;line-height:1.3}
-.cv2-narrow .cv2-two{grid-template-columns:1fr}
-
-/* actions: sentence + purple link → */
-.cv2-acts{display:flex;flex-direction:column;gap:10px}
-.cv2-act{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--cv2-soft);box-shadow:0 0 0 1px var(--cv2-hair) inset;transition:background .2s,transform .2s}
-.cv2-act:hover{transform:translateY(-1px);background:color-mix(in srgb,var(--cv2-soft) 70%,rgba(255,255,255,.18))}
-.cv2-act > span{flex:1;min-width:0;font-size:15px;line-height:1.4}
-.cv2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;padding:8px 14px;border-radius:99px;background:var(--cv2-lnkbg);color:var(--cv2-lnk);flex:none}
-.cv2 .cv2-act > b svg.cv2-i{width:15px;height:15px;transition:transform .2s}
-.cv2-act:hover > b svg.cv2-i{transform:translateX(3px)}
-.cv2-narrow .cv2-act{flex-direction:column;align-items:flex-start;gap:10px}
+.cv2-foot3{display:flex;align-items:center;gap:22px;min-width:0}
+.cv2-foot3 > div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.cv2-foot3 > .cv2-date{flex-direction:row;align-items:center;gap:10px}
+.cv2-date > div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.cv2-foot3 .cv2-lnk{margin-left:auto}
+.cv2-cal{width:44px;flex:none;border-radius:10px;overflow:hidden;text-align:center;background:rgba(255,255,255,.6);box-shadow:0 0 0 1px var(--cv2-hair)}
+.cv2-cal span{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#550da6;padding:2px 0}
+.cv2-cal b{display:block;font-size:20px;font-weight:600;line-height:1.3}
+.cv2-narrow .cv2-cal{display:none}
+.cv2-narrow .cv2-foot3{flex-wrap:wrap;gap:4px 18px}
+.cv2-narrow .cv2-foot3 .cv2-lnk{margin-left:0}
 
 /* ---- nav ---- */
 .cv2-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:2px}
@@ -347,16 +366,15 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-ptag.g{color:#7ce3bc}.pv2-ptag.w{color:#f6d58c}.pv2-ptag.r{color:#ffa3a8}
 .pv2-left{position:absolute;left:7px;bottom:7px;z-index:2;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;color:#fff;background:rgba(10,8,16,.66);border:1px solid var(--ul);white-space:nowrap}
 .pv2-left i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ul);margin-right:5px}
-.pv2-nm{font-size:13.5px;font-weight:500;line-height:1.3;margin-top:10px;min-height:35px}
-.pv2-mrow{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin-top:8px}
-.pv2-mk{font-size:11.5px;color:var(--pv2-mut)}
-.pv2-mv{display:block;font-size:19px;font-weight:600;letter-spacing:-.015em;white-space:nowrap;margin-top:1px}
+/* hierarchy: name → key number (the sort) → secondary line (units sold + the other figure) → size strip */
+.pv2-nm{font-size:14px;font-weight:600;line-height:1.3;margin-top:10px;min-height:36px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pv2-mk{font-size:12px;color:var(--pv2-mut);margin-top:8px;line-height:1.3}
+.pv2-mv{display:block;font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.pv2-mv small{font-size:12px;font-weight:500;color:var(--pv2-mut);margin-right:4px;letter-spacing:0}
 .pv2-mv.r{color:var(--pv2-bad)}
-.pv2-sold{text-align:right;white-space:nowrap}
-.pv2-sold b{display:block;font-size:19px;font-weight:600;letter-spacing:-.015em}
-.pv2-sold b small{font-size:12px;font-weight:500;color:var(--pv2-mut);margin-left:3px;letter-spacing:0}
-.pv2-sold span{font-size:11.5px;color:var(--pv2-mut)}
-.pv2-sub{font-size:12px;color:var(--pv2-mut);margin-top:2px;min-height:16px}
+.pv2-sub{font-size:12.5px;line-height:1.35;color:var(--pv2-mut);margin-top:3px;min-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv2-sub b{color:var(--pv2-fg);font-weight:600}
+@container (max-width:560px){.pv2-mv{font-size:18px}.pv2-nm{font-size:13.5px}}
 /* size strip */
 .pv2-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin-top:12px;padding-top:10px;border-top:1px solid var(--pv2-line)}
 .pv2-sz{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
@@ -393,7 +411,8 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-verdict b{font-weight:700;color:var(--pv2-acc)}
 [data-theme="light"] .pv2 .pv2-verdict b{color:#550da6}
 .pv2-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.pv2-chip{font-size:13px;font-weight:500;padding:5px 11px;border-radius:99px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);white-space:nowrap;color:var(--pv2-mut)}
+.pv2-chip{font-size:13px;font-weight:500;padding:5px 11px;border-radius:99px;background:var(--pv2-bg2);border:1px solid var(--pv2-line)!important;white-space:nowrap;color:var(--pv2-mut);transition:border-color .2s,color .2s}
+.pv2-chip:hover{border-color:var(--pv2-acc)!important;color:var(--pv2-fg)}
 .pv2-chip b{color:var(--pv2-fg);font-weight:700;margin-left:4px}
 .pv2-chip.pv2-cur{border-color:var(--pv2-acc);color:var(--pv2-fg);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent)}
 .pv2-four{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;padding-top:20px;border-top:1px solid var(--pv2-line)}
@@ -419,6 +438,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;padding:8px 14px;border-radius:99px;background:linear-gradient(135deg,#7c3fc1,#550da6);color:#fff;flex:none}
 .pv2-act:hover > b svg{transform:translateX(3px)}
 .pv2-act > b svg{transition:transform .2s}
+.pv2-act.pv2-ok{color:var(--pv2-good);font-weight:500;border-style:dashed}
 @container (max-width:560px){.pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .pv2-sheet.pv2-phone .pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}
 .pv2-sheet.pv2-phone .pv2-act{flex-direction:column;align-items:flex-start}
@@ -474,105 +494,113 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 /* === MONEY v2 START === */
 /* Money v2 — "Where the money went": gross → net revenue → profit, to scale.
    Self-contained (mv2- prefix). THEME: light when <html data-theme="light"> or .mv2[data-mv2-theme="light"].
-   Desktop (block ≥ 720px wide): horizontal waterfall in two phases. Narrower: vertical timeline.
-   Page hook: links fire a bubbling "mv2:action" event (detail.go). */
+   Readability rules (see readability-notes): text ≥ 12px (names 14, shares 13, amounts 17–22), contrast ≥ 4.5:1,
+   no text inside a bar, amounts ABOVE the bars, names in a fixed-height row BELOW the plot.
+   Wide block (≥ 960px): waterfall in two phases. Narrower: horizontal-bar journey list, one step per row.
+   Page hooks: links fire a bubbling "mv2:action" event (detail.go); window.mv2Update(amounts) for live figures. */
 .mv2{--mv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-  --mv2-fg:#eceaf3;--mv2-mut:#9895a8;--mv2-dim:#6c6979;--mv2-line:rgba(255,255,255,.08);--mv2-line2:rgba(255,255,255,.14);--mv2-soft:rgba(255,255,255,.035);
+  --mv2-fg:#eceaf3;--mv2-mut:#a7a3b6;--mv2-dim:#8a8799;--mv2-line:rgba(255,255,255,.08);--mv2-line2:rgba(255,255,255,.15);--mv2-soft:rgba(255,255,255,.035);
   --mv2-bg:#0d0c12;--mv2-acc:#a275e0;--mv2-good:#45d09a;--mv2-bad:#f06571;--mv2-warn:#f2b64f;
   --mv2-gross:linear-gradient(180deg,#e2e4f0,#9da2b8);--mv2-net:linear-gradient(180deg,#a275e0,#550da6);--mv2-profit:linear-gradient(180deg,#5ee0ab,#16865f);
   container-type:inline-size;font-family:var(--mv2-font);color:var(--mv2-fg);font-variant-numeric:tabular-nums;min-width:0}
-[data-theme="light"] .mv2,.mv2[data-mv2-theme="light"]{--mv2-fg:#17141f;--mv2-mut:#5f5b6c;--mv2-dim:#8e8a9b;--mv2-line:rgba(20,10,40,.08);--mv2-line2:rgba(20,10,40,.16);--mv2-soft:rgba(85,13,166,.04);
-  --mv2-bg:#fff;--mv2-acc:#550da6;--mv2-good:#12855a;--mv2-bad:#c73a47;--mv2-warn:#9a6a0e;--mv2-gross:linear-gradient(180deg,#c9cbdb,#8d91a8)}
+[data-theme="light"] .mv2,.mv2[data-mv2-theme="light"]{--mv2-fg:#17141f;--mv2-mut:#5f5b6c;--mv2-dim:#6c6879;--mv2-line:rgba(20,10,40,.08);--mv2-line2:rgba(20,10,40,.16);--mv2-soft:rgba(85,13,166,.04);
+  --mv2-bg:#fff;--mv2-acc:#550da6;--mv2-good:#12855a;--mv2-bad:#c73a47;--mv2-warn:#8a5c08;--mv2-gross:linear-gradient(180deg,#c9cbdb,#8d91a8)}
 .mv2 *,.mv2 *::before,.mv2 *::after{box-sizing:border-box;margin:0;padding:0}
 :where(.mv2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
 :where(.mv2) a{color:inherit;text-decoration:none}
 .mv2 :focus-visible{outline:2px solid var(--mv2-acc);outline-offset:2px;border-radius:8px}
-.mv2-head{display:flex;align-items:flex-end;gap:8px 18px;flex-wrap:wrap;margin-bottom:22px}
-.mv2-head h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
-.mv2-sub{font-size:13px;color:var(--mv2-mut);margin-top:3px}
-.mv2-res{margin-left:auto;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.mv2-res b{font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--mv2-good)}
-.mv2-res b small{font-size:13px;font-weight:500;opacity:.75;margin-right:5px}
-.mv2-res span{font-size:13px;color:var(--mv2-mut)}
+.mv2-head{display:flex;align-items:flex-end;gap:10px 24px;flex-wrap:wrap;margin-bottom:28px}
+.mv2-head h3{font-size:18px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.mv2-sub{font-size:13px;line-height:1.45;color:var(--mv2-mut);margin-top:4px}
+.mv2-res{margin-left:auto;display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;justify-content:flex-end}
+.mv2-res b{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;color:var(--mv2-good)}
+.mv2-res b small{font-size:13px;font-weight:500;opacity:.8;margin-right:5px}
+.mv2-res span{font-size:13px;line-height:1.45;color:var(--mv2-mut)}
 .mv2-chart{position:relative}
-.mv2-phases{position:relative;height:30px;margin-bottom:58px}
-.mv2-phases span{position:absolute;top:0;height:100%;display:flex;align-items:flex-start;padding:0 8px;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mv2-mut);
-  border-top:2px solid var(--mv2-line2);padding-top:7px}
-.mv2-phases span:first-child{border-top-color:rgba(240,101,113,.45)}
-.mv2-phases span:last-child{border-top-color:rgba(162,117,224,.55)}
-.mv2-steps{list-style:none;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:0 10px}
-.mv2-b{display:flex;flex-direction:column;width:100%;border-radius:12px;padding:0 0 10px;transition:background .25s}
+/* phase labels on their own row, with room below before the tallest amount */
+.mv2-phases{position:relative;height:30px;margin-bottom:22px}
+.mv2-phases span{position:absolute;top:0;height:100%;display:flex;align-items:flex-start;padding:8px 8px 0;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mv2-mut);
+  border-top:2px solid var(--mv2-line2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mv2-phases span:first-child{border-top-color:rgba(240,101,113,.5)}
+.mv2-phases span:last-child{border-top-color:rgba(162,117,224,.6)}
+.mv2-steps{list-style:none;display:grid;grid-template-columns:1.15fr repeat(3,minmax(0,1fr)) 1.15fr repeat(4,minmax(0,1fr)) 1.15fr;gap:0 14px}
+.mv2-b{position:relative;display:flex;flex-direction:column;width:100%;border-radius:12px;padding:0 0 12px;transition:background .25s}
 .mv2-b:hover,.mv2-on .mv2-b{background:var(--mv2-soft)}
-.mv2-plot{position:relative;height:270px;margin:0 4px}
-.mv2-bar{position:absolute;left:6%;right:6%;bottom:calc(var(--b) * 1%);height:calc(var(--h) * 1%);min-height:3px;border-radius:7px;background:var(--mv2-c);transform-origin:bottom}
+/* plot: 56px reserved above the bars for the amounts, then 300px of bar area */
+.mv2-plot{position:relative;height:300px;margin:56px 6px 0}
+.mv2-bar{position:absolute;left:8%;right:8%;bottom:calc(var(--b) * 1%);height:calc(var(--h) * 1%);min-height:3px;border-radius:7px;background:var(--mv2-c);transform-origin:bottom}
 .mv2-ded .mv2-bar{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
 .mv2-cp .mv2-bar{box-shadow:0 0 26px -6px var(--mv2-glow,transparent)}
 .mv2-on .mv2-bar{outline:2px solid var(--mv2-acc);outline-offset:2px}
-.mv2-b{position:relative}
-.mv2-amt{position:absolute;left:0;right:0;top:calc((100 - var(--b) - var(--h)) * 2.7px);transform:translateY(calc(-100% - 8px));text-align:center;font-size:16px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;line-height:1.1}
-.mv2-amt small{display:block;font-size:11.5px;font-weight:500;color:var(--mv2-mut);letter-spacing:.02em}
-.mv2-cp .mv2-amt{font-size:26px;letter-spacing:-.025em}
+/* amount: always ABOVE its bar (outside it), never inside */
+.mv2-amt{position:absolute;left:0;right:0;top:calc(56px + (100 - var(--b) - var(--h)) * 3px);transform:translateY(calc(-100% - 8px));text-align:center;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;line-height:1.15}
+.mv2-amt small{display:block;font-size:12px;font-weight:500;color:var(--mv2-mut);letter-spacing:.02em;margin-bottom:1px}
+.mv2-cp .mv2-amt{font-size:22px;letter-spacing:-.02em}
 .mv2-ded .mv2-amt{color:var(--mv2-fg)}
 /* connector: from this bar's resulting level to the next column */
-.mv2-conn{position:absolute;left:94%;width:calc(12% + 10px + 8px);bottom:calc(var(--lv) * 1%);border-top:1.5px dashed var(--mv2-line2)}
+.mv2-conn{position:absolute;left:92%;width:calc(16% + 14px + 12px);bottom:calc(var(--lv) * 1%);border-top:1.5px dashed var(--mv2-line2)}
 .mv2-step:last-child .mv2-conn{display:none}
-.mv2-lab{margin-top:12px;padding:0 6px;text-align:center;display:flex;flex-direction:column;gap:3px}
-.mv2-lab b{font-size:13px;font-weight:600;line-height:1.25}
-.mv2-lab span{font-size:13px;color:var(--mv2-mut)}
-.mv2-est{font-size:10.5px;font-weight:500;color:var(--mv2-dim);letter-spacing:.04em;margin-left:3px;vertical-align:1px}
-.mv2-cp .mv2-lab b{font-size:14px}
+/* names: fixed-height row below the plot (2 lines of name + up to 2 lines of share), so nothing can collide */
+.mv2-lab{margin-top:14px;padding:0 4px;min-height:76px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.mv2-lab b{font-size:14px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
+.mv2-lab span{font-size:13px;line-height:1.3;color:var(--mv2-mut)}
+.mv2-est{color:var(--mv2-mut);font-weight:500}
 .mv2-dot{display:none}
 .mv2-go .mv2-bar{animation:mv2up .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 70ms)}
 .mv2-go .mv2-amt,.mv2-go .mv2-conn{animation:mv2fade .5s ease both;animation-delay:calc(var(--i) * 70ms + 350ms)}
 @keyframes mv2up{from{transform:scaleY(0)}}
 @keyframes mv2fade{from{opacity:0}}
-.mv2-explain{margin-top:16px;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;background:var(--mv2-soft);border:1px solid var(--mv2-line);min-height:72px}
+.mv2-note{margin-top:4px;font-size:12.5px;line-height:1.4;color:var(--mv2-mut)}
+.mv2-explain{margin-top:18px;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;background:var(--mv2-soft);border:1px solid var(--mv2-line);min-height:76px}
 .mv2-xi{width:10px;align-self:stretch;border-radius:9px;background:var(--mv2-c);flex:none}
-.mv2-xt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.mv2-xt b{font-size:16px;font-weight:600}
-.mv2-xt span{font-size:14px;color:var(--mv2-mut);line-height:1.45}
+.mv2-xt{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.mv2-xt b{font-size:16px;font-weight:600;line-height:1.35}
+.mv2-xt span{font-size:14px;color:var(--mv2-mut);line-height:1.5}
 .mv2-xt em{font-style:normal;color:var(--mv2-fg);font-weight:500}
 .mv2-lnk{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--mv2-acc);white-space:nowrap}
 .mv2-lnk svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
 .mv2-lnk:hover svg{transform:translateX(3px)}
 .mv2-why{display:none}
-.mv2-foot{margin-top:16px;padding-top:16px;border-top:1px solid var(--mv2-line);display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:14px;color:var(--mv2-mut)}
+.mv2-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--mv2-line);display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:var(--mv2-mut)}
 .mv2-foot b{color:var(--mv2-warn);font-weight:600}
 
-/* ---- narrow: vertical timeline ---- */
-@container (max-width:719px){
-  .mv2-head{margin-bottom:16px}
+/* ---- narrower than 960px: horizontal-bar journey list (one step per row; labels never touch the bars) ---- */
+@container (max-width:959px){
+  .mv2-head{margin-bottom:18px}
   .mv2-res{margin-left:0;justify-content:flex-start}
   .mv2-phases{display:none}
   .mv2-steps{grid-template-columns:minmax(0,1fr);gap:0;position:relative;margin-top:4px}
+  .mv2-steps::before{content:"";position:absolute;left:9px;top:22px;bottom:22px;width:2px;background:var(--mv2-line2);border-radius:2px}
+  .mv2-ph{display:block!important;font-size:12.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mv2-mut);padding:18px 0 8px 32px}
   .mv2-ph:first-child{padding-top:4px}
-  .mv2-steps::before{content:"";position:absolute;left:9px;top:18px;bottom:18px;width:2px;background:var(--mv2-line2);border-radius:2px}
-  .mv2-ph{display:block!important;font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mv2-mut);padding:14px 0 8px 30px}
-  .mv2-b{display:grid;grid-template-columns:20px minmax(0,1fr) auto;column-gap:10px;row-gap:8px;align-items:center;padding:10px 10px 12px 0;border-radius:12px}
-  .mv2-dot{display:block;grid-row:1 / span 2;align-self:start;margin-top:4px;width:20px;height:20px;border-radius:50%;background:var(--mv2-bg,#0d0c12);border:2px solid var(--mv2-line2);position:relative;z-index:1}
+  .mv2-b{display:grid;grid-template-columns:20px minmax(0,1fr) auto;column-gap:12px;row-gap:10px;align-items:center;padding:12px 12px 14px 0;border-radius:12px}
+  .mv2-dot{display:block;grid-row:1 / span 2;align-self:start;margin-top:3px;width:20px;height:20px;border-radius:50%;background:var(--mv2-bg,#0d0c12);border:2px solid var(--mv2-line2);position:relative;z-index:1}
   .mv2-dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--mv2-c)}
-  .mv2-lab{grid-column:2;grid-row:1;margin:0;padding:0;text-align:left;flex-direction:row;align-items:baseline;gap:8px;flex-wrap:wrap}
-  .mv2-lab b{font-size:14.5px}
+  .mv2-lab{grid-column:2;grid-row:1;margin:0;padding:0;min-height:0;text-align:left;gap:2px}
+  .mv2-lab b{font-size:15px;-webkit-line-clamp:1;display:block;white-space:nowrap;text-overflow:ellipsis}
   .mv2-plot{grid-column:2 / -1;grid-row:2;height:10px;margin:0;border-radius:99px;background:var(--mv2-line)}
-  .mv2-bar{left:calc(var(--b) * 1%);width:calc(var(--h) * 1%);right:auto;top:0;bottom:0;height:auto;border-radius:99px;transform-origin:left}
-  .mv2-amt{position:static;transform:none;grid-column:3;grid-row:1;text-align:right;font-size:17px}
-  .mv2-amt small{display:inline;margin-right:4px}
+  .mv2-bar{left:calc(var(--b) * 1%);width:calc(var(--h) * 1%);min-width:4px;right:auto;top:0;bottom:0;height:auto;border-radius:99px;transform-origin:left}
+  .mv2-amt{position:static;transform:none;grid-column:3;grid-row:1;align-self:start;text-align:right;font-size:17px}
+  .mv2-amt small{display:inline;margin:0 4px 0 0}
   .mv2-conn{display:none}
-  .mv2-cp .mv2-b{background:var(--mv2-soft);border:1px solid var(--mv2-line2);padding:14px 12px 14px 0;margin:6px 0}
-  .mv2-cp .mv2-dot{width:20px;height:20px;border-color:var(--mv2-c-solid,var(--mv2-acc))}
+  .mv2-cp .mv2-b{background:var(--mv2-soft);border:1px solid var(--mv2-line2);padding:14px 12px 16px 0;margin:6px 0}
   .mv2-cp .mv2-plot{height:14px}
-  .mv2-cp .mv2-amt{font-size:26px}
+  .mv2-cp .mv2-amt{font-size:24px}
   .mv2-cp .mv2-lab b{font-size:16px}
   .mv2-on .mv2-bar{outline:0}
-  .mv2-x .mv2-why{display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-size:14px;line-height:1.45;color:var(--mv2-mut);padding:0 10px 14px 30px}
+  .mv2-x .mv2-why{display:flex;flex-direction:column;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:var(--mv2-mut);padding:2px 12px 16px 32px}
   .mv2-why em{font-style:normal;color:var(--mv2-fg);font-weight:500}
   .mv2-explain{display:none}
+  .mv2-note{padding-left:32px;margin-top:8px}
   .mv2-go .mv2-bar{animation-name:mv2right}
 }
 .mv2-ph{display:none}
 .mv2-pre .mv2-bar{visibility:hidden}
 @keyframes mv2right{from{transform:scaleX(0)}}
 @media (prefers-reduced-motion:reduce){.mv2 *{animation:none!important;transition:none!important}}
+/* live update (window.mv2Update): bars glide to their new size; only active once the page has called it */
+.mv2-live .mv2-bar{transition:bottom .5s cubic-bezier(.2,.8,.2,1),height .5s cubic-bezier(.2,.8,.2,1),left .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1)}
+.mv2-live .mv2-amt{transition:top .5s cubic-bezier(.2,.8,.2,1)}
 /* === MONEY v2 END === */
 
 
@@ -647,10 +675,20 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s}
 [data-theme="dark"] .nv2-tog,:root:not([data-theme="light"]) .nv2-tog{background:linear-gradient(135deg,#7c3fc1,#550da6)}
 [data-theme="dark"] .nv2-tog::after,:root:not([data-theme="light"]) .nv2-tog::after{transform:translateX(18px)}
-.nv2-note{display:flex;gap:11px;padding:10px 11px;border-radius:10px;font-size:13.5px;line-height:1.35;width:100%}
+/* bell: straight to the list — icon · one-line message · time · link (no heading) */
+.nv2-bellpop{width:min(344px,calc(100vw - 32px));padding:6px;display:flex;flex-direction:column;gap:2px}
+.nv2-note{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:12px;line-height:1.35;width:100%;text-align:left}
 .nv2-note:hover{background:var(--nv2-panel2)}
-.nv2-note i{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:none;background:var(--c)}
-.nv2-note span small{display:block;font-size:12px;color:var(--nv2-mut);margin-top:2px}
+.nv2-note + .nv2-note{box-shadow:0 -1px 0 var(--nv2-line)}
+.nv2-note:hover + .nv2-note,.nv2-note + .nv2-note:hover{box-shadow:none}
+.nv2-ni{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.nv2-ni svg.nv2-i{width:16px;height:16px}
+.nv2-nt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nv2-nt b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-nt small{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--nv2-mut)}
+.nv2-nl{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--nv2-acc,#a275e0);white-space:nowrap}
+.nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
+.nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
 
 /* ---- phone / tablet top ---- */
 @media (max-width:1023px){
@@ -1210,139 +1248,186 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 /* === ADS v2 START === */
 /* ADS v2 — "Is Meta paying you back?" section at the top of the Ads tab. Root class is av2-root (V and J already use a bare .av2 for avatars). Self-contained: every class,
    id and variable is prefixed av2-. Theme: light when <html data-theme="light"> (or .av2-root[data-av2-theme="light"]).
+   Plain and professional: figures, simple horizontal bars, one table-like list — no decoration.
    Layout: 2 columns when the block is ≥ 760px wide (container query), stacked below that.
    Live hook: window.av2Update({spend,sales,rr,ppp,cpo,aov}) — null restores the actual figures. */
 .av2-root{
   --av2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-  --av2-bg:radial-gradient(70% 120% at 0% 0%,rgba(216,180,108,.13),transparent 60%),radial-gradient(60% 90% at 100% 100%,rgba(124,63,193,.12),transparent 60%),linear-gradient(160deg,#16130e 0%,#0d0b10 55%,#100d15 100%);
-  --av2-line:rgba(216,180,108,.24); --av2-box:rgba(255,255,255,.035); --av2-boxl:rgba(255,255,255,.075);
-  --av2-fg:#f3ede2; --av2-mut:#a8a094; --av2-gold:#f6d58c; --av2-gold2:#d8b46c;
-  --av2-good:#7fe8bd; --av2-warn:#f6c66e; --av2-bad:#ff9686; --av2-track:rgba(255,255,255,.07); --av2-tick:rgba(243,230,200,.7);
-  --av2-pg:#0d3a28; --av2-pgbg:#8ff0c8; --av2-pw:#3d2a00; --av2-pwbg:#f6d58c; --av2-pb:#4a0d06; --av2-pbbg:#ff9d8f;
-  --av2-lnkbg:#f2eafb; --av2-lnk:#550da6; --av2-acc:#a275e0; --av2-shadow:0 24px 60px -34px rgba(0,0,0,.9);
-  container-type:inline-size;position:relative;margin:0 0 18px;padding:26px 28px 28px;border-radius:24px;
-  background:var(--av2-bg);border:1px solid var(--av2-line);box-shadow:var(--av2-shadow);color:var(--av2-fg);
-  font-family:var(--av2-font);font-size:14px;line-height:1.4;font-weight:400;letter-spacing:normal;font-variant-numeric:normal;-webkit-font-smoothing:antialiased;min-width:0;overflow:hidden}
+  --av2-bg:#111017; --av2-line:rgba(255,255,255,.1); --av2-box:rgba(255,255,255,.025); --av2-boxl:rgba(255,255,255,.08);
+  --av2-fg:#eceaf3; --av2-mut:#a7a3b6; --av2-gold:#f0d48e; --av2-ad:#d8b46c; --av2-cost:#8f8aa3;
+  --av2-good:#45d09a; --av2-warn:#f2b64f; --av2-bad:#f06571; --av2-track:rgba(255,255,255,.07); --av2-tick:rgba(236,234,243,.75);
+  --av2-pg:#7fe8bd; --av2-pgbg:rgba(69,208,154,.13); --av2-pw:#f6d58c; --av2-pwbg:rgba(242,182,79,.13); --av2-pb:#ff9d8f; --av2-pbbg:rgba(240,101,113,.14);
+  --av2-lnk:#c4a3f2; --av2-acc:#a275e0;
+  container-type:inline-size;position:relative;margin:0 0 18px;padding:24px 26px 26px;border-radius:20px;
+  background:var(--av2-bg);border:1px solid var(--av2-line);color:var(--av2-fg);
+  font-family:var(--av2-font);font-size:14px;line-height:1.4;font-weight:400;letter-spacing:normal;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;min-width:0;overflow:hidden}
 [data-theme="light"] .av2-root,.av2-root[data-av2-theme="light"]{
-  --av2-bg:radial-gradient(70% 120% at 0% 0%,rgba(216,180,108,.16),transparent 60%),radial-gradient(60% 90% at 100% 100%,rgba(124,63,193,.07),transparent 60%),linear-gradient(160deg,#fffdf8 0%,#ffffff 60%,#fbf8ff 100%);
-  --av2-line:rgba(168,122,51,.28); --av2-box:rgba(255,255,255,.75); --av2-boxl:rgba(40,20,70,.09);
-  --av2-fg:#17141f; --av2-mut:#5f5b6c; --av2-gold:#8a5a12; --av2-gold2:#a87a33;
-  --av2-good:#0b7a50; --av2-warn:#8a5600; --av2-bad:#b42a1f; --av2-track:rgba(40,20,70,.08); --av2-tick:rgba(60,40,10,.6);
-  --av2-pg:#0b5a3a; --av2-pgbg:#c9f5e1; --av2-pw:#6b4300; --av2-pwbg:#fbe5b3; --av2-pb:#8a1d12; --av2-pbbg:#ffd6cf;
-  --av2-lnkbg:#550da6; --av2-lnk:#fff; --av2-acc:#7c3fc1; --av2-shadow:0 22px 50px -34px rgba(60,30,10,.45)}
+  --av2-bg:#fff; --av2-line:rgba(20,10,40,.1); --av2-box:#fbfafd; --av2-boxl:rgba(20,10,40,.08);
+  --av2-fg:#17141f; --av2-mut:#5f5b6c; --av2-gold:#8a5a12; --av2-ad:#b88a3c; --av2-cost:#9d98ad;
+  --av2-good:#0b7a50; --av2-warn:#8a5600; --av2-bad:#b42a1f; --av2-track:rgba(20,10,40,.07); --av2-tick:rgba(23,20,31,.65);
+  --av2-pg:#0b5a3a; --av2-pgbg:#d5f5e6; --av2-pw:#6b4300; --av2-pwbg:#fbeac2; --av2-pb:#8a1d12; --av2-pbbg:#ffdcd6;
+  --av2-lnk:#550da6; --av2-acc:#7c3fc1}
 .av2-root *,.av2-root *::before,.av2-root *::after{box-sizing:border-box;margin:0;padding:0;font-family:inherit}
 :where(.av2-root) a{color:inherit;text-decoration:none}
-.av2-root svg.av2-i{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.av2-root svg.av2-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .av2-root :focus-visible{outline:2px solid var(--av2-acc);outline-offset:3px;border-radius:8px}
 
 /* header */
-.av2-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:22px}
+.av2-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;margin-bottom:20px}
 .av2-hl{min-width:0;max-width:720px}
-.av2-kick{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--av2-gold2)}
-.av2-fn{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;font-weight:700;letter-spacing:0;color:#1a1408;background:linear-gradient(135deg,#f0d48e,#a87a33)}
-.av2-title{display:block;font-size:28px;font-weight:600;letter-spacing:-.025em;line-height:1.15;margin-top:10px}
-.av2-sub{font-size:15px;line-height:1.5;color:var(--av2-mut);margin-top:6px}
-.av2-sub b{color:var(--av2-fg);font-weight:600;font-variant-numeric:tabular-nums}
-.av2-be{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:10px 16px;border-radius:14px;background:var(--av2-box);border:1px solid var(--av2-boxl)}
-.av2-be span{font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--av2-mut);white-space:nowrap}
-.av2-be b{font-size:24px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.av2-kick{font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--av2-mut)}
+.av2-title{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-top:6px}
+.av2-sub{font-size:14.5px;line-height:1.5;color:var(--av2-mut);margin-top:6px}
+.av2-sub b{color:var(--av2-fg);font-weight:600}
+.av2-be{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.av2-be span{font-size:12.5px;color:var(--av2-mut);white-space:nowrap}
+.av2-be b{font-size:22px;font-weight:600;letter-spacing:-.02em}
 
 /* grid of boxes */
-.av2-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
-@container (min-width:760px){
-  .av2-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px}
-}
-.av2-box{display:flex;flex-direction:column;gap:18px;padding:24px;border-radius:18px;background:var(--av2-box);border:1px solid var(--av2-boxl);min-width:0}
-.av2-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--av2-mut)}
-.av2-h .av2-hr{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-weight:500;letter-spacing:.02em;text-transform:none}
-.av2-tick{display:inline-block;width:0;height:14px;border-left:2px dashed var(--av2-tick)}
-.av2-lab{font-size:13.5px;color:var(--av2-mut);line-height:1.35}
-.av2-num{font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
-.av2-num small{font-size:14px;font-weight:500;letter-spacing:0;opacity:.72;margin-right:5px}
-.av2-num.av2-hero{font-size:52px;color:var(--av2-gold)}
+.av2-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+@container (min-width:760px){.av2-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}}
+.av2-box{display:flex;flex-direction:column;gap:16px;padding:20px 22px;border-radius:14px;background:var(--av2-box);border:1px solid var(--av2-boxl);min-width:0}
+.av2-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;color:var(--av2-mut)}
+.av2-h .av2-hr{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-weight:500}
+.av2-tick{display:inline-block;width:0;height:13px;border-left:2px dashed var(--av2-tick)}
+.av2-lab{font-size:13px;color:var(--av2-mut);line-height:1.35}
+.av2-num{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+.av2-num small{font-size:13px;font-weight:500;letter-spacing:0;color:var(--av2-mut);margin-right:4px}
 .av2-good{color:var(--av2-good)} .av2-warn{color:var(--av2-warn)} .av2-bad{color:var(--av2-bad)}
 
-/* what EGP 1 really earns: coins */
-.av2-flow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:12px}
-.av2-node{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0}
-.av2-node .av2-num{height:56px;display:flex;align-items:flex-end}
-.av2-cpobox{justify-content:space-between}
-.av2-stack{display:flex;flex-direction:column-reverse;justify-content:flex-start;min-height:112px;padding-top:6px}
-.av2-coin{display:block;width:56px;height:15px;border-radius:50%;margin-top:-6px;
-  background:linear-gradient(180deg,#fff0c4 0%,#efcd7f 38%,#c4943f 70%,#8a6326 100%);
-  box-shadow:0 2px 0 #6a4a18,0 0 0 1px rgba(80,50,10,.35),inset 0 1px 0 rgba(255,255,255,.6)}
-.av2-coin:first-child{margin-top:0}
-.av2-coin.av2-part{clip-path:inset(0 calc((1 - var(--av2-p)) * 100%) 0 0)}
-.av2-pr .av2-coin{background:linear-gradient(180deg,#e8fff4 0%,#9be9c6 40%,#3fae80 75%,#1f6d4e 100%);box-shadow:0 2px 0 #174f39,0 0 0 1px rgba(10,60,40,.35),inset 0 1px 0 rgba(255,255,255,.6)}
-.av2-empty{display:block;width:56px;height:15px;border-radius:50%;border:1.5px dashed var(--av2-bad);opacity:.7}
-.av2-go .av2-coin{animation:av2drop .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--av2-i) * 45ms + .1s)}
-@keyframes av2drop{from{transform:translateY(-26px);opacity:0}}
-.av2-root svg.av2-arw{width:24px;height:24px;margin-bottom:46px;color:var(--av2-gold2);opacity:.85}
-.av2-note{font-size:15px;line-height:1.5;padding:12px 16px;border-radius:12px;background:var(--av2-box);box-shadow:inset 3px 0 0 var(--av2-warn)}
-.av2-note b{font-weight:600}
+/* what EGP 1 earns: three figures, then one bar that splits the sales */
+.av2-flow{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
+.av2-node{display:flex;flex-direction:column;gap:4px;min-width:0}
+.av2-node .av2-num.av2-hero{color:var(--av2-gold)}
+.av2-root svg.av2-arw{width:18px;height:18px;color:var(--av2-mut)}
+.av2-split{display:flex;flex-direction:column;gap:8px}
+.av2-sbar{position:relative;display:flex;height:12px;border-radius:6px;background:var(--av2-track);overflow:visible}
+.av2-sbar i{display:block;height:100%;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.av2-sbar i:first-child{border-radius:6px 0 0 6px}
+.av2-sbar i:last-of-type{border-radius:0 6px 6px 0}
+.av2-sbar em{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px solid var(--av2-fg);transition:left .5s cubic-bezier(.2,.8,.2,1)}
+.av2-leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--av2-mut)}
+.av2-leg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.av2-leg b{color:var(--av2-fg);font-weight:600}
+.av2-sw{width:10px;height:10px;border-radius:3px;flex:none}
+.av2-note{font-size:14px;line-height:1.5;color:var(--av2-mut);padding-top:14px;border-top:1px solid var(--av2-boxl)}
+.av2-note b{color:var(--av2-fg);font-weight:600}
 
-/* campaigns, per EGP 1 */
-.av2-camps{display:flex;flex-direction:column;gap:20px}
-.av2-camp{display:flex;flex-direction:column;gap:10px}
-.av2-ct{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap}
-.av2-ct b{font-size:16.5px;font-weight:600;min-width:0}
-.av2-pill{margin-left:auto;font-size:13px;font-weight:600;padding:5px 12px;border-radius:99px;white-space:nowrap;flex:none}
+/* campaigns, per EGP 1 — a tidy list: name · bar · value · verdict */
+.av2-camps{display:flex;flex-direction:column}
+.av2-camp{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:8px 14px;padding:12px 0;border-top:1px solid var(--av2-boxl)}
+.av2-camp:first-child{border-top:0;padding-top:0}
+.av2-ct{min-width:0;display:flex;flex-direction:column;gap:2px}
+.av2-ct b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av2-ct .av2-lab{font-size:12.5px}
+.av2-cv{font-size:18px;font-weight:600;white-space:nowrap;text-align:right;min-width:64px}
+.av2-pill{font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:6px;white-space:nowrap;text-align:center;min-width:112px}
 .av2-pg{color:var(--av2-pg);background:var(--av2-pgbg)} .av2-pw{color:var(--av2-pw);background:var(--av2-pwbg)} .av2-pb{color:var(--av2-pb);background:var(--av2-pbbg)}
-.av2-cb{display:flex;align-items:center;gap:16px}
-.av2-bar{position:relative;flex:1;height:14px;border-radius:99px;background:var(--av2-track);min-width:0}
-.av2-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;transform-origin:left;transition:width .5s cubic-bezier(.2,.8,.2,1)}
-.av2-go .av2-bar i{animation:av2grow .9s cubic-bezier(.2,.8,.2,1) .2s both}
-.av2-bar em{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed var(--av2-tick)}
-.av2-cv{font-size:20px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:112px;text-align:right}
-.av2-cv small{font-size:13px;font-weight:500;color:var(--av2-mut)}
-.av2-foot{font-size:14px;line-height:1.5;color:var(--av2-mut)}
+.av2-camp .av2-bar{grid-column:1 / -1}
+.av2-bar{position:relative;display:block;height:8px;border-radius:4px;background:var(--av2-track);min-width:0}
+.av2-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;transform-origin:left;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.av2-go .av2-bar i,.av2-go .av2-sbar i{animation:av2grow .8s cubic-bezier(.2,.8,.2,1) .15s both}
+.av2-bar em{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--av2-tick)}
+.av2-foot{font-size:13.5px;line-height:1.5;color:var(--av2-mut)}
 .av2-foot b{color:var(--av2-fg);font-weight:600}
 
 /* cost per order vs average order */
-.av2-cmp{display:flex;flex-direction:column;gap:16px}
-.av2-cmpr{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:16px}
-.av2-cmpr .av2-num{font-size:26px}
-.av2-share{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-size:15px;line-height:1.45}
-.av2-share .av2-num{font-size:40px;color:var(--av2-warn)}
+.av2-cmp{display:flex;flex-direction:column;gap:14px}
+.av2-cmpr{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:6px 14px}
+.av2-cmpr .av2-bar{grid-column:1 / -1}
+.av2-cmpr .av2-num{font-size:22px}
+.av2-share{font-size:14.5px;line-height:1.5;color:var(--av2-mut);padding-top:14px;border-top:1px solid var(--av2-boxl)}
+.av2-share b{color:var(--av2-fg);font-weight:600}
+.av2-share .av2-num{font-size:22px;margin-right:6px;color:var(--av2-warn)}
 
 /* actions */
-.av2-acts{display:flex;flex-direction:column;gap:12px}
-.av2-act{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;background:var(--av2-box);border:1px solid var(--av2-boxl);transition:transform .2s,border-color .2s}
-.av2-act:hover{transform:translateY(-1px);border-color:var(--av2-line)}
-.av2-act > svg.av2-ai{width:22px;height:22px;color:var(--av2-gold2)}
-.av2-act > span{flex:1;min-width:0;font-size:15.5px;line-height:1.45}
+.av2-acts{display:flex;flex-direction:column}
+.av2-act{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--av2-boxl)}
+.av2-act:first-child{border-top:0;padding-top:0}
+.av2-act > span{flex:1;min-width:0;font-size:15px;line-height:1.45}
 .av2-act > span b{font-weight:600}
-.av2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;padding:9px 15px;border-radius:99px;background:var(--av2-lnkbg);color:var(--av2-lnk);flex:none}
+.av2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;color:var(--av2-lnk);flex:none}
 .av2-root .av2-act > b svg.av2-i{width:15px;height:15px;transition:transform .2s}
 .av2-act:hover > b svg.av2-i{transform:translateX(3px)}
+.av2-act:hover > span{color:var(--av2-fg)}
 
 /* phone / narrow */
 @container (max-width:560px){
-  .av2-title{font-size:23px}
-  .av2-box{padding:20px 18px}
+  .av2-title{font-size:21px}
+  .av2-box{padding:16px}
   .av2-flow{gap:6px}
-  .av2-num{font-size:26px}
-  .av2-num.av2-hero{font-size:34px}
-  .av2-node .av2-num{height:38px;font-size:24px}
-  .av2-node .av2-num.av2-hero{font-size:34px}
-  .av2-node .av2-num small{display:block;font-size:11px}
-  .av2-node .av2-num{flex-direction:column;align-items:flex-start;justify-content:flex-end;height:52px}
-  .av2-ct .av2-lab{display:none}
-  .av2-be{flex-direction:row;align-items:baseline;gap:10px}
-  .av2-num small{font-size:12px;margin-right:3px}
-  .av2-coin,.av2-empty{width:42px;height:12px;margin-top:-5px}
-  .av2-stack{min-height:96px}
-  .av2-root svg.av2-arw{width:16px;height:16px;margin-bottom:36px}
-  .av2-cv{min-width:0;font-size:18px}
-  .av2-cmpr{grid-template-columns:minmax(0,1fr) auto;row-gap:8px}
-  .av2-cmpr .av2-bar{grid-column:1 / -1;grid-row:2}
-  .av2-act{flex-direction:column;align-items:flex-start;gap:12px}
-  .av2-act > svg.av2-ai{display:none}
+  .av2-num{font-size:20px}
+  .av2-node .av2-num{line-height:1.25}
+  .av2-node .av2-num small{display:block;font-size:12px;line-height:1.3;margin:0 0 2px}
+  .av2-root svg.av2-arw{width:14px;height:14px}
+  .av2-camp{grid-template-columns:minmax(0,1fr) auto}
+  .av2-pill{grid-column:1 / -1;justify-self:start;min-width:0;grid-row:3}
+  .av2-cv{font-size:17px}
+  .av2-act{flex-direction:column;align-items:flex-start;gap:6px}
+  .av2-be{align-items:flex-start}
 }
-@media (max-width:600px){.av2-root{padding:20px 16px 18px;border-radius:20px}}
+@media (max-width:600px){.av2-root{padding:18px 14px 16px;border-radius:18px}}
 @keyframes av2grow{from{transform:scaleX(0)}}
 @media (prefers-reduced-motion:reduce){.av2-root *,.av2-root *::before,.av2-root *::after{animation:none!important;transition-duration:.001s!important}}
 /* === ADS v2 END === */
+/* === CITIES v2 START === */
+/* Cities v2 — "Sales by location": ranked rows grouped by country (Egypt first), no map — a map has to zoom out the
+   moment an order comes from abroad. Each row: rank · country code · city + country · orders · share · bar.
+   Tap a row → revenue from there, average order, top product. Egypt shows its top 5; the rest fold behind a toggle.
+   Self-contained, ct2- prefix, neutral styling (sits inside each look's own panel). THEME: light when
+   <html data-theme="light"> or .ct2[data-ct2-theme="light"]. Rendered by the CITIES v2 script from CT2_DATA. */
+.ct2{--ct2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --ct2-fg:#eceaf3;--ct2-mut:#a7a3b6;--ct2-line:rgba(255,255,255,.08);--ct2-soft:rgba(255,255,255,.04);--ct2-track:rgba(255,255,255,.07);
+  --ct2-bar:linear-gradient(90deg,#7c3fc1,#b48cf0);--ct2-bar2:linear-gradient(90deg,#5d5872,#8f8aa3);--ct2-acc:#a275e0;--ct2-cc:#d7c6f5;--ct2-ccbg:rgba(162,117,224,.14);
+  container-type:inline-size;font-family:var(--ct2-font);color:var(--ct2-fg);font-variant-numeric:tabular-nums;min-width:0}
+[data-theme="light"] .ct2,.ct2[data-ct2-theme="light"]{--ct2-fg:#17141f;--ct2-mut:#5f5b6c;--ct2-line:rgba(20,10,40,.09);--ct2-soft:rgba(85,13,166,.04);--ct2-track:rgba(20,10,40,.07);
+  --ct2-bar:linear-gradient(90deg,#550da6,#8f5ad6);--ct2-bar2:linear-gradient(90deg,#8d88a0,#b3aec4);--ct2-acc:#550da6;--ct2-cc:#4a0b93;--ct2-ccbg:rgba(85,13,166,.08)}
+.ct2 *,.ct2 *::before,.ct2 *::after{box-sizing:border-box;margin:0;padding:0}
+:where(.ct2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+.ct2 :focus-visible{outline:2px solid var(--ct2-acc);outline-offset:2px;border-radius:8px}
+.ct2-sum{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--ct2-line);font-size:13.5px;color:var(--ct2-mut)}
+.ct2-sum b{color:var(--ct2-fg);font-weight:600}
+.ct2-sum span{font-size:12.5px}
+.ct2-grp{display:flex;align-items:center;gap:10px;padding:16px 0 6px;font-size:13px;color:var(--ct2-mut)}
+.ct2-grp b{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ct2-fg)}
+.ct2-grp em{margin-left:auto;font-style:normal;white-space:nowrap}
+.ct2-cc{display:inline-grid;place-items:center;min-width:30px;height:20px;padding:0 5px;border-radius:5px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--ct2-cc);background:var(--ct2-ccbg);flex:none}
+.ct2-row{border-radius:12px;transition:background .2s}
+.ct2-row:hover,.ct2-row.ct2-open{background:var(--ct2-soft)}
+.ct2-r{display:grid;grid-template-columns:22px 30px minmax(0,1fr) auto 52px;align-items:center;column-gap:10px;row-gap:7px;width:100%;padding:10px 8px;border-radius:12px}
+.ct2-n{font-size:12.5px;font-weight:600;color:var(--ct2-mut);text-align:center}
+.ct2-nm{min-width:0;display:flex;align-items:baseline;gap:7px}
+.ct2-nm b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ct2-nm small{font-size:12.5px;color:var(--ct2-mut);white-space:nowrap}
+.ct2-o{font-size:14px;font-weight:600;white-space:nowrap;text-align:right}
+.ct2-o small{font-size:12.5px;font-weight:400;color:var(--ct2-mut)}
+.ct2-p{font-size:14px;color:var(--ct2-mut);text-align:right;white-space:nowrap}
+.ct2-bar{grid-column:3 / -1;height:6px;border-radius:99px;background:var(--ct2-track);overflow:hidden}
+.ct2-bar i{display:block;height:100%;border-radius:99px;background:var(--ct2-bar);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.ct2-other .ct2-bar i{background:var(--ct2-bar2)}
+.ct2-pre .ct2-bar i{transform:scaleX(0)}
+.ct2-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1)}
+.ct2-open .ct2-det{grid-template-rows:1fr}
+.ct2-det > div{overflow:hidden}
+.ct2-dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 16px;padding:2px 8px 14px 72px}
+.ct2-dl div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ct2-dl span{font-size:12.5px;color:var(--ct2-mut)}
+.ct2-dl b{font-size:15px;font-weight:600;line-height:1.3}
+.ct2-dl b small{font-size:12px;font-weight:500;color:var(--ct2-mut);margin-right:3px}
+.ct2-more[hidden]{display:none}
+.ct2-tog{display:inline-flex;align-items:center;gap:6px;margin:6px 0 0 8px;padding:7px 12px;border-radius:99px;font-size:13px;font-weight:600;color:var(--ct2-acc);box-shadow:inset 0 0 0 1px var(--ct2-line)}
+.ct2-tog:hover{box-shadow:inset 0 0 0 1px var(--ct2-acc)}
+.ct2-tog svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.ct2-tog[aria-expanded="true"] svg{transform:rotate(180deg)}
+@container (max-width:520px){
+  .ct2-r{grid-template-columns:20px 30px minmax(0,1fr) auto 46px;column-gap:8px;padding:10px 4px}
+  .ct2-nm{flex-direction:column;gap:0}
+  .ct2-o small{display:none}
+  .ct2-dl{grid-template-columns:repeat(2,minmax(0,1fr));padding:2px 8px 14px 62px}
+  .ct2-dl div:last-child{grid-column:1 / -1}
+}
+@media (prefers-reduced-motion:reduce){.ct2 *{transition:none!important}}
+/* === CITIES v2 END === */
 </style>
 </head>
 <body>
@@ -1433,11 +1518,10 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
         <div class="nv2-anc nv2-datew-d"><button type="button" class="nv2-date" data-nv2-pop="date-d" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
           <div class="nv2-pop" data-nv2-id="date-d" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
-          <div class="nv2-pop" data-nv2-id="bell" style="width:300px">
-            <div class="nv2-who"><b>Notifications</b><span>3 new this week</span></div>
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><i></i><span>Revenue grew 12.4%<small>vs the 7 days before</small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><i></i><span>Meta spend up 6.3%<small>Profit ROAS 1.44x, under break-even</small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><i></i><span>9 variants running low<small>Jasmine Wrap Midi S is sold out</small></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
         <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b><span>sam@frillnwear.com</span></button>
           <div class="nv2-pop" data-nv2-id="me" role="menu">
@@ -1477,32 +1561,20 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
             <span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">FN</span><div><div class="cv2-bt">Sales · where the money went</div><div class="cv2-bs">Last 7 days · net sales EGP 253,113</div></div>
-            <button class="cv2-close" type="button" data-cv2-close>Close <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <section class="cv2-blk">
-            <h4 class="cv2-h">Where each EGP 100 of sales went</h4>
-            <div class="cv2-lead"><span class="cv2-big cv2-hero cv2-gc"><small>EGP</small>18</span><span class="cv2-p">is what you keep from every EGP 100 — <b>EGP 46,671</b> this week.</span></div>
-            <div class="cv2-split" role="img" aria-label="Product cost 29, Meta ads 42, commission 7, Bosta fees 4, you keep 18">
-              <i style="width:29%;background:#c9b0f0"></i><i style="width:42%;background:#f0d48e"></i><i style="width:7%;background:#e7d4ff"></i><i style="width:4%;background:#9a8fb8"></i><i class="cv2-keep" style="width:18%;background:#3fbf8f"></i>
-            </div>
-            <div class="cv2-leg">
-              <div><span class="cv2-big">29</span><span class="cv2-lab"><i class="cv2-sw" style="background:#c9b0f0"></i>Product cost</span></div>
-              <div><span class="cv2-big cv2-wc">42</span><span class="cv2-lab"><i class="cv2-sw" style="background:#f0d48e"></i>Meta ads</span></div>
-              <div><span class="cv2-big">7</span><span class="cv2-lab"><i class="cv2-sw" style="background:#e7d4ff"></i>Commission</span></div>
-              <div><span class="cv2-big">4</span><span class="cv2-lab"><i class="cv2-sw" style="background:#9a8fb8"></i>Bosta fees</span></div>
-              <div><span class="cv2-big cv2-gc">18</span><span class="cv2-lab"><i class="cv2-sw" style="background:#3fbf8f"></i>You keep</span></div>
-            </div>
-          </section>
-          <section class="cv2-blk">
-            <h4 class="cv2-h">Cancelled &amp; returns</h4>
-            <div class="cv2-two">
-              <div><span class="cv2-big cv2-wc">14 <small>cancelled</small></span><span class="cv2-lab">7.1% of orders · EGP 19,600 never shipped</span></div>
-              <div><span class="cv2-big">7 <small>returned</small></span><span class="cv2-lab">4.2% of parcels · EGP 10,150 refunded</span></div>
-            </div>
-          </section>
-          <div class="cv2-acts">
-            <a class="cv2-act" href="#" data-cv2-go="ads"><span>Ads take <b>EGP 42</b> of every 100 — trim the losing campaign</span><b>Review Meta <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+          <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt">Where each EGP 100 went</div><div class="cv2-bs">Net sales EGP 253,113</div></div>
+            <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="cv2-lead"><span class="cv2-big cv2-hero cv2-gc"><small>EGP</small>18</span><span class="cv2-p">kept of every EGP 100 · <b>EGP 46,671</b></span></div>
+          <div class="cv2-split" role="img" aria-label="Product cost 29, Meta ads 42, commission 7, Bosta fees 4, you keep 18">
+            <i style="width:29%;background:#c9b0f0"></i><i style="width:42%;background:#f0d48e"></i><i style="width:7%;background:#e7d4ff"></i><i style="width:4%;background:#9a8fb8"></i><i class="cv2-keep" style="width:18%;background:#3fbf8f"></i>
           </div>
+          <div class="cv2-leg">
+            <div style="--sw:#c9b0f0"><span class="cv2-big">29</span><span class="cv2-lab">Product<span class="cv2-wide"> cost</span></span></div>
+            <div style="--sw:#f0d48e"><span class="cv2-big cv2-wc">42</span><span class="cv2-lab">Meta ads</span></div>
+            <div style="--sw:#e7d4ff"><span class="cv2-big">7</span><span class="cv2-lab">Commission</span></div>
+            <div style="--sw:#9a8fb8"><span class="cv2-big">4</span><span class="cv2-lab">Bosta<span class="cv2-wide"> fees</span></span></div>
+            <div style="--sw:#3fbf8f"><span class="cv2-big cv2-gc">18</span><span class="cv2-lab"><span class="cv2-wide">You keep</span><span class="cv2-nar">Kept</span></span></div>
+          </div>
+          <div class="cv2-foot"><span class="cv2-p"><b class="cv2-wc">14</b> cancelled<span class="cv2-wide"> (EGP 19,600)</span> · <b>7</b> returned<span class="cv2-wide"> (EGP 10,150)</span></span><a class="cv2-lnk" href="#" data-cv2-go="ads">Review Meta <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
@@ -1519,24 +1591,18 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
             <span class="cv2-flipbtn cv2-ic" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">∞</span><div><div class="cv2-bt">Ads · from view to purchase</div><div class="cv2-bs">Last 7 days · Meta pixel · spent EGP 106,807</div></div>
-            <button class="cv2-close" type="button" data-cv2-close>Close <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <section class="cv2-blk">
-            <h4 class="cv2-h">From view to purchase</h4>
-            <div class="cv2-fun" role="img" aria-label="14,620 viewed, 779 added to cart, 327 reached checkout, 203 purchased">
-              <div class="cv2-fr" style="--cv2-fw:100%"><span class="cv2-fl">View content</span><span class="cv2-fv">14,620</span></div>
-              <div class="cv2-fr" style="--cv2-fw:62%"><span class="cv2-fl">Add to cart</span><span class="cv2-fv">779<em>5%</em></span></div>
-              <div class="cv2-fr" style="--cv2-fw:44%"><span class="cv2-fl">Checkout</span><span class="cv2-fv">327<em>42%</em></span></div>
-              <div class="cv2-fr cv2-last" style="--cv2-fw:34%"><span class="cv2-fl">Purchase</span><span class="cv2-fv">203<em>62%</em></span></div>
-            </div>
-          </section>
-          <section class="cv2-blk">
-            <h4 class="cv2-h">Campaigns</h4>
-            <div class="cv2-two">
-              <div class="cv2-cmpn cv2-best"><span class="cv2-lab">Best campaign</span><b class="cv2-cn">Satin Edit · Advantage+</b><span class="cv2-big cv2-gc">3.4x</span></div>
-              <div class="cv2-cmpn cv2-worst"><span class="cv2-lab">Worst campaign</span><b class="cv2-cn">Retarget · 30 days</b><span class="cv2-big cv2-bc">1.2x</span></div>
-            </div>
-          </section>
+          <div class="cv2-bh"><span class="cv2-fn">∞</span><div class="cv2-bhx"><div class="cv2-bt">From view to purchase</div><div class="cv2-bs">Meta pixel · spent EGP 106,807</div></div>
+            <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="cv2-fun" role="img" aria-label="14,620 viewed, 779 added to cart, 327 reached checkout, 203 purchased">
+            <div class="cv2-fs"><span class="cv2-lab"><span class="cv2-wide">View content</span><span class="cv2-nar">Viewed</span></span><span class="cv2-big">14,620</span><span class="cv2-fp">all visitors</span><span class="cv2-fb"><i style="width:100%"></i></span></div>
+            <div class="cv2-fs"><span class="cv2-lab"><span class="cv2-wide">Add to cart</span><span class="cv2-nar">Cart</span></span><span class="cv2-big">779</span><span class="cv2-fp">5%<span class="cv2-wide"> of views</span></span><span class="cv2-fb"><i style="width:62%"></i></span></div>
+            <div class="cv2-fs"><span class="cv2-lab">Checkout</span><span class="cv2-big">327</span><span class="cv2-fp">42%<span class="cv2-wide"> of carts</span></span><span class="cv2-fb"><i style="width:44%"></i></span></div>
+            <div class="cv2-fs cv2-last"><span class="cv2-lab"><span class="cv2-wide">Purchase</span><span class="cv2-nar">Bought</span></span><span class="cv2-big">203</span><span class="cv2-fp">62%<span class="cv2-wide"> of checkouts</span></span><span class="cv2-fb"><i style="width:34%"></i></span></div>
+          </div>
+          <div class="cv2-two">
+            <div class="cv2-cmpn cv2-best"><span class="cv2-lab">Best<span class="cv2-wide"> campaign</span></span><b class="cv2-cn">Satin Edit · Advantage+</b><span class="cv2-big cv2-gc">3.4x</span></div>
+            <div class="cv2-cmpn cv2-worst"><span class="cv2-lab">Worst<span class="cv2-wide"> campaign</span></span><b class="cv2-cn">Retarget · 30 days</b><span class="cv2-big cv2-bc">1.2x</span></div>
+          </div>
         </div></div>
       </div>
     </div>
@@ -1553,26 +1619,17 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
             <span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">B</span><div><div class="cv2-bt">Shipping · your Bosta cash</div><div class="cv2-bs">EGP 58,300 to collect · 166 parcels</div></div>
-            <button class="cv2-close" type="button" data-cv2-close>Close <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <section class="cv2-blk">
-            <h4 class="cv2-h">Your cash, by age</h4>
-            <div class="cv2-age">
-              <div><span class="cv2-lab">0–3 days</span><span class="cv2-big"><small>EGP</small>12,100</span><span class="cv2-agebar"><i style="width:31.8%"></i></span></div>
-              <div><span class="cv2-lab">4–7 days</span><span class="cv2-big"><small>EGP</small>8,200</span><span class="cv2-agebar"><i style="width:21.6%"></i></span></div>
-              <div class="cv2-old"><span class="cv2-lab"><b class="cv2-bc">7+ days · stuck</b></span><span class="cv2-big"><small>EGP</small>38,000</span><span class="cv2-agebar"><i style="width:100%"></i></span></div>
-            </div>
-          </section>
-          <section class="cv2-blk">
-            <div class="cv2-two">
-              <div><h4 class="cv2-h">Next Bosta payout</h4>
-                <div class="cv2-date"><span class="cv2-cal"><span>Nov</span><b>2</b></span><div><span class="cv2-big">EGP 20,300</span><div class="cv2-lab">expected Sunday</div></div></div></div>
-              <div><h4 class="cv2-h">Returns</h4>
-                <span class="cv2-big" style="font-size:30px">4.2%</span><span class="cv2-lab">7 of 166 parcels came back</span></div>
-            </div>
-          </section>
-          <div class="cv2-acts">
-            <a class="cv2-act" href="#" data-cv2-go="orders"><span>Call the <b>9 customers</b> stuck 7+ days</span><b>Review shipping <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+          <div class="cv2-bh"><span class="cv2-fn">B</span><div class="cv2-bhx"><div class="cv2-bt">Your Bosta cash, by age</div><div class="cv2-bs">EGP 58,300 to collect · 166 parcels</div></div>
+            <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+          <div class="cv2-age">
+            <div><span class="cv2-lab">0–3 days</span><span class="cv2-big"><small>EGP</small>12,100</span><span class="cv2-agebar"><i style="width:31.8%"></i></span></div>
+            <div><span class="cv2-lab">4–7 days</span><span class="cv2-big"><small>EGP</small>8,200</span><span class="cv2-agebar"><i style="width:21.6%"></i></span></div>
+            <div class="cv2-old"><span class="cv2-lab"><b class="cv2-bc">7+ days<span class="cv2-wide"> · 9 customers</span><span class="cv2-nar"> · stuck</span></b></span><span class="cv2-big"><small>EGP</small>38,000</span><span class="cv2-agebar"><i style="width:100%"></i></span></div>
+          </div>
+          <div class="cv2-foot3">
+            <div class="cv2-date"><span class="cv2-cal"><span>Nov</span><b>2</b></span><div><span class="cv2-lab">Next payout<span class="cv2-nar"> · Nov 2</span></span><span class="cv2-big">EGP 20,300</span></div></div>
+            <div><span class="cv2-lab">Returns</span><span class="cv2-big">4.2%<small class="cv2-wide"> 7 of 166</small></span></div>
+            <a class="cv2-lnk" href="#" data-cv2-go="orders">Review shipping <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
         </div></div>
       </div>
@@ -1710,10 +1767,9 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     <div class="grid">
       <section class="panel s12">
         <div class="ph"><h3>Buyer cities</h3><span class="r">Tap a city</span></div>
-        <div class="mapbox">
-          <div class="map" id="map"><svg id="egypt" viewBox="0 0 304 200" role="img" aria-label="Map of northern Egypt with buyer cities"></svg><div class="tip" id="tip"></div></div>
-          <div class="rank" id="rank"></div>
-        </div>
+<!-- === CITIES v2 START === -->
+<div class="ct2" data-ct2 role="region" aria-label="Sales by location"></div>
+<!-- === CITIES v2 END === -->
       </section>
       <section class="panel s12">
         <div class="ph"><h3>Recent orders</h3><a class="lnk" href="#">All orders →</a></div>
@@ -1737,7 +1793,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 <section class="av2-root" id="av2" aria-labelledby="av2-title">
   <div class="av2-hd">
     <div class="av2-hl">
-      <span class="av2-kick"><span class="av2-fn" aria-hidden="true">∞</span>Ads · last 7 days</span>
+      <span class="av2-kick">Ads · last 7 days</span>
       <h2 class="av2-title" id="av2-title">Is Meta paying you back?</h2>
       <p class="av2-sub">You spent <b>EGP <span data-av2="spend">106,807</span></b> on Meta and it brought <b>EGP <span data-av2="sales">253,113</span></b> in sales.</p>
     </div>
@@ -1746,26 +1802,30 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   <div class="av2-grid">
 
     <article class="av2-box av2-earn">
-      <h3 class="av2-h">What EGP 1 really earns</h3>
+      <h3 class="av2-h">What EGP 1 of ads earns</h3>
       <div class="av2-flow" role="img" data-av2-flowlabel aria-label="EGP 1 spent brings EGP 2.37 in sales and leaves EGP 0.44 profit">
-        <div class="av2-node"><div class="av2-stack" data-av2-coins="1" aria-hidden="true"></div><span class="av2-lab">You spend</span><span class="av2-num"><small>EGP</small>1</span></div>
+        <div class="av2-node"><span class="av2-lab">You spend</span><span class="av2-num"><small>EGP</small>1</span></div>
         <svg class="av2-i av2-arw" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <div class="av2-node"><div class="av2-stack" data-av2-coins="2.37" data-av2-cf="rr" aria-hidden="true"></div><span class="av2-lab">Sales back</span><span class="av2-num av2-hero"><small>EGP</small><span data-av2="rr">2.37</span></span></div>
+        <div class="av2-node"><span class="av2-lab">Sales back</span><span class="av2-num av2-hero"><small>EGP</small><span data-av2="rr">2.37</span></span></div>
         <svg class="av2-i av2-arw" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        <div class="av2-node"><div class="av2-stack av2-pr" data-av2-coins="0.44" data-av2-cf="ppp" aria-hidden="true"></div><span class="av2-lab">Profit left</span><span class="av2-num av2-warn" data-av2-pcls><small>EGP</small><span data-av2="ppp">0.44</span></span></div>
+        <div class="av2-node"><span class="av2-lab">Profit left</span><span class="av2-num av2-warn" data-av2-pcls><small>EGP</small><span data-av2="ppp">0.44</span></span></div>
+      </div>
+      <div class="av2-split">
+        <div class="av2-sbar" aria-hidden="true"><i data-av2-seg="ad" style="width:42.2%;background:var(--av2-ad)"></i><i data-av2-seg="cost" style="width:39.4%;background:var(--av2-cost)"></i><i data-av2-seg="pr" style="width:18.4%;background:var(--av2-good)"></i><em data-av2-salesmark style="left:100%;display:none"></em></div>
+        <div class="av2-leg"><span><i class="av2-sw" style="background:var(--av2-ad)"></i>Ad spend <b>1.00</b></span><span><i class="av2-sw" style="background:var(--av2-cost)"></i>Product, commission, Bosta <b data-av2="oth">0.93</b></span><span><i class="av2-sw" style="background:var(--av2-good)"></i>Profit <b data-av2="ppp2">0.44</b></span></div>
       </div>
       <p class="av2-note" data-av2="note">Break-even is <b>1.65x</b> — you are above it on sales, but profit per pound is thin. Product cost, commission and Bosta eat the rest.</p>
     </article>
 
     <article class="av2-box av2-campbox">
-      <h3 class="av2-h">Campaigns, per EGP 1 <span class="av2-hr"><i class="av2-tick"></i>break-even 1.65</span></h3>
+      <h3 class="av2-h">Campaigns · sales per EGP 1 <span class="av2-hr"><i class="av2-tick"></i>break-even 1.65</span></h3>
       <div class="av2-camps">
-        <div class="av2-camp"><div class="av2-ct"><b>Satin Edit · Advantage+</b><span class="av2-pill av2-pg">Scale</span></div>
-          <div class="av2-cb"><span class="av2-bar"><i style="width:97.1%;background:linear-gradient(90deg,#2d9b70,#8ff0c8)"></i><em style="left:47.1%"></em></span><span class="av2-cv"><small>EGP 1 →</small> 3.40</span></div></div>
-        <div class="av2-camp"><div class="av2-ct"><b>Broad · Women 25–44</b><span class="av2-lab">frequency 4.1</span><span class="av2-pill av2-pw">Refresh creative</span></div>
-          <div class="av2-cb"><span class="av2-bar"><i style="width:60%;background:linear-gradient(90deg,#a87a33,#f6d58c)"></i><em style="left:47.1%"></em></span><span class="av2-cv"><small>EGP 1 →</small> 2.10</span></div></div>
-        <div class="av2-camp"><div class="av2-ct"><b>Retarget · 30 days</b><span class="av2-pill av2-pb">Cut</span></div>
-          <div class="av2-cb"><span class="av2-bar"><i style="width:34.3%;background:linear-gradient(90deg,#9b3328,#ff9d8f)"></i><em style="left:47.1%"></em></span><span class="av2-cv av2-bad"><small>EGP 1 →</small> 1.20</span></div></div>
+        <div class="av2-camp"><div class="av2-ct"><b>Satin Edit · Advantage+</b></div><span class="av2-cv">3.40</span><span class="av2-pill av2-pg">Scale</span>
+          <span class="av2-bar"><i style="width:97.1%;background:var(--av2-good)"></i><em style="left:47.1%"></em></span></div>
+        <div class="av2-camp"><div class="av2-ct"><b>Broad · Women 25–44</b><span class="av2-lab">frequency 4.1</span></div><span class="av2-cv">2.10</span><span class="av2-pill av2-pw">Refresh creative</span>
+          <span class="av2-bar"><i style="width:60%;background:var(--av2-warn)"></i><em style="left:47.1%"></em></span></div>
+        <div class="av2-camp"><div class="av2-ct"><b>Retarget · 30 days</b></div><span class="av2-cv av2-bad">1.20</span><span class="av2-pill av2-pb">Cut</span>
+          <span class="av2-bar"><i style="width:34.3%;background:var(--av2-bad)"></i><em style="left:47.1%"></em></span></div>
       </div>
       <p class="av2-foot"><b>Broad · Women 25–44</b> has reached the same people 4.1 times on average — new creative before more budget.</p>
     </article>
@@ -1773,17 +1833,17 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     <article class="av2-box av2-cpobox">
       <h3 class="av2-h">Cost per order vs average order</h3>
       <div class="av2-cmp">
-        <div class="av2-cmpr"><span class="av2-lab">Ads cost per order</span><span class="av2-bar"><i data-av2-cpobar style="width:37.8%;background:linear-gradient(90deg,#a87a33,#f0d48e)"></i></span><span class="av2-num av2-warn"><small>EGP</small><span data-av2="cpo">526</span></span></div>
-        <div class="av2-cmpr"><span class="av2-lab">Average order</span><span class="av2-bar"><i style="width:100%;background:linear-gradient(90deg,rgba(162,117,224,.55),rgba(162,117,224,.9))"></i></span><span class="av2-num"><small>EGP</small><span data-av2="aov">1,391</span></span></div>
+        <div class="av2-cmpr"><span class="av2-lab">Ads cost per order</span><span class="av2-num av2-warn"><small>EGP</small><span data-av2="cpo">526</span></span><span class="av2-bar"><i data-av2-cpobar style="width:37.8%;background:var(--av2-ad)"></i></span></div>
+        <div class="av2-cmpr"><span class="av2-lab">Average order</span><span class="av2-num"><small>EGP</small><span data-av2="aov">1,391</span></span><span class="av2-bar"><i style="width:100%;background:var(--av2-acc)"></i></span></div>
       </div>
-      <p class="av2-share"><span class="av2-num"><span data-av2="share">38</span>%</span><span>Each order pays <b data-av2="share2">38%</b> of its value back to Meta.</span></p>
+      <p class="av2-share"><span class="av2-num"><span data-av2="share">38</span>%</span>Each order pays <b data-av2="share2">38%</b> of its value back to Meta.</p>
     </article>
 
     <article class="av2-box av2-dobox">
       <h3 class="av2-h">What to do next</h3>
       <div class="av2-acts">
-        <a class="av2-act" href="#" data-av2-go="adsmanager"><svg class="av2-i av2-ai" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17l5-5 4 4 7-8M15 8h5v5"/></svg><span>Move <b>EGP 5,000/day</b> from Retarget to Satin Edit</span><b>Open Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
-        <a class="av2-act" href="#" data-av2-go="topup"><svg class="av2-i av2-ai" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-4 2 4M16 13.5h2"/></svg><span>Ad balance lasts <b>~6 days</b> (EGP 96,400)</span><b>Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+        <a class="av2-act" href="#" data-av2-go="adsmanager"><span>Move <b>EGP 5,000/day</b> from Retarget to Satin Edit</span><b>Open Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+        <a class="av2-act" href="#" data-av2-go="topup"><span>Ad balance lasts <b>~6 days</b> (EGP 96,400)</span><b>Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
       </div>
     </article>
 
@@ -1869,7 +1929,6 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
             <div><span>Placed</span><b>196</b><em>182 web · 14 admin</em></div>
             <div><span>Valid</span><b>175</b><em>161 web · 14 admin</em></div>
             <div><span>Paid &amp; kept</span><b>164</b></div>
-            <div><span>Revenue ROAS</span><b class="g">+5.7%</b><em>vs prior</em></div>
           </div>
         </div>
         <div>
@@ -1956,7 +2015,6 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     $$('.pane').forEach(function(p){var on=p.id==='p-'+name;if(on&&p.hidden){p.hidden=false;countUp(p)}else if(!on)p.hidden=true});
     place();
     var bt=$('[role=tab].on',seg);seg.scrollTo({left:bt.offsetLeft-(seg.clientWidth-bt.offsetWidth)/2,behavior:'smooth'});
-    if(name==='sales')requestAnimationFrame(function(){selectCity(selCity||'Cairo')});
     if(scroll)scrollToBar();
   }
   tabs.forEach(function(t,i){
@@ -1975,47 +2033,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   /* Ask AI quick action → the assistant bar */
   $('#qaAi').addEventListener('click',function(){var a=$('#ask');a.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});a.classList.add('pulse');setTimeout(function(){a.classList.remove('pulse')},1600)});
 
-  /* ================= sales: Egypt buyer-city map ================= */
-  var coast=[[0,68.4],[28.5,58.9],[49.4,47.5],[63.6,36.1],[92.2,21.9],[123.5,17.1],[156.8,11.4],[194.8,16.2],[232.8,17.1],[251.8,30.4],[275.5,40.9],[304,52.3]];
-  var coastD='M'+coast.map(function(p){return p.join(' ')}).join(' L'), land=coastD+' L304 200 L0 200 Z';
-  var cities=[['Cairo',31,176,152],['Giza',17,158,168],['Alexandria',14,52,52],['New Cairo',7,202,158],['6th of October',5.5,134,178],['Sheikh Zayed',4.5,144,148],['Mansoura',3.5,188,64],['Tanta',2.5,152,88]];
-  var HUB=[176,152];
-  var m='<path d="'+land+'" fill="rgba(124,63,193,.35)" filter="url(#glowBig)" opacity=".4"/><path d="'+land+'" fill="url(#landG)"/>'
-    +'<path d="'+coastD+'" fill="none" stroke="#a275e0" stroke-width="1.1" stroke-linejoin="round" filter="url(#glow)"/>'
-    +[8,16,24].map(function(o){return '<path d="'+coast.map(function(p,i){return (i?'L':'M')+p[0]+' '+(p[1]-o)}).join(' ')+'" fill="none" stroke="rgba(162,117,224,'+(.16-o*.004)+')" stroke-width=".6" stroke-dasharray="3 4"/>'}).join('')
-    +'<path d="M176 152 L173 175 L177 200" fill="none" stroke="#a275e0" stroke-width="1.6" stroke-linecap="round" opacity=".45"/>'
-    +'<path d="M176 152 L150 119 L128 90 L109 57 L92 22" fill="none" stroke="#a275e0" stroke-width="1" stroke-linecap="round" opacity=".35"/>'
-    +'<path d="M176 152 L173 109 L186 76 L209 43 L233 17" fill="none" stroke="#a275e0" stroke-width="1" stroke-linecap="round" opacity=".35"/>'
-    +'<text class="sea" x="70" y="10">MEDITERRANEAN SEA</text>';
-  cities.slice(1).forEach(function(c,i){
-    var x=c[2],y=c[3],mx=(HUB[0]+x)/2,my=Math.min(HUB[1],y)-18-Math.hypot(x-HUB[0],y-HUB[1])*.18;
-    var d='M'+HUB[0]+' '+HUB[1]+' Q '+mx+' '+my+' '+x+' '+y;
-    m+='<path class="arc arc-d" data-c="'+c[0]+'" d="'+d+'" pathLength="1" style="animation-delay:'+(.2+i*.06)+'s"/>';
-    if(!reduce)m+='<circle r="1.5" fill="#f2eafb" opacity=".9"><animateMotion dur="'+(2+i*.25)+'s" begin="'+(1+i*.15)+'s" repeatCount="indefinite" path="'+d+'"/><animate attributeName="opacity" values="0;1;1;0" dur="'+(2+i*.25)+'s" begin="'+(1+i*.15)+'s" repeatCount="indefinite"/></circle>';
-  });
-  m+='<circle class="hub" cx="'+HUB[0]+'" cy="'+HUB[1]+'" r="8" fill="none" stroke="#a275e0" stroke-width=".8"/>';
-  cities.forEach(function(c){var r=1.6+Math.sqrt(c[1])*1.05;
-    m+='<g class="city" data-c="'+c[0]+'"><circle class="halo" cx="'+c[2]+'" cy="'+c[3]+'" r="'+(r*2)+'" fill="url(#dotG)" opacity=".55" data-r="'+(r*2)+'"/>'
-      +'<circle class="rip" cx="'+c[2]+'" cy="'+c[3]+'" r="'+r+'"/><circle class="rip b" cx="'+c[2]+'" cy="'+c[3]+'" r="'+r+'"/>'
-      +'<circle class="cdot" cx="'+c[2]+'" cy="'+c[3]+'" r="'+(r*.55)+'" fill="#f6efff" data-r="'+(r*.55)+'"/><circle class="hit" cx="'+c[2]+'" cy="'+c[3]+'" r="12"/></g>'});
-  $('#egypt').innerHTML=m;
-  $('#rank').innerHTML=cities.map(function(c,i){return '<button class="rk" type="button" data-c="'+c[0]+'"><span class="n">'+(i+1)+'</span><span class="nm3">'+c[0]+'</span><span class="b"><i style="width:'+(c[1]/31*100)+'%;animation-delay:'+(.3+i*.05)+'s"></i></span><span class="p">'+c[1]+'%</span></button>'}).join('');
-  var tip=$('#tip'), selCity=null;
-  function selectCity(name){
-    selCity=name;var c=cities.filter(function(x){return x[0]===name})[0];
-    $$('#egypt .city').forEach(function(g){var on=g.dataset.c===name, hh=$('.halo',g), d=$('.cdot',g);
-      hh.setAttribute('r',on?hh.dataset.r*1.9:hh.dataset.r);hh.setAttribute('opacity',on?.95:.5);d.setAttribute('r',on?d.dataset.r*1.7:d.dataset.r);
-      $$('.rip',g).forEach(function(r){r.classList.remove('go');if(on&&!reduce){void r.getBBox();r.classList.add('go')}});
-      if(on)g.parentNode.appendChild(g)});
-    $$('#egypt .arc').forEach(function(a){a.classList.toggle('on',a.dataset.c===name)});
-    $$('.rk').forEach(function(r){r.classList.toggle('on',r.dataset.c===name)});
-    tip.innerHTML='<b>'+c[0]+'</b><div class="tr"><span><strong>'+c[1]+'%</strong>of buyers</span><span><strong>≈'+Math.round(175*c[1]/100)+'</strong>orders</span></div>';
-    var mw=$('#map').clientWidth;if(!mw)return;
-    var tw=tip.offsetWidth,px=c[2]/304*mw;
-    tip.style.left=Math.max(tw/2+6,Math.min(mw-tw/2-6,px))+'px';tip.style.top=(c[3]/200*100)+'%';tip.classList.toggle('flipd',c[3]<80);
-  }
-  $$('#egypt .city').forEach(function(g){g.addEventListener('pointerenter',function(){selectCity(g.dataset.c)});g.addEventListener('click',function(){selectCity(g.dataset.c)})});
-  $$('.rk').forEach(function(r){r.addEventListener('pointerenter',function(){selectCity(r.dataset.c)});r.addEventListener('click',function(){selectCity(r.dataset.c)})});
+  /* buyer cities: the CITIES v2 block (sales by location list) replaced the map */
 
   /* ================= ads: funnel with leaking dots ================= */
   (function(){
@@ -2200,7 +2218,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 <script>
 /* === CARDS v2 START === */
 /* Cards v2 behaviour. Initialises every .cv2 on the page; needs nothing else.
-   Front card: tap / Enter / Space flips it and the card grows to fit its back (side cards step aside).
+   Front card: tap / Enter / Space flips it; the card gets wider (never taller) for its back (side cards step aside).
    Tap again, Close, or Esc flips back. Arrows, dots, swipe/drag and ←/→ move the carousel.
    Back links: <a data-cv2-go="ads"> fire  root.dispatchEvent(new CustomEvent('cv2:action',{bubbles:true,detail:{go:'ads'}})). */
 (function(){
@@ -2223,13 +2241,12 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
       stage.dataset.front=cards[active].dataset.key;
     }
     function gutter(){var b=parseFloat(getComputedStyle(root).getPropertyValue('--cv2-bleed'))||0;return Math.max(16,b)}
+    /* the open card only gets WIDER (up to 640px); its height stays the front's height */
     function size(c){
-      var ow=Math.min(640,Math.floor(stage.clientWidth-2*gutter()));
+      var fw=c.querySelector('.cv2-front').offsetWidth;
+      var ow=Math.max(fw,Math.min(640,Math.floor(stage.clientWidth-2*gutter())));
       c.style.setProperty('--cv2-ow',ow+'px');c.classList.toggle('cv2-narrow',ow<520);
-      var oh=Math.ceil(c.querySelector('.cv2-bk').offsetHeight);
-      c.style.setProperty('--cv2-w',ow+'px');c.style.setProperty('--cv2-h',oh+'px');
-      var top=parseFloat(getComputedStyle(root).getPropertyValue('--cv2-top'))||26;
-      stage.style.height=(top+oh+28)+'px';
+      c.style.setProperty('--cv2-w',ow+'px');
     }
     function openCard(c){
       open=c;size(c);c.classList.add('cv2-is-open');root.classList.add('cv2-has-open');c.setAttribute('aria-expanded','true');
@@ -2239,7 +2256,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     function closeCard(focus){
       if(!open)return;var c=open;open=null;
       c.classList.remove('cv2-is-open');root.classList.remove('cv2-has-open');c.setAttribute('aria-expanded','false');
-      ['--cv2-w','--cv2-h'].forEach(function(p){c.style.removeProperty(p)});stage.style.height='';
+      c.style.removeProperty('--cv2-w');
       layout();if(hint)hint.textContent=HINT_CLOSED;if(focus)c.focus({preventScroll:true});
     }
     function go(i){if(open)closeCard();active=(i+n)%n;layout()}
@@ -2347,7 +2364,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
       var b=document.createElement('button');b.type='button';b.className='pv2-card';b.dataset.id=p.id;p.el=b;
       b.innerHTML='<div class="pv2-sw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'"><span class="pv2-rank">1</span>'+(p.tag?'<span class="pv2-ptag '+p.tag[0]+'">'+p.tag[1]+'</span>':'')+'<span class="pv2-leftslot"></span>'+DRESS+'</div>'
         +'<div class="pv2-nm">'+p.n+'</div>'
-        +'<div class="pv2-mrow"><div><div class="pv2-mk"></div><b class="pv2-mv">0</b></div><div class="pv2-sold"><b><span class="pv2-u">0</span><small>sold</small></b><span class="pv2-ph2"></span></div></div>'
+        +'<div class="pv2-mk"></div><b class="pv2-mv"><small>EGP</small><span class="pv2-mvn">0</span></b>'
         +'<div class="pv2-sub"></div>'
         +'<div class="pv2-strip" aria-hidden="true">'+SZ.map(function(s){return '<div class="pv2-sz"><div class="pv2-t"><i style="--v:0%"></i></div><span>'+s+'</span></div>'}).join('')+'</div>'
         +'<div class="pv2-cap"></div>';
@@ -2360,26 +2377,27 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     root.querySelector('.pv2-per').textContent=P.label+' · '+P.range;
     PR.forEach(function(p){var el=p.el,d=p.P;
       el.querySelector('.pv2-mk').textContent=v==='ret'?'Returned':VIEW[v];
-      var mv=el.querySelector('.pv2-mv');mv.classList.toggle('r',v==='ret'&&d.rate>=15);
+      var mvb=el.querySelector('.pv2-mv'),mv=mvb.querySelector('.pv2-mvn'),pc=v==='margin'||v==='ret';mvb.classList.toggle('r',v==='ret'&&d.rate>=15);
+      mvb.querySelector('small').hidden=pc;
       if(mv.dataset.unit!==v){mv.dataset.cur=0;mv.dataset.unit=v}
       var val=v==='rev'?d.rev:v==='profit'?d.profit:v==='margin'?d.margin:d.rate;
-      tween(mv,val,v==='margin'||v==='ret'?function(x){return x.toFixed(1)+'%'}:function(x){return 'EGP '+fmt(x)});
-      tween(el.querySelector('.pv2-u'),d.u,function(x){return fmt(x)});
-      el.querySelector('.pv2-ph2').textContent=P.phrase;
-      el.querySelector('.pv2-sub').textContent=v==='ret'?(d.s?d.r+' of '+d.s+' came back':'Nothing shipped '+P.phrase):v==='margin'?'EGP '+fmt(d.profit)+' profit':d.u?d.margin.toFixed(1)+'% margin':'No sales '+P.phrase;
+      tween(mv,val,pc?function(x){return x.toFixed(1)+'%'}:function(x){return fmt(x)});
+      /* secondary line: units sold + the figure the sort does not show (the period lives only in the date picker) */
+      el.querySelector('.pv2-sub').innerHTML=v==='ret'?(d.s?'<b>'+d.r+' of '+d.s+'</b> came back':'Nothing shipped yet')
+        :!d.u?'No sales yet':'<b>'+fmt(d.u)+' sold</b> · '+(v==='margin'?'EGP '+fmt(d.profit)+' profit':d.margin.toFixed(1)+'% margin');
       var bars=el.querySelectorAll('.pv2-sz'),cap=el.querySelector('.pv2-cap');cap.classList.toggle('r',v==='ret');
       if(v==='ret'){var rates=d.ship.map(function(s,j){return s?d.ret[j]/s:0}),w=worstSize(p);
         bars.forEach(function(sz,j){var i=sz.querySelector('i');i.style.setProperty('--v',(d.ship[j]?Math.max(8,Math.min(100,rates[j]/.5*100)):0)+'%');i.style.setProperty('--pv2-c',rateColor(rates[j]));
           sz.classList.toggle('pv2-top',j===w);sz.style.setProperty('--pv2-hc','var(--pv2-bad)')});
-        cap.innerHTML=w>=0?'<b>'+SZ[w]+' returns most</b> · '+d.ret[w]+' of '+d.ship[w]:'No returns '+P.phrase;
+        cap.innerHTML=w>=0?'<b>'+SZ[w]+' returns most</b> · '+d.ret[w]+' of '+d.ship[w]:'No returns';
       }else{var mx=Math.max.apply(0,d.sold),t=topSize(p);
         bars.forEach(function(sz,j){var i=sz.querySelector('i');i.style.setProperty('--v',(mx?d.sold[j]/mx*100:0)+'%');i.style.setProperty('--pv2-c',j===t?'linear-gradient(180deg,#b88cf0,#6a1fc4)':'rgba(162,117,224,.42)');
           sz.classList.toggle('pv2-top',j===t);sz.style.removeProperty('--pv2-hc')});
-        cap.innerHTML=t>=0?'<b>'+SZ[t]+' sells most</b> · '+Math.round(d.sold[t]/d.u*100)+'%':'No sales '+P.phrase;
+        cap.innerHTML=t>=0?'<b>'+SZ[t]+' sells most</b> · '+Math.round(d.sold[t]/d.u*100)+'%':'No sales yet';
       }
       var mn=Math.min.apply(0,p.stock),ms=p.stock.indexOf(mn);
       el.querySelector('.pv2-leftslot').innerHTML=mn<=4?'<span class="pv2-left" style="--ul:'+(mn<=1?'#ff8a7a':mn<=2?'#f2c46d':'#a275e0')+'"><i></i>'+(mn?mn+' left · '+SZ[ms]:SZ[ms]+' sold out')+'</span>':'';
-      el.setAttribute('aria-label',p.n+'. '+d.u+' sold '+P.phrase+'. Tap to see why it ranks.');
+      el.setAttribute('aria-label',p.n+'. '+d.u+' sold. Tap to see why it ranks.');
     });
   }
   function order(animate){
@@ -2393,8 +2411,8 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   /* ---------- "why it ranks" sheet ---------- */
   function verdict(p){
     var v=state.view,d=p.P,P=pv2Periods[state.period],r=rankOf(v,p);
-    if(!d.u&&v!=='ret')return 'Nothing sold <b>'+P.phrase+'</b> yet — it sits at <b>#'+r+'</b> by default.';
-    if(v==='ret'){var w=worstSize(p);return d.r?'<b>#'+r+'</b> for returns: <b>'+d.rate.toFixed(1)+'%</b> came back — mostly size <b>'+SZ[w]+'</b> ('+d.ret[w]+' of '+d.ship[w]+').':'<b>#'+r+'</b> for returns — <b>nothing came back</b> '+P.phrase+'.'}
+    if(!d.u&&v!=='ret')return 'Nothing sold yet — it sits at <b>#'+r+'</b> by default.';
+    if(v==='ret'){var w=worstSize(p);return d.r?'<b>#'+r+'</b> for returns: <b>'+d.rate.toFixed(1)+'%</b> came back — mostly size <b>'+SZ[w]+'</b> ('+d.ret[w]+' of '+d.ship[w]+').':'<b>#'+r+'</b> for returns — <b>nothing came back</b>.'}
     var why=[],ur=PR.slice().sort(function(a,b){return b.P.u-a.P.u}).indexOf(p)+1,mr=rankOf('margin',p);
     if(ur===1)why.push('sells the most ('+d.u+')');else if(ur<=2)why.push('is a top seller ('+d.u+' sold)');
     if(mr<=2)why.push('keeps '+Math.round(d.margin)+'% margin');
@@ -2404,23 +2422,25 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   }
   function sheetHTML(p){
     var v=state.view,d=p.P,P=pv2Periods[state.period],ret=v==='ret',t=topSize(p),w=worstSize(p);
-    var chips=['rev','profit','margin'].map(function(k){return '<span class="pv2-chip'+(k===v?' pv2-cur':'')+'">'+VIEW[k]+'<b>#'+rankOf(k,p)+'</b></span>'}).join('')
-      +'<span class="pv2-chip'+(ret?' pv2-cur':'')+'">Returns<b>'+d.rate.toFixed(1)+'%</b></span>';
+    /* each chip ranks the cards by that measure (same as the sort control) */
+    var chips=['rev','profit','margin'].map(function(k){return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-pv2-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>#'+rankOf(k,p)+'</b></button>'}).join('')
+      +'<button type="button" class="pv2-chip'+(ret?' pv2-cur':'')+'" data-pv2-rank="ret" aria-pressed="'+ret+'">Returns<b>'+d.rate.toFixed(1)+'%</b></button>';
     var cells=SZ.map(function(s,j){var st=p.stock[j],top=ret?j===w:j===t;
       return '<div class="pv2-szc'+(top?(ret?' pv2-topr':' pv2-top'):'')+'"><span>'+s+'</span><b>'+(ret?d.ret[j]+'<small style="font-size:12px;font-weight:500;opacity:.7">/'+d.ship[j]+'</small>':d.sold[j])+'</b>'
         +'<em class="'+(st===0?'r':st<=2?'r':st<=4?'w':'')+'">'+(st?st+' left':'sold out')+'</em></div>'}).join('');
     var mn=Math.min.apply(0,p.stock),ms=p.stock.indexOf(mn),act;
     if(ret&&w>=0&&d.ret[w]/d.ship[w]>=.25)act={t:'<b>'+SZ[w]+'</b> returned '+d.ret[w]+' of '+d.ship[w]+' — the fit may run small or large',l:'Check sizing',go:'sizing',size:SZ[w]};
     else if(mn<=2)act={t:mn?'Only <b>'+mn+' left in '+SZ[ms]+'</b>':'<b>'+SZ[ms]+' is sold out</b>',l:'Restock',go:'restock',size:SZ[ms]};
-    else act={t:'Stock is fine in every size',l:'View product',go:'product'};
+    else act=null;
     return '<div class="pv2-grab" aria-hidden="true"></div>'
-      +'<div class="pv2-sh"><span class="pv2-shsw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span><div class="pv2-sht"><small>Why it ranks · '+P.label.toLowerCase()+'</small><b id="pv2-st">'+p.n+'</b></div>'
+      +'<div class="pv2-sh"><span class="pv2-shsw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span><div class="pv2-sht"><small>Why it ranks</small><b id="pv2-st">'+p.n+'</b></div>'
       +'<button type="button" class="pv2-close" data-pv2-close>Close <svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
       +'<div><p class="pv2-verdict">'+verdict(p)+'</p><div class="pv2-chips">'+chips+'</div></div>'
-      +'<div class="pv2-four"><div><span>Sold</span><b>'+d.u+'</b><em>'+P.phrase+'</em></div><div><span>Revenue</span><b><small>EGP</small>'+fmt(d.rev)+'</b></div>'
+      +'<div class="pv2-four"><div><span>Sold</span><b>'+d.u+'</b></div><div><span>Revenue</span><b><small>EGP</small>'+fmt(d.rev)+'</b></div>'
       +'<div><span>Profit</span><b><small>EGP</small>'+fmt(d.profit)+'</b></div><div><span>Margin</span><b>'+(d.u?d.margin.toFixed(1)+'%':'—')+'</b></div></div>'
       +'<div class="pv2-szb"><div class="pv2-szh">'+(ret?'Returned of shipped, by size':'Units sold by size')+' · stock left</div><div class="pv2-szg">'+cells+'</div></div>'
-      +'<a class="pv2-act" href="#" data-pv2-go="'+act.go+'" data-size="'+(act.size||'')+'"><span>'+act.t+'</span><b>'+act.l+' '+ARW+'</b></a>';
+      +(act?'<a class="pv2-act" href="#" data-pv2-go="'+act.go+'" data-size="'+(act.size||'')+'"><span>'+act.t+'</span><b>'+act.l+' '+ARW+'</b></a>'
+        :'<p class="pv2-act pv2-ok">Stock is fine in every size</p>');
   }
   function placeSheet(p){
     var phone=window.innerWidth<600;sheet.classList.toggle('pv2-phone',phone);
@@ -2500,6 +2520,11 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
         if(g.dataset.pv2Go==='restock'&&p){window.pv2OpenStock(p.id);return}
         root.dispatchEvent(new CustomEvent('pv2:action',{bubbles:true,detail:{go:g.dataset.pv2Go,product:p&&p.id,size:g.dataset.size}}));return}
       if(e.target.closest('[data-pv2-close]')){closeSheet();return}
+      var ch=e.target.closest('[data-pv2-rank]');
+      if(ch&&openP){var k=ch.dataset.pv2Rank,sp=openP;if(k===state.view)return;
+        [].forEach.call(sort.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.s===k))});moveInd();
+        state.view=k;order(true);paintCards();sheet.innerHTML=sheetHTML(sp);placeSheet(sp);
+        var nb=sheet.querySelector('[data-pv2-rank="'+k+'"]');if(nb)nb.focus({preventScroll:true});return}
       var seg=e.target.closest('.pv2-seg button');
       if(seg){var k=seg.parentNode.dataset.k;stockState[k]=+seg.dataset.v;[].forEach.call(seg.parentNode.children,function(x){x.setAttribute('aria-pressed',String(x===seg))});paintStock();return}
       var row=e.target.closest('.pv2-prow');
@@ -2514,7 +2539,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     if(document.fonts)document.fonts.ready.then(moveInd);
     if('ResizeObserver' in window)new ResizeObserver(moveInd).observe(sort);
     /* animate the cards in the first time the block becomes visible */
-    if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){PR.forEach(function(p){var mv=p.el.querySelector('.pv2-mv');mv.dataset.cur=0});paintCards();moveInd();io.disconnect()}});io.observe(cardsEl)}
+    if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){PR.forEach(function(p){var mv=p.el.querySelector('.pv2-mvn');mv.dataset.cur=0});paintCards();moveInd();io.disconnect()}});io.observe(cardsEl)}
   }
   window.pv2Periods=pv2Periods;
   window.pv2SetPeriod=function(key){if(!pv2Periods[key]||!root)return;state.period=key;closeSheet();compute(key);order(true);paintCards();paintStock()};
@@ -2534,6 +2559,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 (function(){
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var GROSS=291263;
+  var ROOTS=[];
   /* kind: start | ded | cp ; amounts reconcile: 291,263 − 8,400 − 19,600 − 10,150 = 253,113 ; 253,113 − 72,897 − 106,807 − 17,718 − 9,020 = 46,671 */
   var MV2_STEPS=[
     {k:'start',n:'Gross sales',a:291263,est:1,c:'var(--mv2-gross)',sub:'every order placed',
@@ -2572,16 +2598,16 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
       var sign=s.k==='ded'?'−':'';
       var share=s.k==='start'?'100% · gross':(i===9?'16.0% of gross':pct(s.a)+' of gross');
       html+='<li class="mv2-step mv2-'+s.k+'" style="--b:'+b.toFixed(3)+';--h:'+h.toFixed(3)+';--lv:'+lvl.toFixed(3)+';--i:'+i+';--mv2-c:'+s.c+(s.glow?';--mv2-glow:'+s.glow:'')+'">'
-        +'<button type="button" class="mv2-b" data-i="'+i+'" aria-label="'+s.n+', '+sign+'EGP '+fmt(s.a)+', '+share+'">'
+        +'<button type="button" class="mv2-b" data-i="'+i+'" aria-label="'+s.n+(s.est?' (estimated)':'')+', '+sign+'EGP '+fmt(s.a)+', '+share+'">'
         +'<span class="mv2-dot"></span>'
         +'<span class="mv2-plot"><span class="mv2-bar"></span><span class="mv2-conn"></span></span><span class="mv2-amt">'+(s.k==='ded'?'':'<small>EGP</small>')+sign+fmt(s.a)+'</span>'
-        +'<span class="mv2-lab"><b>'+s.n+(s.est?'<span class="mv2-est">est.</span>':'')+'</b><span>'+share+'</span></span>'
+        +'<span class="mv2-lab"><b>'+s.n+(s.est?'<span class="mv2-est">*</span>':'')+'</b><span>'+share+'</span></span>'
         +'</button><div class="mv2-why"><span><em>'+s.why+'</em> '+s.todo+'</span>'+(s.go?'<a class="mv2-lnk" href="#" data-mv2-go="'+s.go+'">'+s.gl+ARW+'</a>':'')+'</div></li>';
     });
     root.innerHTML='<div class="mv2-head"><div><h3>Where the money went</h3><div class="mv2-sub">Last 7 days · every pound from order to profit · tap a step</div></div>'
       +'<div class="mv2-res"><b><small>EGP</small>46,671</b><span>kept · 18.4% of net revenue · 16.0% of gross</span></div></div>'
-      +'<div class="mv2-chart"><div class="mv2-phases" aria-hidden="true"><span style="left:0;width:45%">From orders to revenue</span><span style="left:45%;width:55%">From revenue to profit</span></div>'
-      +'<ol class="mv2-steps">'+html+'</ol></div>'
+      +'<div class="mv2-chart"><div class="mv2-phases" aria-hidden="true"><span style="left:0;width:50.4%">From orders to revenue</span><span style="left:51.2%;width:48.8%">From revenue to profit</span></div>'
+      +'<ol class="mv2-steps">'+html+'</ol><p class="mv2-note">* estimated from order data</p></div>'
       +'<div class="mv2-explain" aria-live="polite"></div>'
       +'<p class="mv2-foot"><span>Of the net revenue, <b>EGP 58,300</b> is still with Bosta as cash on delivery</span><a class="mv2-lnk" href="#" data-mv2-go="orders">Review shipping'+ARW+'</a></p>';
     var steps=[].slice.call(root.querySelectorAll('.mv2-step')),ex=root.querySelector('.mv2-explain'),sel=-1;
@@ -2599,14 +2625,43 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
       steps.forEach(function(li,j){var x=j===i&&!li.classList.contains('mv2-x');li.classList.toggle('mv2-x',x)});
     });
     steps.forEach(function(li,i){var b=li.querySelector('.mv2-b');
-      b.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'&&root.clientWidth>=720)pick(i)});
+      b.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'&&root.clientWidth>=960)pick(i)});
       b.addEventListener('focus',function(){pick(i)})});
     pick(9);
+    ROOTS.push({root:root,steps:steps,repick:function(){var s=sel;sel=-1;pick(s<0?9:s)}});
     if(reduce||!('IntersectionObserver' in window))return;
     root.classList.add('mv2-pre');
     var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){root.classList.remove('mv2-pre');root.classList.add('mv2-go');io.disconnect()}},{threshold:.15});
     io.observe(root);
   }
+  /* Live update — window.mv2Update(amounts). amounts = 10 numbers in step order
+     [gross, discounts, cancelled, returned, net revenue, product cost, Meta ads, commission, Bosta fees, profit]
+     (they must reconcile like the real ones). Call with nothing / null to restore the actual figures.
+     Re-scales the bars to the new gross and rewrites amounts, shares, the result line and the open explanation.
+     Does not change the look; used by W's what-if simulator. */
+  var BASE_A=MV2_STEPS.map(function(s){return s.a});
+  function share(s,i){return s.k==='start'?'100% · gross':pct(s.a)+' of gross'}
+  window.mv2Update=function(am){
+    am=am&&am.length===10?am:BASE_A;GROSS=am[0];
+    MV2_STEPS.forEach(function(s,i){s.a=am[i]});
+    var net=am[4],pr=am[9],pn=(pr/net*100).toFixed(1)+'%';
+    MV2_STEPS[4].why='What actually stayed sold — '+pct(net)+' of gross. Every cost below comes out of this.';
+    MV2_STEPS[9].why='What you keep: '+pn+' of net revenue, '+pct(pr)+' of gross.';MV2_STEPS[9].sub=pn+' of net';
+    ROOTS.forEach(function(R){var lvl=0;
+      R.root.classList.add('mv2-live');
+      MV2_STEPS.forEach(function(s,i){var li=R.steps[i],b,h;
+        if(s.k==='ded'){h=s.a/GROSS*100;b=lvl-h;lvl=b}else{b=0;h=Math.max(0,s.a/GROSS*100);lvl=h}
+        li.style.setProperty('--b',b.toFixed(3));li.style.setProperty('--h',h.toFixed(3));li.style.setProperty('--lv',lvl.toFixed(3));
+        var sign=s.k==='ded'||s.a<0?'−':'';
+        li.querySelector('.mv2-amt').innerHTML=(s.k==='ded'?'':'<small>EGP</small>')+sign+fmt(Math.abs(s.a));
+        li.querySelector('.mv2-lab > span').textContent=share(s,i);
+        li.querySelector('.mv2-b').setAttribute('aria-label',s.n+', '+sign+'EGP '+fmt(Math.abs(s.a))+', '+share(s,i));
+        var w=li.querySelector('.mv2-why em');if(w)w.textContent=s.why});
+      var rb=R.root.querySelector('.mv2-res b'),rs=R.root.querySelector('.mv2-res span');
+      rb.innerHTML='<small>EGP</small>'+(pr<0?'−':'')+fmt(Math.abs(pr));rb.style.color=pr<0?'var(--mv2-bad)':'';
+      rs.textContent=(pr<0?'lost':'kept')+' · '+pn+' of net revenue · '+pct(pr)+' of gross';
+      R.repick()});
+  };
   function boot(){[].slice.call(document.querySelectorAll('[data-mv2]')).forEach(init)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
@@ -2615,26 +2670,16 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 </script>
 <script>
 /* === ADS v2 START === */
-/* ADS v2 behaviour: builds the coin stacks (1 coin = EGP 0.25), plays the drop-in once the section
-   is on screen, and exposes window.av2Update(d) for live figures:
+/* ADS v2 behaviour: grows the bars once the section is on screen and exposes window.av2Update(d) for live figures:
    d = {spend, sales, rr (sales per EGP 1), ppp (profit per EGP 1), cpo (ads cost per order), aov}.
    av2Update(null) restores the actual figures. Action links fire a bubbling "av2:action" event (detail.go). */
 (function(){
   var fmt=function(v,d){return v.toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})};
   var BASE={spend:106807,sales:253113,rr:253113/106807,ppp:46671/106807,cpo:106807/203,aov:243495/175};
-  var NOTE0=null;
-  function coins(st,v){
-    var n=Math.max(0,v)/0.25,full=Math.floor(n+1e-6),part=n-full,h='',i;
-    for(i=0;i<full;i++)h+='<i class="av2-coin" style="--av2-i:'+i+'"></i>';
-    if(part>0.05)h+='<i class="av2-coin av2-part" style="--av2-i:'+i+';--av2-p:'+part.toFixed(2)+'"></i>';
-    if(!h)h='<i class="av2-empty"></i>';
-    st.innerHTML=h;
-  }
   function init(root){
     if(root.dataset.av2Ready)return;root.dataset.av2Ready='1';
     var q=function(s){return [].slice.call(root.querySelectorAll(s))};
-    var note=root.querySelector('[data-av2="note"]');NOTE0=note.innerHTML;
-    q('[data-av2-coins]').forEach(function(st){coins(st,+st.dataset.av2Coins)});
+    var note=root.querySelector('[data-av2="note"]'),NOTE0=note.innerHTML;
     q('[data-av2-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();
       root.dispatchEvent(new CustomEvent('av2:action',{bubbles:true,detail:{go:a.dataset.av2Go}}))})});
     if('IntersectionObserver' in window){
@@ -2644,15 +2689,20 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     root.av2Update=function(d){
       var live=!!d;d=d||BASE;
       var set=function(k,t){q('[data-av2="'+k+'"]').forEach(function(el){el.textContent=t})};
+      var sg=function(v){return (v<0?'−':'')+Math.abs(v).toFixed(2)};
+      var oth=d.rr-1-d.ppp;
       set('spend',fmt(d.spend));set('sales',fmt(d.sales));
-      set('rr',d.rr.toFixed(2));set('ppp',(d.ppp<0?'−':'')+Math.abs(d.ppp).toFixed(2));
+      set('rr',d.rr.toFixed(2));set('ppp',sg(d.ppp));set('ppp2',sg(d.ppp));set('oth',Math.max(0,oth).toFixed(2));
       set('cpo',fmt(d.cpo));set('aov',fmt(d.aov));
       var sh=Math.round(d.cpo/d.aov*100);set('share',String(sh));set('share2',sh+'%');
       var bar=root.querySelector('[data-av2-cpobar]');if(bar)bar.style.width=Math.min(100,d.cpo/d.aov*100).toFixed(1)+'%';
-      q('[data-av2-cf]').forEach(function(st){coins(st,d[st.dataset.av2Cf])});
+      /* the split bar is the sales of EGP 1; when costs are bigger than the sales, a mark shows where the sales end */
+      var pr=Math.max(0,d.ppp),scale=Math.max(d.rr,1+Math.max(0,oth)+pr)||1;
+      var seg=function(k,v){var el=root.querySelector('[data-av2-seg="'+k+'"]');if(el)el.style.width=(Math.max(0,v)/scale*100).toFixed(1)+'%'};
+      seg('ad',1);seg('cost',oth);seg('pr',pr);
+      var mk=root.querySelector('[data-av2-salesmark]');if(mk){mk.style.display=d.ppp<0?'':'none';mk.style.left=(d.rr/scale*100).toFixed(1)+'%'}
       var pc=root.querySelector('[data-av2-pcls]');pc.classList.toggle('av2-bad',d.ppp<0);pc.classList.toggle('av2-warn',d.ppp>=0);
-      var fl=root.querySelector('[data-av2-flowlabel]');
-      fl.setAttribute('aria-label','EGP 1 spent brings EGP '+d.rr.toFixed(2)+' in sales and leaves EGP '+d.ppp.toFixed(2)+' profit');
+      root.querySelector('[data-av2-flowlabel]').setAttribute('aria-label','EGP 1 spent brings EGP '+d.rr.toFixed(2)+' in sales and leaves EGP '+d.ppp.toFixed(2)+' profit');
       if(!live){note.innerHTML=NOTE0;return}
       var roas=d.rr.toFixed(2)+'x';
       note.innerHTML=d.ppp<0?'Every EGP 1 on Meta now <b>loses EGP '+Math.abs(d.ppp).toFixed(2)+'</b> after product cost, commission and Bosta.'
@@ -2665,6 +2715,70 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 /* === ADS v2 END === */
+</script>
+<script>
+/* === CITIES v2 START === */
+/* Cities v2 behaviour: renders CT2_DATA into every [data-ct2]; rows toggle their detail (one open at a time);
+   Egypt shows its top 5, the toggle shows the rest. 175 valid orders, shares add to 100%, revenue to EGP 243,495. */
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TOTAL=175;
+  var CT2_DATA=[
+    {cc:'EG',c:'Egypt',rows:[
+      ['Cairo',54,77800,'Nour Satin Slip',11],['Giza',30,39955,'Layla Tiered Ruffle Maxi',7],['Alexandria',24,32620,'Jasmine Wrap Midi',6],
+      ['New Cairo',12,19245,'Nour Satin Slip',4],['6th of October',10,14270,'Layla Tiered Ruffle Maxi',3],['Sheikh Zayed',8,12175,'Salma Puff-Sleeve Mini',2],
+      ['Mansoura',6,7340,'Farida Linen Shirt',2],['Tanta',4,4675,'Mariam Pleated Chiffon',1],['Other cities',22,26310,'Layla Tiered Ruffle Maxi',5,1]]},
+    {cc:'SA',c:'Saudi Arabia',rows:[['Riyadh',3,5300,'Nour Satin Slip',2]]},
+    {cc:'AE',c:'United Arab Emirates',short:'UAE',rows:[['Dubai',2,3805,'Jasmine Wrap Midi',1]]}
+  ];
+  var SHOW=5;
+  var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
+  var pct=function(n){return (n/TOTAL*100).toFixed(1)+'%'};
+  var CHEV='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg>';
+  function init(root){
+    if(root.dataset.ct2Ready)return;root.dataset.ct2Ready='1';
+    var max=0,rank=0,h='';
+    CT2_DATA.forEach(function(g){g.rows.forEach(function(r){if(!r[5]&&r[1]>max)max=r[1]})});
+    h+='<div class="ct2-sum"><div><b>'+TOTAL+'</b> orders from <b>'+CT2_DATA.length+'</b> countries</div><span>Orders · share of orders</span></div>';
+    CT2_DATA.forEach(function(g){
+      var n=g.rows.reduce(function(a,r){return a+r[1]},0),more=g.rows.length-SHOW;
+      h+='<div class="ct2-grp"><span class="ct2-cc">'+g.cc+'</span><b>'+g.c+'</b><em>'+n+' orders · '+pct(n)+'</em></div>';
+      g.rows.forEach(function(r,i){
+        var other=!!r[5],hide=more>0&&i>=SHOW;if(!other)rank++;
+        h+='<div class="ct2-row'+(other?' ct2-other':'')+(hide?' ct2-more':'')+'"'+(hide?' hidden':'')+'>'
+          +'<button type="button" class="ct2-r" aria-expanded="false" aria-label="'+r[0]+', '+g.c+': '+r[1]+' orders, '+pct(r[1])+'. Show details">'
+          +'<span class="ct2-n">'+(other?'·':rank)+'</span><span class="ct2-cc">'+g.cc+'</span>'
+          +'<span class="ct2-nm"><b>'+r[0]+'</b><small>'+(g.short||g.c)+'</small></span>'
+          +'<span class="ct2-o">'+r[1]+'<small> orders</small></span><span class="ct2-p">'+pct(r[1])+'</span>'
+          +'<span class="ct2-bar" aria-hidden="true"><i style="width:'+Math.max(2,r[1]/max*100).toFixed(1)+'%"></i></span></button>'
+          +'<div class="ct2-det"><div><div class="ct2-dl">'
+          +'<div><span>Revenue from here</span><b><small>EGP</small>'+fmt(r[2])+'</b></div>'
+          +'<div><span>Average order</span><b><small>EGP</small>'+fmt(r[2]/r[1])+'</b></div>'
+          +'<div><span>Top product</span><b>'+r[3]+' · '+r[4]+' sold</b></div>'
+          +'</div></div></div></div>';
+      });
+      if(more>0)h+='<button type="button" class="ct2-tog" aria-expanded="false" data-ct2-more="'+more+'" data-ct2-c="'+g.c+'">Show '+more+' more in '+g.c+CHEV+'</button>';
+    });
+    root.innerHTML=h;
+    root.addEventListener('click',function(e){
+      var t=e.target.closest('.ct2-tog');
+      if(t){var on=t.getAttribute('aria-expanded')!=='true';t.setAttribute('aria-expanded',String(on));
+        [].forEach.call(root.querySelectorAll('.ct2-more'),function(r){r.hidden=!on;if(!on){r.classList.remove('ct2-open');r.querySelector('.ct2-r').setAttribute('aria-expanded','false')}});
+        t.firstChild.textContent=on?'Show fewer':'Show '+t.dataset.ct2More+' more in '+t.dataset.ct2C;return}
+      var b=e.target.closest('.ct2-r');if(!b)return;
+      var row=b.parentNode,open=!row.classList.contains('ct2-open');
+      [].forEach.call(root.querySelectorAll('.ct2-open'),function(r){r.classList.remove('ct2-open');r.querySelector('.ct2-r').setAttribute('aria-expanded','false')});
+      row.classList.toggle('ct2-open',open);b.setAttribute('aria-expanded',String(open));
+    });
+    if(reduce||!('IntersectionObserver' in window))return;
+    root.classList.add('ct2-pre');
+    var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){requestAnimationFrame(function(){root.classList.remove('ct2-pre')});io.disconnect()}},{threshold:.1});
+    io.observe(root);
+  }
+  function boot(){[].slice.call(document.querySelectorAll('[data-ct2]')).forEach(init)}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+/* === CITIES v2 END === */
 </script>
 </body>
 </html>
