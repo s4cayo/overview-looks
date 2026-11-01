@@ -462,6 +462,24 @@ main{gap:24px}
 /* light mode: status text colours darkened to reach 4.5:1 on white */
 :root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
 
+/* shared section pieces (Orders B + Shipping B) */
+.ob-stack{display:flex;flex-direction:column;gap:20px}
+/* section header: title + one-line explanation on the left, the count on the right */
+.ob-sh{display:flex;align-items:flex-start;gap:16px;padding-bottom:16px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.ob-sh h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ob-sh p{font-size:13px;color:var(--muted);margin-top:4px}
+.ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
+@media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
+
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div:first-child{border-top:0}
+.ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
+.ob-bars b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ob-bars small{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+.ob-bars .few{color:var(--muted)}
+@media (max-width:480px){.ob-bars > div{grid-template-columns:minmax(0,1fr) 30px 100px}.ob-bars .t{grid-column:1 / -1;grid-row:2}}
+
 /* ===== page: orders-B ===== */
 /* hero: one number + the status mix (legend items filter the list) */
 .ob-hero{display:grid;grid-template-columns:minmax(200px,.8fr) minmax(0,2fr);gap:40px;align-items:center;padding:26px 28px}
@@ -536,31 +554,63 @@ main{gap:24px}
 .ob-ok svg.i{color:var(--good)}
 @media (max-width:600px){.ob-a{grid-template-columns:minmax(0,1fr) auto}.ob-a .acts{grid-column:1 / -1}.ob-a .v{grid-row:1;grid-column:2}}
 
-/* cancelled & returned */
-.ob-lost{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:36px;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--line)}
+/* cancelled & returned: a stack of clearly separated sections */
+.ob-lost{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr);gap:0;align-items:stretch;padding:24px 0}
+.ob-lost > *{padding:0 26px}
 .ob-lh{display:flex;flex-direction:column;gap:6px}
 .ob-lh .k{font-size:13px;color:var(--muted)}
 .ob-lh b{font-size:36px;font-weight:600;letter-spacing:-.025em;color:var(--bad);font-variant-numeric:tabular-nums;line-height:1.1}
 .ob-lh b small{font-size:15px;color:var(--muted);font-weight:500;margin-right:6px}
 .ob-lh .mut{font-size:13px}
-.ob-lsplit{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ob-lsplit > div{display:flex;flex-direction:column;gap:6px}
+.ob-lsplit{display:contents}
+.ob-lsplit > div{display:flex;flex-direction:column;gap:6px;padding:0 26px;border-left:1px solid var(--line)}
 .ob-lsplit .k{font-size:13px;color:var(--muted);display:flex;gap:7px;align-items:center}
 .ob-lsplit .k i{width:8px;height:8px;border-radius:50%;background:var(--dc)}
-.ob-lsplit b{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
-.ob-lsplit .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.ob-lsplit b{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.ob-lsplit .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden;margin-top:4px}
 .ob-lsplit .t i{display:block;height:100%;background:var(--dc);border-radius:9px}
-.ob-lsplit small{font-size:12.5px;color:var(--muted)}
-.ob-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;padding-top:24px}
-.ob-h3{font-size:14px;font-weight:600;margin-bottom:12px}
-.ob-rows > div{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
-.ob-rows > div:first-child{border-top:0;padding-top:0}
-.ob-rows b{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
-.ob-rows em{font-style:normal;font-size:12.5px;color:var(--muted);grid-column:1}
+.ob-lsplit small{font-size:13px;color:var(--muted)}
+@media (max-width:760px){
+  .ob-lost{grid-template-columns:1fr 1fr;row-gap:20px;padding:20px 0}
+  .ob-lost > *{padding:0 18px}
+  .ob-lh{grid-column:1 / -1}
+  .ob-lsplit > div{padding:0 18px}
+  .ob-lsplit > div:first-child{border-left:0}
+  .ob-lh b{font-size:30px}.ob-lsplit b{font-size:20px}
+}
+/* products that come back: one row per product, six size cells always in the same columns */
+.ob-szhead,.ob-pr{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,1.5fr);gap:20px;align-items:center}
+.ob-szhead{padding:12px 0 6px;font-size:12.5px;color:var(--muted)}
+.ob-szcols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;text-align:center}
+.ob-pr{padding:12px 0;border-top:1px solid var(--line)}
+.ob-pr .nm{display:flex;align-items:center;gap:12px;min-width:0}
+.ob-pr .sw{width:34px;height:42px;border-radius:8px;flex:none}
+.ob-pr .sw svg{width:16px;height:24px}
+.ob-pr .nm b{display:block;font-weight:600;font-size:14.5px}
+.ob-pr .nm small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.ob-pr .nm small em{font-style:normal;font-weight:600;color:var(--text)}
+.ob-pr .nm small em.bd{color:var(--bad)}
+.ob-sz{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:46px;border-radius:10px;background:var(--panel2);font-variant-numeric:tabular-nums}
+.ob-sz b{font-size:15px;font-weight:600;line-height:1.1}
+.ob-sz small{font-size:12px;color:var(--muted)}
+.ob-sz.z b{color:var(--muted);font-weight:500}
+.ob-sz.lo{background:color-mix(in srgb,var(--warn) 12%,var(--panel2))}
+.ob-sz.lo b{color:var(--warn)}
+.ob-sz.hi{background:color-mix(in srgb,var(--bad) 14%,var(--panel2))}
+.ob-sz.hi b{color:var(--bad)}
+.ob-sz .l{display:none;font-size:12px;color:var(--muted)}
+@media (max-width:760px){
+  .ob-szhead{display:none}
+  .ob-pr{grid-template-columns:1fr;gap:10px}
+  .ob-sz .l{display:block}
+}
 .ob-note{font-size:13px;color:var(--muted);margin-top:14px}
 .ob-note b{color:var(--text)}
-@media (max-width:1100px){.ob-three{grid-template-columns:1fr 1fr}.ob-three > :last-child{grid-column:1 / -1}}
-@media (max-width:760px){.ob-lost{grid-template-columns:1fr;gap:20px}.ob-three{grid-template-columns:1fr;gap:28px}.ob-lh b{font-size:30px}}
+
+/* why cancelled + where returns come from: same row grid in both */
+.ob-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media (max-width:900px){.ob-pair{grid-template-columns:1fr}}
+
 
 /* abandoned carts */
 .ob-cn{grid-template-columns:repeat(4,minmax(0,1fr));padding-bottom:22px;border-bottom:1px solid var(--line)}
@@ -726,17 +776,30 @@ main{gap:24px}
       <div class="panel ob-att" id="obAtt"></div>
     </section>
 
-    <!-- CANCELLED & RETURNED -->
+    <!-- CANCELLED & RETURNED: summary, then one section per question, each with its own header -->
     <section class="pane" id="p-lost" role="tabpanel" aria-labelledby="t-lost" hidden>
-      <div class="panel">
-        <div class="ob-lost">
+      <div class="ob-stack">
+        <div class="panel ob-lost">
           <div class="ob-lh"><span class="k">Lost to cancelled &amp; returned orders</span><b id="obLostV"></b><span class="mut" id="obLostS"></span></div>
           <div class="ob-lsplit" id="obLostSplit"></div>
         </div>
-        <div class="ob-three">
-          <div><h3 class="ob-h3">Why orders were cancelled</h3><div class="ob-rows" id="obWhy"></div></div>
-          <div><h3 class="ob-h3">Dresses that come back</h3><div class="ob-rows" id="obRet"></div><p class="ob-note" id="obSz"></p></div>
-          <div><h3 class="ob-h3">Where returns come from</h3><div class="ob-rows" id="obCity"></div></div>
+
+        <section class="panel" aria-labelledby="obRetH">
+          <div class="ob-sh"><div><h3 id="obRetH">Products that come back</h3><p>Units returned of units shipped, size by size. Sizes in red came back the most.</p></div><span class="r" id="obRetR"></span></div>
+          <div class="ob-szhead" aria-hidden="true"><span>Product</span><span class="ob-szcols"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span></span></div>
+          <div id="obRet"></div>
+          <p class="ob-note" id="obSz"></p>
+        </section>
+
+        <div class="ob-pair">
+          <section class="panel" aria-labelledby="obWhyH">
+            <div class="ob-sh"><div><h3 id="obWhyH">Why orders were cancelled</h3><p>Reason picked in Shopify when the order was cancelled.</p></div><span class="r" id="obWhyR"></span></div>
+            <div class="ob-bars" id="obWhy"></div>
+          </section>
+          <section class="panel" aria-labelledby="obCityH">
+            <div class="ob-sh"><div><h3 id="obCityH">Where returns come from</h3><p>Returned orders of all orders shipped to that city.</p></div><span class="r" id="obCityR"></span></div>
+            <div class="ob-bars" id="obCity"></div>
+          </section>
         </div>
       </div>
     </section>
@@ -1211,23 +1274,48 @@ OS.page='Orders';
   }
 
   /* ---------- cancelled & returned ---------- */
+  /* per-size units shipped / returned in the last 7 days (PRODUCTS v2 in the Overview, sizes XS..XXL);
+     other periods spread the product's total over the same size mix, so every row still adds up */
+  var SZ=['XS','S','M','L','XL','XXL'];
+  var SHIP7=[[3,6,9,7,4,3],[5,7,10,8,3,3],[1,4,7,7,3,3],[6,5,7,5,2,2],[1,3,6,5,1,1],[1,2,4,3,2,2]];
+  var RET7=[[1,0,0,1,0,1],[2,1,1,1,0,1],[0,0,1,0,0,1],[3,0,0,0,1,1],[0,0,1,0,0,0],[0,0,0,0,0,1]];
+  function spread(total,w){var W=w.reduce(function(a,b){return a+b},0)||1,raw=w.map(function(x){return x/W*total}),out=raw.map(Math.floor),left=total-out.reduce(function(a,b){return a+b},0);
+    raw.map(function(x,i){return [x-Math.floor(x),i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,left).forEach(function(q){out[q[1]]++});return out}
+  function sizes(k,i){var R=RET[k];if(k==='7d')return {s:SHIP7[i],r:RET7[i]};
+    var sh=spread(R.s[i],SHIP7[i]),rt=spread(R.r[i],RET7[i].some(Boolean)?RET7[i]:SHIP7[i]);
+    rt=rt.map(function(x,j){return Math.min(x,sh[j])});return {s:sh,r:rt}}
+  function bars(list,col){var mx=Math.max.apply(0,list.map(function(x){return x.v}))||1;
+    return list.map(function(x){return '<div style="--dc:'+col+'"><span class="'+(x.few?'few':'')+'">'+x.n+'</span><span class="t"><i style="width:'+(x.v/mx*100)+'%'+(x.few?';opacity:.35':'')+'"></i></span><b class="'+(x.few?'few':'')+'">'+x.c+'</b><small>'+x.sub+'</small></div>'}).join('')}
   function paintLost(){
     var k=OS.key(),P=PER[k],L=OS.LEAK[k],exV=0,exN=0;
     base().forEach(function(o){if(o.st==='cancelled'&&S.ex[o.id]){exV+=o.total;exN++}});
     var canc=Math.max(0,L[1]-exV),cN=L[0]-exN,lost=canc+L[3],net=+P.t.n_rev.replace(/,/g,''),pc=lost/(net+lost)*100;
     $('#obLostV').innerHTML='<small>EGP</small>'+fmt(lost);
     $('#obLostS').textContent=(cN+L[2])+' orders · '+pc.toFixed(1)+'% of the sales placed'+(exN?' · '+exN+' left out by you':'');
-    $('#obLostSplit').innerHTML='<div style="--dc:var(--muted)"><span class="k"><i></i>Cancelled · '+cN+'</span><b>EGP '+fmt(canc)+'</b><span class="t"><i style="width:'+(canc/(lost||1)*100)+'%"></i></span><small>never shipped</small></div>'+
-      '<div style="--dc:var(--bad)"><span class="k"><i></i>Returned · '+L[2]+'</span><b>EGP '+fmt(L[3])+'</b><span class="t"><i style="width:'+(L[3]/(lost||1)*100)+'%"></i></span><small>shipped and came back</small></div>';
-    var why={};base().forEach(function(o){if(o.st==='cancelled')why[o.reason]=(why[o.reason]||0)+1});
-    var w=Object.keys(why).map(function(r){return [r,why[r]]}).sort(function(a,b){return b[1]-a[1]});
-    $('#obWhy').innerHTML=w.length?w.map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join(''):'<p class="mut">No cancelled orders in this period.</p>';
-    var R=RET[k],list=OS.PR.map(function(p,i){return {n:p.s,r:R.r[i],s:R.s[i]}}).filter(function(x){return x.r>0}).sort(function(a,b){return b.r/b.s-a.r/a.s});
-    $('#obRet').innerHTML=list.length?list.slice(0,4).map(function(x){var p=x.r/x.s*100;return '<div><span>'+x.n+'</span><b class="'+(p>=15?'bd':'')+'">'+(p%1?p.toFixed(1):p)+'%</b><em>'+x.r+' of '+x.s+' units came back</em></div>'}).join(''):'<p class="mut">No dresses came back in this period.</p>';
-    $('#obSz').innerHTML=k==='7d'||k==='30d'||k==='month'?'Most returned sizes <b>XS 16.7%</b> · <b>XXL 10.6%</b> · <b>XL 7.4%</b>':'';
-    var city={},ship={};OS.ORD.forEach(function(o){var r=OS.RANGE[k];if(o.day<r[0]||o.day>r[1])return;if(o.st!=='cancelled')ship[o.city]=(ship[o.city]||0)+1;if(o.st==='returned')city[o.city]=(city[o.city]||0)+1});
-    var cl=Object.keys(city).map(function(c){return [c,city[c],ship[c]]}).sort(function(a,b){return b[1]-a[1]||b[1]/b[2]-a[1]/a[2]});
-    $('#obCity').innerHTML=cl.length?cl.slice(0,5).map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b><em>of '+x[2]+' orders shipped there</em></div>'}).join(''):'<p class="mut">No returns in this period.</p>';
+    $('#obLostSplit').innerHTML='<div style="--dc:var(--muted)"><span class="k"><i></i>Cancelled · '+cN+' orders</span><b>EGP '+fmt(canc)+'</b><small>never shipped</small><span class="t"><i style="width:'+(canc/(lost||1)*100)+'%"></i></span></div>'+
+      '<div style="--dc:var(--bad)"><span class="k"><i></i>Returned · '+L[2]+' orders</span><b>EGP '+fmt(L[3])+'</b><small>shipped and came back</small><span class="t"><i style="width:'+(L[3]/(lost||1)*100)+'%"></i></span></div>';
+    /* why cancelled */
+    var why={},nC=0;base().forEach(function(o){if(o.st==='cancelled'){why[o.reason]=(why[o.reason]||0)+1;nC++}});
+    var w=Object.keys(why).map(function(r){return {n:r,v:why[r],c:why[r],sub:Math.round(why[r]/nC*100)+'%'}}).sort(function(a,b){return b.v-a.v});
+    $('#obWhyR').textContent=nC+' cancelled';
+    $('#obWhy').innerHTML=w.length?bars(w,'var(--pl)'):'<p class="mut" style="padding:12px 0">No cancelled orders in this period.</p>';
+    /* products that come back, size by size */
+    var tot=[0,0,0,0,0,0],totS=[0,0,0,0,0,0],R=RET[k],units=0,shipped=0;
+    var rows=OS.PR.map(function(p,i){var z=sizes(k,i);z.r.forEach(function(x,j){tot[j]+=x;totS[j]+=z.s[j]});units+=R.r[i];shipped+=R.s[i];return {p:p,r:R.r[i],s:R.s[i],z:z}})
+      .filter(function(x){return x.r>0}).sort(function(a,b){return b.r/b.s-a.r/a.s});
+    $('#obRetR').textContent=units+' of '+shipped+' units';
+    $('#obRet').innerHTML=rows.length?rows.map(function(x){var pc=x.r/x.s*100,mx=Math.max.apply(0,x.z.r);
+      return '<div class="ob-pr"><span class="nm"><span class="sw" style="--c1:'+x.p.c[0]+';--c2:'+x.p.c[1]+'">'+OS.DRESS+'</span><span><b>'+x.p.s+'</b><small><em class="'+(pc>=15?'bd':'')+'">'+(pc%1?pc.toFixed(1):pc)+'%</em> · '+x.r+' of '+x.s+' units came back</small></span></span>'+
+        '<span class="ob-szcols">'+SZ.map(function(sz,j){var r=x.z.r[j],sh=x.z.s[j],cls=!r?'z':(r===mx&&r>0?'hi':'lo');
+          return '<span class="ob-sz '+cls+'" title="'+sz+': '+r+' of '+sh+' returned"><span class="l">'+sz+'</span><b>'+r+'</b><small>of '+sh+'</small></span>'}).join('')+'</span></div>'}).join('')
+      :'<p class="mut" style="padding:14px 0">No products came back in this period.</p>';
+    var szr=SZ.map(function(sz,j){return {sz:sz,p:totS[j]?tot[j]/totS[j]*100:0,r:tot[j]}}).filter(function(x){return x.r>0}).sort(function(a,b){return b.p-a.p}).slice(0,3);
+    $('#obSz').innerHTML=szr.length?'Most returned sizes across all products: '+szr.map(function(x){return '<b>'+x.sz+' '+x.p.toFixed(1)+'%</b>'}).join(' · '):'';
+    /* where returns come from */
+    var city={},ship={},r2=OS.RANGE[k],nR=0;OS.ORD.forEach(function(o){if(o.day<r2[0]||o.day>r2[1])return;if(o.st!=='cancelled')ship[o.city]=(ship[o.city]||0)+1;if(o.st==='returned'){city[o.city]=(city[o.city]||0)+1;nR++}});
+    var cl=Object.keys(city).map(function(c){return {n:c,v:city[c]/ship[c],c:city[c],sub:'of '+ship[c]+' shipped',few:ship[c]<10}}).sort(function(a,b){return b.c-a.c||b.v-a.v});
+    $('#obCityR').textContent=nR+' returned';
+    $('#obCity').innerHTML=cl.length?bars(cl.slice(0,6),'var(--bad)'):'<p class="mut" style="padding:12px 0">No returns in this period.</p>';
   }
 
   /* ---------- abandoned carts ---------- */

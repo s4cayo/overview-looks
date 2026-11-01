@@ -462,6 +462,24 @@ main{gap:24px}
 /* light mode: status text colours darkened to reach 4.5:1 on white */
 :root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
 
+/* shared section pieces (Orders B + Shipping B) */
+.ob-stack{display:flex;flex-direction:column;gap:20px}
+/* section header: title + one-line explanation on the left, the count on the right */
+.ob-sh{display:flex;align-items:flex-start;gap:16px;padding-bottom:16px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.ob-sh h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ob-sh p{font-size:13px;color:var(--muted);margin-top:4px}
+.ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
+@media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
+
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div:first-child{border-top:0}
+.ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
+.ob-bars b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ob-bars small{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+.ob-bars .few{color:var(--muted)}
+@media (max-width:480px){.ob-bars > div{grid-template-columns:minmax(0,1fr) 30px 100px}.ob-bars .t{grid-column:1 / -1;grid-row:2}}
+
 /* ===== page: shipping-B ===== */
 .sb-h1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .sb-by{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0;flex:none}
@@ -531,26 +549,86 @@ main{gap:24px}
 .sb-c .ob.on{color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,transparent)}
 @media (max-width:760px){.sb-c .ph{display:none}.sb-c{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}.sb-c .acts{grid-column:1 / -1}.sb-c .acts .ob{flex:1 1 0;min-width:0;padding:0 8px}}
 
-/* parcels */
-.sb-tools{display:flex;flex-direction:column;gap:12px;margin-bottom:8px}
+/* deliveries */
+.sb-two{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media (max-width:1000px){.sb-two{grid-template-columns:1fr}}
+.sb-ops{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px}
+.sb-ops button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px;border-radius:12px;text-align:left;transition:background .2s;min-width:0}
+.sb-ops button:hover{background:color-mix(in srgb,var(--pl) 7%,transparent)}
+.sb-ops .k{font-size:13px;color:var(--muted)}
+.sb-ops b{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15}
+.sb-ops .w b{color:var(--warn)} .sb-ops .r b{color:var(--bad)}
+.sb-ops small{font-size:13px;color:var(--muted)}
+.sb-states > div{grid-template-columns:minmax(0,1fr) minmax(60px,.8fr) 34px 48px}
+.sb-tools{display:flex;flex-direction:column;gap:12px;margin:14px 0 6px}
 .sb-tools .os-search{max-width:420px;flex:none;width:100%}
-.sb-p{display:grid;grid-template-columns:120px minmax(0,1fr) 170px 90px 90px;gap:14px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer;border-radius:10px;transition:background .15s}
+.sb-p{display:grid;grid-template-columns:minmax(150px,1.3fr) 84px 156px 128px 64px 64px 64px 112px minmax(110px,1.2fr);gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line);font-size:14px;cursor:pointer;border-radius:10px;transition:background .15s}
 .sb-p:hover{background:color-mix(in srgb,var(--pl) 6%,transparent)}
-.sb-p .mono{color:var(--muted)}
 .sb-p .m{min-width:0}
-.sb-p .m b{font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sb-p .m small,.sb-p .s small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
-.sb-p .d,.sb-p .c{text-align:right;font-variant-numeric:tabular-nums}
-.sb-p .c{font-weight:600}
+.sb-p .m b{font-weight:500;display:block;font-family:'Geist Mono',monospace;font-size:13px}
+.sb-p .m small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-p .tr{font-size:12.5px;color:var(--muted)}
+.sb-p .py{font-size:13.5px;min-width:0}
+.sb-p .py small{display:block;font-size:12.5px;color:var(--muted)}
+.sb-p .c{text-align:right;font-variant-numeric:tabular-nums}
+.sb-p .co,.sb-p .ex{font-size:13.5px;min-width:0}
+.sb-p .co{padding-left:10px}
+.sb-p .ex.w{color:var(--warn);font-weight:500}
 .sb-ph{cursor:default;font-size:12.5px;color:var(--muted);padding-top:6px}
 .sb-ph:hover{background:none}
 .sb-empty{padding:36px 8px;text-align:center;color:var(--muted)}
-@media (max-width:900px){
+@media (max-width:1279px){
   .sb-ph{display:none}
-  .sb-p{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"m c" "s d" "id id";row-gap:6px;padding:13px 2px}
-  .sb-p .m{grid-area:m} .sb-p .c{grid-area:c} .sb-p .s{grid-area:s} .sb-p .d{grid-area:d;font-size:13px;color:var(--muted)} .sb-p .mono{grid-area:id;font-size:12.5px}
-  .sb-p .s small{display:inline;margin-left:6px}
+  .sb-p{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"m m s s" "tr tr py py";row-gap:8px;padding:14px 4px}
+  .sb-p .m{grid-area:m} .sb-p .s{grid-area:s;justify-self:end} .sb-p .tr{grid-area:tr;align-self:start} .sb-p .py{grid-area:py;text-align:right}
+  .sb-p .py small{display:block}
+  .sb-p .c,.sb-p .co{text-align:left;font-size:13.5px}
+  .sb-p .c:before,.sb-p .co:before,.sb-p .ex:before{content:attr(data-l);display:block;font-size:12px;color:var(--muted);font-weight:400}
+  .sb-p .ex{grid-column:1 / -1}
+  .sb-p .ex:has(> .mut),.sb-p .c:has(> .mut),.sb-p .co:has(> .mut){display:none}
+  .sb-p{grid-template-areas:"m m s s" "tr tr py py"}
 }
+@media (max-width:600px){.sb-p{grid-template-columns:1fr 1fr;grid-template-areas:"m s" "tr py"}.sb-p .co{padding-left:0}}
+
+/* money check */
+.sb-led > div{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.sb-led > div:first-child{border-top:0}
+.sb-led .sg{font-size:17px;font-weight:600;color:var(--muted);text-align:center}
+.sb-led .lb b{display:block;font-weight:500;font-size:14.5px}
+.sb-led .lb small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.sb-led .v{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.sb-led .sum{border-top:1px solid var(--line2)}
+.sb-led .neg .v{color:var(--bad)}
+.sb-led .tot{border-top:1.5px solid var(--line2)}
+.sb-led .tot .lb b{font-weight:600}
+.sb-led .tot .v{font-size:20px}
+.sb-led > div.g,.sb-led > div.w,.sb-led > div.bd{color:var(--text)}
+.sb-led .g .v{color:var(--good)} .sb-led .bd .v{color:var(--bad)} .sb-led .w .v{color:var(--warn)}
+
+/* setup */
+.sb-acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.sb-ready > div{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 0;border-top:1px solid var(--line)}
+.sb-ready > div:first-child{border-top:0}
+.sb-ready .mk{width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.sb-ready .mk.ok{background:var(--good)} .sb-ready .mk.warn{background:var(--warn)}
+.sb-ready b{display:block;font-weight:500}
+.sb-ready small{display:block;font-size:13px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+.sb-ready strong{font-weight:600;font-variant-numeric:tabular-nums}
+.sb-res{margin-top:14px;padding:14px 16px;border-radius:12px;border:1px solid var(--line2);font-size:14px;display:flex;flex-direction:column;gap:4px}
+.sb-res.ok{border-color:color-mix(in srgb,var(--good) 40%,transparent);background:color-mix(in srgb,var(--good) 8%,transparent)}
+.sb-res span{color:var(--muted);font-size:13.5px}
+.sb-res ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.sb-res li{display:flex;align-items:center;gap:8px;font-size:13.5px}
+.sb-res li svg.i{color:var(--good);width:15px;height:15px}
+.sb-confirm{margin-top:14px;padding:16px 18px;border-radius:14px;border:1px solid var(--line2);background:var(--panel2);display:flex;flex-direction:column;gap:8px;font-size:14px}
+.sb-confirm[hidden]{display:none}
+.sb-confirm h4{font-size:15px;font-weight:600}
+.sb-confirm p{color:var(--muted);font-size:13.5px}
+.sb-confirm p b{color:var(--text);font-weight:600}
+.sb-cacts{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.sb-hint{font-size:13px;color:var(--muted);margin-top:16px}
+.sb-hint code{color:var(--text)}
+@media (max-width:600px){.sb-acts{margin-left:0;width:100%}.sb-acts .ob{flex:1}}
 
 /* cities */
 .sb-ch,.sb-cr{display:grid;grid-template-columns:minmax(0,1.3fr) 90px minmax(0,1.4fr) 100px;gap:14px;align-items:center}
@@ -719,9 +797,11 @@ main{gap:24px}
       <div class="seg" id="seg" role="tablist" aria-label="Shipping sections">
         <span class="ind" id="ind" aria-hidden="true"></span>
         <button type="button" role="tab" id="t-call" data-tab="call" aria-controls="p-call" class="on" aria-selected="true">Call list <span class="n r" id="sbCallN">9</span></button>
-        <button type="button" role="tab" id="t-parcels" data-tab="parcels" aria-controls="p-parcels" aria-selected="false" tabindex="-1">Parcels</button>
+        <button type="button" role="tab" id="t-parcels" data-tab="parcels" aria-controls="p-parcels" aria-selected="false" tabindex="-1">Deliveries</button>
+        <button type="button" role="tab" id="t-money" data-tab="money" aria-controls="p-money" aria-selected="false" tabindex="-1">Money check</button>
         <button type="button" role="tab" id="t-cities" data-tab="cities" aria-controls="p-cities" aria-selected="false" tabindex="-1">Cities</button>
         <button type="button" role="tab" id="t-pay" data-tab="pay" aria-controls="p-pay" aria-selected="false" tabindex="-1">Payouts</button>
+        <button type="button" role="tab" id="t-setup" data-tab="setup" aria-controls="p-setup" aria-selected="false" tabindex="-1">Setup</button>
       </div>
     </div>
 
@@ -734,20 +814,51 @@ main{gap:24px}
     </section>
 
     <section class="pane" id="p-parcels" role="tabpanel" aria-labelledby="t-parcels" hidden>
-      <div class="panel">
-        <div class="ph"><h2>Parcels</h2><span class="r" id="sbParR"></span></div>
-        <div class="sb-tools">
-          <label class="os-search" id="sbSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-            <input type="search" id="sbQ" placeholder="Search order, tracking, name, city" aria-label="Search parcels" autocomplete="off">
-            <button type="button" class="x" id="sbQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
-          <div class="os-filt" id="sbFilt" role="group" aria-label="Filter parcels">
-            <button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="transit" aria-pressed="false">In transit</button><button type="button" data-f="delivered" aria-pressed="false">Delivered</button><button type="button" data-f="returned" aria-pressed="false">Returned</button><button type="button" data-f="stuck" aria-pressed="false">Stuck 7+ days</button>
-          </div>
+      <div class="ob-stack">
+        <div class="sb-two">
+          <section class="panel" aria-labelledby="sbOpsH">
+            <div class="ob-sh"><div><h3 id="sbOpsH">Delivery checks</h3><p>Tap a number to list those orders below.</p></div></div>
+            <div class="sb-ops" id="sbOps"></div>
+          </section>
+          <section class="panel" aria-labelledby="sbStH">
+            <div class="ob-sh"><div><h3 id="sbStH">Most common Bosta states</h3><p>Where this period's orders are now. The five most common states.</p></div></div>
+            <div class="ob-bars sb-states" id="sbStates"></div>
+          </section>
         </div>
-        <div id="sbRows"></div>
-        <div class="os-pager"><span id="sbRange"></span><div class="pg">
-          <button type="button" class="ob sm ic" id="sbPrev" aria-label="Previous page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-          <button type="button" class="ob sm ic" id="sbNext" aria-label="Next page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+        <section class="panel" id="sbTable" aria-labelledby="sbDelH">
+          <div class="ob-sh"><div><h3 id="sbDelH">Delivery status</h3><p id="sbParR"></p></div></div>
+          <div class="sb-tools">
+            <label class="os-search" id="sbSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input type="search" id="sbQ" placeholder="Search order, tracking, status, name" aria-label="Search deliveries" autocomplete="off">
+              <button type="button" class="x" id="sbQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
+            <div class="os-filt" id="sbFilt" role="group" aria-label="Filter deliveries">
+              <button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="transit" aria-pressed="false">In transit</button><button type="button" data-f="delivered" aria-pressed="false">Delivered</button><button type="button" data-f="returned" aria-pressed="false">Returned</button><button type="button" data-f="stuck" aria-pressed="false">Stuck 7+ days</button><button type="button" data-f="exc" aria-pressed="false">Exceptions</button><button type="button" data-f="risk" aria-pressed="false">2+ attempts</button><button type="button" data-f="untracked" aria-pressed="false">Not tracked</button>
+            </div>
+          </div>
+          <div id="sbRows"></div>
+          <div class="os-pager"><span id="sbRange" aria-live="polite"></span><div class="pg">
+            <button type="button" class="ob sm ic" id="sbPrev" aria-label="Previous page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button type="button" class="ob sm ic" id="sbNext" aria-label="Next page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="pane" id="p-money" role="tabpanel" aria-labelledby="t-money" hidden>
+      <div class="ob-stack">
+        <section class="panel" aria-labelledby="sbMonH">
+          <div class="ob-sh"><div><h3 id="sbMonH">What Bosta collected and what reaches you</h3><p>Bosta orders delivered in this period.</p></div><span class="r" id="sbMonR"></span></div>
+          <div class="sb-led" id="sbLed"></div>
+        </section>
+        <div class="sb-two">
+          <section class="panel" aria-labelledby="sbGapH">
+            <div class="ob-sh"><div><h3 id="sbGapH">Check against Shopify</h3><p>Did Bosta pay what Shopify says was delivered?</p></div></div>
+            <div class="sb-led" id="sbGap"></div>
+          </section>
+          <section class="panel" aria-labelledby="sbOpenH">
+            <div class="ob-sh"><div><h3 id="sbOpenH">Not settled yet</h3><p>Cash on parcels that are not delivered yet.</p></div></div>
+            <div class="sb-led" id="sbOpen"></div>
+          </section>
+        </div>
       </div>
     </section>
 
@@ -771,6 +882,27 @@ main{gap:24px}
         <div class="sb-pay" id="sbPay"></div>
       </div>
     </section>
+
+    <section class="pane" id="p-setup" role="tabpanel" aria-labelledby="t-setup" hidden>
+      <div class="panel">
+        <div class="ob-sh"><div><h3>Connection &amp; data readiness</h3><p>Checked once, not read daily.</p></div>
+          <span class="sb-acts"><button type="button" class="ob sm" id="sbTest">Test Bosta API</button><button type="button" class="ob sm" id="sbImport">Import history</button></span></div>
+        <div class="sb-ready">
+          <div><span class="mk ok" aria-hidden="true"></span><span><b>API key</b><small class="mono">https://app.bosta.co/api/v2</small></span><strong>Configured</strong></div>
+          <div><span class="mk ok" aria-hidden="true"></span><span><b>Webhook</b><small>Bosta sends every status change the moment it happens</small></span><strong>Configured</strong></div>
+          <div><span class="mk warn" aria-hidden="true" id="sbMatchMk"></span><span><b>Matched orders</b><small id="sbMatchS"></small></span><strong id="sbMatch"></strong></div>
+        </div>
+        <div id="sbOut" aria-live="polite"></div>
+        <div class="sb-confirm" id="sbConfirm" hidden role="group" aria-labelledby="sbConfH">
+          <h4 id="sbConfH">Import Bosta delivery history?</h4>
+          <p>This calls Bosta and imports every delivery visible in this account's history, page by page, into this brand's records.</p>
+          <p><b>The matched-order and cash figures on this screen will be replaced</b> by the check that follows the import. Nothing in Bosta or Shopify is changed.</p>
+          <div class="sb-cacts"><button type="button" class="ob sm" id="sbCancel">Cancel</button><button type="button" class="ob sm pri" id="sbGoImport">Import history</button></div>
+        </div>
+        <p class="sb-hint">If delivery data looks low, import the Bosta history. Bosta references like <code class="mono">frill-n-wear:#1235</code> are matched to Shopify order names.</p>
+      </div>
+    </section>
+
 
   </main>
   </div>
@@ -1150,7 +1282,7 @@ OS.page='Shipping';
 /* Shipping · B — cash first, parcel steps (mini van drives once and parks at "In transit"), tabs: Call list · Parcels · Cities · Payouts */
 (function(){
   var $=OS.$,$$=OS.$$,fmt=OS.fmt,esc=OS.esc,IC=OS.IC;
-  var S={f:'all',q:'',page:0,cs:'n',cdir:-1},PAGE=10;
+  var S={f:'all',q:'',page:0,cs:'n',cdir:-1},PAGE=12;
   var PAY=[['Mon, Nov 2','expected',22410,2110,20300,16,true],['Mon, Oct 26','paid',33430,1980,31450,24],['Mon, Oct 19','paid',29660,1760,27900,21],['Mon, Oct 12','paid',31480,1840,29640,22],['Mon, Oct 5','paid',28350,1690,26660,20]];
   var show=OS.tabs();
 
@@ -1178,27 +1310,72 @@ OS.page='Shipping';
       '<p class="sb-grp">7 to 11 days · '+mid.length+' parcels · EGP '+fmt(mid.reduce(function(a,p){return a+p.cod},0))+'</p>'+mid.map(row).join('');
   }
 
-  /* ---------- parcels: orders placed in the period (Bosta status) + the stuck ones ---------- */
-  function parcels(){
+  /* ---------- deliveries: every order placed in the period with its Bosta row (same columns as the real
+     Delivery status table) + the parcels stuck right now ---------- */
+  var MONDAYS=[5,12,19,26,33];
+  function cashout(d){for(var i=0;i<MONDAYS.length;i++)if(MONDAYS[i]>d)return MONDAYS[i]===33?'Mon, Nov 2':'Mon, Oct '+MONDAYS[i]+' · paid';return '—'}
+  function fee(o){return o.region==='Cairo'||o.region==='Giza'?55:70}
+  function rowsAll(){
     var list=OS.inPeriod(OS.key()).filter(function(o){return o.st!=='cancelled'}).map(function(o){
-      var f=o.st==='pending'?'transit':o.st==='paid'?'delivered':'returned';
-      return {f:f,id:o.id,name:o.name,city:o.city,track:o.track,cod:o.card?0:o.total,o:o,days:o.st==='pending'?30-o.day:null,
-        st:o.st==='pending'?o.stage:o.st==='paid'?'Delivered':'Returned',sub:o.st==='returned'?o.reason:o.st==='paid'?(o.card?'Paid by card':'Cash collected'):'Cash on delivery'}});
-    OS.STUCK.forEach(function(p){list.push({f:'stuck',id:p.id,name:p.name,city:p.city,track:p.track,cod:p.cod,days:p.days,st:'Stuck · '+p.days+' days',sub:p.why,p:p})});
-    var q=S.q.toLowerCase();
-    return list.filter(function(x){return (S.f==='all'||x.f===S.f)&&(!q||(x.id+' '+x.track+' '+x.name+' '+x.city).toLowerCase().indexOf(q)>=0)})
-      .sort(function(a,b){return (b.f==='stuck')-(a.f==='stuck')||(b.days||0)-(a.days||0)})}
-  var DC={transit:'transit',delivered:'paid',returned:'returned',stuck:'stuck'};
+      var r={id:o.id,o:o,name:o.name,city:o.city,date:OS.when(o),track:o.track,cod:o.card?0:o.total,online:o.card?o.total:0,fee:null,cash:'—',exc:'',tries:0};
+      if(o.st==='paid'&&!o.web&&o.m%2===0){r.f='untracked';r.st='Not tracked';r.track='—';r.tries=null;return r}
+      if(o.st==='pending'){r.f='transit';r.tries=o.stage==='Waiting for pickup'?0:1;
+        if(o.m<6&&o.stage!=='Waiting for pickup'){r.exc='Customer not answering';r.tries=2;r.st='Exception'}
+        else r.st={'Waiting for pickup':'Pickup requested','In transit':'In transit between hubs','Out for delivery':'Out for delivery'}[o.stage]}
+      else if(o.st==='paid'){r.f='delivered';r.st='Delivered';r.tries=1;r.fee=fee(o);var dd=Math.min(30,o.day+(o.region==='Cairo'||o.region==='Giza'?1:2));r.cash=cashout(dd)}
+      else{r.f='returned';r.st='Returned to business';r.tries=o.attempts;r.fee=fee(o);r.exc=o.reason}
+      return r});
+    OS.STUCK.forEach(function(p){list.push({id:p.id,p:p,name:p.name,city:p.city,date:'Oct '+(30-p.days),track:p.track,cod:p.cod,online:0,fee:null,cash:'—',exc:p.why,tries:p.tries,f:'stuck',st:/hub/.test(p.why)?'On hold':'Exception'})});
+    return list}
+  function open(r){return r.f==='transit'||r.f==='stuck'}
+  function match(r,f){return f==='all'||r.f===f||(f==='exc'&&r.exc&&open(r))||(f==='risk'&&r.tries>=2&&open(r))}
+  function rows(){var q=S.q.toLowerCase();
+    return rowsAll().filter(function(r){return match(r,S.f)&&(!q||(r.id+' '+r.track+' '+r.st+' '+r.name+' '+r.city).toLowerCase().indexOf(q)>=0)})
+      .sort(function(a,b){return (b.f==='stuck')-(a.f==='stuck')||(b.exc&&open(b))-(a.exc&&open(a))||(b.o?b.o.ts:0)-(a.o?a.o.ts:0)})}
+  var DC={transit:'transit',delivered:'paid',returned:'returned',stuck:'stuck',untracked:'cancelled'};
+  var money=function(v){return v?fmt(v):'<span class="mut">—</span>'};
+  function paintChecks(){
+    var all=rowsAll(),per=all.filter(function(r){return r.f!=='stuck'}),tr=per.filter(function(r){return r.f!=='untracked'}).length,un=per.length-tr,
+      exc=all.filter(function(r){return r.exc&&open(r)}).length,risk=all.filter(function(r){return r.tries>=2&&open(r)}).length;
+    S.match=[tr,un];
+    $('#sbOps').innerHTML=[['all','Tracked',tr,'orders matched to Bosta','g'],['untracked','Not tracked',un,'no Bosta parcel found',un?'w':'g'],['exc','Exceptions',exc,'need operations follow-up',exc?'r':'g'],['risk','Attempts risk',risk,'2+ attempts and not delivered',risk?'r':'g']]
+      .map(function(c){return '<button type="button" data-ops="'+c[0]+'" class="'+c[4]+'"><span class="k">'+c[1]+'</span><b>'+c[2]+'</b><small>'+c[3]+'</small></button>'}).join('');
+    var by={};all.forEach(function(r){if(r.f!=='untracked')by[r.st]=(by[r.st]||0)+1});
+    var st=Object.keys(by).map(function(k){return [k,by[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,5),mx=st.length?st[0][1]:1,tot=all.length-un;
+    var col={'Delivered':'var(--good)','Returned to business':'var(--bad)','Exception':'var(--warn)','On hold':'var(--warn)'};
+    $('#sbStates').innerHTML=st.map(function(x){return '<div style="--dc:'+(col[x[0]]||'var(--pl)')+'"><span>'+x[0]+'</span><span class="t"><i style="width:'+(x[1]/mx*100)+'%"></i></span><b>'+x[1]+'</b><small>'+Math.round(x[1]/tot*100)+'%</small></div>'}).join('');
+    $('#sbMatch').textContent=tr;$('#sbMatchS').textContent=un+' Shopify orders not matched in this period';$('#sbMatchMk').className='mk '+(un?'warn':'ok');
+  }
   function paintParcels(){
-    var r=parcels(),n=r.length,pages=Math.max(1,Math.ceil(n/PAGE));if(S.page>=pages)S.page=pages-1;var v=r.slice(S.page*PAGE,S.page*PAGE+PAGE);
-    $('#sbParR').textContent='orders placed '+PER[OS.key()].t.range+' + parcels stuck now';
-    $('#sbRows').innerHTML=n?'<div class="sb-p sb-ph" aria-hidden="true"><span>Order</span><span>Customer</span><span>Bosta status</span><span class="d">Days</span><span class="c">Cash</span></div>'+v.map(function(x){
-      return '<div class="sb-p" role="button" tabindex="0" data-pid="'+x.id+'" aria-label="Parcel '+x.id+', '+esc(x.name)+', '+x.st+'"><span class="mono">#'+x.id+'</span><span class="m"><b>'+esc(x.name)+'</b><small>'+x.city+' · '+x.track+'</small></span>'+
-        '<span class="s"><span class="chip '+DC[x.f]+'">'+x.st+'</span><small>'+esc(x.sub)+'</small></span><span class="d">'+(x.days!=null?(x.days===0?'today':x.days+(x.days===1?' day':' days')):'—')+'</span><span class="c">'+(x.cod?fmt(x.cod):'paid')+'</span></div>'}).join('')
-      :'<div class="sb-empty">No parcels match.<br><button type="button" class="ob sm" id="sbReset" style="margin-top:12px">Clear search and filter</button></div>';
-    $('#sbRange').textContent=n?(S.page*PAGE+1)+'–'+(S.page*PAGE+v.length)+' of '+n+' parcels':'0 parcels';
+    var r=rows(),n=r.length,pages=Math.max(1,Math.ceil(n/PAGE));if(S.page>=pages)S.page=pages-1;var v=r.slice(S.page*PAGE,S.page*PAGE+PAGE);
+    $('#sbParR').textContent='Orders placed '+PER[OS.key()].t.range+', plus the parcels stuck with Bosta right now.';
+    $('#sbRows').innerHTML=n?'<div class="sb-p sb-ph" aria-hidden="true"><span>Order</span><span>Tracking</span><span>Status</span><span>Payment</span><span class="c">COD</span><span class="c">Online</span><span class="c">Bosta fee</span><span>Cashout</span><span>Exception</span></div>'+v.map(function(x){
+      var pay=(x.online?'Paid online':'Cash on delivery')+(x.tries?'<small>'+x.tries+' attempt'+(x.tries>1?'s':'')+'</small>':'');
+      return '<div class="sb-p" role="button" tabindex="0" data-pid="'+x.id+'" aria-label="Order '+x.id+', '+esc(x.name)+', '+x.st+'">'+
+        '<span class="m"><b>#'+x.id+'</b><small>'+x.date+' · '+esc(x.name)+'</small></span><span class="mono tr">'+x.track+'</span>'+
+        '<span class="s"><span class="chip '+(x.exc&&open(x)?'stuck':DC[x.f])+'">'+x.st+'</span></span><span class="py">'+pay+'</span>'+
+        '<span class="c" data-l="COD">'+money(x.cod)+'</span><span class="c" data-l="Online">'+money(x.online)+'</span><span class="c" data-l="Bosta fee">'+money(x.fee)+'</span>'+
+        '<span class="co" data-l="Cashout">'+(x.cash==='—'?'<span class="mut">—</span>':x.cash)+'</span><span class="ex'+(x.exc&&open(x)?' w':'')+'" data-l="Exception">'+(x.exc?esc(x.exc):'<span class="mut">—</span>')+'</span></div>'}).join('')
+      :'<div class="sb-empty">'+(S.q?'No deliveries match “'+esc(S.q)+'”.':'No deliveries match this filter.')+'<br><button type="button" class="ob sm" id="sbReset" style="margin-top:12px">Clear filters</button></div>';
+    $('#sbRange').textContent=n?(S.page*PAGE+1)+'–'+(S.page*PAGE+v.length)+' of '+n+' deliveries':'0 deliveries';
     $('#sbPrev').disabled=S.page===0;$('#sbNext').disabled=S.page>=pages-1;$('#sbPrev').style.opacity=S.page===0?.4:1;$('#sbNext').style.opacity=S.page>=pages-1?.4:1;
     $$('#sbFilt [data-f]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.f===S.f)});
+  }
+
+  /* ---------- money check: the ten Bosta cash figures of the real screen, in plain words ---------- */
+  function paintMoney(){
+    var k=OS.key(),P=PER[k].t,f=(+P.c_deliv)/121,r10=function(v){return Math.round(v/10)*10};
+    var col=r10(156690*f),onl=r10(18420*f),onN=Math.max(1,Math.round(14*f)),paid=col+onl,fees=(+P.c_deliv)*70,net=paid-fees,
+      gap=f>=1?-1450*Math.round(f):0,exp=paid-gap,pend=92980,ret=OS.LEAK[k][3],trk=col+pend+ret;
+    $('#sbMonR').textContent=P.c_deliv+' delivered · '+P.label.toLowerCase();
+    var row=function(sign,lab,real,v,cls,note){return '<div class="'+(cls||'')+'"><span class="sg" aria-hidden="true">'+sign+'</span><span class="lb"><b>'+lab+'</b><small>'+real+(note?' · '+note:'')+'</small></span><span class="v">EGP '+fmt(v)+'</span></div>'};
+    $('#sbLed').innerHTML=row('','Cash collected on delivery','Collected COD',col,'','delivered Bosta orders')+row('+','Paid online through Bosta','Online paid',onl,'',onN+' order'+(onN>1?'s':''))+
+      row('=','Customers paid Bosta','Customer paid Bosta',paid,'sum','COD + online payments')+row('−','Bosta fees','Bosta fees',fees,'neg','excluded from net')+
+      row('=','Net from Bosta','Net from Bosta',net,'tot g','customer paid minus Bosta fees');
+    $('#sbGap').innerHTML=row('','Shopify says delivered','Expected COD',exp,'','delivered total incl. shipping')+row('','Bosta payments','Customer paid Bosta',paid,'','')+
+      '<div class="tot '+(gap<0?'bd':'g')+'"><span class="sg" aria-hidden="true">=</span><span class="lb"><b>Payment gap</b><small>'+(gap<0?'Bosta paid EGP '+fmt(-gap)+' less · usually a parcel Shopify shows as delivered that Bosta has not confirmed':'Bosta paid what Shopify expected')+'</small></span><span class="v">'+(gap<0?'− EGP '+fmt(-gap):'EGP 0')+'</span></div>';
+    $('#sbOpen').innerHTML=row('','Still moving','Pending COD',pend,'w','on the road or waiting for pickup, incl. 9 stuck')+row('','Came back','Returned COD',ret,'bd','returned, failed or cancelled')+
+      row('','All matched Bosta orders','Tracked COD',trk,'tot','collected + pending + returned');
   }
 
   /* ---------- cities ---------- */
@@ -1219,7 +1396,7 @@ OS.page='Shipping';
       '<span class="br">'+p[5]+' parcels · collected EGP '+fmt(p[2])+' − Bosta fees '+fmt(p[3])+'</span><span class="nt">EGP '+fmt(p[4])+'</span></div>'}).join('');
   }
 
-  function all(){paintHero();paintCalls();paintParcels();paintCities();paintPay()}
+  function all(){paintHero();paintCalls();paintChecks();paintParcels();paintMoney();paintCities();paintPay()}
 
   /* ---------- events ---------- */
   document.addEventListener('click',function(e){var t=e.target.closest('[data-tabgo]');if(t)show(t.dataset.tabgo,true)});
@@ -1241,6 +1418,19 @@ OS.page='Shipping';
     try{var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));a.download='bosta-payouts.csv';document.body.appendChild(a);a.click();a.remove()}catch(err){}
     OS.toast('Payouts saved as bosta-payouts.csv (in this preview the download may be blocked)')});
   $('#sbOrders').addEventListener('click',function(){OS.go('sales')});
+
+  /* ---------- setup: Test Bosta API + Import history (with an in-page confirmation, as in the real screen) ---------- */
+  var out=$('#sbOut'),conf=$('#sbConfirm');
+  $('#sbTest').addEventListener('click',function(){var b=this;b.disabled=true;b.textContent='Testing…';out.innerHTML='';
+    setTimeout(function(){b.disabled=false;b.textContent='Test Bosta API';
+      out.innerHTML='<div class="sb-res ok"><b>Bosta API connected</b><span>All three checks passed just now.</span><ul><li>'+IC.check+'Deliveries: OK</li><li>'+IC.check+'Wallet and cashouts: OK</li><li>'+IC.check+'Webhook: OK</li></ul></div>'},900)});
+  $('#sbImport').addEventListener('click',function(){conf.hidden=false;out.innerHTML='';$('#sbCancel').focus()});
+  $('#sbCancel').addEventListener('click',function(){conf.hidden=true;$('#sbImport').focus()});
+  $('#sbGoImport').addEventListener('click',function(){conf.hidden=true;var i=0,b=$('#sbImport');b.disabled=true;$('#sbTest').disabled=true;
+    (function step(){i++;out.innerHTML='<div class="sb-res info"><span>Importing page '+i+' of 7 from Bosta…</span></div>';
+      if(i<7){setTimeout(step,OS.reduce?60:260);return}
+      setTimeout(function(){b.disabled=false;$('#sbTest').disabled=false;out.innerHTML='<div class="sb-res ok"><b>Bosta history imported</b><span>642 deliveries found · 631 matched to Shopify orders. Figures on this screen are up to date.</span></div>'},300)})()});
+  $('#sbOps').addEventListener('click',function(e){var b=e.target.closest('[data-ops]');if(!b)return;S.f=b.dataset.ops;S.page=0;paintParcels();$('#sbTable').scrollIntoView({behavior:OS.reduce?'auto':'smooth',block:'start'})});
   document.addEventListener('per:change',function(){S.page=0;all()});
   all();
 })();
