@@ -1,0 +1,80 @@
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1>Orders</h1><p>Day by day, with what needs you first.</p></div>
+      <div class="acts"><button type="button" class="ob" id="obShip">Open shipping</button></div>
+    </header>
+
+    <section class="panel ob-hero rise" style="--d:.06s" aria-label="Orders in this period">
+      <div class="ob-big">
+        <span class="k">Valid orders</span>
+        <b id="obValid">175</b>
+        <span class="ob-d"><span class="dl" id="obDelta"></span> <span class="mut" id="obVs"></span></span>
+      </div>
+      <div class="ob-mix">
+        <div class="ob-bar" id="obBar" role="img"></div>
+        <div class="ob-leg" id="obLeg" aria-label="Filter the list by status"></div>
+      </div>
+    </section>
+
+    <div class="tabs-anchor" id="tabsAnchor" aria-hidden="true"></div>
+    <div class="tabbar rise" id="tabbar" style="--d:.1s">
+      <div class="seg" id="seg" role="tablist" aria-label="Orders sections">
+        <span class="ind" id="ind" aria-hidden="true"></span>
+        <button type="button" role="tab" id="t-list" data-tab="list" aria-controls="p-list" class="on" aria-selected="true">Orders</button>
+        <button type="button" role="tab" id="t-att" data-tab="att" aria-controls="p-att" aria-selected="false" tabindex="-1">Needs you <span class="n r" id="obAttN">0</span></button>
+        <button type="button" role="tab" id="t-lost" data-tab="lost" aria-controls="p-lost" aria-selected="false" tabindex="-1">Cancelled &amp; returned</button>
+        <button type="button" role="tab" id="t-carts" data-tab="carts" aria-controls="p-carts" aria-selected="false" tabindex="-1">Abandoned carts</button>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <section class="pane" id="p-list" role="tabpanel" aria-labelledby="t-list">
+      <div class="panel">
+        <div class="ob-tools">
+          <label class="os-search" id="obSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input type="search" id="obQ" placeholder="Search name, order, phone, city, dress" aria-label="Search orders" autocomplete="off">
+            <button type="button" class="x" id="obQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
+          <select class="os-sel" id="obSort" aria-label="Sort orders"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="hi">Highest total</option><option value="lo">Lowest total</option></select>
+          <button type="button" class="ob" id="obSelBtn" aria-pressed="false">Select</button>
+          <button type="button" class="ob" id="obCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span id="obCsvT">Export CSV</span></button>
+        </div>
+        <p class="ob-filt" id="obFilt" hidden></p>
+        <div id="obDays"></div>
+        <div class="ob-more"><span id="obCount" class="mut"></span><button type="button" class="ob" id="obMore">Show 20 more</button></div>
+      </div>
+    </section>
+
+    <!-- NEEDS YOU -->
+    <section class="pane" id="p-att" role="tabpanel" aria-labelledby="t-att" hidden>
+      <div class="panel ob-att" id="obAtt"></div>
+    </section>
+
+    <!-- CANCELLED & RETURNED -->
+    <section class="pane" id="p-lost" role="tabpanel" aria-labelledby="t-lost" hidden>
+      <div class="panel">
+        <div class="ob-lost">
+          <div class="ob-lh"><span class="k">Lost to cancelled &amp; returned orders</span><b id="obLostV"></b><span class="mut" id="obLostS"></span></div>
+          <div class="ob-lsplit" id="obLostSplit"></div>
+        </div>
+        <div class="ob-three">
+          <div><h3 class="ob-h3">Why orders were cancelled</h3><div class="ob-rows" id="obWhy"></div></div>
+          <div><h3 class="ob-h3">Dresses that come back</h3><div class="ob-rows" id="obRet"></div><p class="ob-note" id="obSz"></p></div>
+          <div><h3 class="ob-h3">Where returns come from</h3><div class="ob-rows" id="obCity"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABANDONED CARTS -->
+    <section class="pane" id="p-carts" role="tabpanel" aria-labelledby="t-carts" hidden>
+      <div class="panel">
+        <div class="os-nums ob-cn" id="obCartN"></div>
+        <div class="ob-carts" id="obCarts"></div>
+        <p class="ob-note">Only people with a phone on file are listed. Messages open WhatsApp with a ready reminder you can edit.</p>
+      </div>
+    </section>
+
+    <div class="os-bulk" id="obBulk" role="region" aria-label="Selected orders">
+      <b id="obBulkN">0 selected</b>
+      <button type="button" class="ob sm pri" id="obBulkCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Export CSV</button>
+      <button type="button" class="ob sm" id="obBulkAll">Select all <span id="obBulkAllN"></span></button>
+      <button type="button" class="ob sm ic" id="obBulkX" aria-label="Clear selection"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>

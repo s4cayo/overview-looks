@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shipping · Road</title>
+<meta name="description" content="Frill N Wear dashboard redesign mockup: Shipping · Road.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+/* theme: remembered choice first, else the OS preference (same key as the Overview) */
+(function(){var t=null;try{t=localStorage.getItem("n-theme")}catch(e){}
+  if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
+  document.documentElement.dataset.theme=t})();
+</script>
+<style>
+:root{
+  --bg:#060509; --panel:#0d0c12; --panel2:#14121b; --line:rgba(255,255,255,.065); --line2:rgba(255,255,255,.11);
+  --text:#eceaf3; --muted:#8d8a9b; --dim:#5f5c6c;
+  --p:#550da6; --pm:#7c3fc1; --pl:#a275e0; --tint:#f2eafb; --acc:#8a4fd1;
+  --good:#45d09a; --warn:#f2b64f; --bad:#f06571; --gold:#d8b46c;
+  --track:rgba(255,255,255,.06); --grid:rgba(255,255,255,.06); --grid2:rgba(255,255,255,.12);
+  --r:18px; --peek:68px;
+  --cw:min(500px, 78vw);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f4f2f8; --panel:#ffffff; --panel2:#f6f3fb; --line:rgba(20,10,40,.08); --line2:rgba(20,10,40,.14);
+  --text:#17141f; --muted:#666273; --dim:#9a96a6; --acc:#550da6; --pl:#7c3fc1;
+  --good:#14935f; --warn:#b07a12; --bad:#d0434f; --gold:#a8843c;
+  --track:rgba(20,10,40,.07); --grid:rgba(20,10,40,.07); --grid2:rgba(20,10,40,.16);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:Geist,system-ui,sans-serif;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.num,td,.tab{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:6px}
+svg.i{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100%}
+.side{position:sticky;top:0;align-self:flex-start;height:100vh;width:248px;flex:none;padding:18px 14px;display:flex;flex-direction:column;gap:18px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(124,63,193,.07),transparent 40%),var(--bg)}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-weight:700;font-size:11.5px;letter-spacing:.02em;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 6px 18px -6px rgba(124,63,193,.8)}
+.switch{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line2);border-radius:12px;background:var(--panel)}
+.switch .dot{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,#a275e0,#550da6,#a275e0)}
+.switch b{font-weight:500;flex:1;text-align:left}
+.switch .i{color:var(--muted);width:15px}
+nav{display:flex;flex-direction:column;gap:14px;overflow:auto}
+.grp h6{font-size:10.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding:0 10px 6px}
+.grp a{display:flex;align-items:center;gap:11px;padding:7.5px 10px;border-radius:10px;color:var(--muted);font-size:13.5px;transition:background .2s,color .2s}
+.grp a:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.grp a.on{color:#fff;background:linear-gradient(90deg,rgba(138,79,209,.28),rgba(138,79,209,.06));box-shadow:inset 2px 0 0 var(--acc)}
+:root[data-theme="light"] .grp a.on{color:var(--p);background:linear-gradient(90deg,rgba(124,63,193,.13),rgba(124,63,193,.03))}
+:root[data-theme="light"] .grp a:hover{background:rgba(20,10,40,.04)}
+
+.content{flex:1;min-width:0;padding:22px 34px 60px}
+main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:500;color:var(--good);background:rgba(69,208,154,.1);border:1px solid rgba(69,208,154,.22)}
+.pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.ctrls{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 13px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13px;transition:border-color .2s,background .2s}
+.btn:hover{border-color:rgba(162,117,224,.5)}
+.btn small{color:var(--muted);font-size:12px}
+.btn.sq{width:36px;padding:0;justify-content:center}
+#theme .sun{display:none} :root[data-theme="light"] #theme .sun{display:block} :root[data-theme="light"] #theme .moon{display:none}
+.user{display:flex;align-items:center;gap:9px;padding-left:6px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;background:linear-gradient(140deg,#2a2833,#17151d);color:#eceaf3;border:1px solid var(--line2)}
+.user span{font-size:12.5px;color:var(--muted)}
+.burger{display:none}
+
+/* === NAV v2 START === */
+/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
+   and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
+   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
+   attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
+   Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
+   "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
+.nv2-top,.nv2-dock,.nv2-sheet,.nv2-scrim{--nv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --nv2-bg:#060509;--nv2-panel:#0f0d15;--nv2-panel2:#17141f;--nv2-line:rgba(255,255,255,.08);--nv2-line2:rgba(255,255,255,.14);--nv2-fg:#eceaf3;--nv2-mut:#9693a6;
+  --nv2-acc:#a275e0;--nv2-good:#45d09a;--nv2-bad:#f06571;--nv2-glass:rgba(22,19,30,.86);--nv2-shadow:0 18px 40px -14px rgba(0,0,0,.85);
+  font-family:var(--nv2-font);color:var(--nv2-fg)}
+[data-theme="light"] .nv2-top,[data-theme="light"] .nv2-dock,[data-theme="light"] .nv2-sheet,[data-theme="light"] .nv2-scrim{
+  --nv2-bg:#f4f2f8;--nv2-panel:#fff;--nv2-panel2:#f6f3fb;--nv2-line:rgba(20,10,40,.08);--nv2-line2:rgba(20,10,40,.14);--nv2-fg:#17141f;--nv2-mut:#5f5b6c;
+  --nv2-acc:#550da6;--nv2-good:#12855a;--nv2-bad:#d0434f;--nv2-glass:rgba(255,255,255,.9);--nv2-shadow:0 16px 36px -14px rgba(40,20,80,.35)}
+.nv2-top *,.nv2-dock *,.nv2-sheet *{box-sizing:border-box;margin:0;padding:0}
+:where(.nv2-top,.nv2-dock,.nv2-sheet) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:where(.nv2-top,.nv2-sheet,.nv2-dock) a{color:inherit;text-decoration:none}
+.nv2-top :focus-visible,.nv2-dock :focus-visible,.nv2-sheet :focus-visible{outline:2px solid var(--nv2-acc);outline-offset:2px;border-radius:10px}
+.nv2-i{width:19px;height:19px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- top bar ---- */
+.nv2-top{position:relative;z-index:40;display:flex;align-items:center;gap:10px;min-height:44px}
+.nv2-anc{position:relative}
+/* Profitable / Loss: a tiny dot after the brand name (aria-label + title carry the words) */
+.nv2-sdot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--nv2-good);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-good) 22%,transparent)}
+.nv2-sdot.nv2-loss{background:var(--nv2-bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-bad) 22%,transparent)}
+.nv2-search{position:relative;flex:1 1 340px;max-width:340px;min-width:150px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
+.nv2-search:focus-within{border-color:var(--nv2-acc)}
+.nv2-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-search input::placeholder{color:var(--nv2-mut)}
+.nv2-kbd{font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;border:1px solid var(--nv2-line2);color:var(--nv2-mut);white-space:nowrap}
+.nv2-res{position:absolute;left:0;right:0;top:calc(100% + 6px);padding:6px;border-radius:14px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);display:none}
+.nv2-res.nv2-on{display:block}
+.nv2-res button{display:flex;width:100%;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-res button small{margin-left:auto;font-size:12px;color:var(--nv2-mut)}
+.nv2-res button:hover,.nv2-res button.nv2-hl{background:var(--nv2-panel2)}
+.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+.nv2-date{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:99px;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s}
+.nv2-date:hover{border-color:var(--nv2-acc)!important}
+.nv2-date small{font-size:12.5px;color:var(--nv2-mut);font-weight:400}
+.nv2-ds{display:none}
+.nv2-date .nv2-i{width:16px;height:16px}
+.nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
+.nv2-ib:hover{border-color:var(--nv2-acc)!important}
+.nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
+.nv2-avw{flex:none}
+.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
+.nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
+.nv2-brandw{min-width:0;flex:none}
+.nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
+.nv2-brand:hover{background:var(--nv2-panel2)}
+.nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
+.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+/* popovers */
+.nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
+  opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.nv2-pop.nv2-on{opacity:1;transform:none;pointer-events:auto}
+.nv2-pop.nv2-l{right:auto;left:0;transform-origin:top left}
+.nv2-pop.nv2-c{right:auto;left:50%;transform:translate(-50%,-6px) scale(.98);transform-origin:top center}
+.nv2-pop.nv2-c.nv2-on{transform:translate(-50%,0)}
+.nv2-mi{display:flex;width:100%;align-items:center;gap:11px;min-height:42px;padding:8px 11px;border-radius:10px;font-size:14px;white-space:nowrap}
+.nv2-mi:hover{background:var(--nv2-panel2)}
+.nv2-mi small{margin-left:auto;font-size:12.5px;color:var(--nv2-mut)}
+.nv2-mi[aria-checked="true"]{color:var(--nv2-acc);font-weight:600}
+.nv2-mi[aria-checked="true"]::after{content:"✓";margin-left:10px;font-weight:700}
+.nv2-mi .nv2-i{width:17px;height:17px;color:var(--nv2-mut)}
+.nv2-hr{height:1px;background:var(--nv2-line);margin:5px 6px}
+.nv2-who{padding:10px 11px 8px}
+.nv2-who b{display:block;font-size:14px;font-weight:600}
+.nv2-who span{font-size:12.5px;color:var(--nv2-mut)}
+.nv2-tog{margin-left:auto;position:relative;width:42px;height:24px;border-radius:99px;background:var(--nv2-line2);flex:none;transition:background .25s}
+.nv2-tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s}
+[data-theme="dark"] .nv2-tog,:root:not([data-theme="light"]) .nv2-tog{background:linear-gradient(135deg,#7c3fc1,#550da6)}
+[data-theme="dark"] .nv2-tog::after,:root:not([data-theme="light"]) .nv2-tog::after{transform:translateX(18px)}
+/* bell: straight to the list — icon · one-line message · time · link (no heading) */
+.nv2-bellpop{width:min(344px,calc(100vw - 32px));padding:6px;display:flex;flex-direction:column;gap:2px}
+.nv2-note{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:12px;line-height:1.35;width:100%;text-align:left}
+.nv2-note:hover{background:var(--nv2-panel2)}
+.nv2-note + .nv2-note{box-shadow:0 -1px 0 var(--nv2-line)}
+.nv2-note:hover + .nv2-note,.nv2-note + .nv2-note:hover{box-shadow:none}
+.nv2-ni{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.nv2-ni svg.nv2-i{width:16px;height:16px}
+.nv2-nt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nv2-nt b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-nt small{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--nv2-mut)}
+.nv2-nl{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--nv2-acc,#a275e0);white-space:nowrap}
+.nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
+.nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
+
+/* ---- narrower desktops: the range moves into the menu ---- */
+@media (max-width:1279px){.nv2-dr{display:none}}
+/* ---- phone / tablet top: the same single row; search hidden, compact date ("7 days") ---- */
+@media (max-width:1023px){
+  .nv2-top{gap:8px}
+  .nv2-brandw{flex:0 1 auto}
+  .nv2-search{display:none}
+  .nv2-dl,.nv2-dr{display:none}
+  .nv2-ds{display:inline}
+}
+@media (max-width:480px){
+  .nv2-top{gap:6px}
+  .nv2-right{gap:6px}
+  .nv2-av,.nv2-ib{width:40px;height:40px}
+  .nv2-av b{width:38px;height:38px}
+  .nv2-dot{top:9px;right:10px}
+  .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
+  .nv2-date{height:40px;padding:0 12px;gap:6px}
+  .nv2-date .nv2-cal{display:none}
+}
+@media (max-width:400px){.nv2-bchev{display:none}}
+
+/* ---- bottom dock ---- */
+.nv2-dock{display:none}
+@media (max-width:1023px){
+  html.nv2-docked body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  .nv2-dock{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:row;overflow:visible;justify-content:center;align-items:center;gap:12px;pointer-events:none;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+  .nv2-dock.nv2-hide{transform:translateY(calc(100% + 30px));opacity:0}
+  .nv2-pill,.nv2-ai{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+  .nv2-pill{display:flex;align-items:center;gap:2px;padding:5px;border-radius:99px;background:var(--nv2-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .nv2-pill > *{width:56px;height:46px;border-radius:99px;display:grid;place-items:center;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > *[aria-current="page"]{background:var(--nv2-fg);color:var(--nv2-bg)}
+  .nv2-pill .nv2-i{width:22px;height:22px}
+  .nv2-pill > *[aria-current="page"] .nv2-i{fill:currentColor;stroke:currentColor}
+  .nv2-ai{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6 60%,#3d0880);box-shadow:0 14px 30px -10px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)!important}
+  .nv2-ai .nv2-i{width:24px;height:24px}
+}
+/* ---- sheets (menu, assistant) ---- */
+.nv2-scrim{position:fixed;inset:0;z-index:90;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.nv2-scrim.nv2-on{opacity:1;pointer-events:auto}
+.nv2-sheet{position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:86vh;overflow:auto;border-radius:24px 24px 0 0;background:var(--nv2-panel);border-top:1px solid var(--nv2-line2);
+  padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s .4s;box-shadow:0 -20px 50px -20px rgba(0,0,0,.6)}
+.nv2-sheet.nv2-on{transform:none;visibility:visible;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:1024px){.nv2-sheet{left:50%;right:auto;width:520px;margin-left:-260px}}
+.nv2-grab{width:40px;height:5px;border-radius:9px;background:var(--nv2-line2);margin:2px auto 14px}
+.nv2-sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nv2-sh h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.nv2-x{margin-left:auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel2)}
+.nv2-sw{display:flex;align-items:center;gap:11px;width:100%;padding:12px;border-radius:14px;background:var(--nv2-panel2);border:1px solid var(--nv2-line)!important;margin-bottom:16px;font-size:15px;font-weight:600}
+.nv2-sw .nv2-i{margin-left:auto;color:var(--nv2-mut)}
+.nv2-grp{margin-bottom:14px}
+.nv2-grp h6{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--nv2-mut);padding:0 12px 6px}
+.nv2-grp a{display:flex;align-items:center;gap:13px;min-height:46px;padding:0 12px;border-radius:12px;font-size:15px}
+.nv2-grp a:hover{background:var(--nv2-panel2)}
+.nv2-grp a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-acc) 16%,transparent);color:var(--nv2-acc);font-weight:600}
+.nv2-grp a .nv2-i{color:var(--nv2-mut)}
+.nv2-grp a[aria-current="page"] .nv2-i{color:var(--nv2-acc)}
+.nv2-ask{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--nv2-panel2);border:1px solid var(--nv2-line2);margin:6px 0 16px}
+.nv2-ask:focus-within{border-color:var(--nv2-acc)}
+.nv2-ask input:focus-visible,.nv2-search input:focus-visible{outline:none}
+.nv2-ask input{flex:1;min-width:0;height:44px;border:0;outline:0;background:none;font:inherit;font-size:15px;color:var(--nv2-fg)}
+.nv2-ask button{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6)}
+.nv2-sugh{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--nv2-mut);margin-bottom:8px}
+.nv2-sug{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--nv2-line)!important;margin-bottom:8px;font-size:14.5px;line-height:1.35}
+.nv2-sug:hover{border-color:var(--nv2-acc)!important}
+.nv2-sug .nv2-i{color:var(--nv2-acc)}
+.nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* === NAV v2 END === */
+/* === PERIODS v1 START === */
+/* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
+[data-per-down] > span:first-child svg{transform:scaleY(-1)}
+/* === PERIODS v1 END === */
+/* ===== shared by the Orders + Shipping mockups (os- prefix). Base tokens come from the Overview (ref-base.css). ===== */
+@media (max-width:1180px){.side{width:212px}}
+@media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px}}
+@media (max-width:600px){.content{padding-left:16px;padding-right:16px;padding-top:14px}}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.ph h2,.ph h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ph .r{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
+.lnk{font-size:13px;color:var(--pl);font-weight:500;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.lnk:hover{text-decoration:underline;text-underline-offset:3px}
+.lnk svg.i{width:15px;height:15px}
+.ph .lnk{margin-left:auto}
+.mut{color:var(--muted)}
+.g{color:var(--good)} .w{color:var(--warn)} .bd{color:var(--bad)}
+.rise{opacity:0;transform:translateY(12px);animation:rise .65s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+
+/* page title row */
+.os-head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.os-head h1{font-size:28px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.os-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.os-head .acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:600px){.os-head h1{font-size:24px}.os-head .acts{margin-left:0;width:100%}}
+
+/* buttons */
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
+.ob:hover{border-color:rgba(162,117,224,.55)}
+.ob:active{transform:scale(.97)}
+.ob svg.i{width:16px;height:16px}
+.ob.pri{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
+.ob.sm{height:32px;padding:0 11px;font-size:13px;border-radius:9px}
+.ob.ic{width:38px;padding:0}
+.ob.sm.ic{width:32px}
+
+/* plain number-over-label stats, no boxes */
+.os-nums{display:grid;gap:24px}
+.os-nums > div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.os-nums .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.os-nums .k i{width:8px;height:8px;border-radius:50%;background:var(--dc,var(--pl));box-shadow:0 0 8px var(--dc,var(--pl));flex:none}
+.os-nums b{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.os-nums b small{font-size:14px;font-weight:500;color:var(--muted);margin-right:5px;letter-spacing:0}
+.os-nums .s{font-size:13px;color:var(--muted)}
+.os-nums .s.w{color:var(--warn);font-weight:500}
+@media (max-width:600px){.os-nums b{font-size:22px}.os-nums{gap:18px 14px}}
+
+/* status chips */
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap;
+  color:var(--cc);background:color-mix(in srgb,var(--cc) 12%,transparent)}
+.chip:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.chip.paid{--cc:var(--good)} .chip.pending{--cc:var(--warn)} .chip.cancelled{--cc:var(--muted)} .chip.returned{--cc:var(--bad)}
+.chip.transit{--cc:var(--pl)} .chip.stuck{--cc:var(--warn)}
+
+/* search + segmented filter + selects */
+.os-search{position:relative;display:flex;align-items:center;flex:1 1 260px;min-width:0;max-width:420px}
+.os-search svg.i{position:absolute;left:12px;color:var(--muted);pointer-events:none}
+.os-search input{width:100%;height:40px;padding:0 36px 0 38px;border-radius:12px;border:1px solid var(--line2);background:var(--panel);color:var(--text);font:inherit;font-size:14px}
+.os-search input::placeholder{color:var(--muted)}
+.os-search input:focus{outline:none;border-color:var(--pl);box-shadow:0 0 0 3px rgba(162,117,224,.2)}
+.os-search .x{position:absolute;right:6px;width:28px;height:28px;border-radius:8px;display:none;place-items:center;color:var(--muted)}
+.os-search.has .x{display:grid}
+.os-filt{display:flex;gap:6px;flex-wrap:wrap}
+.os-filt button{height:34px;padding:0 12px;border-radius:99px;border:1px solid var(--line2);font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:7px;transition:.2s;white-space:nowrap}
+.os-filt button b{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+.os-filt button:hover{border-color:rgba(162,117,224,.5);color:var(--text)}
+.os-filt button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.os-filt button[aria-pressed="true"] b{color:var(--bg)}
+.os-sel{height:38px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);color:var(--text);font:inherit;font-size:13.5px;padding:0 30px 0 12px;appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M8 10l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:16px}
+.os-sel:focus{outline:none;border-color:var(--pl)}
+
+/* checkbox */
+.cb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);background:var(--panel);display:inline-grid;place-items:center;cursor:pointer;flex:none;margin:0;transition:.15s}
+.cb:hover{border-color:var(--pl)}
+.cb:checked,.cb:indeterminate{background:var(--acc);border-color:var(--acc)}
+.cb:checked:after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.cb:indeterminate:after{content:"";width:8px;height:2px;background:#fff;border-radius:2px}
+
+/* pager */
+.os-pager{display:flex;align-items:center;gap:10px;justify-content:space-between;padding-top:16px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.os-pager .pg{display:flex;gap:6px;align-items:center}
+
+/* bulk bar */
+.os-bulk{position:fixed;left:50%;bottom:24px;z-index:60;transform:translate(-50%,140%);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:16px;
+  background:var(--text);color:var(--bg);box-shadow:0 20px 50px -14px rgba(0,0,0,.6);transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;visibility:hidden;max-width:calc(100vw - 32px);font-size:14px}
+.os-bulk.on{transform:translate(-50%,0);visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.os-bulk b{font-weight:600;white-space:nowrap}
+.os-bulk .ob{background:transparent;color:inherit;border-color:color-mix(in srgb,var(--bg) 30%,transparent)}
+.os-bulk .ob.pri{background:var(--acc);color:#fff;border-color:transparent}
+:root[data-theme="light"] .os-bulk .ob.pri{background:#a275e0;color:#17141f}
+@media (max-width:1023px){.os-bulk{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:480px){.os-bulk{gap:6px;padding:7px 7px 7px 14px;font-size:13px}.os-bulk .hide-s{display:none}}
+
+/* toast */
+.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:11px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
+  box-shadow:0 16px 40px -16px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;visibility:hidden;max-width:calc(100vw - 32px);display:flex;gap:9px;align-items:center}
+.os-toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.os-toast svg.i{color:var(--good)}
+
+/* drawer (right on desktop, bottom sheet on phone) */
+.os-scrim{position:fixed;inset:0;z-index:70;background:rgba(4,3,8,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.os-scrim.on{opacity:1;pointer-events:auto}
+.os-drawer{position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(460px,100vw);background:var(--panel);border-left:1px solid var(--line2);display:flex;flex-direction:column;
+  transform:translateX(105%);transition:transform .38s cubic-bezier(.2,.8,.2,1);box-shadow:-30px 0 60px -30px rgba(0,0,0,.6)}
+.os-drawer:not(.on){visibility:hidden;transition:transform .38s cubic-bezier(.2,.8,.2,1),visibility 0s .38s}
+.os-drawer.on{transform:none}
+.os-dh{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+.os-dh h2{font-size:20px;font-weight:600;letter-spacing:-.015em}
+.os-dh p{font-size:13px;color:var(--muted);margin-top:4px}
+.os-dh .ob{margin-left:auto;flex:none}
+.os-db{flex:1;overflow:auto;padding:4px 22px 24px;overscroll-behavior:contain}
+.os-db section{padding:18px 0;border-top:1px solid var(--line)}
+.os-db section:first-child{border-top:0}
+.os-db h3{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
+.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.os-df .ob{flex:1 1 auto}
+@media (max-width:600px){
+  .os-drawer{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;transform:translateY(105%)}
+  .os-drawer.on{transform:none}
+  .os-dh,.os-db,.os-df{padding-left:16px;padding-right:16px}
+  .os-df{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+}
+.tl{list-style:none;display:flex;flex-direction:column}
+.tl li{position:relative;display:grid;grid-template-columns:18px 1fr auto;gap:10px;padding-bottom:14px;font-size:14px}
+.tl li:last-child{padding-bottom:0}
+.tl li:before{content:"";position:absolute;left:8px;top:16px;bottom:-2px;width:1.5px;background:var(--line2)}
+.tl li:last-child:before{display:none}
+.tl li i{width:12px;height:12px;margin:3px 0 0 3px;border-radius:50%;border:2px solid var(--line2);background:var(--panel)}
+.tl li.done i{background:var(--good);border-color:var(--good)}
+.tl li.now i{background:var(--pl);border-color:var(--pl);box-shadow:0 0 0 4px rgba(162,117,224,.2)}
+.tl li.bad i{background:var(--bad);border-color:var(--bad)}
+.tl li.todo{color:var(--muted)}
+.tl li span:last-child{font-size:12.5px;color:var(--muted);text-align:right}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px 0;font-size:14px}
+.kv dt{padding-right:16px}
+.kv dt{color:var(--muted)} .kv dd{text-align:right;font-variant-numeric:tabular-nums}
+.kv .tot{font-weight:600;font-size:16px;padding-top:9px;border-top:1px solid var(--line)}
+.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0}
+.sw{width:40px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.sw svg{width:20px;height:30px}
+.items b{font-weight:500;display:block}
+.items small{font-size:12.5px;color:var(--muted)}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:13px}
+.copy{display:inline-flex;align-items:center;gap:6px;color:var(--pl);font-weight:500}
+.copy svg.i{width:15px;height:15px}
+
+/* Bosta lane (from the Overview Orders tab; van drives once, then parks) */
+.lane{position:relative;height:178px;border-radius:16px;overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(90% 120% at 50% 130%,rgba(85,13,166,.42),transparent 62%),repeating-radial-gradient(circle at 92% 118%,rgba(255,255,255,.04) 0 .5px,transparent 1px 6px),linear-gradient(180deg,#0b0a10,#120f1b)}
+:root[data-theme="light"] .lane{background:radial-gradient(90% 120% at 50% 130%,rgba(124,63,193,.5),transparent 62%),repeating-radial-gradient(circle at 92% 118%,rgba(255,255,255,.05) 0 .5px,transparent 1px 6px),linear-gradient(180deg,#1a1030,#2a1650);border-color:transparent}
+.road{position:absolute;left:5%;right:5%;top:96px;height:16px;margin-top:-8px;border-radius:99px;background:#07060b;box-shadow:0 0 0 1px rgba(162,117,224,.28),0 0 26px -4px rgba(124,63,193,.6)}
+.road:before{content:"";position:absolute;left:10px;right:10px;top:50%;height:1.5px;margin-top:-.75px;background:repeating-linear-gradient(90deg,rgba(242,234,251,.42) 0 7px,transparent 7px 14px)}
+.road i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,rgba(216,180,108,.35),rgba(162,117,224,.45),rgba(69,208,154,.4));width:100%;opacity:.35}
+.stop{position:absolute;top:96px;width:0;height:0;cursor:pointer;z-index:3}
+.stop .dt{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#0b0814;border:2.5px solid var(--dc);box-shadow:0 0 12px var(--dc);transition:transform .2s}
+.stop:hover .dt{transform:scale(1.25)}
+.stop:focus-visible{outline:none}
+.stop:focus-visible .dt{box-shadow:0 0 0 3px var(--pl),0 0 12px var(--dc)}
+.stop .lb{position:absolute;top:22px;transform:translateX(-50%);white-space:nowrap;text-align:center;font-size:12px;color:#c4bcd6}
+.stop .lb b{display:block;font-size:16px;font-weight:600;color:#f2eefa;font-variant-numeric:tabular-nums}
+.stop.first .lb{transform:none;left:-8px;text-align:left} .stop.last .lb{transform:translateX(-100%);left:8px;text-align:right}
+.stop.on .dt{transform:scale(1.3)}
+.retb{position:absolute;top:18px;left:34%;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:#f6d58c}
+.retb svg{width:58px;height:44px;overflow:visible}
+.van{position:absolute;top:96px;left:5%;width:66px;margin-left:-33px;margin-top:-42px;z-index:2}
+.van svg{display:block;width:100%;overflow:visible}
+.van.go{transition:left 1.5s cubic-bezier(.16,.84,.3,1)}
+.van .wh{transform-box:fill-box;transform-origin:center}
+.van.go .wh{animation:spin .55s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:600px){
+  .lane{height:196px}
+  .road,.stop,.van{top:104px}
+  .stop .lb{font-size:12px}
+  .stop .lb b{font-size:14px}
+  .stop.s2 .lb,.stop.s3 .lb{top:-88px}
+  .retb{top:auto;bottom:10px;left:auto;right:12px;font-size:12px}
+  .retb svg{display:none}
+  .van{width:52px;margin-left:-26px;margin-top:-34px}
+}
+.grp h6{font-size:12px;letter-spacing:.07em}
+/* sticky section tabs (copied from the Overview, J's style) */
+.tabs-anchor{height:0;margin-bottom:-22px}
+.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:min(100%,780px);padding:5px;border-radius:99px;
+  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
+.seg::-webkit-scrollbar{display:none}
+.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
+.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
+  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button:hover{color:var(--text)}
+.seg button.on{color:#fff}
+.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+.seg .n{font-size:10.5px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:17px;font-variant-numeric:tabular-nums}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+.seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
+.pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
+.pane[hidden]{display:none}
+.pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
+.pane:focus{outline:none}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+main{gap:24px}
+.tabs-anchor{margin-bottom:-24px}
+@media (max-width:600px){
+  .panel{padding:18px} main{gap:20px} .tabs-anchor{margin-bottom:-20px}
+  .tabbar{margin:0 -16px;padding:0 16px}
+  .seg{width:100%}
+  .seg button{padding:9px 13px;font-size:13px}
+}
+.seg .n{font-size:12px;line-height:18px}
+
+/* light mode: status text colours darkened to reach 4.5:1 on white */
+:root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
+
+/* ===== page: shipping-A ===== */
+.sa-h1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sa-by{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0}
+.sa-by{flex:none}
+.sa-by .cv2-bosta{height:18px;width:62px;flex:none;display:block}
+.sa-cap{font-size:13.5px;color:var(--muted);margin-top:12px;min-height:20px}
+.sa-nums{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:18px;padding-top:20px;border-top:1px solid var(--line)}
+.sa-nums .lnk{align-self:flex-start}
+@media (max-width:760px){.sa-nums{grid-template-columns:1fr 1fr}}
+
+.sa-two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}
+@media (max-width:1100px){.sa-two{grid-template-columns:1fr}}
+.sa-hero{display:flex;flex-direction:column;gap:4px}
+.sa-hero .k{font-size:13px;color:var(--muted)}
+.sa-hero b{font-size:38px;font-weight:600;letter-spacing:-.025em;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.1}
+.sa-hero b small{font-size:15px;color:var(--muted);font-weight:500;margin-right:6px;letter-spacing:0}
+.sa-split{display:flex;gap:3px;height:10px;border-radius:99px;overflow:hidden;margin:16px 0 6px}
+.sa-cash > div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.dotk{display:flex;flex-direction:column;gap:2px;padding-left:18px;position:relative;min-width:0}
+.dotk:before{content:"";position:absolute;left:0;top:6px;width:9px;height:9px;border-radius:50%;background:var(--dc)}
+.dotk b{font-weight:600;font-size:14.5px}
+.dotk small{font-size:13px;color:var(--muted)}
+.sa-cash .v{font-size:18px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sa-h3{font-size:13px;font-weight:500;color:var(--muted);margin:22px 0 8px}
+.sa-pay > div{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.sa-pay > div:first-child{border-top:0}
+.sa-pay .mut{font-size:13px}
+.sa-pay b{font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.sa-pay > div{grid-template-columns:minmax(0,1fr) auto}.sa-pay .mut{grid-column:1;grid-row:2;margin-top:-4px}}
+
+.sa-ok{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.sa-ok > div{display:flex;flex-direction:column;gap:4px}
+.sa-ok .k{font-size:13px;color:var(--muted)}
+.sa-ok b{font-size:34px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.sa-ok b small{font-size:15px;font-weight:500;color:var(--muted)}
+.sa-ok .s{font-size:13px;color:var(--muted)}
+.sa-okbar{display:block;height:8px;border-radius:99px;background:color-mix(in srgb,var(--bad) 45%,transparent);overflow:hidden;margin-top:16px}
+.sa-okbar i{display:block;height:100%;background:var(--good);border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.sa-days > div{display:grid;grid-template-columns:120px minmax(0,1fr) 64px;gap:12px;align-items:center;padding:7px 0;font-size:14px}
+.sa-days .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.sa-days .t i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--p),var(--pl))}
+.sa-days b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-width:420px){.sa-days > div{grid-template-columns:96px minmax(0,1fr) 60px}}
+
+.sa-lead{font-size:13.5px;color:var(--muted);margin:-8px 0 8px}
+.sa-c{display:grid;grid-template-columns:52px minmax(0,1fr) auto auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line);transition:opacity .3s}
+.sa-c .dd{display:flex;flex-direction:column;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:color-mix(in srgb,var(--warn) 12%,transparent);color:var(--warn)}
+.sa-c .dd b{font-size:19px;font-weight:600;line-height:1}
+.sa-c .dd small{font-size:12px}
+.sa-c .m{min-width:0;cursor:pointer}
+.sa-c .m b{font-weight:600;font-size:15px}
+.sa-c .m b span{font-weight:400;color:var(--muted);font-size:13px;margin-left:6px}
+.sa-c .m p{font-size:13px;color:var(--muted);margin-top:3px}
+.sa-c .m p em{font-style:normal;color:var(--text)}
+.sa-c .v{font-weight:600;font-variant-numeric:tabular-nums;font-size:15px;white-space:nowrap}
+.sa-c .acts{display:flex;gap:6px}
+.sa-c.done{opacity:.55}
+.sa-c.done .dd{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good)}
+.sa-c .ob.on{color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+@media (max-width:760px){
+  .sa-c{grid-template-columns:44px minmax(0,1fr) auto;gap:6px 12px;align-items:start}
+  .sa-c .dd{width:44px;height:44px;border-radius:12px}.sa-c .dd b{font-size:16px}
+  .sa-c .acts{grid-column:2 / -1}
+  .sa-c .acts .ob{flex:1 1 0;min-width:0;padding:0 8px}
+}
+
+.sa-cities > div{display:grid;grid-template-columns:140px minmax(0,1fr) 60px 190px;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.sa-cities > div:first-child{border-top:0}
+.sa-cities .t{height:8px;border-radius:9px;background:var(--track);overflow:hidden}
+.sa-cities .t i{display:block;height:100%;border-radius:9px;background:var(--bad)}
+.sa-cities b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.sa-cities small{font-size:13px;color:var(--muted);text-align:right}
+@media (max-width:600px){.sa-cities > div{grid-template-columns:minmax(0,1fr) auto;row-gap:6px}.sa-cities .t{grid-column:1 / -1;grid-row:2}.sa-cities small{grid-column:1 / -1;text-align:left;grid-row:3}}
+
+.sa-cities b.few{color:var(--muted);font-weight:500}
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="landG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1670" stop-opacity=".55"/><stop offset="1" stop-color="#1a0b33" stop-opacity=".35"/></linearGradient>
+    <radialGradient id="dotG"><stop offset="0" stop-color="#f2eafb"/><stop offset=".35" stop-color="#a275e0"/><stop offset="1" stop-color="#7c3fc1" stop-opacity="0"/></radialGradient>
+    <linearGradient id="vanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b5ce0"/><stop offset=".5" stop-color="#550da6"/><stop offset="1" stop-color="#2c0661"/></linearGradient>
+    <linearGradient id="beamG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e7c0" stop-opacity=".55"/><stop offset="1" stop-color="#f6e7c0" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <symbol id="dress" viewBox="0 0 46 70"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-meta" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-cardi" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11V6a3 3 0 0 1 6 0v5M5 11h14l-1 10H6z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="3"/><path d="M5 9V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2M7 5V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-carousel" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="2"/><path d="M4 7v10M20 7v10"/></symbol>
+</svg>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="logo"><div class="mark">FN</div>Scale Trick</div>
+    <button class="switch"><span class="dot"></span><b>Frill N Wear</b><svg class="i"><use href="#i-chev"/></svg></button>
+    <nav>
+      <div class="grp"><h6>Operate</h6>
+        <a href="#" data-go="overview"><svg class="i"><use href="#i-home"/></svg>Overview</a>
+        <a href="#" data-go="brands"><svg class="i"><use href="#i-grid"/></svg>All brands</a>
+        <a href="#" data-go="sales"><svg class="i"><use href="#i-bag"/></svg>Orders</a>
+        <a class="on" aria-current="page" href="#" data-go="orders"><svg class="i"><use href="#i-truck"/></svg>Shipping</a>
+        <a href="#" data-go="inventory"><svg class="i"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#" data-go="products"><svg class="i"><use href="#i-tag"/></svg>Products</a>
+      </div>
+      <div class="grp"><h6>Grow</h6>
+        <a href="#" data-go="ads"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
+        <a href="#" data-go="adsmanager"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
+        <a href="#" data-go="assistant"><svg class="i"><use href="#i-spark"/></svg>Assistant</a>
+        <a href="#" data-go="competitors"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
+      </div>
+      <div class="grp"><h6>Workspace</h6>
+        <a href="#" data-go="connections"><svg class="i"><use href="#i-plug"/></svg>Connections</a>
+        <a href="#" data-go="settings"><svg class="i"><use href="#i-gear"/></svg>Workspace settings</a>
+        <a href="#" data-go="admin"><svg class="i"><use href="#i-shield"/></svg>Admin</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="content">
+  <main>
+    <!-- === NAV v2 START === -->
+    <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
+    <header class="nv2-top" data-nv2-store="n-theme">
+      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
+          <div class="nv2-pop" data-nv2-id="me" role="menu">
+            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
+            <button type="button" class="nv2-mi" role="menuitemcheckbox" data-nv2-theme aria-checked="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dark mode<span class="nv2-tog" aria-hidden="true"></span></button>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-refresh><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>Refresh data<small class="nv2-rt">synced 2 min ago</small></button>
+            <div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
+          </div></div>
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
+        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
+      <div class="nv2-right">
+        <div class="nv2-anc nv2-datew"><button type="button" class="nv2-date" data-nv2-pop="date" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i nv2-cal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><span class="nv2-ds">7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
+        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+          </div></div>
+      </div>
+    </header>
+    <!-- === NAV v2 END === -->
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1 class="sa-h1">Shipping <span class="sa-by">with <svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span></h1><p>Where your parcels are and the cash Bosta holds for you.</p></div>
+      <div class="acts"><button type="button" class="ob" id="saOrders">Open orders</button></div>
+    </header>
+
+    <section class="panel rise" style="--d:.06s" aria-labelledby="saRoadH">
+      <div class="ph"><h2 id="saRoadH">Your parcels</h2><span class="r">tap a stage</span></div>
+      <div class="lane" id="lane" role="group" aria-label="Parcel stages">
+        <div class="road"><i></i></div>
+        <button type="button" class="stop first" data-stage="picked" data-at="5" style="left:5%;--dc:#d8b46c"><span class="dt"></span><span class="lb"><b id="saPicked">166</b>Picked up</span></button>
+        <button type="button" class="stop s2" data-stage="transit" data-at="34.3" style="left:34.3%;--dc:#a275e0"><span class="dt"></span><span class="lb"><b id="saTransit">38</b>In transit</span></button>
+        <button type="button" class="stop s3" data-stage="out" data-at="65.7" style="left:65.7%;--dc:#8fc8ff"><span class="dt"></span><span class="lb"><b id="saOut">—</b>Out for delivery</span></button>
+        <button type="button" class="stop last" data-stage="delivered" data-at="95" style="left:95%;--dc:#45d09a"><span class="dt"></span><span class="lb"><b id="saDel">121</b>Delivered</span></button>
+        <div class="retb"><svg viewBox="0 0 58 44" aria-hidden="true"><path d="M52 40 C 48 14, 26 6, 6 8" fill="none" stroke="#f6d58c" stroke-width="1.4" stroke-dasharray="3 3"/><path d="M11 4 L5 8 L11 12" fill="none" stroke="#f6d58c" stroke-width="1.4"/></svg><span id="saRetB">7 returned to your warehouse</span></div>
+        <div class="van" id="van"><svg viewBox="-44 -40 92 40" aria-hidden="true"><g>
+            <path d="M40 -16 L92 -30 L92 2 Z" fill="url(#beamG)" opacity=".9"/>
+            <rect x="-40" y="-36" width="56" height="28" rx="5" fill="url(#vanG)" stroke="rgba(242,234,251,.55)" stroke-width=".8"/>
+            <path d="M16 -30 h12 q6 0 9 6 l4 9 q1 3 1 6 v1 h-26z" fill="url(#vanG)" stroke="rgba(242,234,251,.55)" stroke-width=".8"/>
+            <path d="M19 -27 h8 q3 0 5 4 l3 7 h-16z" fill="rgba(200,230,255,.55)"/>
+            <rect x="-34" y="-31" width="13" height="10" rx="2" fill="#e4c37a"/><path d="M-34 -27.5h13M-34 -24.5h13M-29.5 -31v10M-25.5 -31v10" stroke="rgba(80,50,10,.5)" stroke-width=".6"/>
+            <text x="-6" y="-21" text-anchor="middle" style="font:700 7px Geist,sans-serif;fill:#fff;letter-spacing:.5px">FN</text>
+            <rect x="38" y="-14" width="4" height="4" rx="1" fill="#f6e7c0"/>
+            <g class="wh"><circle cx="-24" cy="-7" r="6" fill="#0b0814" stroke="#c9b6ec" stroke-width="1.6"/><path d="M-24 -11v8M-28 -7h8" stroke="#c9b6ec" stroke-width="1"/></g>
+            <g class="wh"><circle cx="26" cy="-7" r="6" fill="#0b0814" stroke="#c9b6ec" stroke-width="1.6"/><path d="M26 -11v8M22 -7h8" stroke="#c9b6ec" stroke-width="1"/></g>
+          </g></svg></div>
+      </div>
+      <p class="sa-cap" id="saCap" aria-live="polite"></p>
+      <div class="os-nums sa-nums">
+        <div style="--dc:#a275e0"><span class="k"><i></i>In transit</span><b id="saN1">38</b><span class="s">right now</span></div>
+        <div style="--dc:#45d09a"><span class="k"><i></i>Delivered</span><b id="saN2">121</b><span class="s" id="saN2s"></span></div>
+        <div style="--dc:#f06571"><span class="k"><i></i>Returned</span><b id="saN3">7</b><span class="s" id="saN3s"></span></div>
+        <div style="--dc:#f2b64f"><span class="k"><i></i>Stuck 7+ days</span><b>9</b><button type="button" class="lnk" data-jump="saCall">Call list <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      </div>
+    </section>
+
+    <div class="sa-two">
+      <section class="panel rise" style="--d:.1s" aria-labelledby="saCashH">
+        <div class="ph"><h2 id="saCashH">Your cash with Bosta</h2></div>
+        <div class="sa-hero"><span class="k">Cash to collect</span><b><small>EGP</small>58,300</b></div>
+        <div class="sa-split" role="img" aria-label="EGP 20,300 on its way, EGP 38,000 stuck"><i style="flex:20300;background:var(--good)"></i><i style="flex:38000;background:var(--warn)"></i></div>
+        <div class="sa-cash">
+          <div><span class="dotk" style="--dc:var(--good)"><b>Next payout</b><small>Mon, Nov 2 · on its way to you</small></span><span class="v g">EGP 20,300</span></div>
+          <div><span class="dotk" style="--dc:var(--warn)"><b>Stuck 7+ days</b><small>9 parcels · call these customers</small></span><span class="v w">EGP 38,000</span></div>
+        </div>
+        <h3 class="sa-h3">Last payouts</h3>
+        <div class="sa-pay">
+          <div><span>Mon, Oct 26</span><span class="mut">after EGP 1,980 Bosta fees</span><b>31,450</b></div>
+          <div><span>Mon, Oct 19</span><span class="mut">after EGP 1,760 Bosta fees</span><b>27,900</b></div>
+          <div><span>Mon, Oct 12</span><span class="mut">after EGP 1,840 Bosta fees</span><b>29,640</b></div>
+        </div>
+      </section>
+
+      <section class="panel rise" style="--d:.12s" aria-labelledby="saDelH">
+        <div class="ph"><h2 id="saDelH">Delivery</h2></div>
+        <div class="sa-ok">
+          <div><span class="k">Delivery success</span><b class="g" id="saOk">94.5%</b><span class="s" id="saOkOf">121 of 128 delivered</span></div>
+          <div><span class="k">Average time</span><b><span id="saDays">2.4</span> <small>days</small></b><span class="s">from pickup to door</span></div>
+        </div>
+        <span class="sa-okbar" role="img" id="saOkBar" aria-label="Delivery success"><i style="width:94.5%"></i></span>
+        <h3 class="sa-h3">Days to deliver by city</h3>
+        <div class="sa-days" id="saCityDays"></div>
+      </section>
+    </div>
+
+    <section class="panel rise" style="--d:.14s" id="saCall" aria-labelledby="saCallH">
+      <div class="ph"><h2 id="saCallH">Stuck 7+ days · call these customers</h2><span class="r" id="saCallProg"></span></div>
+      <p class="sa-lead">A quick call usually saves the parcel. Oldest first.</p>
+      <div class="sa-calls" id="saCalls"></div>
+    </section>
+
+    <section class="panel rise" style="--d:.16s" aria-labelledby="saCityH">
+      <div class="ph"><h2 id="saCityH">Returns by city</h2><span class="r" id="saCityR"></span></div>
+      <div class="sa-cities" id="saCities"></div>
+    </section>
+
+  </main>
+  </div>
+</div>
+<!-- === NAV v2 START (dock + sheets) === -->
+<nav class="nv2-dock" aria-label="Quick navigation">
+  <div class="nv2-pill">
+    <a href="#" data-nv2-go="overview" aria-label="Home"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></a>
+    <a href="#" data-nv2-go="adsmanager" aria-label="Ads Manager"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></a>
+    <a href="#" data-nv2-go="competitors" aria-label="Competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
+    <button type="button" data-nv2-open="menu" aria-label="Menu" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+  <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
+</nav>
+<div class="nv2-scrim"></div>
+<section class="nv2-sheet" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="nv2-grab" aria-hidden="true"></div>
+  <div class="nv2-sh"><h2>Menu</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <button type="button" class="nv2-sw"><span class="nv2-mark">FN</span>Frill N Wear<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+  <div class="nv2-grp"><h6>Operate</h6>
+    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Overview</a>
+    <a href="#" data-nv2-go="brands"><svg class="nv2-i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>All brands</a>
+    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Orders</a>
+    <a href="#" aria-current="page" data-nv2-go="orders"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Shipping</a>
+    <a href="#" data-nv2-go="inventory"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>Inventory</a>
+    <a href="#" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>Products</a>
+  </div>
+  <div class="nv2-grp"><h6>Grow</h6>
+    <a href="#" data-nv2-go="ads"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></svg>Meta Ads</a>
+    <a href="#" data-nv2-go="adsmanager"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Ads Manager</a>
+    <a href="#" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Assistant</a>
+    <a href="#" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Competitors</a>
+  </div>
+  <div class="nv2-grp"><h6>Workspace</h6>
+    <a href="#" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg>Connections</a>
+    <a href="#" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Workspace settings</a>
+    <a href="#" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Admin</a>
+  </div>
+</section>
+<section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
+  <div class="nv2-grab" aria-hidden="true"></div>
+  <div class="nv2-sh"><span class="nv2-mark" style="width:34px;height:34px;border-radius:10px"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><h2>Ask the assistant</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <p class="nv2-sugh">Try asking</p>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Why is profit ROAS below break-even?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Which campaign should I cut this week?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>What should I restock before the weekend?</button>
+  <p class="nv2-sent" aria-live="polite"></p>
+</section>
+<!-- === NAV v2 END (dock + sheets) === -->
+<script>
+/* === PERIODS v1 START === */
+/* Periods v1 (round 7) — ONE dataset for every date period (today = Fri, Oct 30, the last day of the sample) and ONE
+   place that re-renders the page when the date picker changes: NAV v2 calls perSet(key) on every pick.
+   perSet(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'. It calls, in order,
+     pv2SetPeriod(key)  PRODUCTS v2   (top products + low-stock planner)
+     cv2SetPeriod(P)    CARDS v2      (card fronts + backs)
+     puSetPeriod(P)     PULSE v1      (Store pulse, N/K/J)
+     accSetPeriod(P)    ACCOUNT v1    (Sales vs spend + Where the money went)
+   then fills the look's own markup through data attributes
+     data-per-t="key"             textContent = P.t[key] (a data-count on the same element is re-targeted)
+     data-per-cls="key:good:bad"  class `good` when P.tone[key] === 'g', else `bad`
+     data-per-flip="key"          attribute data-per-down while that figure went down (its arrow icon flips)
+     data-per-w="key"             style.flex = P.w[key]
+   and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
+   PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you keep EGP 7,597. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you keep EGP 6,748. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
+PER.cur='7d';
+window.perSet=function(key){
+  var P=PER[key];if(!P)return;PER.cur=key;
+  var call=function(f,a){if(typeof window[f]==='function'){try{window[f](a)}catch(e){console.warn(f,e)}}};
+  call('pv2SetPeriod',key);call('cv2SetPeriod',P);call('puSetPeriod',P);call('accSetPeriod',P);
+  var all=function(s){return [].slice.call(document.querySelectorAll(s))};
+  all('[data-per-t]').forEach(function(e){var v=P.t[e.getAttribute('data-per-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-per-cls]').forEach(function(e){var a=e.getAttribute('data-per-cls').split(':'),g=P.tone[a[0]]==='g';e.classList.toggle(a[1],g);e.classList.toggle(a[2],!g)});
+  all('[data-per-flip]').forEach(function(e){e.toggleAttribute('data-per-down',!!P.flip[e.getAttribute('data-per-flip')])});
+  all('[data-per-w]').forEach(function(e){var v=P.w[e.getAttribute('data-per-w')];if(v!=null)e.style.flex=String(v)});
+  document.dispatchEvent(new CustomEvent('per:change',{detail:{key:key,P:P}}));
+};
+/* === PERIODS v1 END === */
+</script>
+<script>
+/* === NAV v2 START === */
+/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
+   theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go). */
+(function(){
+  var top=document.querySelector('.nv2-top');if(!top)return;
+  var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
+  var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
+  var period='7d';
+  /* ---- popovers ---- */
+  var openPop=null;
+  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');var t=top.querySelector('[data-nv2-pop="'+openPop.dataset.nv2Id+'"]');if(t)t.setAttribute('aria-expanded','false');openPop=null}
+  $$('[data-nv2-pop]',top).forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=top.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openPop===p;closePop();
+    if(!was){p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;var f=p.querySelector('button');if(f)f.focus({preventScroll:true})}})});
+  document.addEventListener('click',function(e){if(openPop&&!openPop.contains(e.target))closePop()});
+  /* ---- date menu ---- */
+  function paintDates(){
+    $$('[data-nv2-id^="date"]',top).forEach(function(m){m.innerHTML=PERIODS.map(function(p){return '<button type="button" class="nv2-mi" role="menuitemradio" data-nv2-period="'+p[0]+'" aria-checked="'+(p[0]===period)+'">'+p[1]+'<small>'+p[2]+'</small></button>'}).join('')});
+    var cur=PERIODS.filter(function(p){return p[0]===period})[0];
+    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-ds',top).forEach(function(s){s.textContent=cur[3]});$$('.nv2-date',top).forEach(function(b){b.setAttribute('aria-label','Date range: '+cur[1]+', '+cur[2])});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
+  }
+  paintDates();
+  top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
+    if(window.perSet)window.perSet(period);else if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
+  /* ---- theme ---- */
+  var key=top.dataset.nv2Store||'theme',html=document.documentElement;
+  function syncTheme(){var dark=html.dataset.theme!=='light';$$('[data-nv2-theme]').forEach(function(b){b.setAttribute('aria-checked',String(dark))})}
+  $$('[data-nv2-theme]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var t=html.dataset.theme==='light'?'dark':'light';html.dataset.theme=t;try{localStorage.setItem(key,t)}catch(err){}syncTheme();fire('nv2:theme',{theme:t})})});
+  syncTheme();
+  $$('[data-nv2-refresh]').forEach(function(b){b.addEventListener('click',function(){var i=b.querySelector('svg');if(i&&!reduce)i.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:700});var s=b.querySelector('.nv2-rt');if(s)s.textContent='synced just now';fire('nv2:refresh')})});
+  /* ---- navigation (top + dock + sheets) ---- */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet'))return;e.preventDefault();closePop();closeSheet();
+    var go=a.dataset.nv2Go;if(a.closest('.nv2-pill')){$$('.nv2-pill > *').forEach(function(x){x.removeAttribute('aria-current')});a.setAttribute('aria-current','page')}
+    fire('nv2:nav',{go:go})});
+  /* ---- search (desktop) ---- */
+  var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
+  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · Meta funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
+    ['Layla Tiered Ruffle Maxi Dress','products','Product'],['Nour Satin Slip Dress','products','Product'],['Jasmine Wrap Midi Dress','products','Product'],['Salma Puff-Sleeve Mini Dress','products','Product'],
+    ['Satin Edit · Advantage+','ads','Campaign'],['Retarget · 30 days','ads','Campaign'],['Broad · Women 25–44','ads','Ad set'],['Ads Manager','adsmanager','Page'],['Competitors','competitors','Page'],['Connections','connections','Page']];
+  var hits=[],hl=0;
+  function search(){var q=sIn.value.trim().toLowerCase();hits=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0}).slice(0,7):[];hl=0;
+    sRes.innerHTML=hits.length?hits.map(function(h,i){return '<button type="button" role="option" class="'+(i?'':'nv2-hl')+'" data-i="'+i+'">'+h[0]+'<small>'+h[2]+'</small></button>'}).join(''):(q?'<button type="button" disabled>No matches<small></small></button>':'');
+    sRes.classList.toggle('nv2-on',!!q)}
+  function pick(i){var h=hits[i];if(!h)return;sIn.value='';search();sIn.blur();fire('nv2:nav',{go:h[1],q:h[0]})}
+  if(sIn){sIn.addEventListener('input',search);
+    sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();pick(hl)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();hl=(hl+(e.key==='ArrowDown'?1:-1)+hits.length)%Math.max(1,hits.length);$$('button',sRes).forEach(function(b,i){b.classList.toggle('nv2-hl',i===hl)})}else if(e.key==='Escape'){sIn.value='';search()}});
+    sRes.addEventListener('mousedown',function(e){var b=e.target.closest('[data-i]');if(b){e.preventDefault();pick(+b.dataset.i)}});
+    sIn.addEventListener('blur',function(){setTimeout(function(){sRes.classList.remove('nv2-on')},100)});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
+    var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
+  /* ---- sheets ---- */
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');if(scrim)scrim.classList.add('nv2-on');
+    var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
+  function closeSheet(){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
+  if(scrim)scrim.addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
+  window.nv2Open=openSheet;
+  /* assistant */
+  var ai=document.querySelector('[data-nv2-sheet="ai"]');
+  if(ai){var inp=ai.querySelector('input'),sent=ai.querySelector('.nv2-sent');
+    $$('.nv2-sug',ai).forEach(function(b){b.addEventListener('click',function(){inp.value=b.textContent.trim();inp.focus()})});
+    ai.querySelector('form').addEventListener('submit',function(e){e.preventDefault();var q=inp.value.trim();if(!q)return;sent.textContent='Sent to the assistant: “'+q+'”';inp.value='';fire('nv2:ask',{q:q})})}
+  /* ---- dock: hide on scroll down, show on scroll up ---- */
+  var dock=document.querySelector('.nv2-dock');
+  if(dock){document.documentElement.classList.add('nv2-docked');var ly=window.scrollY,acc=0;
+    window.addEventListener('scroll',function(){var y=window.scrollY,d=y-ly;ly=y;acc=(d>0)===(acc>0)?acc+d:d;
+      if(y<80||acc<-24)dock.classList.remove('nv2-hide');else if(acc>40&&!sheetOpen)dock.classList.add('nv2-hide')},{passive:true})}
+})();
+/* === NAV v2 END === */
+</script>
+<script>
+/* ===== shared by the Orders + Shipping mockups: sample orders, period helpers, toast, drawer, nav ===== */
+(function(){
+  var OS=window.OS={};
+  var $=OS.$=function(s,r){return (r||document).querySelector(s)};
+  var $$=OS.$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  OS.reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OS.fmt=function(v){return Math.round(v).toLocaleString('en-US')};
+  OS.esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  var I=OS.icon=function(p){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'};
+  OS.IC={
+    phone:I('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'),
+    wa:I('<path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.5-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2z"/>'),
+    copy:I('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>'),
+    check:I('<path d="M20 6L9 17l-5-5"/>'),
+    x:I('<path d="M6 6l12 12M18 6L6 18"/>'),
+    arrow:I('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+    dl:I('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'),
+    ext:I('<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>'),
+    search:I('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
+    left:I('<path d="M15 6l-6 6 6 6"/>'), right:I('<path d="M9 6l6 6-6 6"/>'),
+    up:I('<path d="M7 14l5-5 5 5"/>'), down:I('<path d="M7 10l5 5 5-5"/>'), sort:I('<path d="M8 9l4-4 4 4M8 15l4 4 4-4"/>'),
+    spark:I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>'),
+    truck:I('<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>'),
+    bag:I('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>')
+  };
+  OS.DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/></svg>';
+
+  /* ---------- products (same six as the Overview's PRODUCTS v2) ---------- */
+  var PR=OS.PR=[
+    {n:'Layla Tiered Ruffle Maxi Dress',s:'Layla Tiered Ruffle',col:'Dusty Rose',p:1490,c:['#d8a1ad','#9c5a6c'],w:27},
+    {n:'Nour Satin Slip Dress',s:'Nour Satin Slip',col:'Champagne',p:1290,c:['#e6cfa6','#a98a5c'],w:30},
+    {n:'Jasmine Wrap Midi Dress',s:'Jasmine Wrap Midi',col:'Sage',p:1390,c:['#b4c6aa','#6c8462'],w:24},
+    {n:'Salma Puff-Sleeve Mini Dress',s:'Salma Puff-Sleeve',col:'Ivory',p:990,c:['#efe7d6','#b9ab8e'],w:23},
+    {n:'Farida Linen Shirt Dress',s:'Farida Linen Shirt',col:'Sand',p:1190,c:['#d4c3a8','#8f7c60'],w:15},
+    {n:'Mariam Pleated Chiffon Dress',s:'Mariam Pleated Chiffon',col:'Navy',p:1650,c:['#4b5a8f','#232b4d'],w:12}
+  ];
+  var SIZES=['XS','S','M','L','XL','XXL'],SW=[8,22,28,22,12,8];
+  var FIRST=['Nour','Salma','Malak','Jana','Esraa','Nourhan','Mariam','Habiba','Farida','Yasmin','Hana','Rana','Aya','Mai','Dina','Laila','Reem','Sara','Menna','Shahd','Rawan','Hoda','Nada','Amira','Heba','Ola','Yara','Basma','Rahma','Zeina'];
+  var LAST=['Hany','Wael','Gamal','Adel','Mostafa','Samir','Fathy','Kamal','Hassan','Ibrahim','Nabil','Saad','Tarek','Ashraf','Magdy','Sherif','Fouad','Ramy','Khaled','Youssef'];
+  var CITIES=OS.CITIES=[['Cairo','Cairo',34],['Giza','Giza',18],['Alexandria','Alexandria',14],['New Cairo','Cairo',9],['6th of October','Giza',6],['Mansoura','Dakahlia',5],['Tanta','Gharbia',4],['Zagazig','Sharqia',3],['Hurghada','Red Sea',2],['Assiut','Assiut',2],['Port Said','Port Said',2],['Ismailia','Ismailia',1]];
+  var CANCEL=['Customer changed their mind','Customer changed their mind','Customer changed their mind','Out of stock','Staff made an error','Not given','Customer changed their mind','Out of stock','Not given','Cancelled for another reason','Customer changed their mind','Staff made an error','Out of stock','Customer changed their mind'];
+  var RETURN=['Size too small',"Customer didn't answer",'Size too big','Not as pictured','Size too small',"Customer didn't answer",'Fabric issue'];
+  /* seeded random: every load shows the same orders */
+  var seed=20261030;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296}
+  function pickW(arr,wi){var t=0,i;for(i=0;i<arr.length;i++)t+=wi(arr[i]);var r=rnd()*t;for(i=0;i<arr.length;i++){r-=wi(arr[i]);if(r<=0)return arr[i]}return arr[arr.length-1]}
+  function pickIdx(w){var t=w.reduce(function(a,b){return a+b},0),r=rnd()*t;for(var i=0;i<w.length;i++){r-=w[i];if(r<=0)return i}return w.length-1}
+
+  /* valid orders per day Oct 1–30 = Periods v1 (30-day series); cancelled + returned per day add up to its totals */
+  var OD=window.PER['30d'].s.od;
+  var CD=[1,2,2,1,2,2,1,2,2,1,2,2,1,2,2,2,1,2,2,2,1,2,2, 2,2,2,2,2,2,2];   /* 53, last 7 = 14 */
+  var RD=[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1];   /* 31, last 7 = 7 */
+  var MON=['Oct'];
+  var ORD=OS.ORD=[],num=54980,ci=0,ri=0;
+  for(var d=1;d<=30;d++){
+    var list=[],k;
+    for(k=0;k<OD[d-1];k++)list.push('v');for(k=0;k<CD[d-1];k++)list.push('c');for(k=0;k<RD[d-1];k++)list.push('r');
+    list.forEach(function(kind){
+      var h=Math.floor(rnd()*rnd()*24);h=(h+9)%24;var m=Math.floor(rnd()*60);
+      var items=[],n=rnd()<.82?1:2;
+      for(var j=0;j<n;j++){var pi=pickIdx(PR.map(function(p){return p.w})),p=PR[pi];items.push({p:pi,t:p.s,size:SIZES[pickIdx(SW)],col:p.col,q:rnd()<.93?1:2,price:p.p})}
+      var city=pickW(CITIES,function(c){return c[2]});
+      var fn=FIRST[Math.floor(rnd()*FIRST.length)],ln=LAST[Math.floor(rnd()*LAST.length)];
+      var phone='01'+['0','1','2','5'][Math.floor(rnd()*4)]+' '+String(1000+Math.floor(rnd()*9000))+' '+String(1000+Math.floor(rnd()*9000));
+      var sub=items.reduce(function(a,b){return a+b.price*b.q},0),ship=city[1]==='Cairo'||city[1]==='Giza'?60:85;
+      var o={id:'FNW-'+(++num),day:d,h:h,m:m,ts:d*1440+h*60+m,name:fn+' '+ln,phone:phone,city:city[0],region:city[1],items:items,sub:sub,ship:ship,total:sub+ship,
+        web:rnd()>.08,card:false,kind:kind,track:String(Math.floor(10000000+rnd()*89999999))};
+      if(rnd()<.06)o.phone='';
+      if(kind==='c'){o.reason=CANCEL[ci++%CANCEL.length]}
+      if(kind==='r'){o.reason=RETURN[ri++%RETURN.length];o.attempts=1+Math.floor(rnd()*3);o.pday=Math.max(1,d-4)}  /* listed on the day it came back */
+      ORD.push(o);
+    });
+  }
+  ORD.sort(function(a,b){return b.ts-a.ts});
+  /* status: the newest 38 valid orders are still with Bosta (cash on delivery, not paid yet); the rest were delivered */
+  var pend=0;ORD.forEach(function(o){
+    if(o.kind==='c')o.st='cancelled';else if(o.kind==='r')o.st='returned';
+    else if(pend<38){o.st='pending';pend++;o.stage=o.day>=30?'Waiting for pickup':(o.h<12?'Out for delivery':'In transit')}
+    else{o.st='paid';o.card=rnd()<.16}
+  });
+  OS.ST={paid:'Paid',pending:'Pending',cancelled:'Cancelled',returned:'Returned'};
+  OS.SOURCE=function(o){return o.web?'Web':'Admin'};
+  OS.when=function(o){var hh=o.h%12||12;return 'Oct '+(o.pday||o.day)+', '+hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  OS.whenShort=function(o){var hh=o.h%12||12;return hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  OS.itemsTxt=function(o){return o.items.map(function(i){return i.t+' · '+i.size+(i.q>1?' × '+i.q:'')}).join(', ')};
+
+  /* ---------- periods (driven by NAV v2 → PERIODS v1 perSet → "per:change") ---------- */
+  OS.RANGE={today:[30,30],yesterday:[29,29],'7d':[24,30],'30d':[1,30],month:[1,30]};
+  OS.inPeriod=function(key){var r=OS.RANGE[key];return ORD.filter(function(o){return o.day>=r[0]&&o.day<=r[1]})};
+  /* money lost to cancelled + returned orders (matches the Overview's "Cancelled & returned" tile per period) */
+  OS.LEAK={today:[2,2800,1,1450],yesterday:[2,2800,1,1450],'7d':[14,19600,7,10150],'30d':[53,74200,31,44950],month:[53,74200,31,44950]};
+  OS.key=function(){return (window.PER&&PER.cur)||'7d'};
+
+  /* ---------- toast ---------- */
+  var toastEl,toastT;
+  OS.toast=function(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='os-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.innerHTML=OS.IC.check+'<span>'+OS.esc(msg)+'</span>';toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)};
+  OS.copy=function(text,msg){try{navigator.clipboard.writeText(text).catch(function(){})}catch(e){}OS.toast(msg||('Copied '+text))};
+
+  /* ---------- drawer ---------- */
+  var scrim,drawer,lastF;
+  OS.openDrawer=function(html,label){
+    if(!drawer){scrim=document.createElement('div');scrim.className='os-scrim';drawer=document.createElement('aside');drawer.className='os-drawer';drawer.setAttribute('role','dialog');drawer.setAttribute('aria-modal','true');
+      document.body.appendChild(scrim);document.body.appendChild(drawer);scrim.addEventListener('click',OS.closeDrawer);
+      drawer.addEventListener('click',function(e){if(e.target.closest('[data-close]'))OS.closeDrawer()})}
+    lastF=document.activeElement;drawer.innerHTML=html;drawer.setAttribute('aria-label',label||'Details');
+    requestAnimationFrame(function(){scrim.classList.add('on');drawer.classList.add('on');var f=drawer.querySelector('[data-close]');f&&f.focus({preventScroll:true})});
+    document.documentElement.style.overflow='hidden'};
+  OS.closeDrawer=function(){if(!drawer||!drawer.classList.contains('on'))return;drawer.classList.remove('on');scrim.classList.remove('on');document.documentElement.style.overflow='';lastF&&lastF.focus&&lastF.focus({preventScroll:true})};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')OS.closeDrawer()});
+
+  /* ---------- order detail (shared by both Orders looks and the Shipping call list) ---------- */
+  OS.orderHtml=function(o){
+    var steps=[['Placed',OS.when(o)]],cls=[];
+    if(o.st==='cancelled'){steps.push(['Cancelled · '+o.reason,'Oct '+o.day]);cls=['done','bad']}
+    else{
+      var pu='Oct '+Math.min(30,o.day+1),dl='Oct '+Math.min(30,o.day+3);
+      steps.push(['Picked up by Bosta',o.st==='pending'&&o.stage==='Waiting for pickup'?'tomorrow':pu]);
+      if(o.st==='pending'){steps.push(['In transit',o.stage==='In transit'?'now':o.stage==='Out for delivery'?'Oct '+(o.day+1):'next']);steps.push(['Out for delivery',o.stage==='Out for delivery'?'now':'next']);steps.push(['Delivered · cash collected','—']);
+        var at={'Waiting for pickup':1,'In transit':2,'Out for delivery':3}[o.stage];cls=steps.map(function(s,i){return i<at?'done':i===at?'now':'todo'})}
+      else if(o.st==='returned'){steps[1][1]='Oct '+(o.pday+1);steps.push(['Delivery tried · '+o.attempts+' attempt'+(o.attempts>1?'s':''),'Oct '+(o.day-1)]);steps.push(['Back at your warehouse · '+o.reason,'Oct '+o.day]);cls=['done','done','done','bad']}
+      else{steps.push(['Delivered',dl]);steps.push([o.card?'Paid by card':'Cash collected by Bosta',o.card?OS.when(o):dl]);cls=['done','done','done','done']}
+    }
+    var pay=o.st==='paid'?(o.card?'Paid by card':'Cash on delivery · collected'):o.st==='pending'?'Cash on delivery · to collect':o.st==='returned'?'Cash on delivery · not collected':'Not charged';
+    var ph=o.phone?'<a class="ob sm" href="tel:'+o.phone.replace(/ /g,'')+'" data-call="'+o.phone+'">'+OS.IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+o.phone+'">'+OS.IC.wa+'WhatsApp</button>':'<span class="mut" style="font-size:13px">No phone on file</span>';
+    return '<div class="os-dh"><div><h2>#'+o.id+'</h2><p>'+OS.when(o)+' · '+OS.SOURCE(o)+' order</p><div style="margin-top:10px"><span class="chip '+o.st+'">'+OS.ST[o.st]+'</span></div></div>'+
+      '<button type="button" class="ob ic" data-close aria-label="Close">'+OS.IC.x+'</button></div>'+
+      '<div class="os-db">'+
+      '<section><h3>Customer</h3><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:150px"><b style="font-weight:600;font-size:15px">'+OS.esc(o.name)+'</b><div class="mut" style="font-size:13px;margin-top:3px">'+o.city+', '+o.region+(o.phone?' · '+o.phone:'')+'</div></div><div style="display:flex;gap:6px">'+ph+'</div></div></section>'+
+      '<section><h3>Items</h3><div class="items">'+o.items.map(function(i){var p=PR[i.p];return '<div class="it"><span class="sw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+OS.DRESS+'</span><span><b>'+p.n+'</b><small>'+i.size+' · '+i.col+' · qty '+i.q+'</small></span><span class="mono">'+OS.fmt(i.price*i.q)+'</span></div>'}).join('')+'</div>'+
+      '<dl class="kv" style="margin-top:12px"><dt>Items</dt><dd>EGP '+OS.fmt(o.sub)+'</dd><dt>Shipping</dt><dd>EGP '+o.ship+'</dd><dt class="tot">Total</dt><dd class="tot">EGP '+OS.fmt(o.total)+'</dd><dt>Payment</dt><dd>'+pay+'</dd></dl></section>'+
+      '<section><h3>Delivery with Bosta</h3><ol class="tl">'+steps.map(function(s,i){return '<li class="'+(cls[i]||'')+'"><i></i><span>'+s[0]+'</span><span>'+s[1]+'</span></li>'}).join('')+'</ol>'+
+      (o.st!=='cancelled'?'<p style="margin-top:14px;font-size:13px" class="mut">Tracking <button type="button" class="copy mono" data-copy="'+o.track+'">'+o.track+' '+OS.IC.copy+'</button></p>':'')+'</section>'+
+      '</div><div class="os-df"><button type="button" class="ob" data-shopify="'+o.id+'">'+OS.IC.ext+'Open in Shopify</button><button type="button" class="ob" data-ask="'+o.id+'">'+OS.IC.spark+'Ask about this order</button></div>';
+  };
+  OS.openOrder=function(o){OS.openDrawer(OS.orderHtml(o),'Order '+o.id)};
+  document.addEventListener('click',function(e){
+    var t;
+    if((t=e.target.closest('[data-copy]'))){e.preventDefault();OS.copy(t.dataset.copy,'Tracking number '+t.dataset.copy+' copied')}
+    else if((t=e.target.closest('[data-call]'))){try{navigator.clipboard.writeText(t.dataset.call).catch(function(){})}catch(err){}OS.toast('Number '+t.dataset.call+' copied · your phone app may also open')}
+    else if((t=e.target.closest('[data-wa]'))){e.preventDefault();OS.toast('In the app this opens a WhatsApp chat with '+t.dataset.wa)}
+    else if((t=e.target.closest('[data-shopify]'))){e.preventDefault();OS.toast('Opens order #'+t.dataset.shopify+' in Shopify admin')}
+    else if((t=e.target.closest('[data-ask]'))){e.preventDefault();OS.closeDrawer();if(window.nv2Open){window.nv2Open('ai');var inp=$('[data-nv2-sheet="ai"] input');if(inp)inp.value='What happened with order #'+t.dataset.ask+'?'}}
+  });
+
+  /* ---------- navigation: this mockup is one page; other pages say where they would go ---------- */
+  var NAMES={overview:'Overview',brands:'All brands',sales:'Orders',orders:'Shipping',inventory:'Inventory',products:'Products',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'Profile',signout:'Sign out',account:'Overview · Account'};
+  OS.page='';
+  OS.go=function(go){if(go==='assistant'&&window.nv2Open){window.nv2Open('ai');return}var name=NAMES[go]||go;if(name===OS.page){window.scrollTo({top:0,behavior:OS.reduce?'auto':'smooth'});return}OS.toast('In the app this opens '+name)};
+  document.addEventListener('nv2:nav',function(e){OS.go(e.detail.go)});
+  document.addEventListener('nv2:refresh',function(){OS.toast('Data refreshed')});
+  document.addEventListener('click',function(e){var a=e.target.closest('.side a');if(!a)return;e.preventDefault();OS.go(a.dataset.go)});
+
+  /* CSV of any set of orders (same columns as the real export) */
+  OS.csv=function(rows,file){
+    var q=function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+    var lines=[['Order','Ordered','Customer','Phone','Products','Total','Destination','Payment','Status'].join(',')].concat(rows.map(function(o){
+      return [o.id,'2026-10-'+(o.day<10?'0':'')+o.day,o.name,o.phone,o.items.map(function(i){return i.t+' · '+i.size+' · '+i.col+' × '+i.q}).join(' | '),o.total,o.city+', '+o.region,o.card?'Card':'Cash on delivery',OS.ST[o.st]].map(q).join(',')}));
+    try{var b=new Blob([lines.join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=file;document.body.appendChild(a);a.click();a.remove()}catch(err){}
+    OS.toast(rows.length+' order'+(rows.length===1?'':'s')+' saved as '+file+' (in this preview the download may be blocked)')};
+})();
+/* sticky section tabs (behaviour ported from the Overview): OS.tabs(onShow) → show(name, scroll) */
+OS.tabs=function(onShow){
+  var $=OS.$,$$=OS.$$,seg=$('#seg'),ind=$('#ind'),bar=$('#tabbar'),anchor=$('#tabsAnchor'),tabs=$$('[role=tab]',seg);
+  function place(){var bt=$('[role=tab].on',seg);if(!bt)return;ind.style.width=bt.offsetWidth+'px';ind.style.transform='translateX('+bt.offsetLeft+'px)'}
+  function scrollToBar(){var top=parseFloat(getComputedStyle(bar).top)||0,y=anchor.getBoundingClientRect().top+scrollY+24-top;if(scrollY>y+2||scrollY<y-2)window.scrollTo({top:y,behavior:OS.reduce?'auto':'smooth'})}
+  function show(name,scroll,focus){
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;if(on&&focus)t.focus({preventScroll:true})});
+    $$('.pane').forEach(function(p){p.hidden=p.id!=='p-'+name});
+    place();var bt=$('[role=tab].on',seg);seg.scrollTo({left:bt.offsetLeft-(seg.clientWidth-bt.offsetWidth)/2,behavior:OS.reduce?'auto':'smooth'});
+    if(scroll)scrollToBar();if(onShow)onShow(name)}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){show(t.dataset.tab,true)});
+    t.addEventListener('keydown',function(e){var j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;
+      if(j!==null){e.preventDefault();show(tabs[j].dataset.tab,false,true)}})});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)},{threshold:0}).observe(anchor);
+  document.documentElement.style.setProperty('--pane-min',(innerHeight-96)+'px');
+  addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);setTimeout(place,400);place();
+  return show};
+/* ---------- Bosta: stuck 7+ days (point in time: 9 parcels, EGP 38,000 — same as the Overview's courier card) ---------- */
+OS.STUCK=[
+  {id:'FNW-54871',name:'Nourhan Adel',city:'Hurghada',region:'Red Sea',phone:'010 1182 7735',cod:6140,days:15,tries:3,why:'Customer not answering',items:'Jasmine Wrap Midi · XL, Layla Tiered Ruffle · L, Nour Satin Slip · M',track:'71840352'},
+  {id:'FNW-54902',name:'Mariam Samir',city:'Assiut',region:'Assiut',phone:'012 5530 9181',cod:5480,days:13,tries:2,why:'Postponed by customer',items:'Mariam Pleated Chiffon · M × 2, Salma Puff-Sleeve · S',track:'71852210'},
+  {id:'FNW-54915',name:'Laila Kamal',city:'Mansoura',region:'Dakahlia',phone:'011 3307 4420',cod:4970,days:12,tries:3,why:'Wrong address',items:'Layla Tiered Ruffle · M × 2, Farida Linen Shirt · S',track:'71857793'},
+  {id:'FNW-54933',name:'Heba Fathy',city:'Alexandria',region:'Alexandria',phone:'010 6618 2207',cod:4450,days:11,tries:1,why:'Waiting for your reply',items:'Nour Satin Slip · L × 2, Jasmine Wrap Midi · L',track:'71861045'},
+  {id:'FNW-54950',name:'Reem Ibrahim',city:'Cairo',region:'Cairo',phone:'015 2294 8812',cod:4120,days:10,tries:2,why:'Customer asked for a later day',items:'Mariam Pleated Chiffon · S, Layla Tiered Ruffle · S',track:'71866631'},
+  {id:'FNW-54968',name:'Dina Mostafa',city:'Giza',region:'Giza',phone:'012 7741 0036',cod:3860,days:9,tries:2,why:'Customer not answering',items:'Jasmine Wrap Midi · M, Nour Satin Slip · M',track:'71870958'},
+  {id:'FNW-54981',name:'Aya Tarek',city:'Tanta',region:'Gharbia',phone:'011 9036 5574',cod:3390,days:9,tries:1,why:'On hold at the Tanta hub',items:'Layla Tiered Ruffle · XL, Salma Puff-Sleeve · L',track:'71874402'},
+  {id:'FNW-54996',name:'Yasmin Nabil',city:'Port Said',region:'Port Said',phone:'010 4450 1193',cod:3050,days:8,tries:2,why:'Phone switched off',items:'Nour Satin Slip · S, Salma Puff-Sleeve · S',track:'71879116'},
+  {id:'FNW-55008',name:'Shahd Wael',city:'Zagazig',region:'Sharqia',phone:'012 3389 7720',cod:2540,days:7,tries:1,why:'Address not found',items:'Layla Tiered Ruffle · M, Salma Puff-Sleeve · XS',track:'71883387'}];
+OS.called={};
+OS.parcelHtml=function(p){var IC=OS.IC,c=OS.called[p.id];
+  return '<div class="os-dh"><div><h2>#'+p.id+'</h2><p>With Bosta for '+p.days+' days · '+p.tries+' delivery tr'+(p.tries>1?'ies':'y')+'</p><div style="margin-top:10px"><span class="chip stuck">Stuck '+p.days+' days</span></div></div>'+
+    '<button type="button" class="ob ic" data-close aria-label="Close">'+IC.x+'</button></div><div class="os-db">'+
+    '<section><h3>Customer</h3><b style="font-weight:600;font-size:15px">'+p.name+'</b><div class="mut" style="font-size:13px;margin-top:3px">'+p.city+', '+p.region+' · '+p.phone+'</div>'+
+    '<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><a class="ob sm" href="tel:'+p.phone.replace(/ /g,'')+'" data-call="'+p.phone+'">'+IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+p.phone+'">'+IC.wa+'WhatsApp</button></div></section>'+
+    '<section><h3>Why it is stuck</h3><p style="font-size:15px">'+p.why+'</p><p class="mut" style="font-size:13px;margin-top:6px">Ask the customer for a good time and the right address, then tell Bosta from their app or ask the assistant to draft the message.</p></section>'+
+    '<section><h3>In the parcel</h3><p style="font-size:14px">'+p.items+'</p><dl class="kv" style="margin-top:12px"><dt class="tot">Cash to collect</dt><dd class="tot">EGP '+OS.fmt(p.cod)+'</dd></dl>'+
+    '<p style="margin-top:14px;font-size:13px" class="mut">Tracking <button type="button" class="copy mono" data-copy="'+p.track+'">'+p.track+' '+IC.copy+'</button></p></section></div>'+
+    '<div class="os-df"><button type="button" class="ob'+(c?'':' pri')+'" data-markcalled="'+p.id+'">'+IC.check+(c?'Called · undo':'Mark as called')+'</button><button type="button" class="ob" data-ask="'+p.id+'">'+IC.spark+'Ask the assistant</button></div>'};
+OS.openParcel=function(id){var p=OS.STUCK.filter(function(x){return x.id===id})[0];if(p)OS.openDrawer(OS.parcelHtml(p),'Parcel '+p.id)};
+/* call-list state shared by the page: data-markcalled toggles, then "os:called" lets the page repaint */
+document.addEventListener('click',function(e){var b=e.target.closest('[data-markcalled]');if(!b)return;var id=b.dataset.markcalled;
+  if(OS.called[id])delete OS.called[id];else OS.called[id]=1;
+  if(b.closest('.os-drawer'))OS.openParcel(id);
+  OS.toast(OS.called[id]?'Marked as called':'Moved back to the call list');document.dispatchEvent(new CustomEvent('os:called'))});
+/* delivery by city (Bosta, per period): average days to deliver */
+OS.CITYDAYS={Cairo:1.8,'New Cairo':1.9,Giza:2.0,'6th of October':2.2,Alexandria:2.6,Tanta:2.9,Zagazig:3.0,Mansoura:3.1,Ismailia:3.0,'Port Said':3.2,Assiut:3.9,Hurghada:4.2};
+OS.cityStats=function(key){var r=OS.RANGE[key],m={};OS.CITIES.forEach(function(c){m[c[0]]={city:c[0],del:0,ret:0,w:c[2]}});OS.ORD.forEach(function(o){if(o.day<r[0]||o.day>r[1]||o.st==='cancelled'||o.st==='pending')return;
+  var c=m[o.city]||(m[o.city]={city:o.city,del:0,ret:0});if(o.st==='returned')c.ret++;else c.del++});
+  /* delivered per city adds up exactly to the period's Bosta deliveries (largest remainder) */
+  var L=Object.keys(m).map(function(k){return m[k]}),tot=+PER[key].t.c_deliv.replace(/,/g,''),W=L.reduce(function(a,c){return a+c.del},0),useW=W<tot/3;  /* too few delivered orders in the window (e.g. today): spread by usual city mix */
+  if(useW)W=L.reduce(function(a,c){return a+c.w},0);
+  var raw=L.map(function(c){return (useW?c.w:c.del)/W*tot});L.forEach(function(c,i){c.del=Math.floor(raw[i])});
+  var left=tot-L.reduce(function(a,c){return a+c.del},0);raw.map(function(x,i){return [x-Math.floor(x),i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,left).forEach(function(q){L[q[1]].del++});
+  return L.map(function(c){c.n=c.del+c.ret;c.rate=c.n?c.ret/c.n*100:0;c.days=OS.CITYDAYS[c.city]||2.5;return c}).filter(function(c){return c.n>0})};
+
+OS.page='Shipping';
+</script>
+<script>
+/* Shipping · A — the road (van drives ONCE to "In transit" and parks), cash with Bosta, delivery, call list, returns by city */
+(function(){
+  var $=OS.$,$$=OS.$$,fmt=OS.fmt,IC=OS.IC;
+  var van=$('#van'),T=null,stage='transit';
+  function drive(to){if(OS.reduce){van.style.left=to+'%';return}van.classList.add('go');van.style.left=to+'%';clearTimeout(T);T=setTimeout(function(){van.classList.remove('go')},1550)}
+  function caption(){
+    var P=PER[OS.key()].t,lab=P.label.toLowerCase();
+    var c={picked:fmt(38+(+P.c_deliv)+(+P.c_ret))+' parcels picked up from you · '+(OS.key()==='today'||OS.key()==='yesterday'?lab:'in the '+lab),
+      transit:'38 parcels on the road right now · the oldest left you on Oct 29',
+      out:'Bosta counts parcels out for delivery inside “In transit”.',
+      delivered:P.c_deliv+' delivered · '+P.c_ok+' delivery success'}[stage];
+    $('#saCap').textContent=c;$$('#lane .stop').forEach(function(s){s.classList.toggle('on',s.dataset.stage===stage);s.setAttribute('aria-pressed',s.dataset.stage===stage)})}
+  $$('#lane .stop').forEach(function(s){s.addEventListener('click',function(){stage=s.dataset.stage;drive(+s.dataset.at);caption()})});
+  /* drive once when the road scrolls into view, then park */
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){io.disconnect();setTimeout(function(){drive(34.3)},350)}},{threshold:.5});io.observe($('#lane'))}else drive(34.3);
+
+  function paintPeriod(){
+    var k=OS.key(),P=PER[k].t;
+    $('#saPicked').textContent=fmt(38+(+P.c_deliv)+(+P.c_ret));$('#saDel').textContent=P.c_deliv;$('#saN2').textContent=P.c_deliv;$('#saN3').textContent=P.c_ret;
+    var lab=P.label.toLowerCase();$('#saN2s').textContent=lab;$('#saN3s').textContent=lab;
+    $('#saRetB').textContent=P.c_ret+' returned to your warehouse';
+    $('#lane').setAttribute('aria-label','Parcel stages: picked up '+$('#saPicked').textContent+', in transit 38, delivered '+P.c_deliv+'; '+P.c_ret+' returned');
+    $('#saOk').textContent=P.c_ok;$('#saOkOf').textContent=P.c_okof+' delivered';$('#saDays').textContent=P.c_days;
+    $('#saOkBar i').style.width=P.c_ok;$('#saOkBar').setAttribute('aria-label','Delivery success '+P.c_ok);
+    var cs=OS.cityStats(k);
+    var byDays=cs.slice().sort(function(a,b){return b.n-a.n}).slice(0,6).sort(function(a,b){return a.days-b.days});
+    $('#saCityDays').innerHTML=byDays.map(function(c){return '<div><span>'+c.city+'</span><span class="t"><i style="width:'+(c.days/4.5*100)+'%"></i></span><b>'+c.days.toFixed(1)+' days</b></div>'}).join('');
+    var ret=cs.filter(function(c){return c.ret>0}).sort(function(a,b){return (b.n>=10)-(a.n>=10)||b.rate-a.rate}),mx=ret.length?ret[0].rate:1;
+    $('#saCityR').textContent=P.c_ret+' returned · '+lab;
+    $('#saCities').innerHTML=ret.length?ret.map(function(c){return '<div><span>'+c.city+'</span><span class="t"><i style="width:'+(c.rate/mx*100)+'%'+(c.n<10?';opacity:.35':'')+'"></i></span><b class="'+(c.n<10?'few':c.rate>=10?'bd':'')+'">'+c.rate.toFixed(1)+'%</b><small>'+c.ret+' of '+c.n+(c.n<10?' · too few to judge':' parcels')+'</small></div>'}).join(''):'<p class="mut">No parcels came back in this period.</p>';
+    caption();
+  }
+  function paintCalls(){
+    var done=OS.STUCK.filter(function(p){return OS.called[p.id]}).length;
+    $('#saCallProg').textContent=done?done+' of 9 called':'9 parcels · EGP 38,000';
+    $('#saCalls').innerHTML=OS.STUCK.map(function(p){var c=OS.called[p.id];
+      return '<div class="sa-c'+(c?' done':'')+'"><span class="dd" aria-label="'+p.days+' days with Bosta"><b>'+p.days+'</b><small>days</small></span>'+
+        '<span class="m" data-parcel="'+p.id+'" role="button" tabindex="0"><b>'+p.name+'<span>'+p.city+'</span></b><p><em>'+p.why+'</em> · '+p.tries+' tr'+(p.tries>1?'ies':'y')+' · #'+p.id+'</p></span>'+
+        '<span class="v">EGP '+fmt(p.cod)+'</span>'+
+        '<span class="acts"><a class="ob sm" href="tel:'+p.phone.replace(/ /g,'')+'" data-call="'+p.phone+'">'+IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+p.phone+'">'+IC.wa+'WhatsApp</button>'+
+        '<button type="button" class="ob sm'+(c?' on':'')+'" data-markcalled="'+p.id+'" aria-pressed="'+!!c+'">'+IC.check+(c?'Called':'Done')+'</button></span></div>'}).join('');
+  }
+  $('#saCalls').addEventListener('click',function(e){var m=e.target.closest('[data-parcel]');if(m)OS.openParcel(m.dataset.parcel)});
+  $('#saCalls').addEventListener('keydown',function(e){var m=e.target.closest('[data-parcel]');if(m&&(e.key==='Enter'||e.key===' ')){e.preventDefault();OS.openParcel(m.dataset.parcel)}});
+  document.addEventListener('os:called',paintCalls);
+  document.addEventListener('click',function(e){var j=e.target.closest('[data-jump]');if(j)$('#'+j.dataset.jump).scrollIntoView({behavior:OS.reduce?'auto':'smooth',block:'start'})});
+  $('#saOrders').addEventListener('click',function(){OS.go('sales')});
+  document.addEventListener('per:change',paintPeriod);
+  paintPeriod();paintCalls();
+})();
+
+</script>
+</body>
+</html>

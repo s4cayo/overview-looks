@@ -1,0 +1,64 @@
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1 class="sa-h1">Shipping <span class="sa-by">with {{BOSTA}}</span></h1><p>Where your parcels are and the cash Bosta holds for you.</p></div>
+      <div class="acts"><button type="button" class="ob" id="saOrders">Open orders</button></div>
+    </header>
+
+    <section class="panel rise" style="--d:.06s" aria-labelledby="saRoadH">
+      <div class="ph"><h2 id="saRoadH">Your parcels</h2><span class="r">tap a stage</span></div>
+      <div class="lane" id="lane" role="group" aria-label="Parcel stages">
+        <div class="road"><i></i></div>
+        <button type="button" class="stop first" data-stage="picked" data-at="5" style="left:5%;--dc:#d8b46c"><span class="dt"></span><span class="lb"><b id="saPicked">166</b>Picked up</span></button>
+        <button type="button" class="stop s2" data-stage="transit" data-at="34.3" style="left:34.3%;--dc:#a275e0"><span class="dt"></span><span class="lb"><b id="saTransit">38</b>In transit</span></button>
+        <button type="button" class="stop s3" data-stage="out" data-at="65.7" style="left:65.7%;--dc:#8fc8ff"><span class="dt"></span><span class="lb"><b id="saOut">—</b>Out for delivery</span></button>
+        <button type="button" class="stop last" data-stage="delivered" data-at="95" style="left:95%;--dc:#45d09a"><span class="dt"></span><span class="lb"><b id="saDel">121</b>Delivered</span></button>
+        <div class="retb"><svg viewBox="0 0 58 44" aria-hidden="true"><path d="M52 40 C 48 14, 26 6, 6 8" fill="none" stroke="#f6d58c" stroke-width="1.4" stroke-dasharray="3 3"/><path d="M11 4 L5 8 L11 12" fill="none" stroke="#f6d58c" stroke-width="1.4"/></svg><span id="saRetB">7 returned to your warehouse</span></div>
+        {{VAN}}
+      </div>
+      <p class="sa-cap" id="saCap" aria-live="polite"></p>
+      <div class="os-nums sa-nums">
+        <div style="--dc:#a275e0"><span class="k"><i></i>In transit</span><b id="saN1">38</b><span class="s">right now</span></div>
+        <div style="--dc:#45d09a"><span class="k"><i></i>Delivered</span><b id="saN2">121</b><span class="s" id="saN2s"></span></div>
+        <div style="--dc:#f06571"><span class="k"><i></i>Returned</span><b id="saN3">7</b><span class="s" id="saN3s"></span></div>
+        <div style="--dc:#f2b64f"><span class="k"><i></i>Stuck 7+ days</span><b>9</b><button type="button" class="lnk" data-jump="saCall">Call list <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      </div>
+    </section>
+
+    <div class="sa-two">
+      <section class="panel rise" style="--d:.1s" aria-labelledby="saCashH">
+        <div class="ph"><h2 id="saCashH">Your cash with Bosta</h2></div>
+        <div class="sa-hero"><span class="k">Cash to collect</span><b><small>EGP</small>58,300</b></div>
+        <div class="sa-split" role="img" aria-label="EGP 20,300 on its way, EGP 38,000 stuck"><i style="flex:20300;background:var(--good)"></i><i style="flex:38000;background:var(--warn)"></i></div>
+        <div class="sa-cash">
+          <div><span class="dotk" style="--dc:var(--good)"><b>Next payout</b><small>Mon, Nov 2 · on its way to you</small></span><span class="v g">EGP 20,300</span></div>
+          <div><span class="dotk" style="--dc:var(--warn)"><b>Stuck 7+ days</b><small>9 parcels · call these customers</small></span><span class="v w">EGP 38,000</span></div>
+        </div>
+        <h3 class="sa-h3">Last payouts</h3>
+        <div class="sa-pay">
+          <div><span>Mon, Oct 26</span><span class="mut">after EGP 1,980 Bosta fees</span><b>31,450</b></div>
+          <div><span>Mon, Oct 19</span><span class="mut">after EGP 1,760 Bosta fees</span><b>27,900</b></div>
+          <div><span>Mon, Oct 12</span><span class="mut">after EGP 1,840 Bosta fees</span><b>29,640</b></div>
+        </div>
+      </section>
+
+      <section class="panel rise" style="--d:.12s" aria-labelledby="saDelH">
+        <div class="ph"><h2 id="saDelH">Delivery</h2></div>
+        <div class="sa-ok">
+          <div><span class="k">Delivery success</span><b class="g" id="saOk">94.5%</b><span class="s" id="saOkOf">121 of 128 delivered</span></div>
+          <div><span class="k">Average time</span><b><span id="saDays">2.4</span> <small>days</small></b><span class="s">from pickup to door</span></div>
+        </div>
+        <span class="sa-okbar" role="img" id="saOkBar" aria-label="Delivery success"><i style="width:94.5%"></i></span>
+        <h3 class="sa-h3">Days to deliver by city</h3>
+        <div class="sa-days" id="saCityDays"></div>
+      </section>
+    </div>
+
+    <section class="panel rise" style="--d:.14s" id="saCall" aria-labelledby="saCallH">
+      <div class="ph"><h2 id="saCallH">Stuck 7+ days · call these customers</h2><span class="r" id="saCallProg"></span></div>
+      <p class="sa-lead">A quick call usually saves the parcel. Oldest first.</p>
+      <div class="sa-calls" id="saCalls"></div>
+    </section>
+
+    <section class="panel rise" style="--d:.16s" aria-labelledby="saCityH">
+      <div class="ph"><h2 id="saCityH">Returns by city</h2><span class="r" id="saCityR"></span></div>
+      <div class="sa-cities" id="saCities"></div>
+    </section>

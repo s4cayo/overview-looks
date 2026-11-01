@@ -1,0 +1,58 @@
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1>Orders</h1><p>Every order, its payment and where it is with Bosta.</p></div>
+      <div class="acts"><button type="button" class="ob" id="oaShip" data-go="orders">Open shipping</button></div>
+    </header>
+
+    <!-- status filters double as the period's numbers: each figure appears once -->
+    <section class="oa-st rise" style="--d:.06s" aria-label="Filter by status" id="oaSt"></section>
+
+    <section class="panel oa-list rise" style="--d:.1s" aria-label="Order list">
+      <div class="oa-tools">
+        <label class="os-search" id="oaSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="search" id="oaQ" placeholder="Search name, order, phone, city, dress" aria-label="Search orders" autocomplete="off">
+          <button type="button" class="x" id="oaQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
+        <select class="os-sel oa-sort" id="oaSort" aria-label="Sort orders">
+          <option value="new">Newest first</option><option value="old">Oldest first</option><option value="hi">Highest total</option><option value="lo">Lowest total</option><option value="az">Customer A–Z</option>
+        </select>
+        <button type="button" class="ob" id="oaCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span id="oaCsvT">Export CSV</span></button>
+      </div>
+      <div class="oa-tbl" role="table" aria-label="Orders">
+        <div class="oa-hd" role="row">
+          <span role="columnheader"><input type="checkbox" class="cb" id="oaAll" aria-label="Select all orders in this view"></span>
+          <span role="columnheader"><button type="button" data-sort="new">Order</button></span>
+          <span role="columnheader"><button type="button" data-sort="az">Customer</button></span>
+          <span role="columnheader">Items</span>
+          <span role="columnheader">Delivery</span>
+          <span role="columnheader" class="ra"><button type="button" data-sort="hi">Total</button></span>
+          <span role="columnheader">Status</span>
+        </div>
+        <div id="oaRows"></div>
+      </div>
+      <div class="os-pager"><span id="oaRange"></span><div class="pg">
+        <button type="button" class="ob sm ic" id="oaPrev" aria-label="Previous page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button type="button" class="ob sm ic" id="oaNext" aria-label="Next page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+    </section>
+
+    <section class="panel oa-lost rise" style="--d:.14s" aria-labelledby="oaLostH">
+      <div class="ph"><h2 id="oaLostH">Cancelled &amp; returned</h2><span class="r" id="oaLostR"></span></div>
+      <div class="oa-flow" id="oaFlow"></div>
+      <div class="oa-two">
+        <div>
+          <h3 class="oa-h3">Why orders were cancelled</h3>
+          <div class="oa-bars" id="oaWhy"></div>
+          <button type="button" class="lnk" data-filter="cancelled" style="margin-top:14px">See the cancelled orders <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div>
+          <h3 class="oa-h3">Most returned dresses <span class="mut" style="font-weight:400">· units back of units shipped</span></h3>
+          <div class="oa-rows" id="oaRet"></div>
+          <p class="oa-sz" id="oaSz"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="os-bulk" id="oaBulk" role="region" aria-label="Selected orders">
+      <b id="oaBulkN">0 selected</b>
+      <button type="button" class="ob sm pri" id="oaBulkCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Export CSV</button>
+      <button type="button" class="ob sm" id="oaBulkCopy"><span class="hide-s">Copy order numbers</span><span class="show-s">Copy</span></button>
+      <button type="button" class="ob sm ic" id="oaBulkX" aria-label="Clear selection"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>

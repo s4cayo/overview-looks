@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inventory · Timeline</title>
+<!--@HEADFONTS-->
+<style>
+/*@BASECSS*/
+/*@PANELCSS*/
+/*@TABSCSS*/
+/*@NAVCSS*/
+/*@PV2CSS*/
+/*@COMMONCSS*/
+/* ===== Inventory B — run-out timeline ===== */
+.ib-panes .pane{margin-top:16px}
+.ib-panes .pv2-panel{padding:22px 24px}
+@media (max-width:600px){.ib-panes .pv2-panel{padding:16px}}
+.ia-intro{font-size:14px;line-height:1.5;color:var(--pv2-mut);margin-bottom:16px;max-width:760px}
+.ia-intro b{color:var(--pv2-fg);font-weight:600}
+/*@IA_LISTCSS*/
+
+/* hero sentence + settings */
+.ib-hero{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 28px;margin-bottom:22px}
+.ib-hl{flex:1 1 420px;font-size:22px;font-weight:500;line-height:1.4;letter-spacing:-.01em}
+.ib-hl b{font-weight:700}.ib-hl .r{color:var(--pv2-bad)}.ib-hl .a{color:var(--pv2-acc)}
+.ib-set{display:flex;flex-direction:column;gap:10px}
+.ib-set .pv2-ctl > span{min-width:118px;font-size:13px}
+.ib-set .pv2-seg button{height:32px;min-width:46px;font-size:13px}
+@media (max-width:600px){.ib-hl{font-size:18px}.ib-set{width:100%}.ib-set .pv2-ctl > span{width:100%}}
+
+/* timeline */
+.ib-tl{--lab:250px;--ord:118px;position:relative}
+.ib-axis,.ib-row,.ib-sub{display:grid;grid-template-columns:var(--lab) minmax(0,1fr) var(--ord);gap:16px;align-items:center}
+.ib-axis{height:44px;align-items:end;padding-bottom:6px;border-bottom:1px solid var(--pv2-line)}
+.ib-ticks{position:relative;height:100%}
+.ib-tick{position:absolute;bottom:0;transform:translateX(-50%);font-size:12px;color:var(--pv2-mut);white-space:nowrap}
+.ib-tick:first-child{transform:none}
+.ib-mk{position:absolute;top:0;transform:translateX(-50%);font-size:12px;font-weight:600;white-space:nowrap;padding:2px 8px;border-radius:99px}
+.ib-mk.d{color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent)}
+.ib-mk.c{color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 13%,transparent)}
+.ib-mk.end{transform:translateX(-100%)}
+.ib-rows{position:relative}
+.ib-p{border-bottom:1px solid var(--pv2-line)}
+.ib-row{width:100%;text-align:left;padding:12px 0;border-radius:12px;transition:background .2s}
+.ib-row:hover{background:var(--pv2-bg2)}
+.ib-lab{display:flex;align-items:center;gap:12px;min-width:0;padding-left:6px}
+.ib-lab .ip-th{width:38px;height:38px;border-radius:11px}.ib-lab .ip-th svg{width:17px;height:25px}
+.ib-lab > span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ib-lab b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.ib-lab b svg{width:14px;height:14px;color:var(--pv2-mut);transition:transform .3s;flex:none}
+.ib-open .ib-lab b svg{transform:rotate(180deg)}
+.ib-lab small{font-size:12.5px;color:var(--pv2-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-trk{position:relative;height:30px}
+.ib-trk::before{content:"";position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:99px;background:var(--pv2-track)}
+.ib-line{position:absolute;top:-12px;bottom:-12px;width:0;border-left:1.5px dashed var(--c);opacity:.7}
+.ib-bar{position:absolute;left:0;top:50%;height:10px;margin-top:-5px;border-radius:99px;width:var(--w);background:var(--c);transition:width .55s cubic-bezier(.2,.8,.2,1)}
+.ib-bar.more::after{content:"";position:absolute;right:-7px;top:50%;margin-top:-5px;border:5px solid transparent;border-left:7px solid var(--c)}
+.ib-end{position:absolute;top:50%;transform:translate(8px,-50%);font-size:12.5px;font-weight:600;white-space:nowrap;color:var(--c);background:var(--pv2-bg);padding:1px 6px;border-radius:6px;z-index:1}
+.ib-row:hover .ib-end{background:var(--pv2-bg2)}
+.ib-tick.last{transform:translateX(-100%)}
+.ib-end.in{transform:translate(calc(-100% - 10px),-50%);color:var(--pv2-fg)}
+.ib-dot{position:absolute;left:0;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--pv2-bad);box-shadow:0 0 0 4px color-mix(in srgb,var(--pv2-bad) 22%,transparent)}
+.ib-ord{justify-self:end;font-size:13px;font-weight:700;padding:7px 13px;border-radius:99px;white-space:nowrap;color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.ib-ord.ok{color:var(--pv2-good);background:color-mix(in srgb,var(--pv2-good) 12%,transparent)}
+.ib-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.8,.2,1)}
+.ib-open .ib-det{grid-template-rows:1fr}
+.ib-det > div{overflow:hidden}
+.ib-sub{padding:5px 0}
+.ib-sub:last-child{padding-bottom:14px}
+.ib-sub .ib-lab{padding-left:56px;font-size:13.5px;gap:10px}
+.ib-sub .ib-lab b{font-size:13.5px;min-width:34px}
+.ib-sub .ib-lab small{font-size:12.5px}
+.ib-sub .ib-trk{height:22px}
+.ib-sub .ib-bar{height:6px;margin-top:-3px}
+.ib-sub .ib-dot{width:10px;height:10px;margin-top:-5px}
+.ib-sub .ib-ord{background:none;color:var(--pv2-fg);padding:0 13px;font-weight:600}
+.ib-sub .ib-ord.ok{color:var(--pv2-mut);font-weight:500}
+.ib-hatch{position:absolute;left:0;right:0;top:50%;height:10px;margin-top:-5px;border-radius:99px;background:repeating-linear-gradient(135deg,var(--pv2-line2) 0 4px,transparent 4px 8px)}
+.ib-out{font-size:13.5px;color:var(--pv2-mut);line-height:1.5;margin-top:16px}
+.ib-out button{color:var(--pv2-acc);font-weight:600}
+@media (max-width:1100px){.ib-tl{--lab:200px;--ord:104px}}
+@media (max-width:760px){
+  .ib-tl{--ord:auto}
+  .ib-axis{grid-template-columns:minmax(0,1fr);height:52px}.ib-axis > :first-child,.ib-axis > :last-child{display:none}
+  .ib-row,.ib-sub{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"l o" "t t";row-gap:10px;padding:12px 0}
+  .ib-row .ib-lab,.ib-sub .ib-lab{grid-area:l;padding-left:0}.ib-trk{grid-area:t}.ib-ord{grid-area:o}
+  .ib-sub{padding:6px 0 4px;row-gap:4px}.ib-sub .ib-lab{padding-left:50px}
+  .ib-tick.hp{display:none}
+}
+
+/* order list */
+.ib-order{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;align-items:start}
+.ib-big{font-size:34px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.ib-big small{font-size:15px;font-weight:500;color:var(--pv2-mut);margin-left:6px;letter-spacing:0}
+.ib-olist{grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.ib-ol{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:12px 0;border-top:1px solid var(--pv2-line);font-size:14px}
+.ib-ol b{font-weight:600}
+.ib-ol span{color:var(--pv2-mut);font-size:13px;grid-column:1 / -1;line-height:1.45}
+.ib-ol em{font-style:normal;font-weight:700;grid-row:1;grid-column:2}
+@media (max-width:760px){.ib-olist{grid-template-columns:minmax(0,1fr)}.ib-order{grid-template-columns:minmax(0,1fr)}.ib-big{font-size:28px}}
+.ib-order .pv2-copy{margin-top:0}
+.ib-order .pv2-fallback{grid-column:1 / -1}
+</style>
+<script>
+/*@PERJS*/
+</script>
+</head>
+<body data-page="inventory">
+<!--@SPRITE-->
+<div class="app">
+<!--@SIDE-->
+  <div class="content">
+  <main>
+<!--@NAVTOP-->
+    <div class="pv2 ip" id="ip">
+      <header class="ip-head">
+        <div><h1>Inventory</h1><p id="ib-count"></p></div>
+        <div class="ip-hl"><a class="ip-link" href="#" data-ip-go="products">Products <svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </header>
+
+      <div class="ib-panes">
+        <div class="tabs-anchor" id="tabsAnchor" style="height:0"></div>
+        <div class="tabbar" id="tabbar"><div class="seg" role="tablist" aria-label="Inventory sections" id="seg"><span class="ind" id="ind" aria-hidden="true"></span>
+          <button role="tab" class="on" data-tab="time" aria-selected="true" id="t-time" aria-controls="p-time">When it runs out</button>
+          <button role="tab" data-tab="out" aria-selected="false" tabindex="-1" id="t-out" aria-controls="p-out">Sold out <span class="n r" data-n="out"></span></button>
+          <button role="tab" data-tab="dead" aria-selected="false" tabindex="-1" id="t-dead" aria-controls="p-dead">Not selling <span class="n" data-n="dead"></span></button>
+          <button role="tab" data-tab="unk" aria-selected="false" tabindex="-1" id="t-unk" aria-controls="p-unk">Unknown <span class="n" data-n="unk"></span></button>
+        </div></div>
+
+        <section class="pane" id="p-time" role="tabpanel" aria-labelledby="t-time" tabindex="0">
+          <div class="pv2-panel">
+            <div class="ib-hero">
+              <p class="ib-hl" id="ib-hl" aria-live="polite"></p>
+              <div class="ib-set">
+                <div class="pv2-ctl"><span>Delivery takes</span><div class="pv2-seg" data-k="del"><button type="button" data-v="3" aria-pressed="false">3d</button><button type="button" data-v="7" aria-pressed="true">7d</button><button type="button" data-v="14" aria-pressed="false">14d</button></div></div>
+                <div class="pv2-ctl"><span>Cover after delivery</span><div class="pv2-seg" data-k="cover"><button type="button" data-v="14" aria-pressed="false">14d</button><button type="button" data-v="30" aria-pressed="true">30d</button><button type="button" data-v="45" aria-pressed="false">45d</button><button type="button" data-v="60" aria-pressed="false">60d</button></div></div>
+              </div>
+            </div>
+            <div class="ib-tl" id="ib-tl"></div>
+            <p class="ib-out" id="ib-left"></p>
+          </div>
+          <div class="pv2-panel" style="margin-top:16px">
+            <div class="pv2-ph"><h3>Order list</h3></div>
+            <div class="ib-order" id="ib-order"></div>
+          </div>
+        </section>
+
+        <section class="pane" id="p-out" role="tabpanel" aria-labelledby="t-out" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro" id="ia-out-intro"></p><div class="ia-list" id="ia-out"></div></div>
+        </section>
+        <section class="pane" id="p-dead" role="tabpanel" aria-labelledby="t-dead" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro" id="ia-dead-intro"></p><div class="ia-list" id="ia-dead"></div></div>
+        </section>
+        <section class="pane" id="p-unk" role="tabpanel" aria-labelledby="t-unk" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro">Shopify isn’t counting stock for these, so we can’t say how many are left or when they run out. They are <b>not</b> counted as sold out, and they are left off the timeline.</p>
+            <div class="ia-list" id="ia-unk"></div>
+            <div class="ia-how"><b>To fix it in Shopify:</b> open the product → pick the size → under Inventory, tick <b>Track quantity</b> and enter how many you have. It shows up here on the next sync.</div></div>
+        </section>
+      </div>
+    </div>
+  </main>
+  </div>
+</div>
+<!--@DOCK-->
+<script>
+/*@NAVJS*/
+</script>
+<script>
+/*@DATAJS*/
+/*@COMMONJS*/
+/* ===== Inventory B behaviour ===== */
+(function(){
+  var U=IPU,$=U.$,$$=U.$$,fmt=IP.fmt,PR=IP.PR;
+  var st={cover:30,del:7,open:{}};
+  var CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg>';
+  function P(){return IP.PER[U.perKey()]}
+  function soldOut(){var out=[];PR.forEach(function(p){var s=p.sizes.filter(function(x,j){return p.stock[j]===0});if(s.length)out.push({p:p,s:s})});return out}
+  function unknowns(){return PR.filter(function(p){return p.unknownSizes.length})}
+  function col(d){return d===0||d<st.del?'var(--pv2-bad)':d<st.del+7?'var(--pv2-warn)':'var(--pv2-good)'}
+  function max(){return Math.max(56,Math.ceil((st.del+st.cover+6)/7)*7)}
+  function pos(d){return Math.min(100,d/max()*100)}
+  function track(d,big){
+    var M=max(),lines='<span class="ib-line" style="left:'+pos(st.del)+'%;--c:var(--pv2-bad)"></span><span class="ib-line" style="left:'+pos(st.del+st.cover)+'%;--c:var(--pv2-acc)"></span>';
+    if(d==null)return lines+'<span class="ib-hatch"></span>';
+    if(d===0)return lines+'<span class="ib-dot"></span>';
+    var w=pos(isFinite(d)?d:M),more=!isFinite(d)||d>M,c=col(d),lab=!isFinite(d)?'not selling':d<1?'today':IP.dateIn(d);
+    return lines+'<span class="ib-bar'+(more?' more':'')+'" style="--w:'+w+'%;--c:'+c+'"></span>'+(big?'<span class="ib-end'+(w>78?' in':'')+'" style="left:'+w+'%;--c:'+c+'">'+(more&&isFinite(d)?'after '+IP.dateIn(M):lab)+'</span>':'');
+  }
+  function rows(){return PR.filter(function(p){return IP.DEAD.indexOf(p)<0&&p.stockKnown.length}).map(function(p){return [p,IP.plan(p,st.cover,st.del)]})
+    .sort(function(a,b){return a[1].first.lasts-b[1].first.lasts})}
+
+  function timeline(){
+    var M=max(),ticks=[];for(var d=0;d<=M;d+=7)ticks.push(d);
+    var R=rows(),late=0,gone=0;R.forEach(function(x){x[1].rows.forEach(function(r){if(r.unk)return;if(r.lasts===0)gone++;else if(r.lasts<st.del)late++})});
+    $('#ib-hl').innerHTML='A delivery ordered today lands <b class="a">'+IP.dateIn(st.del)+'</b>. Before then <b class="r">'+late+' sizes run out</b> — and <b class="r">'+gone+'</b> are already gone.';
+    var ax='<div class="ib-axis" aria-hidden="true"><span></span><div class="ib-ticks">'
+      +ticks.map(function(t,i){return '<span class="ib-tick'+(i%2?' hp':'')+(i===ticks.length-1?' last':'')+'" style="left:'+pos(t)+'%">'+(t?IP.dateIn(t):'Today')+'</span>'}).join('')
+      +'<span class="ib-mk d" style="left:'+pos(st.del)+'%">Delivery lands</span><span class="ib-mk c'+(pos(st.del+st.cover)>85?' end':'')+'" style="left:'+pos(st.del+st.cover)+'%">Covered until '+IP.dateIn(st.del+st.cover)+'</span></div><span></span></div>';
+    var body=R.map(function(x){var p=x[0],pl=x[1],f=pl.first,one=p.sizes.length===1,open=!!st.open[p.id];
+      var sub=p.left===0?'every size sold out':(one?'':f.s+' ')+(f.lasts===0?'sold out now':IP.when(f.lasts).replace('runs out ~','runs out '))+' · '+p.left+' left';
+      return '<div class="ib-p'+(open?' ib-open':'')+'" data-id="'+p.id+'"><button type="button" class="ib-row" aria-expanded="'+open+'">'
+        +'<span class="ib-lab">'+U.sw(p)+'<span><b>'+p.main+(one?'':CHEV)+'</b><small>'+sub+'</small></span></span>'
+        +'<span class="ib-trk">'+track(f.lasts,true)+'</span>'
+        +'<span class="ib-ord'+(pl.ord?'':' ok')+'">'+(pl.ord?'Order '+pl.ord:'Enough')+'</span></button>'
+        +(one?'':'<div class="ib-det"><div>'+pl.rows.map(function(r){return '<div class="ib-sub"><span class="ib-lab"><b>'+r.s+'</b><small>'+(r.unk?'not tracked':r.st===0?'sold out':r.st+' left · '+r.rate.toFixed(1)+'/day')+'</small></span><span class="ib-trk">'+track(r.unk?null:r.lasts,false)+'</span><span class="ib-ord'+(r.ord?'':' ok')+'">'+(r.unk?'?':r.ord?'+'+r.ord:'—')+'</span></div>'}).join('')+'</div></div>')
+        +'</div>'}).join('');
+    $('#ib-tl').innerHTML=ax+'<div class="ib-rows">'+body+'</div>';
+    var unk=unknowns().filter(function(p){return !p.stockKnown.length}).map(function(p){return p.main});
+    $('#ib-left').innerHTML='Not on the timeline: '+(unk.length?unk.join(', ')+' — stock not tracked (<button type="button" data-totab="unk">why</button>)':'')+(IP.DEAD.length?' · '+IP.DEAD.map(function(p){return p.main}).join(' and ')+' — not selling (<button type="button" data-totab="dead">see</button>)':'')+'.';
+    st.list=R.filter(function(x){return x[1].ord>0});
+    order();
+  }
+  function order(){
+    var L=st.list,tot=L.reduce(function(a,x){return a+x[1].ord},0);
+    $('#ib-order').innerHTML='<div><div class="ib-big">'+fmt(tot)+'<small>pieces to order</small></div><p class="ip-note" style="margin-top:6px">So every size lasts until <b>'+IP.dateIn(st.del+st.cover)+'</b> at '+P().pace+'.</p></div>'
+      +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><button type="button" class="pv2-copy" id="ib-copy"><svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Copy list for supplier</button><span class="pv2-copied" aria-live="polite"></span></div>'
+      +'<div class="ib-olist">'+L.map(function(x){var p=x[0],pl=x[1],one=p.sizes.length===1;
+        return '<div class="ib-ol"><b>'+p.main+'</b><em>'+pl.ord+'</em><span>'+(one?'One size':pl.rows.filter(function(r){return r.ord}).map(function(r){return r.s+' × '+r.ord}).join(' · '))+'</span></div>'}).join('')+'</div>';
+  }
+  function copyText(){var lines=['Restock order — '+st.cover+' days of cover, delivery takes '+st.del+' days ('+P().pace+')'];
+    (st.list||[]).forEach(function(x){var pl=x[1],p=x[0];lines.push('• '+p.main+' ('+p.col+'): '+pl.rows.filter(function(r){return r.ord}).map(function(r){return (p.sizes.length===1?'':r.s+' × ')+r.ord}).join(', '))});
+    return lines.join('\n')}
+
+  /*@IA_LISTJS*/
+
+  /* ---- sticky tabs (N's tab bar) ---- */
+  var seg=$('#seg'),ind=$('#ind'),bar=$('#tabbar'),anchor=$('#tabsAnchor'),tabs=$$('[role=tab]',seg);
+  function place(){var bt=$('[role=tab].on',seg);if(!bt||!bt.offsetWidth)return;ind.style.width=bt.offsetWidth+'px';ind.style.transform='translateX('+bt.offsetLeft+'px)'}
+  function show(name,scroll,focus){
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;if(on&&focus)t.focus({preventScroll:true})});
+    $$('.ib-panes .pane').forEach(function(p){p.hidden=p.id!=='p-'+name});place();
+    var bt=$('[role=tab].on',seg);seg.scrollTo({left:bt.offsetLeft-(seg.clientWidth-bt.offsetWidth)/2,behavior:U.reduce?'auto':'smooth'});
+    if(scroll){var y=anchor.getBoundingClientRect().top+scrollY-12;if(scrollY>y+4||scroll==='force')window.scrollTo({top:y,behavior:U.reduce?'auto':'smooth'})}}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){show(t.dataset.tab,true)});
+    t.addEventListener('keydown',function(e){var j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j!==null){e.preventDefault();show(tabs[j].dataset.tab,false,true)}})});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)}).observe(anchor);
+  addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);
+
+  function openPlan(id){show('time','force');st.open={};st.open[id]=true;timeline();
+    setTimeout(function(){var el=$('.ib-p[data-id="'+id+'"]');if(el)el.scrollIntoView({behavior:U.reduce?'auto':'smooth',block:'center'})},U.reduce?0:450)}
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-totab]');if(t){show(t.dataset.totab,'force');return}
+    var pl=e.target.closest('[data-plan]');if(pl){e.preventDefault();U.close();openPlan(pl.dataset.plan);return}
+    var sg=e.target.closest('.ib-set .pv2-seg button');if(sg){st[sg.parentNode.dataset.k]=+sg.dataset.v;$$('button',sg.parentNode).forEach(function(x){x.setAttribute('aria-pressed',String(x===sg))});timeline();return}
+    var row=e.target.closest('.ib-row');if(row){var pd=row.parentNode,id=pd.dataset.id;if(!pd.querySelector('.ib-det')){U.open(U.detail(IP.byId(id),'units',{noRestock:true})+'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+id)+'">Open in Products '+U.ARW+'</a>',row);return}
+      st.open[id]=!st.open[id];pd.classList.toggle('ib-open',st.open[id]);row.setAttribute('aria-expanded',String(st.open[id]));return}
+    if(e.target.closest('#ib-copy')){var txt=copyText(),msg=$('#ib-order .pv2-copied');
+      var fb=function(){var ta=$('#ib-order .pv2-fallback');if(!ta){ta=document.createElement('textarea');ta.className='pv2-fallback';ta.readOnly=true;$('#ib-order').appendChild(ta)}ta.value=txt;ta.focus();ta.select();msg.textContent='Select all and copy'};
+      try{navigator.clipboard.writeText(txt).then(function(){msg.textContent='Copied ✓';setTimeout(function(){msg.textContent=''},2200)},fb)}catch(err){fb()}}
+  });
+  function counts(){var so=soldOut();$('[data-n=out]').textContent=so.reduce(function(a,x){return a+x.s.length},0);$('[data-n=dead]').textContent=IP.DEAD.length;$('[data-n=unk]').textContent=PR.reduce(function(a,p){return a+p.unknownSizes.length},0)}
+  function all(){IP.compute(U.perKey());timeline();lists();counts();place()}
+  document.addEventListener('per:change',all);
+  $('#ib-count').textContent=fmt(PR.reduce(function(a,p){return a+p.left},0))+' pieces in stock · '+PR.length+' products · '+PR.reduce(function(a,p){return a+p.sizes.length},0)+' sizes';
+  all();
+  var pid=U.params.get('p'),tab=U.params.get('tab');
+  if(pid&&IP.byId(pid)){if(st.list.some(function(x){return x[0].id===pid}))setTimeout(function(){openPlan(pid)},250);else setTimeout(function(){U.open(U.detail(IP.byId(pid),'units',{noRestock:true}))},250)}
+  else if(tab&&$('#p-'+tab))setTimeout(function(){show(tab,'force')},150);
+})();
+</script>
+</body>
+</html>

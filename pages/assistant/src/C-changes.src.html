@@ -1,0 +1,189 @@
+@@TITLE Assistant · C Changes panel
+@@CSS
+/* C · Changes panel — chat on the left; on the right everything waiting for your OK (from any chat) and what the last answer read.
+   Below 1180px the two become sticky tabs: Chat · Waiting · Checked. */
+.c-shell{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:32px;align-items:start}
+.c-chat{min-width:0;display:flex;flex-direction:column;gap:26px;min-height:calc(100vh - 110px)}
+.c-head{display:flex;align-items:center;gap:8px;min-height:40px}
+.c-sw{position:relative;flex:1;min-width:0}
+.c-swb{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:40px;padding:0 12px 0 10px;border-radius:12px;font-size:17px;font-weight:600;letter-spacing:-.01em;transition:background .2s}
+.c-swb:hover{background:var(--panel2)}
+.c-swb > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.c-swb svg.as-i{color:var(--muted)}
+.c-pop{position:absolute;left:0;top:calc(100% + 6px);z-index:60;width:min(380px,calc(100vw - 32px));max-height:min(620px,72vh);display:none;flex-direction:column;gap:10px;padding:12px 8px 10px;border-radius:18px;background:var(--panel);border:1px solid var(--line2);box-shadow:0 22px 50px -18px rgba(0,0,0,.6)}
+.c-pop.is-on{display:flex}
+.c-pt{display:flex;gap:8px;padding:0 4px}
+.c-search{flex:1;display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:11px;background:var(--panel2);border:1px solid var(--line);color:var(--muted)}
+.c-search:focus-within{border-color:color-mix(in srgb,var(--pl) 60%,transparent)}
+.c-search input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--text)}
+.c-search input::placeholder{color:var(--muted)}
+.c-search input:focus-visible{outline:none}
+.c-list{flex:1;min-height:0;overflow:auto}
+.c-pins{border-top:1px solid var(--line);padding-top:10px}
+.c-pins h3{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 10px 4px}
+.c-chat details.as-tools{display:none}
+.c-chat .as-cwrap{position:sticky;bottom:0;margin-top:auto;padding:14px 0 18px;background:linear-gradient(to bottom,transparent,var(--bg) 22px);z-index:5}
+.c-spacer{display:none}
+/* empty state: questions as a calm list */
+.c-empty{flex-direction:column;gap:8px;padding-top:3vh}
+.c-empty h2{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.c-empty > p{font-size:15px;color:var(--muted);margin-bottom:14px}
+.c-sugs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.c-sugs .as-sh{display:none}
+.c-sugs .as-sug{flex-direction:column-reverse;justify-content:flex-end;gap:6px}
+.c-sugs .as-sq{font-size:15px}
+/* side */
+.c-side{position:sticky;top:16px;display:flex;flex-direction:column;gap:24px;max-height:calc(100vh - 32px);overflow:auto;padding-bottom:8px}
+.c-sec h2{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.c-n{min-width:22px;height:22px;padding:0 7px;border-radius:99px;display:inline-grid;place-items:center;font-size:12px;letter-spacing:0;color:#1b1300;background:var(--warn)}
+:root[data-theme="light"] .c-n{color:#fff}
+.c-wl{display:flex;flex-direction:column;gap:14px}
+.c-from{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.c-from button{color:var(--pl);font-weight:600;text-align:left}
+.c-from button:hover{text-decoration:underline}
+.c-side .as-prop{padding:14px 14px 16px;gap:12px}
+.c-side .as-pi{grid-template-columns:minmax(0,1fr);gap:6px}
+.c-side .as-diff{padding-left:34px;flex-wrap:wrap}
+.c-side .as-pbtns{flex-direction:column}
+.c-side .as-pbtns .as-btn{width:100%}
+.c-side .as-prop.is-flash{animation:c-flash 1.2s ease}
+@keyframes c-flash{0%,100%{box-shadow:none}30%{box-shadow:0 0 0 4px color-mix(in srgb,var(--warn) 45%,transparent)}}
+.c-calm{font-size:14px;color:var(--muted);line-height:1.5;padding:14px 16px;border-radius:14px;border:1px dashed var(--line2)}
+.c-ck{list-style:none;display:flex;flex-direction:column}
+.c-ck li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.c-ck li:first-child{border-top:0;padding-top:2px}
+.c-ck svg.as-i{color:var(--good);margin-top:2px}
+.c-ck b{font-size:14px;font-weight:500}
+.c-ck small{grid-column:2;font-size:13px;color:var(--muted)}
+.c-ckq{font-size:13px;color:var(--muted);margin-bottom:10px}
+.c-ckq b{color:var(--text);font-weight:500}
+/* tabs (below 1180px) */
+.c-tabs{display:none}
+@media (max-width:1179px){
+  .c-shell{display:block}
+  .c-side{position:static;max-height:none;overflow:visible}
+  .c-tabs{display:flex;position:sticky;top:0;z-index:40;gap:4px;padding:8px 0;margin:-8px 0 -6px;background:var(--bg)}
+  .c-tabs button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:42px;border-radius:12px;font-size:14px;font-weight:500;color:var(--muted);border:1px solid var(--line);background:var(--panel);transition:background .2s,color .2s}
+  .c-tabs button[aria-selected="true"]{color:var(--text);border-color:color-mix(in srgb,var(--pl) 55%,transparent);background:color-mix(in srgb,var(--pl) 14%,var(--panel));font-weight:600}
+  .c-tabs .c-n{height:20px;min-width:20px;font-size:12px}
+  body:not(.c-tab-chat) .c-chat{display:none}
+  body:not(.c-tab-wait) .c-wait{display:none}
+  body:not(.c-tab-checked) .c-checked{display:none}
+  .c-side .c-sec h2{display:none}
+  .c-side .as-pbtns{flex-direction:row}
+  .c-side .as-pbtns .as-btn{width:auto;flex:1 1 auto}
+}
+@media (max-width:1023px){
+  .c-chat{min-height:0}
+  .c-chat .as-cwrap{position:fixed;left:max(16px,calc(50% - 380px));right:max(16px,calc(50% - 380px));bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:65;padding:0;background:none;transition:bottom .35s cubic-bezier(.2,.8,.2,1)}
+  .c-chat .as-cwrap::before{content:"";position:absolute;left:-16px;right:-16px;top:-18px;bottom:-120px;z-index:-1;background:linear-gradient(to bottom,transparent,var(--bg) 18px);pointer-events:none}
+  .as-dock-hidden .c-chat .as-cwrap{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  .c-chat .as-fine{display:none}
+  .c-spacer{display:block;height:var(--as-ch,80px)}
+}
+@media (max-width:600px){
+  .c-head .as-modelw{display:none}
+  .c-pmodel{display:block}
+  .c-swb{font-size:16px}
+  .c-sugs{grid-template-columns:minmax(0,1fr)}
+  .c-empty h2{font-size:23px}
+  .c-side .as-pbtns{flex-direction:column}
+  .c-side .as-pbtns .as-btn{width:100%}
+}
+.c-pmodel{display:none;border-top:1px solid var(--line);padding:10px 4px 0}
+.c-pmodel .as-mbtn{width:100%}
+.c-pmodel .as-mbtn [data-as-model-label]{flex:1;text-align:left}
+.c-pmodel .as-menu{top:auto;bottom:calc(100% + 6px);left:0;right:0}
+@media (prefers-reduced-motion:reduce){.c-side .as-prop.is-flash{animation:none}.c-chat .as-cwrap{transition:none!important}}
+@@MAIN
+    <div class="c-tabs" role="tablist" aria-label="Assistant views">
+      <button type="button" role="tab" data-c-tab="chat" aria-selected="true" aria-controls="c-chat">Chat</button>
+      <button type="button" role="tab" data-c-tab="wait" aria-selected="false" aria-controls="c-wait">Waiting<span class="c-n" data-c-count hidden>0</span></button>
+      <button type="button" role="tab" data-c-tab="checked" aria-selected="false" aria-controls="c-checked">Checked</button>
+    </div>
+    <div class="c-shell">
+      <section class="c-chat" id="c-chat" aria-label="Chat">
+        <header class="c-head">
+          <div class="c-sw">
+            <button type="button" class="c-swb" data-c-sw aria-haspopup="dialog" aria-expanded="false" aria-controls="c-pop"><span data-as-title>New chat</span><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+            <div class="c-pop" id="c-pop" role="dialog" aria-label="Your chats">
+              <div class="c-pt">
+                <label class="c-search"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="sr">Search chats</span><input type="search" placeholder="Search chats" autocomplete="off" data-as-search></label>
+              </div>
+              <nav class="c-list" aria-label="Saved chats" data-as-list></nav>
+              <section class="c-pins" aria-label="Pinned"><h3>Pinned</h3><div data-as-pins></div></section>
+              <div class="c-pmodel">{{MODEL}}</div>
+            </div>
+          </div>
+          {{MODEL}}
+          <button type="button" class="as-mbtn is-sq" data-as-new aria-label="New chat" title="New chat"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          {{MORE}}
+        </header>
+
+        <section class="as-empty c-empty" data-as-empty aria-label="Start a chat">
+          <h2>Ask about your store</h2>
+          <p>I read your orders, stock, Bosta shipments and Meta ads. What I read shows on the right.</p>
+          <div class="c-sugs" data-as-sugs></div>
+        </section>
+
+        <div class="as-thread" data-as-thread></div>
+        <div class="c-spacer" aria-hidden="true"></div>
+        {{COMPOSER}}
+      </section>
+
+      <aside class="c-side" aria-label="Changes and sources">
+        <section class="c-sec c-wait" id="c-wait" role="tabpanel" aria-label="Waiting for your OK">
+          <h2>Waiting for your OK <span class="c-n" data-c-count hidden>0</span></h2>
+          <div class="c-wl" data-c-wait></div>
+        </section>
+        <section class="c-sec c-checked" id="c-checked" role="tabpanel" aria-label="What I checked">
+          <h2>What I checked</h2>
+          <div data-c-checked></div>
+        </section>
+      </aside>
+    </div>
+@@PREJS
+window.AS_OPTS = { propInline: false };
+@@JS
+/* C: side panel (approvals queue + what the last answer read), chat switcher, phone tabs */
+(function(){
+  var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
+  var narrow=function(){return matchMedia('(max-width:1179px)').matches};
+  /* tabs */
+  function tab(t){document.body.classList.remove('c-tab-chat','c-tab-wait','c-tab-checked');document.body.classList.add('c-tab-'+t);
+    $$('[data-c-tab]').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.cTab===t))});if(narrow())window.scrollTo(0,0)}
+  tab('chat');
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-c-tab]');if(b)tab(b.dataset.cTab)});
+  /* chat switcher */
+  var sw=$('[data-c-sw]'),pop=$('#c-pop');
+  function popClose(){if(!pop.classList.contains('is-on'))return;pop.classList.remove('is-on');sw.setAttribute('aria-expanded','false')}
+  sw.addEventListener('click',function(e){e.stopPropagation();var on=!pop.classList.contains('is-on');popClose();if(on){pop.classList.add('is-on');sw.setAttribute('aria-expanded','true');var f=pop.querySelector('[aria-current="true"]')||pop.querySelector('input');f&&f.focus({preventScroll:true})}});
+  document.addEventListener('click',function(e){if(!e.target.closest('.c-pop')&&!e.target.closest('[data-c-sw]'))popClose()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')popClose()});
+  document.addEventListener('as:opened',function(){popClose();tab('chat')});document.addEventListener('as:picked',function(){popClose();tab('chat')});
+  /* side panel */
+  var ic=AS.ic,esc=AS.esc;
+  function paint(e){
+    var d=e.detail,w=d.pending;
+    $$('[data-c-count]').forEach(function(n){n.hidden=!w.length;n.textContent=w.length});
+    $('[data-c-wait]').innerHTML=w.length?w.map(function(x){
+      return '<div><p class="c-from">From '+(d.conv&&x.conv.id===d.conv.id?'this chat':'<button type="button" data-as-open="'+x.conv.id+'">'+esc(x.conv.title)+'</button>')+'</p>'+AS.propCard(x.prop,x.conv.id,x.mi)+'</div>'}).join('')
+      :'<p class="c-calm">Nothing is waiting. When I suggest a change to your ads, it waits here until you approve it.</p>';
+    var t=d.tools,q=null;
+    if(t&&d.conv){for(var i=t.i-1;i>=0;i--){if(d.conv.msgs[i].role==='user'){q=d.conv.msgs[i].text;break}}}
+    $('[data-c-checked]').innerHTML=t&&!t.m.live?(q?'<p class="c-ckq">For <b>“'+esc(q)+'”</b></p>':'')+'<ul class="c-ck">'+t.m.tools.map(function(x){return '<li>'+ic('check')+'<b>'+esc(x.l)+'</b><small>'+esc(x.r)+'</small></li>'}).join('')+'</ul>'
+      :t&&t.m.live?'<p class="c-calm">Reading now — the list fills in when the answer is ready.</p>'
+      :'<p class="c-calm">Nothing yet. Ask a question and the data I read for it shows here.</p>';
+  }
+  document.addEventListener('as:render',paint);
+  /* "Review" in the chat: the card lives in the panel */
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-as-goto-prop]');if(!b)return;
+    if(narrow())tab('wait');
+    var card=document.querySelector('.c-side .as-prop[data-cid="'+b.dataset.cid+'"][data-mi="'+b.dataset.mi+'"]');
+    if(card){if(!narrow())card.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});card.classList.remove('is-flash');void card.offsetWidth;card.classList.add('is-flash');var f=card.querySelector('[data-as-run]');f&&f.focus({preventScroll:true})}});
+  /* first paint (the engine rendered before this listener existed) */
+  var cur=AS.convs.filter(function(c){return c.id===AS.state.cur})[0],pend=[];
+  AS.convs.forEach(function(c){c.msgs.forEach(function(m,i){if(m.prop&&m.prop.state==='pending')pend.push({conv:c,mi:i,prop:m.prop})})});
+  var lt=null;if(cur)for(var i=cur.msgs.length-1;i>=0;i--){if(cur.msgs[i].role==='ai'&&cur.msgs[i].tools&&cur.msgs[i].tools.length){lt={m:cur.msgs[i],i:i};break}}
+  paint({detail:{conv:cur,pending:pend,tools:lt}});
+})();

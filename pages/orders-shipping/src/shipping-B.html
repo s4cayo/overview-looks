@@ -1,0 +1,86 @@
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1 class="sb-h1">Shipping <span class="sb-by">with {{BOSTA}}</span></h1><p>Your cash with Bosta first, then the parcels that need a call.</p></div>
+      <div class="acts"><button type="button" class="ob" id="sbOrders">Open orders</button></div>
+    </header>
+
+    <section class="panel sb-hero rise" style="--d:.06s" aria-label="Cash and parcels">
+      <div class="sb-cash">
+        <span class="k">Cash to collect</span>
+        <b class="sb-big"><small>EGP</small>58,300</b>
+        <div class="sb-split" role="img" aria-label="EGP 20,300 on its way, EGP 38,000 stuck"><i style="flex:20300;background:var(--good)"></i><i style="flex:38000;background:var(--warn)"></i></div>
+        <div class="sb-leg">
+          <button type="button" data-tabgo="pay"><span class="dotk" style="--dc:var(--good)"><b>Next payout · EGP 20,300</b><small>Mon, Nov 2 · on its way to you</small></span></button>
+          <button type="button" data-tabgo="call"><span class="dotk" style="--dc:var(--warn)"><b>Stuck 7+ days · EGP 38,000</b><small>9 parcels · call these customers</small></span></button>
+        </div>
+      </div>
+      <div class="sb-pipe">
+        <span class="k">Parcels</span>
+        <div class="sb-steps" id="sbSteps">
+          <div class="sb-track"><i></i></div>
+          <span class="sb-van" id="sbVan" aria-hidden="true"><svg viewBox="-44 -40 92 40"><rect x="-40" y="-36" width="56" height="28" rx="5" fill="url(#vanG)" stroke="rgba(242,234,251,.55)" stroke-width=".8"/><path d="M16 -30 h12 q6 0 9 6 l4 9 q1 3 1 6 v1 h-26z" fill="url(#vanG)" stroke="rgba(242,234,251,.55)" stroke-width=".8"/><path d="M19 -27 h8 q3 0 5 4 l3 7 h-16z" fill="rgba(200,230,255,.55)"/><g class="wh"><circle cx="-24" cy="-7" r="6" fill="#0b0814" stroke="#c9b6ec" stroke-width="1.6"/></g><g class="wh"><circle cx="26" cy="-7" r="6" fill="#0b0814" stroke="#c9b6ec" stroke-width="1.6"/></g></svg></span>
+          <button type="button" class="sb-st" data-pf="transit" style="--dc:#a275e0"><i></i><b>38</b><span>In transit</span><small>right now</small></button>
+          <button type="button" class="sb-st" data-pf="delivered" style="--dc:#45d09a"><i></i><b id="sbDel">121</b><span>Delivered</span><small id="sbDelS"></small></button>
+          <button type="button" class="sb-st" data-pf="returned" style="--dc:#f06571"><i></i><b id="sbRet">7</b><span>Returned</span><small id="sbRetS"></small></button>
+          <button type="button" class="sb-st w" data-tabgo="call" style="--dc:#f2b64f"><i></i><b>9</b><span>Stuck 7+ days</span><small>right now</small></button>
+        </div>
+        <p class="sb-ok"><span>Delivery success <b class="g" id="sbOk">94.5%</b> <span class="mut" id="sbOkOf">· 121 of 128</span></span><span>Average <b id="sbDays">2.4</b> days to deliver</span></p>
+      </div>
+    </section>
+
+    <div class="tabs-anchor" id="tabsAnchor" aria-hidden="true"></div>
+    <div class="tabbar rise" id="tabbar" style="--d:.1s">
+      <div class="seg" id="seg" role="tablist" aria-label="Shipping sections">
+        <span class="ind" id="ind" aria-hidden="true"></span>
+        <button type="button" role="tab" id="t-call" data-tab="call" aria-controls="p-call" class="on" aria-selected="true">Call list <span class="n r" id="sbCallN">9</span></button>
+        <button type="button" role="tab" id="t-parcels" data-tab="parcels" aria-controls="p-parcels" aria-selected="false" tabindex="-1">Parcels</button>
+        <button type="button" role="tab" id="t-cities" data-tab="cities" aria-controls="p-cities" aria-selected="false" tabindex="-1">Cities</button>
+        <button type="button" role="tab" id="t-pay" data-tab="pay" aria-controls="p-pay" aria-selected="false" tabindex="-1">Payouts</button>
+      </div>
+    </div>
+
+    <section class="pane" id="p-call" role="tabpanel" aria-labelledby="t-call">
+      <div class="panel">
+        <div class="ph"><h2>Stuck 7+ days · call these customers</h2><span class="r" id="sbProg"></span></div>
+        <div class="sb-progbar" role="img" id="sbProgBar"><i></i></div>
+        <div id="sbCalls"></div>
+      </div>
+    </section>
+
+    <section class="pane" id="p-parcels" role="tabpanel" aria-labelledby="t-parcels" hidden>
+      <div class="panel">
+        <div class="ph"><h2>Parcels</h2><span class="r" id="sbParR"></span></div>
+        <div class="sb-tools">
+          <label class="os-search" id="sbSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input type="search" id="sbQ" placeholder="Search order, tracking, name, city" aria-label="Search parcels" autocomplete="off">
+            <button type="button" class="x" id="sbQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
+          <div class="os-filt" id="sbFilt" role="group" aria-label="Filter parcels">
+            <button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="transit" aria-pressed="false">In transit</button><button type="button" data-f="delivered" aria-pressed="false">Delivered</button><button type="button" data-f="returned" aria-pressed="false">Returned</button><button type="button" data-f="stuck" aria-pressed="false">Stuck 7+ days</button>
+          </div>
+        </div>
+        <div id="sbRows"></div>
+        <div class="os-pager"><span id="sbRange"></span><div class="pg">
+          <button type="button" class="ob sm ic" id="sbPrev" aria-label="Previous page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="ob sm ic" id="sbNext" aria-label="Next page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+      </div>
+    </section>
+
+    <section class="pane" id="p-cities" role="tabpanel" aria-labelledby="t-cities" hidden>
+      <div class="panel">
+        <div class="ph"><h2>Delivery by city</h2><span class="r" id="sbCityR"></span></div>
+        <div class="sb-ct" role="table" aria-label="Delivery by city">
+          <div class="sb-ch" role="row"><span role="columnheader">City</span>
+            <span role="columnheader" class="ra"><button type="button" data-cs="n">Parcels</button></span>
+            <span role="columnheader" class="ra"><button type="button" data-cs="rate">Returned</button></span>
+            <span role="columnheader" class="ra"><button type="button" data-cs="days">Avg. days</button></span></div>
+          <div id="sbCities"></div>
+        </div>
+        <p class="sb-note">Cities with fewer than 10 parcels are greyed out: too few to judge.</p>
+      </div>
+    </section>
+
+    <section class="pane" id="p-pay" role="tabpanel" aria-labelledby="t-pay" hidden>
+      <div class="panel">
+        <div class="ph"><h2>Payouts from Bosta</h2><button type="button" class="lnk" id="sbPayCsv">Export CSV <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button></div>
+        <div class="sb-pay" id="sbPay"></div>
+      </div>
+    </section>

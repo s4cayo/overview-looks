@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inventory · Restock first</title>
+<!--@HEADFONTS-->
+<style>
+/*@BASECSS*/
+/*@PANELCSS*/
+/*@TABSCSS*/
+/*@NAVCSS*/
+/*@PV2CSS*/
+/*@COMMONCSS*/
+/* ===== Inventory A — restock first, sticky tabs ===== */
+.ia-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ia-t{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:18px;background:var(--pv2-bg);border:1px solid var(--pv2-line);text-align:left;min-width:0;transition:border-color .2s,transform .2s,box-shadow .2s}
+[data-theme="light"] .ia-t{box-shadow:0 1px 2px rgba(24,16,40,.04),0 10px 28px -20px rgba(40,20,80,.25)}
+.ia-t:hover{border-color:color-mix(in srgb,var(--c) 55%,transparent);transform:translateY(-2px)}
+.ia-t > span{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--pv2-mut)}
+.ia-t > span i{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.ia-t b{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.05;color:var(--c2,var(--pv2-fg))}
+.ia-t b small{font-size:14px;font-weight:500;color:var(--pv2-mut);margin-left:6px;letter-spacing:0}
+.ia-t em{font-style:normal;font-size:13px;color:var(--pv2-mut);line-height:1.4}
+.ia-t em strong{color:var(--pv2-fg);font-weight:600}
+@media (max-width:1100px){.ia-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.ia-tiles{gap:10px}.ia-t{padding:13px 14px;border-radius:16px}.ia-t b{font-size:25px}.ia-t > span{font-size:12.5px}.ia-t em{font-size:12.5px}}
+
+.ia-panes .pane{margin-top:16px}
+.ia-panes .pv2-panel{padding:22px 24px}
+@media (max-width:600px){.ia-panes .pv2-panel{padding:16px}}
+.ia-intro{font-size:14px;line-height:1.5;color:var(--pv2-mut);margin-bottom:16px;max-width:760px}
+.ia-intro b{color:var(--pv2-fg);font-weight:600}
+
+/* restock */
+.ia-plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px 28px;align-items:center;padding:16px 18px;border-radius:16px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);margin-bottom:6px}
+.ia-plan .pv2-ctl > span{min-width:110px;font-size:13px}
+.ia-plan .pv2-seg button{height:32px;min-width:46px;font-size:13px}
+.ia-sum{font-size:16px;line-height:1.45}
+.ia-sum b{font-weight:700}.ia-sum .r{color:var(--pv2-bad)}
+.ia-sumrow{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-top:8px}
+.ia-plan .pv2-copy{margin-top:0}
+@media (max-width:800px){.ia-plan{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.ia-plan{padding:14px}.ia-plan .pv2-ctl > span{width:100%;min-width:0}.ia-sum{font-size:15px}}
+.ia-plan .pv2-fallback{grid-column:1/-1}
+.ia-prods .pv2-prow{grid-template-columns:40px minmax(0,1fr) auto;padding:14px 0}
+.ia-prods .pv2-swc{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2));border:0}
+.ia-prods .pv2-swc svg{width:18px;height:27px}
+.ia-prods .pv2-pn{font-size:15px}
+.ia-prods .pv2-pm{font-size:13px}
+.ia-prods .pv2-ord{font-size:13px;padding:7px 13px}
+.ia-prods .pv2-run{height:6px}
+.ia-prods .pv2-call,.ia-prods .pv2-tbl{margin-left:52px}
+.ia-prods .pv2-tbl{width:calc(100% - 52px);font-size:13.5px}
+.ia-prods .pv2-tbl th{font-size:12.5px}
+.ia-prods .pv2-tbl td.u{color:var(--pv2-mut)}
+@media (max-width:600px){.ia-prods .pv2-call,.ia-prods .pv2-tbl{margin-left:0}.ia-prods .pv2-tbl{width:100%;font-size:13px}.ia-prods .pv2-tbl .hp{display:none}}
+.ia-skip{font-size:13.5px;color:var(--pv2-mut);margin-top:14px;padding-top:14px;border-top:1px solid var(--pv2-line);line-height:1.5}
+.ia-skip button{color:var(--pv2-acc);font-weight:600}
+
+/* all stock grid */
+.ia-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--pv2-mut);margin-bottom:14px}
+.ia-legend span{display:inline-flex;align-items:center;gap:7px}
+.ia-legend i{width:14px;height:14px;border-radius:4px;background:var(--c)}
+.ia-grid{display:flex;flex-direction:column}
+.ia-gh,.ia-gr{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(6,minmax(44px,.5fr)) 76px minmax(96px,.7fr);gap:6px;align-items:center}
+.ia-gh{font-size:12.5px;color:var(--pv2-mut);font-weight:500;padding:0 8px 8px}
+.ia-gh span{text-align:center}.ia-gh span:first-child{text-align:left}.ia-gh span:nth-last-child(-n+2){text-align:right}
+.ia-gr{padding:8px;border-top:1px solid var(--pv2-line);border-radius:12px;width:100%;text-align:left;transition:background .2s}
+.ia-gr:hover{background:var(--pv2-bg2)}
+.ia-gn{display:flex;align-items:center;gap:10px;min-width:0}
+.ia-gn .ip-th{width:34px;height:34px;border-radius:10px}.ia-gn .ip-th svg{width:15px;height:23px}
+.ia-gn b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ia-c{height:38px;border-radius:9px;display:grid;place-items:center;font-size:14px;font-weight:600;background:var(--pv2-bg2);color:var(--pv2-fg)}
+.ia-c.r{background:color-mix(in srgb,var(--pv2-bad) 18%,transparent);color:var(--pv2-bad)}
+.ia-c.w{background:color-mix(in srgb,var(--pv2-warn) 17%,transparent);color:var(--pv2-warn)}
+.ia-c.d{background:transparent;color:var(--pv2-mut);box-shadow:inset 0 0 0 1px var(--pv2-line)}
+.ia-c.u{background:repeating-linear-gradient(135deg,var(--pv2-bg2) 0 5px,transparent 5px 10px);color:var(--pv2-mut);box-shadow:inset 0 0 0 1px var(--pv2-line2)}
+.ia-c.one{grid-column:span 6}
+.ia-tot{text-align:right;font-size:14px;font-weight:600}
+.ia-tot small{display:block;font-size:12px;font-weight:500;color:var(--pv2-mut)}
+.ia-ro{text-align:right;font-size:13px;color:var(--pv2-mut);white-space:nowrap}
+.ia-ro b{display:block;font-size:14px;color:var(--pv2-fg);font-weight:600}
+.ia-ro.r b{color:var(--pv2-bad)}.ia-ro.w b{color:var(--pv2-warn)}
+@media (max-width:760px){
+  .ia-gh{display:none}
+  .ia-gr{grid-template-columns:repeat(6,minmax(0,1fr));grid-template-areas:"n n n n t t" "a b c d e f" "r r r r r r";row-gap:8px;padding:12px 4px}
+  .ia-gn{grid-area:n}.ia-tot{grid-area:t}.ia-ro{grid-area:r;text-align:left;display:flex;gap:6px;align-items:baseline}.ia-ro b{display:inline}
+  .ia-c{height:42px;font-size:13.5px;flex-direction:column;gap:0;line-height:1.1}
+  .ia-c::before{content:attr(data-s);font-size:12px;font-weight:500;color:var(--pv2-mut)}
+  .ia-c.r::before,.ia-c.w::before{color:inherit;opacity:.85}
+  .ia-c.one{grid-column:1 / -1}
+}
+
+/* lists for sold out / not selling / unknown */
+.ia-list{display:flex;flex-direction:column}
+.ia-li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:16px 0;border-top:1px solid var(--pv2-line)}
+.ia-li:first-child{border-top:0;padding-top:4px}
+.ia-li > .ip-th{grid-row:1 / span 2}
+.ia-li h4{font-size:15px;font-weight:600;line-height:1.3}
+.ia-li p{grid-column:2;font-size:13.5px;line-height:1.5;color:var(--pv2-mut)}
+.ia-li p b{color:var(--pv2-fg);font-weight:600}
+.ia-li p .r{color:var(--pv2-bad)}
+.ia-li .ia-act{grid-row:1 / span 2;grid-column:3;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.ia-szs{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.ia-big{font-size:20px;font-weight:600;color:var(--pv2-fg);letter-spacing:-.01em}
+@media (max-width:700px){.ia-li{grid-template-columns:44px minmax(0,1fr)}.ia-li .ia-act{grid-row:auto;grid-column:1 / -1;justify-content:flex-start}}
+.ia-how{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);font-size:13.5px;line-height:1.55;color:var(--pv2-mut)}
+.ia-how b{color:var(--pv2-fg);font-weight:600}
+</style>
+<script>
+/*@PERJS*/
+</script>
+</head>
+<body data-page="inventory">
+<!--@SPRITE-->
+<div class="app">
+<!--@SIDE-->
+  <div class="content">
+  <main>
+<!--@NAVTOP-->
+    <div class="pv2 ip" id="ip">
+      <header class="ip-head">
+        <div><h1>Inventory</h1><p id="ia-count"></p></div>
+        <div class="ip-hl"><a class="ip-link" href="#" data-ip-go="products">Products <svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </header>
+
+      <div class="ia-tiles" id="ia-tiles"></div>
+
+      <div class="ia-panes">
+        <div class="tabs-anchor" id="tabsAnchor" style="height:0"></div>
+        <div class="tabbar" id="tabbar"><div class="seg" role="tablist" aria-label="Inventory sections" id="seg"><span class="ind" id="ind" aria-hidden="true"></span>
+          <button role="tab" class="on" data-tab="restock" aria-selected="true" id="t-restock" aria-controls="p-restock">Restock <span class="n r" data-n="restock"></span></button>
+          <button role="tab" data-tab="all" aria-selected="false" tabindex="-1" id="t-all" aria-controls="p-all">All stock <span class="n" data-n="all"></span></button>
+          <button role="tab" data-tab="out" aria-selected="false" tabindex="-1" id="t-out" aria-controls="p-out">Sold out <span class="n" data-n="out"></span></button>
+          <button role="tab" data-tab="dead" aria-selected="false" tabindex="-1" id="t-dead" aria-controls="p-dead">Not selling <span class="n" data-n="dead"></span></button>
+          <button role="tab" data-tab="unk" aria-selected="false" tabindex="-1" id="t-unk" aria-controls="p-unk">Unknown <span class="n" data-n="unk"></span></button>
+        </div></div>
+
+        <section class="pane" id="p-restock" role="tabpanel" aria-labelledby="t-restock" tabindex="0">
+          <div class="pv2-panel">
+            <p class="ia-intro">How many to order so every size lasts until the next delivery, and then for the days you want covered. Sales pace follows the date picker.</p>
+            <div class="ia-plan">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div class="pv2-ctl"><span>Cover after delivery</span><div class="pv2-seg" data-k="cover"><button type="button" data-v="14" aria-pressed="false">14d</button><button type="button" data-v="30" aria-pressed="true">30d</button><button type="button" data-v="45" aria-pressed="false">45d</button><button type="button" data-v="60" aria-pressed="false">60d</button></div></div>
+                <div class="pv2-ctl"><span>Delivery takes</span><div class="pv2-seg" data-k="del"><button type="button" data-v="3" aria-pressed="false">3d</button><button type="button" data-v="7" aria-pressed="true">7d</button><button type="button" data-v="14" aria-pressed="false">14d</button></div></div>
+              </div>
+              <div><p class="ia-sum" id="ia-sum" aria-live="polite"></p>
+                <div class="ia-sumrow"><button type="button" class="pv2-copy" id="ia-copy"><svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Copy list for supplier</button><span class="pv2-copied" aria-live="polite"></span></div></div>
+            </div>
+            <div class="pv2-prods ia-prods" id="ia-prods"></div>
+            <p class="ia-skip" id="ia-skip"></p>
+          </div>
+        </section>
+
+        <section class="pane" id="p-all" role="tabpanel" aria-labelledby="t-all" tabindex="0" hidden>
+          <div class="pv2-panel">
+            <div class="ia-legend"><span><i style="--c:color-mix(in srgb,var(--pv2-bad) 30%,transparent)"></i>Runs out before a delivery lands</span><span><i style="--c:color-mix(in srgb,var(--pv2-warn) 30%,transparent)"></i>Within a week after that</span><span><i style="--c:var(--pv2-bg2)"></i>Fine</span><span><i style="--c:repeating-linear-gradient(135deg,var(--pv2-line2) 0 3px,transparent 3px 6px)"></i>Not tracked</span></div>
+            <div class="ia-grid" id="ia-grid"></div>
+          </div>
+        </section>
+
+        <section class="pane" id="p-out" role="tabpanel" aria-labelledby="t-out" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro" id="ia-out-intro"></p><div class="ia-list" id="ia-out"></div></div>
+        </section>
+
+        <section class="pane" id="p-dead" role="tabpanel" aria-labelledby="t-dead" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro" id="ia-dead-intro"></p><div class="ia-list" id="ia-dead"></div></div>
+        </section>
+
+        <section class="pane" id="p-unk" role="tabpanel" aria-labelledby="t-unk" tabindex="0" hidden>
+          <div class="pv2-panel"><p class="ia-intro">Shopify isn’t counting stock for these, so we can’t say how many are left or when they run out. They are <b>not</b> counted as sold out, and they are left out of the restock plan.</p>
+            <div class="ia-list" id="ia-unk"></div>
+            <div class="ia-how"><b>To fix it in Shopify:</b> open the product → pick the size → under Inventory, tick <b>Track quantity</b> and enter how many you have. It shows up here on the next sync.</div></div>
+        </section>
+      </div>
+    </div>
+  </main>
+  </div>
+</div>
+<!--@DOCK-->
+<script>
+/*@NAVJS*/
+</script>
+<script>
+/*@DATAJS*/
+/*@COMMONJS*/
+/* ===== Inventory A behaviour ===== */
+(function(){
+  var U=IPU,$=U.$,$$=U.$$,fmt=IP.fmt,PR=IP.PR;
+  var st={cover:30,del:7,open:{},tab:'restock'};
+  var CHEV='<svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg>';
+  function thumb(p){return '<span class="pv2-swc" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+U.DRESS+'</span>'}
+  function tone(d){return d==null?'u':d===0?'r':d<st.del?'r':d<st.del+7?'w':''}
+  function soldOut(){var out=[];PR.forEach(function(p){var s=p.sizes.filter(function(x,j){return p.stock[j]===0});if(s.length)out.push({p:p,s:s})});return out}
+  function unknowns(){return PR.filter(function(p){return p.unknownSizes.length})}
+  function planned(){return PR.filter(function(p){return IP.DEAD.indexOf(p)<0&&p.stockKnown.length}).map(function(p){return [p,IP.plan(p,st.cover,st.del)]})
+    .filter(function(x){return x[1].ord>0}).sort(function(a,b){return a[1].first.lasts-b[1].first.lasts})}
+  function P(){return IP.PER[U.perKey()]}
+
+  /* ---- tiles ---- */
+  function tiles(){
+    var late=0,lateP={};PR.forEach(function(p){if(IP.DEAD.indexOf(p)>=0)return;var pl=IP.plan(p,st.cover,st.del);pl.rows.forEach(function(r){if(!r.unk&&r.lasts>0&&r.lasts<st.del){late++;lateP[p.id]=1}})});
+    var so=soldOut(),soN=so.reduce(function(a,x){return a+x.s.length},0),miss=0;so.forEach(function(x){x.s.forEach(function(s){var j=x.p.sizes.indexOf(s);miss+=x.p.P.perDay[j]*x.p.price})});
+    var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0),unk=PR.reduce(function(a,p){return a+p.unknownSizes.length},0);
+    var T=[
+      {t:'restock',c:'var(--pv2-bad)',c2:'var(--pv2-bad)',l:'Run out before a delivery lands',b:late+'<small>sizes</small>',e:'In '+Object.keys(lateP).length+' products · '+st.del+'-day delivery'},
+      {t:'out',c:'var(--pv2-bad)',l:'Sold out now',b:soN+'<small>sizes</small>',e:miss?'About <strong>EGP '+fmt(miss)+'</strong> a day not sold':'No sales '+P().phrase+' to estimate from'},
+      {t:'dead',c:'var(--pv2-mut)',l:'Not selling',b:IP.DEAD.length+'<small>products</small>',e:'At least <strong>EGP '+fmt(cash)+'</strong> of stock sitting still'},
+      {t:'unk',c:'var(--pv2-warn)',l:'Stock unknown',b:unk+'<small>sizes</small>',e:'Shopify isn’t counting them'}];
+    $('#ia-tiles').innerHTML=T.map(function(x){return '<button type="button" class="ia-t" data-totab="'+x.t+'" style="--c:'+x.c+(x.c2?';--c2:'+x.c2:'')+'"><span><i></i>'+x.l+'</span><b>'+x.b+'</b><em>'+x.e+'</em></button>'}).join('');
+    $('[data-n=restock]').textContent=late||'';$('[data-n=out]').textContent=soN;$('[data-n=dead]').textContent=IP.DEAD.length;$('[data-n=unk]').textContent=unk;$('[data-n=all]').textContent=PR.length;
+  }
+
+  /* ---- restock planner (Cayo Perico logic, grouped by product) ---- */
+  function restock(){
+    var list=planned(),tot=0,late=0;list.forEach(function(x){tot+=x[1].ord;x[1].rows.forEach(function(r){if(!r.unk&&r.lasts>0&&r.lasts<st.del)late++})});
+    $('#ia-prods').innerHTML=list.map(function(x){var p=x[0],pl=x[1],f=pl.first,col=f.lasts<st.del?'var(--pv2-bad)':f.lasts<st.del+7?'var(--pv2-warn)':'var(--pv2-good)',w=isFinite(f.lasts)?Math.max(4,Math.min(100,f.lasts/(st.cover+st.del)*100)):100,one=p.sizes.length===1;
+      return '<div class="pv2-prod'+(st.open[p.id]?' pv2-open':'')+'" data-id="'+p.id+'"><button type="button" class="pv2-prow" aria-expanded="'+!!st.open[p.id]+'">'
+        +thumb(p)+'<span class="pv2-pn">'+p.main+CHEV+'</span><span class="pv2-ord">Order '+pl.ord+'</span>'
+        +'<span class="pv2-pm"><b>'+p.left+' left</b> · <span class="'+(f.lasts<st.del?'r':'')+'">'+(p.left===0?'every size sold out since '+p.out:(one?'':f.s+' ')+IP.when(f.lasts))+'</span></span>'
+        +'<span class="pv2-run"><i style="--w:'+w+'%;--c:'+col+'"></i></span></button>'
+        +'<div class="pv2-det"><div><p class="pv2-call'+(f.lasts>=st.del+7?' ok':'')+'">'+(one?'':f.s+' ')+IP.when(f.lasts)+(f.lasts<st.del&&f.lasts>0?' — before a '+st.del+'-day delivery could land':f.lasts===0?' — order now':'')+'</p>'
+        +'<table class="pv2-tbl"><thead><tr><th>Size</th><th class="hp">Sells/day</th><th>In stock</th><th>Runs out</th><th>Order</th></tr></thead><tbody>'
+        +pl.rows.map(function(r){var t=tone(r.lasts);return '<tr><td>'+r.s+'</td><td class="hp">'+r.rate.toFixed(1)+'</td><td class="'+(r.unk?'u':r.st===0||r.st<=2?'r':r.st<=4?'w':'')+'">'+(r.unk?'not tracked':r.st?r.st:'out')+'</td><td class="'+t+'">'+(r.unk?'?':r.lasts===0?'now':!isFinite(r.lasts)?'—':r.lasts<1?'today':IP.dateIn(r.lasts))+'</td><td>'+(r.ord?'<b>'+r.ord+'</b>':'—')+'</td></tr>'}).join('')
+        +'</tbody></table></div></div></div>'}).join('')||'<p class="ip-empty">Every size lasts '+st.cover+' days after a '+st.del+'-day delivery at '+P().pace+'.</p>';
+    $('#ia-sum').innerHTML=tot?'Order <b>'+fmt(tot)+' pieces</b> across '+list.length+' products'+(late?' · <span class="r"><b>'+late+' sizes</b> run out before a delivery could land</span>':''):'Nothing to order for '+st.cover+' days at '+P().pace+'.';
+    var unk=unknowns().map(function(p){return p.main+(p.unknownSizes.length<p.sizes.length?' '+p.unknownSizes.join(', '):'')});
+    $('#ia-skip').innerHTML='Left out of this plan: '+(unk.length?unk.join(' and ')+' (stock not tracked — <button type="button" data-totab="unk">see why</button>)':'')+(IP.DEAD.length?(unk.length?' · ':'')+IP.DEAD.map(function(p){return p.main}).join(' and ')+' (not selling — <button type="button" data-totab="dead">see</button>)':'')+'.';
+    st.list=list;
+  }
+  function copyText(){var lines=['Restock order — '+st.cover+' days of cover, delivery takes '+st.del+' days ('+P().pace+')'];
+    (st.list||[]).forEach(function(x){var pl=x[1],p=x[0],out=pl.rows.filter(function(r){return r.st===0}).map(function(r){return r.s});
+      lines.push('• '+p.main+' ('+p.col+'): '+pl.rows.filter(function(r){return r.ord}).map(function(r){return (p.sizes.length===1?'':r.s+' × ')+r.ord}).join(', ')+(out.length&&p.sizes.length>1?' ('+out.join(', ')+' sold out now)':''))});
+    return lines.join('\n')}
+
+  /* ---- all stock ---- */
+  function grid(){
+    var rows=PR.slice().sort(function(a,b){var x=IP.plan(a,st.cover,st.del).first,y=IP.plan(b,st.cover,st.del).first;var lx=x?x.lasts:1e9,ly=y?y.lasts:1e9;if(!isFinite(lx))lx=1e8;if(!isFinite(ly))ly=1e8;return lx-ly});
+    $('#ia-grid').innerHTML='<div class="ia-gh" aria-hidden="true"><span>Product</span>'+IP.SZ.map(function(s){return '<span>'+s+'</span>'}).join('')+'<span>Total</span><span>First to run out</span></div>'
+      +rows.map(function(p){var pl=IP.plan(p,st.cover,st.del),f=pl.first,one=p.sizes.length===1,cells;
+        if(one){var r=pl.rows[0];cells='<span class="ia-c one '+tone(r.lasts)+'" data-s="One size">'+(r.unk?'?':r.st===0?'out':r.st)+'</span>'}
+        else cells=pl.rows.map(function(r){var dead=IP.DEAD.indexOf(p)>=0,t=r.unk?'u':dead?'d':tone(r.lasts);return '<span class="ia-c '+t+'" data-s="'+r.s+'" title="'+r.s+': '+(r.unk?'not tracked':r.st+' left · '+IP.when(r.lasts))+'">'+(r.unk?'?':r.st===0?'out':r.st)+'</span>'}).join('');
+        var ro=IP.DEAD.indexOf(p)>=0?'<span class="ia-ro"><b>Not selling</b>since '+p.lastSale+'</span>':!f?'<span class="ia-ro"><b>Unknown</b>not tracked</span>'
+          :'<span class="ia-ro '+tone(f.lasts)+'"><b>'+(f.lasts===0?(p.left?f.s+' out now':'Sold out'):!isFinite(f.lasts)?'Not selling':f.lasts<1?'Today':IP.dateIn(f.lasts))+'</b>'+(f.lasts>0&&isFinite(f.lasts)?(one?'':f.s+' · ')+IP.short(f.lasts):f.lasts===0&&!p.left?'since '+p.out:'')+'</span>';
+        return '<button type="button" class="ia-gr" data-p="'+p.id+'"><span class="ia-gn">'+U.sw(p)+'<b>'+p.main+'</b></span>'+cells+'<span class="ia-tot">'+(p.unknownSizes.length===p.sizes.length?'?':p.left)+'<small>'+(p.unknownSizes.length===p.sizes.length?'not tracked':p.unknownSizes.length?'+ '+p.unknownSizes.length+' unknown':'in stock')+'</small></span>'+ro+'</button>'}).join('');
+  }
+
+  /* ---- sold out / not selling / unknown ---- */
+  function lists(){
+    var so=soldOut(),Pp=P();
+    $('#ia-out-intro').innerHTML='Every size with nothing left. The money figure is what that size was selling a day at '+Pp.pace+' — sales you are missing until it is back.';
+    $('#ia-out').innerHTML=so.map(function(x){var p=x.p,all=x.s.length===p.sizes.length,day=x.s.reduce(function(a,s){return a+p.P.perDay[p.sizes.indexOf(s)]},0);
+      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+(all?' · every size':' · '+x.s.join(', '))+'</h4>'
+        +'<p>'+(all?'Sold out since <b>'+p.out+'</b>. ':'')+(day?'Was selling <b>'+day.toFixed(1)+' a day</b> · about <span class="r"><b>EGP '+fmt(day*p.price)+'</b></span> a day not sold':'No sales '+Pp.phrase+' to estimate from')+'</p>'
+        +'<div class="ia-act"><button type="button" class="ip-btn" data-plan="'+p.id+'">Add to order '+U.ARW+'</button></div></div>'}).join('');
+    var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0);
+    $('#ia-dead-intro').innerHTML='Products with at most <b>1 sale in 30 days</b> while stock sits on the shelf — at least <b>EGP '+fmt(cash)+'</b> of cost. Don’t reorder them; try a bundle, a discount or a fresh photo.';
+    $('#ia-dead').innerHTML=IP.DEAD.map(function(p){var tc=IP.tied(p),n30=IP.PER['30d'].u[PR.indexOf(p)];
+      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+'</h4>'
+        +'<p><b>'+p.left+' pieces</b> · '+(n30?'1 sale':'no sales')+' in 30 days · last sale <b>'+p.lastSale+'</b><br><span class="ia-big">'+(tc.unk?'at least ':'')+'EGP '+fmt(tc.cash)+'</span> of stock at cost'+(tc.unk?' — '+tc.unk+' pieces have no cost in Shopify':'')+'</p>'
+        +'<div class="ia-act"><a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a></div></div>'}).join('');
+    $('#ia-unk').innerHTML=unknowns().map(function(p){var all=p.unknownSizes.length===p.sizes.length;
+      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+(all?' · every size':' · '+p.unknownSizes.join(', '))+'</h4>'
+        +'<p>'+(all?'Still selling — <b>'+p.P.u+' sold '+P().phrase+'</b> — but we can’t tell how many are left.':'Other sizes are counted ('+p.left+' left). '+p.unknownSizes.join(', ')+' sold <b>'+p.unknownSizes.reduce(function(a,s){return a+p.P.sold[p.sizes.indexOf(s)]},0)+'</b> '+P().phrase+'.')+'</p>'
+        +'<div class="ia-act"><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+U.EXT+'</button></div></div>'}).join('');
+  }
+
+  /* ---- detail sheet for a product (All stock) ---- */
+  function openP(p,from){var pl=IP.plan(p,st.cover,st.del);
+    U.open(U.detail(p,'units',{noRestock:true})+(pl.ord?'<a class="pv2-act" href="#" data-plan="'+p.id+'"><span>Order <b>'+pl.ord+'</b> to cover '+st.cover+' days</span><b>See the plan '+U.ARW+'</b></a>':'')
+      +'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a>',from)}
+
+  /* ---- sticky tabs (N's tab bar) ---- */
+  var seg=$('#seg'),ind=$('#ind'),bar=$('#tabbar'),anchor=$('#tabsAnchor'),tabs=$$('[role=tab]',seg);
+  function place(){var bt=$('[role=tab].on',seg);if(!bt||!bt.offsetWidth)return;ind.style.width=bt.offsetWidth+'px';ind.style.transform='translateX('+bt.offsetLeft+'px)'}
+  function show(name,scroll,focus){st.tab=name;
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;if(on&&focus)t.focus({preventScroll:true})});
+    $$('.ia-panes .pane').forEach(function(p){p.hidden=p.id!=='p-'+name});place();
+    var bt=$('[role=tab].on',seg);seg.scrollTo({left:bt.offsetLeft-(seg.clientWidth-bt.offsetWidth)/2,behavior:U.reduce?'auto':'smooth'});
+    if(scroll){var y=anchor.getBoundingClientRect().top+scrollY-12;if(scrollY>y+4||scroll==='force')window.scrollTo({top:y,behavior:U.reduce?'auto':'smooth'})}}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){show(t.dataset.tab,true)});
+    t.addEventListener('keydown',function(e){var j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;if(j!==null){e.preventDefault();show(tabs[j].dataset.tab,false,true)}})});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)}).observe(anchor);
+  addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);
+
+  function openPlan(id){show('restock','force');st.open={};st.open[id]=true;restock();
+    setTimeout(function(){var el=$('.pv2-prod[data-id="'+id+'"]');if(el)el.scrollIntoView({behavior:U.reduce?'auto':'smooth',block:'center'})},U.reduce?0:450)}
+
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-totab]');if(t){show(t.dataset.totab,'force');return}
+    var pl=e.target.closest('[data-plan]');if(pl){e.preventDefault();U.close();openPlan(pl.dataset.plan);return}
+    var sg=e.target.closest('.ia-plan .pv2-seg button');if(sg){st[sg.parentNode.dataset.k]=+sg.dataset.v;$$('button',sg.parentNode).forEach(function(x){x.setAttribute('aria-pressed',String(x===sg))});all();return}
+    var row=e.target.closest('.ia-prods .pv2-prow');if(row){var pd=row.parentNode,id=pd.dataset.id;st.open[id]=!st.open[id];pd.classList.toggle('pv2-open',st.open[id]);row.setAttribute('aria-expanded',String(st.open[id]));return}
+    var g=e.target.closest('.ia-gr');if(g){openP(IP.byId(g.dataset.p),g);return}
+    if(e.target.closest('#ia-copy')){var txt=copyText(),msg=$('.ia-sumrow .pv2-copied');
+      var fb=function(){var ta=$('.ia-plan .pv2-fallback');if(!ta){ta=document.createElement('textarea');ta.className='pv2-fallback';ta.readOnly=true;$('.ia-plan').appendChild(ta)}ta.value=txt;ta.focus();ta.select();msg.textContent='Select all and copy'};
+      try{navigator.clipboard.writeText(txt).then(function(){msg.textContent='Copied ✓';setTimeout(function(){msg.textContent=''},2200)},fb)}catch(err){fb()}}
+  });
+  function all(){IP.compute(U.perKey());tiles();restock();grid();lists();place()}
+  document.addEventListener('per:change',all);
+  var units=PR.reduce(function(a,p){return a+p.left},0),sizes=PR.reduce(function(a,p){return a+p.sizes.length},0);
+  $('#ia-count').textContent=fmt(units)+' pieces in stock · '+PR.length+' products · '+sizes+' sizes';
+  all();
+  var pid=U.params.get('p'),tab=U.params.get('tab');
+  if(pid&&IP.byId(pid)){var inPlan=(st.list||[]).some(function(x){return x[0].id===pid});
+    if(inPlan)setTimeout(function(){openPlan(pid)},250);else setTimeout(function(){show('all','force');openP(IP.byId(pid))},250)}
+  else if(tab&&$('#p-'+tab))setTimeout(function(){show(tab,'force')},150);
+})();
+</script>
+</body>
+</html>
