@@ -605,7 +605,7 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
 /* Cards v2 — Sales / Ads / Shipping 3D carousel (N skins). Self-contained: every class, id and
    variable is prefixed cv2-. Depends on nothing outside this block.
    THEME: the cards themselves never change with the theme (skins stay purple / black-gold / lilac).
-   Only the chrome around them (glow, arrows, dots) has a light variant. It is switched on when
+   Only the chrome around them (glow, dots) has a light variant. It is switched on when
    EITHER the page's <html> carries data-theme="light" (how V, W, N, K and J all do it)
    OR the block itself carries data-cv2-theme="light". Any other page: add data-cv2-theme to .cv2.
    PAGE HOOKS: --cv2-bleed (px the stage may bleed past the page gutter so side cards are not clipped;
@@ -613,10 +613,10 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
 .cv2{
   --cv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
   --cv2-cw:min(500px,78vw); --cv2-u:calc(var(--cv2-cw) / 100); --cv2-bleed:0px; --cv2-top:26px;
-  --cv2-ui:#8d8a9b; --cv2-ui2:#eceaf3; --cv2-line:rgba(255,255,255,.12); --cv2-acc:#a275e0; --cv2-glowo:1;
+  --cv2-ui:#8d8a9b; --cv2-ui2:#eceaf3; --cv2-line:rgba(255,255,255,.12); --cv2-acc:#a275e0; --cv2-glowo:1; --cv2-dot:rgba(255,255,255,.16); --cv2-dot-on:rgba(162,117,224,.7);
   position:relative;font-family:var(--cv2-font);-webkit-font-smoothing:antialiased;min-width:0}
-[data-theme="light"] .cv2,.cv2[data-cv2-theme="light"]{--cv2-ui:#666273;--cv2-ui2:#17141f;--cv2-line:rgba(20,10,40,.16);--cv2-acc:#7c3fc1;--cv2-glowo:.55}
-.cv2[data-cv2-theme="dark"]{--cv2-ui:#8d8a9b;--cv2-ui2:#eceaf3;--cv2-line:rgba(255,255,255,.12);--cv2-acc:#a275e0;--cv2-glowo:1}
+[data-theme="light"] .cv2,.cv2[data-cv2-theme="light"]{--cv2-ui:#666273;--cv2-ui2:#17141f;--cv2-line:rgba(20,10,40,.16);--cv2-acc:#7c3fc1;--cv2-glowo:.55;--cv2-dot:rgba(20,10,40,.16);--cv2-dot-on:rgba(124,63,193,.62)}
+.cv2[data-cv2-theme="dark"]{--cv2-ui:#8d8a9b;--cv2-ui2:#eceaf3;--cv2-line:rgba(255,255,255,.12);--cv2-acc:#a275e0;--cv2-glowo:1;--cv2-dot:rgba(255,255,255,.16);--cv2-dot-on:rgba(162,117,224,.7)}
 .cv2 *,.cv2 *::before,.cv2 *::after{box-sizing:border-box;margin:0;padding:0}
 :where(.cv2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :where(.cv2) a{color:inherit;text-decoration:none}
@@ -654,59 +654,56 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
   padding:calc(var(--cv2-u) * 6.2) calc(var(--cv2-u) * 6.8);display:flex;flex-direction:column}
 .cv2-back{inset:0;transform:rotateY(180deg);border-radius:24px}
 
-/* ---- front content (all sizes scale with the card width; text never below 12px) ---- */
+/* ---- front content (sizes scale with the card width; text never below 12px). Calm: three rows only —
+   mark · name · round flip button / hero number with the card chip beside it / at most three quiet tiles ---- */
 .cv2-top{display:flex;align-items:center;gap:calc(var(--cv2-u) * 2.6);min-width:0}
 .cv2-fn{width:calc(var(--cv2-u) * 8.4);height:calc(var(--cv2-u) * 8.4);border-radius:calc(var(--cv2-u) * 2.3);display:grid;place-items:center;font-size:calc(var(--cv2-u) * 2.9);font-weight:700;color:#fff;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.25) inset;flex:none}
+/* Meta's mark (simple-icons path), mono on the card; TikTok beside it, smaller and muted */
+.cv2 svg.cv2-mk{display:block;width:62%;height:auto;fill:currentColor}
+.cv2-ttw{display:inline-grid;place-items:center;flex:none;margin-left:calc(var(--cv2-u) * -.6);opacity:.42}
+.cv2 svg.cv2-tt{display:block;width:max(12px,calc(var(--cv2-u) * 3.6));height:max(12px,calc(var(--cv2-u) * 3.6));fill:currentColor}
 /* Bosta's own logo (bosta.co) on a white rounded chip */
 .cv2-logo{display:inline-flex;align-items:center;flex:none;height:max(26px,calc(var(--cv2-u) * 8.4));padding:0 max(7px,calc(var(--cv2-u) * 2.2));border-radius:max(8px,calc(var(--cv2-u) * 2.3));background:#fff;box-shadow:0 0 0 1px rgba(85,13,166,.16),0 2px 6px -2px rgba(40,10,90,.35)}
 .cv2 svg.cv2-bosta{display:block;height:max(15px,calc(var(--cv2-u) * 4.4));width:auto}
 .cv2-nm{font-size:calc(var(--cv2-u) * 4.1);font-weight:600;letter-spacing:-.01em;white-space:nowrap}
-.cv2-tag{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.3);font-size:max(11px,calc(var(--cv2-u) * 2.55));font-weight:600;line-height:1.25;
-  padding:calc(var(--cv2-u) * 1.2) calc(var(--cv2-u) * 2.4);border-radius:calc(var(--cv2-u) * 3);min-width:0;max-width:74%;text-align:left;white-space:nowrap;
-  color:var(--cv2-tagc);background:var(--cv2-tagbg);box-shadow:0 0 0 1px color-mix(in srgb,var(--cv2-tagc) 45%,transparent) inset}
-.cv2-tag > span{overflow:hidden;text-overflow:ellipsis;min-width:0}
-.cv2-tag i{width:calc(var(--cv2-u) * 1.5);height:calc(var(--cv2-u) * 1.5);border-radius:50%;background:currentColor;box-shadow:0 0 calc(var(--cv2-u) * 1.5) currentColor;flex:none}
-.cv2-chiprow{display:flex;align-items:center;gap:calc(var(--cv2-u) * 2);margin-top:calc(var(--cv2-u) * 2.8)}
-.cv2-chip{width:calc(var(--cv2-u) * 10.4);height:calc(var(--cv2-u) * 7.8);border-radius:calc(var(--cv2-u) * 1.8);background:linear-gradient(135deg,#f3dfa4,#c79a4b 45%,#f0d48e 60%,#a87a33);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,.25) inset;flex:none}
+/* the flip control: one small round icon button, top-right corner, same on all three cards */
+.cv2-flipbtn{margin-left:auto;display:grid;place-items:center;flex:none;width:max(28px,calc(var(--cv2-u) * 7.6));height:max(28px,calc(var(--cv2-u) * 7.6));border-radius:50%;
+  background:rgba(255,255,255,.1);box-shadow:0 0 0 1px rgba(255,255,255,.2) inset;opacity:.9}
+.cv2 .cv2-flipbtn svg.cv2-i{width:max(13px,calc(var(--cv2-u) * 3.4));height:max(13px,calc(var(--cv2-u) * 3.4))}
+.cv2-chip{width:calc(var(--cv2-u) * 9.6);height:calc(var(--cv2-u) * 7.2);border-radius:calc(var(--cv2-u) * 1.7);background:linear-gradient(135deg,#f3dfa4,#c79a4b 45%,#f0d48e 60%,#a87a33);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,.25) inset;flex:none}
 .cv2-chip::before,.cv2-chip::after{content:"";position:absolute;inset:22% 0;border-top:1px solid rgba(80,50,10,.45);border-bottom:1px solid rgba(80,50,10,.45)}
 .cv2-chip::after{inset:0 34%;border:0;border-left:1px solid rgba(80,50,10,.45);border-right:1px solid rgba(80,50,10,.45)}
-.cv2 svg.cv2-wave{width:calc(var(--cv2-u) * 6.2);height:calc(var(--cv2-u) * 6.2);opacity:.85}
+.cv2 svg.cv2-wave{width:calc(var(--cv2-u) * 5.6);height:calc(var(--cv2-u) * 5.6);opacity:.7}
 .cv2 svg.cv2-truck{stroke-width:1.6}
-.cv2-fhero{margin-top:calc(var(--cv2-u) * 2.6)}
-.cv2-lbl{font-size:max(12px,calc(var(--cv2-u) * 2.8));letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:500;white-space:nowrap}
-.cv2-amt{font-size:calc(var(--cv2-u) * 9.6);font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;margin-top:calc(var(--cv2-u) * 1.2);white-space:nowrap}
+.cv2-fhero{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:calc(var(--cv2-u) * 3);min-width:0}
+.cv2-fh{min-width:0}
+.cv2-deco{display:flex;align-items:center;gap:calc(var(--cv2-u) * 1.8);flex:none;margin-bottom:calc(var(--cv2-u) * .6)}
+.cv2-lbl{font-size:max(12px,calc(var(--cv2-u) * 2.7));letter-spacing:.12em;text-transform:uppercase;opacity:.72;font-weight:500;white-space:nowrap}
+.cv2-amt{font-size:calc(var(--cv2-u) * 9.6);font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;margin-top:calc(var(--cv2-u) * 1.6);white-space:nowrap}
 .cv2-cur{font-size:calc(var(--cv2-u) * 4.6);font-weight:500;opacity:.7;margin-right:calc(var(--cv2-u) * 1.6);letter-spacing:0}
-.cv2-flipbtn{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.6);font-size:max(12px,calc(var(--cv2-u) * 3));font-weight:500;padding:calc(var(--cv2-u) * 1.6) calc(var(--cv2-u) * 3);border-radius:99px;
-  background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.22) inset;white-space:nowrap;flex:none}
-.cv2 .cv2-flipbtn svg.cv2-i{width:max(13px,calc(var(--cv2-u) * 3.6));height:max(13px,calc(var(--cv2-u) * 3.6))}
-.cv2-flipbtn.cv2-ic{padding:calc(var(--cv2-u) * 1.9)}
-/* small, calm stat tiles */
-.cv2-tiles{margin-top:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--cv2-u) * 2)}
+/* quiet stat tiles: no outline, a soft fill, room inside */
+.cv2-tiles{margin-top:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--cv2-u) * 2.6)}
 .cv2-ads .cv2-tiles{grid-template-columns:minmax(0,.8fr) minmax(0,1.45fr)}
-.cv2-tiles > div{display:flex;flex-direction:column;justify-content:center;gap:calc(var(--cv2-u) * .5);min-width:0;padding:calc(var(--cv2-u) * 1.8) calc(var(--cv2-u) * 2.6);border-radius:calc(var(--cv2-u) * 2.6);
-  background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
-.cv2-tk{font-size:max(12px,calc(var(--cv2-u) * 2.6));line-height:1.25;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-tiles > div{display:flex;flex-direction:column;justify-content:center;gap:calc(var(--cv2-u) * .7);min-width:0;padding:calc(var(--cv2-u) * 2.3) calc(var(--cv2-u) * 3);border-radius:calc(var(--cv2-u) * 2.8);
+  background:var(--cv2-tile,var(--cv2-soft))}
+.cv2-tk{font-size:max(12px,calc(var(--cv2-u) * 2.6));line-height:1.25;opacity:.72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-tn{display:none}
 .cv2-tv{font-size:max(14px,calc(var(--cv2-u) * 4));font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-tv small{font-size:.64em;font-weight:500;opacity:.72;margin-right:.32em;letter-spacing:0}
-.cv2-tv.cv2-g{color:var(--cv2-fg-g)} .cv2-tv.cv2-bc{color:var(--cv2-fg-b)}
+.cv2-tv.cv2-g{color:var(--cv2-fg-g)} .cv2-tv.cv2-bc{color:var(--cv2-fg-b)} .cv2-tv.cv2-wcol{color:var(--cv2-fg-w)}
 .cv2-tv.cv2-txt{font-size:max(13px,calc(var(--cv2-u) * 3.3))}
 .cv2-ads{line-height:1.4;font-variant-numeric:normal}
-.cv2-ads .cv2-tag i{animation:cv2blink 1.6s ease-in-out infinite}
-@keyframes cv2blink{50%{opacity:.3}}
 @media (max-width:600px){
-  .cv2-front{padding:calc(var(--cv2-u) * 5.2) calc(var(--cv2-u) * 6)}
-  .cv2-chiprow{margin-top:calc(var(--cv2-u) * 2)}
-  .cv2-fhero{margin-top:calc(var(--cv2-u) * 1.8)}
+  .cv2-front{padding:calc(var(--cv2-u) * 5.4) calc(var(--cv2-u) * 6)}
   .cv2-lbl{letter-spacing:.08em}
-  .cv2-tiles{gap:6px}
-  .cv2-tiles > div{padding:5px 8px;gap:1px}
+  .cv2-tiles{gap:7px}
+  .cv2-tiles > div{padding:6px 8px;gap:1px}
   .cv2-tw{display:none} .cv2-tn{display:inline}
 }
 
 /* ---- skins (N's): sales purple guilloche · ads black-gold · courier lilac ---- */
 .cv2-sales{--cv2-fg:#fff;--cv2-fg-g:#a6f5d2;--cv2-fg-w:#ffdd94;--cv2-fg-b:#ffb4aa;--cv2-tagc:#ffdd94;--cv2-tagbg:rgba(25,0,60,.38);
-  --cv2-mut:rgba(255,255,255,.74);--cv2-hair:rgba(255,255,255,.16);--cv2-soft:rgba(255,255,255,.08);--cv2-lnkbg:#f2eafb;--cv2-lnk:#550da6}
+  --cv2-mut:rgba(255,255,255,.74);--cv2-hair:rgba(255,255,255,.16);--cv2-soft:rgba(255,255,255,.08);--cv2-tile:rgba(255,255,255,.075);--cv2-lnkbg:#f2eafb;--cv2-lnk:#550da6}
 .cv2-sales .cv2-front,.cv2-sales .cv2-back{color:#fff;background:
   repeating-radial-gradient(circle at 88% 115%,rgba(255,255,255,.075) 0 .5px,transparent 1px 6px),
   repeating-radial-gradient(circle at 8% -20%,rgba(255,255,255,.055) 0 .5px,transparent 1px 5px),
@@ -717,23 +714,23 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
   radial-gradient(90% 40% at 85% 0%,#8f4fdc 0%,transparent 60%),
   linear-gradient(170deg,#5e16b6 0%,#4a0b93 40%,#2a0660 100%)}
 .cv2-ads{--cv2-fg:#f3e6c8;--cv2-fg-g:#8ff0c8;--cv2-fg-w:#f6d58c;--cv2-fg-b:#ff9d8f;--cv2-tagc:#ff9d8f;--cv2-tagbg:rgba(255,120,100,.12);
-  --cv2-mut:rgba(243,230,200,.72);--cv2-hair:rgba(216,180,108,.22);--cv2-soft:rgba(216,180,108,.08);--cv2-lnkbg:#f2eafb;--cv2-lnk:#550da6}
+  --cv2-mut:rgba(243,230,200,.72);--cv2-hair:rgba(216,180,108,.22);--cv2-soft:rgba(216,180,108,.08);--cv2-tile:rgba(216,180,108,.07);--cv2-lnkbg:#f2eafb;--cv2-lnk:#550da6}
 .cv2-ads .cv2-front,.cv2-ads .cv2-back{color:#f3e6c8;background:
   repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 1px,transparent 1px 2px),
   repeating-radial-gradient(circle at 100% 50%,rgba(216,180,108,.08) 0 .5px,transparent 1px 7px),
   linear-gradient(160deg,#1c1a17 0%,#0b0a09 60%,#14110b 100%);
   box-shadow:0 30px 60px -24px rgba(0,0,0,.9),0 0 0 1px rgba(216,180,108,.4) inset}
 .cv2-ads .cv2-front::before{content:"";position:absolute;left:0;right:0;top:14%;opacity:.5;height:1px;background:linear-gradient(90deg,transparent,rgba(216,180,108,.55),transparent)}
-.cv2-ads .cv2-fn{background:linear-gradient(135deg,#f0d48e,#a87a33);color:#1a1408;box-shadow:none}
+.cv2-ads .cv2-fn{background:rgba(216,180,108,.1);color:#f3e6c8;box-shadow:0 0 0 1px rgba(216,180,108,.32) inset}
 .cv2-ship{--cv2-fg:#211437;--cv2-fg-g:#0b6e48;--cv2-fg-w:#7a4c00;--cv2-fg-b:#a3241a;--cv2-tagc:#7a4c00;--cv2-tagbg:rgba(255,255,255,.55);
-  --cv2-mut:rgba(33,20,55,.72);--cv2-hair:rgba(60,20,110,.18);--cv2-soft:rgba(255,255,255,.4);--cv2-lnkbg:#550da6;--cv2-lnk:#fff}
+  --cv2-mut:rgba(33,20,55,.72);--cv2-hair:rgba(60,20,110,.18);--cv2-soft:rgba(255,255,255,.4);--cv2-tile:rgba(255,255,255,.34);--cv2-lnkbg:#550da6;--cv2-lnk:#fff}
 .cv2-ship .cv2-front,.cv2-ship .cv2-back{color:#211437;background:
   repeating-radial-gradient(ellipse at 50% 130%,rgba(85,13,166,.07) 0 .6px,transparent 1px 6px),
   radial-gradient(90% 80% at 10% 0%,#f4ecff,transparent 60%),
   linear-gradient(145deg,#dccbfa 0%,#c3a8f0 55%,#a98ae4 100%)}
 .cv2-ship .cv2-back{background:repeating-radial-gradient(ellipse at 50% 130%,rgba(85,13,166,.06) 0 .6px,transparent 1px 6px),radial-gradient(70% 40% at 10% 0%,#f4ecff,transparent 60%),linear-gradient(170deg,#ddcdfa 0%,#c7aef1 55%,#b298e8 100%)}
 .cv2-ship .cv2-tag i{box-shadow:none}
-.cv2-ship .cv2-flipbtn{background:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(85,13,166,.2) inset}
+.cv2-ship .cv2-flipbtn{background:rgba(255,255,255,.36);box-shadow:0 0 0 1px rgba(85,13,166,.16) inset}
 
 /* ---- backs: EXACTLY the front's height (the card only gets wider when it flips). Everything fits inside it:
    labels 13px, values 20px, one hero 30px (narrow cards: 12 / 16 / 24). No inner scrolling. ---- */
@@ -745,6 +742,7 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
 .cv2-narrow .cv2-wide{display:none}
 .cv2-bh{display:flex;align-items:center;gap:12px;min-width:0}
 .cv2-bh .cv2-fn{width:34px;height:34px;border-radius:10px;font-size:13px}
+.cv2-bh .cv2-fn svg.cv2-mk{width:21px}
 .cv2-bh .cv2-logo{height:34px;padding:0 9px;border-radius:10px}
 .cv2-bh svg.cv2-bosta{height:20px}
 .cv2-narrow .cv2-bh .cv2-fn{display:none}
@@ -832,13 +830,13 @@ h2:where(:not(.nv2-sheet h2)) { display: flex; align-items: center; gap: 10px; m
 .cv2-call .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-narrow .cv2-call{padding:3px 3px 3px 10px;gap:8px;border-radius:10px}
 
-/* ---- nav ---- */
-.cv2-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:2px}
-.cv2-arr{width:36px;height:36px;border-radius:50%;border:1px solid var(--cv2-line)!important;display:grid;place-items:center;color:var(--cv2-ui);transition:color .2s,border-color .2s}
-.cv2-arr:hover{color:var(--cv2-ui2);border-color:var(--cv2-acc)!important}
-.cv2-dots{display:flex;gap:7px}
-.cv2-dots button{width:7px;height:7px;border-radius:9px;background:var(--cv2-line);transition:width .35s,background .35s}
-.cv2-dots button[aria-selected="true"]{width:26px;background:var(--cv2-acc)}
+/* ---- nav: no arrow buttons — only a small, quiet position indicator. Each dot is a 28px-tall tap target. ---- */
+.cv2-nav{display:flex;align-items:center;justify-content:center;margin-top:2px}
+.cv2-dots{display:flex}
+.cv2-dots button{display:grid;place-items:center;height:28px;padding:0 5px;-webkit-tap-highlight-color:transparent}
+.cv2-dots button::before{content:"";display:block;width:6px;height:6px;border-radius:9px;background:var(--cv2-dot);transition:width .35s,background .35s}
+.cv2-dots button[aria-selected="true"]::before{width:16px;background:var(--cv2-dot-on)}
+.cv2-dots button:hover::before{background:var(--cv2-dot-on)}
 @keyframes cv2grow{from{transform:scaleX(0)}}
 @media (max-width:600px){.cv2{--cv2-cw:min(440px,80vw)}.cv2-stage{height:calc(var(--cv2-cw) / 1.586 + 52px)}}
 @media (prefers-reduced-motion:reduce){.cv2 *,.cv2 *::before,.cv2 *::after{animation:none!important;transition-duration:.001s!important;transition-delay:0s!important}}
@@ -1697,9 +1695,8 @@ main { gap: 24px; }
          aria-label="Sales card. Profit you keep EGP 46,671. Margin 18.4%, 175 orders, average order EGP 1,391. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-tag"><i></i><span>Profit ROAS 1.44x · below 1.65x</span></span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg><span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671">46,671</span></div></div>
+          <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671">46,671</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
           <div class="cv2-tiles"><div><span class="cv2-tk">Margin</span><span class="cv2-tv cv2-g">18.4%</span></div><div><span class="cv2-tk">Orders</span><span class="cv2-tv">175</span></div><div><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span><span class="cv2-tv"><small>EGP</small>1,391</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
@@ -1718,16 +1715,15 @@ main { gap: 24px; }
 
     <!-- META ADS -->
     <div class="cv2-card cv2-ads" data-key="ads" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Ads card. Meta spend EGP 106,807. Cost per purchase EGP 526. Tired ad set Broad, Women 25 to 44. Press Enter for details.">
+         aria-label="Ads card, Meta and TikTok. Meta spend EGP 106,807. Cost per purchase EGP 526. Tired ad set Broad, Women 25 to 44. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-fn">∞</span><span class="cv2-nm">Ads</span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg><span class="cv2-flipbtn cv2-ic" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-lbl">Meta spend</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="106807">106,807</span></div></div>
+          <div class="cv2-top"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><span class="cv2-ttw" role="img" aria-label="TikTok"><svg class="cv2-tt" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="cv2-nm">Ads</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Meta spend</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="106807">106,807</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></span></div>
           <div class="cv2-tiles"><div><span class="cv2-tk"><span class="cv2-tw">Cost per purchase</span><span class="cv2-tn">Per purchase</span></span><span class="cv2-tv"><small>EGP</small>526</span></div><div><span class="cv2-tk">Tired ad set</span><span class="cv2-tv cv2-txt cv2-bc">Broad · Women 25–44</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">∞</span><div class="cv2-bhx"><div class="cv2-bt">This week on Meta</div><div class="cv2-bs">Spent EGP 106,807</div></div>
+          <div class="cv2-bh"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">This week on Meta</div><div class="cv2-bs">Spent EGP 106,807</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
           <div class="cv2-lead2"><div class="cv2-lead"><span class="cv2-big cv2-hero">2.37x</span><span class="cv2-p">Revenue ROAS · <b class="cv2-gc">▲ 5.7%</b><span class="cv2-wide"> vs last week</span></span></div>
             <div class="cv2-stat"><span class="cv2-lab">Purchases</span><span class="cv2-big">203</span></div></div>
@@ -1742,13 +1738,12 @@ main { gap: 24px; }
 
     <!-- COURIER -->
     <div class="cv2-card cv2-ship" data-key="ship" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned. EGP 38k stuck 7+ days. Press Enter for details.">
+         aria-label="Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, EGP 38k stuck 7+ days, 7 returned. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><span class="cv2-nm">Courier</span><span class="cv2-tag"><i></i><span>EGP 38k stuck 7+ days</span></span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave cv2-truck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg><span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
-          <div class="cv2-fhero"><div class="cv2-lbl">Cash to collect</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="58300">58,300</span></div></div>
-          <div class="cv2-tiles"><div><span class="cv2-tk">In transit</span><span class="cv2-tv">38</span></div><div><span class="cv2-tk">Delivered</span><span class="cv2-tv cv2-g">121</span></div><div><span class="cv2-tk">Returned</span><span class="cv2-tv cv2-bc">7</span></div></div>
+          <div class="cv2-top"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><span class="cv2-nm">Courier</span><span class="cv2-flipbtn" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-fhero"><div class="cv2-fh"><div class="cv2-lbl">Cash to collect</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="58300">58,300</span></div></div><span class="cv2-deco"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave cv2-truck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg></span></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk">In transit</span><span class="cv2-tv">38</span></div><div><span class="cv2-tk"><span class="cv2-tw">Stuck 7+ days</span><span class="cv2-tn">Stuck 7d+</span></span><span class="cv2-tv cv2-wcol"><small>EGP</small>38k</span></div><div><span class="cv2-tk">Returned</span><span class="cv2-tv cv2-bc">7</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
           <div class="cv2-bh"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">Delivery health</div><div class="cv2-bs">128 finished · 38 in transit</div></div>
@@ -1763,11 +1758,9 @@ main { gap: 24px; }
 
   </div>
   <div class="cv2-nav">
-    <button class="cv2-arr" type="button" data-cv2-prev aria-label="Previous card"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
     <div class="cv2-dots" role="tablist" aria-label="Cards">
       <button type="button" role="tab" data-cv2-dot="0" aria-label="Sales" aria-selected="true"></button><button type="button" role="tab" data-cv2-dot="1" aria-label="Meta ads" aria-selected="false"></button><button type="button" role="tab" data-cv2-dot="2" aria-label="Courier" aria-selected="false"></button>
     </div>
-    <button class="cv2-arr" type="button" data-cv2-next aria-label="Next card"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
   </div>
 </div>
 <!-- === CARDS v2 END === -->
@@ -2484,9 +2477,9 @@ main { gap: 24px; }
 </script>
 <script>
 /* === CARDS v2 START === */
-/* Cards v2 behaviour. Initialises every .cv2 on the page; needs nothing else. No hint text: arrows + dots only.
+/* Cards v2 behaviour. Initialises every .cv2 on the page; needs nothing else. No hint text, no arrow buttons: dots only.
    Front card: tap / Enter / Space flips it; the card gets wider (never taller) for its back (side cards step aside).
-   Tap again, Close, or Esc flips back. Arrows, dots, swipe/drag and ←/→ move the carousel.
+   Tap again, Close, or Esc flips back. Dots, swipe/drag and the ←/→ keys move the carousel.
    Back links: <a data-cv2-go="ads"> fire  root.dispatchEvent(new CustomEvent('cv2:action',{bubbles:true,detail:{go:'ads'}})). */
 (function(){
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2540,8 +2533,6 @@ main { gap: 24px; }
       c.addEventListener('keydown',function(e){if(e.target!==c)return;if(e.key==='Enter'||e.key===' '){e.preventDefault();open===c?closeCard(true):openCard(c)}});
     });
     dots.forEach(function(b){b.addEventListener('click',function(){go(+b.dataset.cv2Dot)})});
-    root.querySelector('[data-cv2-prev]').addEventListener('click',function(){go(active-1)});
-    root.querySelector('[data-cv2-next]').addEventListener('click',function(){go(active+1)});
     stage.addEventListener('keydown',function(e){if(open)return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(active+(e.key==='ArrowLeft'?-1:1));cards[active].focus({preventScroll:true})}});
     document.addEventListener('keydown',function(e){if(e.key==='Escape'&&open)closeCard(true)});
     stage.addEventListener('pointerdown',function(e){if(open)return;dragX=e.clientX;dragged=false});
