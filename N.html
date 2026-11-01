@@ -86,7 +86,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 /* Cards v2 — Sales / Ads / Shipping 3D carousel (N skins). Self-contained: every class, id and
    variable is prefixed cv2-. Depends on nothing outside this block.
    THEME: the cards themselves never change with the theme (skins stay purple / black-gold / lilac).
-   Only the chrome around them (glow, arrows, dots, hint) has a light variant. It is switched on when
+   Only the chrome around them (glow, arrows, dots) has a light variant. It is switched on when
    EITHER the page's <html> carries data-theme="light" (how V, W, N, K and J all do it)
    OR the block itself carries data-cv2-theme="light". Any other page: add data-cv2-theme to .cv2.
    PAGE HOOKS: --cv2-bleed (px the stage may bleed past the page gutter so side cards are not clipped;
@@ -135,42 +135,57 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   padding:calc(var(--cv2-u) * 6.2) calc(var(--cv2-u) * 6.8);display:flex;flex-direction:column}
 .cv2-back{inset:0;transform:rotateY(180deg);border-radius:24px}
 
-/* ---- front content (all sizes scale with the card width) ---- */
+/* ---- front content (all sizes scale with the card width; text never below 12px) ---- */
 .cv2-top{display:flex;align-items:center;gap:calc(var(--cv2-u) * 2.6);min-width:0}
 .cv2-fn{width:calc(var(--cv2-u) * 8.4);height:calc(var(--cv2-u) * 8.4);border-radius:calc(var(--cv2-u) * 2.3);display:grid;place-items:center;font-size:calc(var(--cv2-u) * 2.9);font-weight:700;color:#fff;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.25) inset;flex:none}
+/* Bosta's own logo (bosta.co) on a white rounded chip */
+.cv2-logo{display:inline-flex;align-items:center;flex:none;height:max(26px,calc(var(--cv2-u) * 8.4));padding:0 max(7px,calc(var(--cv2-u) * 2.2));border-radius:max(8px,calc(var(--cv2-u) * 2.3));background:#fff;box-shadow:0 0 0 1px rgba(85,13,166,.16),0 2px 6px -2px rgba(40,10,90,.35)}
+.cv2 svg.cv2-bosta{display:block;height:max(15px,calc(var(--cv2-u) * 4.4));width:auto}
 .cv2-nm{font-size:calc(var(--cv2-u) * 4.1);font-weight:600;letter-spacing:-.01em;white-space:nowrap}
-.cv2-tag{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.3);font-size:calc(var(--cv2-u) * 2.55);font-weight:600;line-height:1.25;
-  padding:calc(var(--cv2-u) * 1.2) calc(var(--cv2-u) * 2.4);border-radius:calc(var(--cv2-u) * 3);min-width:0;max-width:74%;text-align:left;
+.cv2-tag{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.3);font-size:max(11px,calc(var(--cv2-u) * 2.55));font-weight:600;line-height:1.25;
+  padding:calc(var(--cv2-u) * 1.2) calc(var(--cv2-u) * 2.4);border-radius:calc(var(--cv2-u) * 3);min-width:0;max-width:74%;text-align:left;white-space:nowrap;
   color:var(--cv2-tagc);background:var(--cv2-tagbg);box-shadow:0 0 0 1px color-mix(in srgb,var(--cv2-tagc) 45%,transparent) inset}
+.cv2-tag > span{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .cv2-tag i{width:calc(var(--cv2-u) * 1.5);height:calc(var(--cv2-u) * 1.5);border-radius:50%;background:currentColor;box-shadow:0 0 calc(var(--cv2-u) * 1.5) currentColor;flex:none}
-.cv2-chiprow{display:flex;align-items:center;gap:calc(var(--cv2-u) * 2);margin-top:calc(var(--cv2-u) * 3.2)}
+.cv2-chiprow{display:flex;align-items:center;gap:calc(var(--cv2-u) * 2);margin-top:calc(var(--cv2-u) * 2.8)}
 .cv2-chip{width:calc(var(--cv2-u) * 10.4);height:calc(var(--cv2-u) * 7.8);border-radius:calc(var(--cv2-u) * 1.8);background:linear-gradient(135deg,#f3dfa4,#c79a4b 45%,#f0d48e 60%,#a87a33);position:relative;box-shadow:0 0 0 1px rgba(0,0,0,.25) inset;flex:none}
 .cv2-chip::before,.cv2-chip::after{content:"";position:absolute;inset:22% 0;border-top:1px solid rgba(80,50,10,.45);border-bottom:1px solid rgba(80,50,10,.45)}
 .cv2-chip::after{inset:0 34%;border:0;border-left:1px solid rgba(80,50,10,.45);border-right:1px solid rgba(80,50,10,.45)}
 .cv2 svg.cv2-wave{width:calc(var(--cv2-u) * 6.2);height:calc(var(--cv2-u) * 6.2);opacity:.85}
-.cv2-fhero{margin-top:calc(var(--cv2-u) * 3)}
-.cv2-lbl{font-size:calc(var(--cv2-u) * 2.8);letter-spacing:.13em;text-transform:uppercase;opacity:.72;font-weight:500;white-space:nowrap}
-.cv2-amt{font-size:calc(var(--cv2-u) * 9.6);font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;margin-top:calc(var(--cv2-u) * 1.4);white-space:nowrap}
+.cv2 svg.cv2-truck{stroke-width:1.6}
+.cv2-fhero{margin-top:calc(var(--cv2-u) * 2.6)}
+.cv2-lbl{font-size:max(12px,calc(var(--cv2-u) * 2.8));letter-spacing:.12em;text-transform:uppercase;opacity:.75;font-weight:500;white-space:nowrap}
+.cv2-amt{font-size:calc(var(--cv2-u) * 9.6);font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;margin-top:calc(var(--cv2-u) * 1.2);white-space:nowrap}
 .cv2-cur{font-size:calc(var(--cv2-u) * 4.6);font-weight:500;opacity:.7;margin-right:calc(var(--cv2-u) * 1.6);letter-spacing:0}
-.cv2-bot{margin-top:auto;padding-top:calc(var(--cv2-u) * 2.6);display:flex;align-items:flex-end;justify-content:space-between;gap:calc(var(--cv2-u) * 3)}
-.cv2-kv{display:flex;gap:calc(var(--cv2-u) * 5.5);min-width:0}
-.cv2-kv > div{min-width:0}
-.cv2-k{white-space:nowrap;font-size:calc(var(--cv2-u) * 2.6);letter-spacing:.11em;text-transform:uppercase;opacity:.68}
-.cv2-v{font-size:calc(var(--cv2-u) * 4.3);font-weight:600;font-variant-numeric:tabular-nums;margin-top:calc(var(--cv2-u) * .6);white-space:nowrap}
-.cv2-v small{font-size:.62em;font-weight:500;opacity:.7;margin-right:calc(var(--cv2-u) * 1)}
-.cv2-v.cv2-g{color:var(--cv2-fg-g)} .cv2-v.cv2-w{color:var(--cv2-fg-w)}
-.cv2-flipbtn{display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.6);font-size:calc(var(--cv2-u) * 3.1);font-weight:500;padding:calc(var(--cv2-u) * 1.8) calc(var(--cv2-u) * 3.2);border-radius:99px;
+.cv2-flipbtn{margin-left:auto;display:inline-flex;align-items:center;gap:calc(var(--cv2-u) * 1.6);font-size:max(12px,calc(var(--cv2-u) * 3));font-weight:500;padding:calc(var(--cv2-u) * 1.6) calc(var(--cv2-u) * 3);border-radius:99px;
   background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.22) inset;white-space:nowrap;flex:none}
-.cv2 .cv2-flipbtn svg.cv2-i{width:calc(var(--cv2-u) * 3.6);height:calc(var(--cv2-u) * 3.6)}
-/* ads front: Meta spend · cost / purchase · tired ad set (text value) · icon-only flip button */
+.cv2 .cv2-flipbtn svg.cv2-i{width:max(13px,calc(var(--cv2-u) * 3.6));height:max(13px,calc(var(--cv2-u) * 3.6))}
+.cv2-flipbtn.cv2-ic{padding:calc(var(--cv2-u) * 1.9)}
+/* small, calm stat tiles */
+.cv2-tiles{margin-top:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:calc(var(--cv2-u) * 2)}
+.cv2-ads .cv2-tiles{grid-template-columns:minmax(0,.8fr) minmax(0,1.45fr)}
+.cv2-tiles > div{display:flex;flex-direction:column;justify-content:center;gap:calc(var(--cv2-u) * .5);min-width:0;padding:calc(var(--cv2-u) * 1.8) calc(var(--cv2-u) * 2.6);border-radius:calc(var(--cv2-u) * 2.6);
+  background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair)}
+.cv2-tk{font-size:max(12px,calc(var(--cv2-u) * 2.6));line-height:1.25;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-tn{display:none}
+.cv2-tv{font-size:max(14px,calc(var(--cv2-u) * 4));font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-tv small{font-size:.64em;font-weight:500;opacity:.72;margin-right:.32em;letter-spacing:0}
+.cv2-tv.cv2-g{color:var(--cv2-fg-g)} .cv2-tv.cv2-bc{color:var(--cv2-fg-b)}
+.cv2-tv.cv2-txt{font-size:max(13px,calc(var(--cv2-u) * 3.3))}
 .cv2-ads{line-height:1.4;font-variant-numeric:normal}
-.cv2-v.cv2-txt{font-size:calc(var(--cv2-u) * 3.2);line-height:1.38;overflow:hidden;text-overflow:ellipsis}
-.cv2-v.cv2-bc{color:var(--cv2-fg-b)}
-.cv2-flipbtn.cv2-ic{padding:calc(var(--cv2-u) * 2.2)}
 .cv2-ads .cv2-tag i{animation:cv2blink 1.6s ease-in-out infinite}
 @keyframes cv2blink{50%{opacity:.3}}
+@media (max-width:600px){
+  .cv2-front{padding:calc(var(--cv2-u) * 5.2) calc(var(--cv2-u) * 6)}
+  .cv2-chiprow{margin-top:calc(var(--cv2-u) * 2)}
+  .cv2-fhero{margin-top:calc(var(--cv2-u) * 1.8)}
+  .cv2-lbl{letter-spacing:.08em}
+  .cv2-tiles{gap:6px}
+  .cv2-tiles > div{padding:5px 8px;gap:1px}
+  .cv2-tw{display:none} .cv2-tn{display:inline}
+}
 
-/* ---- skins (N's): sales purple guilloche · ads black-gold · shipping lilac ---- */
+/* ---- skins (N's): sales purple guilloche · ads black-gold · courier lilac ---- */
 .cv2-sales{--cv2-fg:#fff;--cv2-fg-g:#a6f5d2;--cv2-fg-w:#ffdd94;--cv2-fg-b:#ffb4aa;--cv2-tagc:#ffdd94;--cv2-tagbg:rgba(25,0,60,.38);
   --cv2-mut:rgba(255,255,255,.74);--cv2-hair:rgba(255,255,255,.16);--cv2-soft:rgba(255,255,255,.08);--cv2-lnkbg:#f2eafb;--cv2-lnk:#550da6}
 .cv2-sales .cv2-front,.cv2-sales .cv2-back{color:#fff;background:
@@ -198,26 +213,30 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   radial-gradient(90% 80% at 10% 0%,#f4ecff,transparent 60%),
   linear-gradient(145deg,#dccbfa 0%,#c3a8f0 55%,#a98ae4 100%)}
 .cv2-ship .cv2-back{background:repeating-radial-gradient(ellipse at 50% 130%,rgba(85,13,166,.06) 0 .6px,transparent 1px 6px),radial-gradient(70% 40% at 10% 0%,#f4ecff,transparent 60%),linear-gradient(170deg,#ddcdfa 0%,#c7aef1 55%,#b298e8 100%)}
-.cv2-ship .cv2-fn{background:#550da6;box-shadow:none}
 .cv2-ship .cv2-tag i{box-shadow:none}
 .cv2-ship .cv2-flipbtn{background:rgba(255,255,255,.42);box-shadow:0 0 0 1px rgba(85,13,166,.2) inset}
 
 /* ---- backs: EXACTLY the front's height (the card only gets wider when it flips). Everything fits inside it:
-   labels 13px, values 20px, one hero 30px (narrow cards: 12 / 16 / 26). No inner scrolling. ---- */
+   labels 13px, values 20px, one hero 30px (narrow cards: 12 / 16 / 24). No inner scrolling. ---- */
 .cv2-bk{position:absolute;top:0;left:0;width:var(--cv2-ow,640px);height:100%;padding:18px 24px 20px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;
-  color:var(--cv2-fg);cursor:auto;user-select:text;-webkit-user-select:text;overflow:hidden}
-.cv2-narrow .cv2-bk{padding:11px 14px 12px;gap:6px}
+  color:var(--cv2-fg);line-height:1.3;cursor:auto;user-select:text;-webkit-user-select:text;overflow:hidden}
+.cv2-narrow .cv2-bk{padding:10px 14px 11px;gap:5px}
 .cv2-nar{display:none}
 .cv2-narrow .cv2-nar{display:inline}
 .cv2-narrow .cv2-wide{display:none}
 .cv2-bh{display:flex;align-items:center;gap:12px;min-width:0}
 .cv2-bh .cv2-fn{width:34px;height:34px;border-radius:10px;font-size:13px}
+.cv2-bh .cv2-logo{height:34px;padding:0 9px;border-radius:10px}
+.cv2-bh svg.cv2-bosta{height:20px}
 .cv2-narrow .cv2-bh .cv2-fn{display:none}
+.cv2-narrow .cv2-bh{gap:10px}
+.cv2-narrow .cv2-bh .cv2-logo{height:28px;padding:0 7px;border-radius:8px}
+.cv2-narrow .cv2-bh svg.cv2-bosta{height:15px}
 .cv2-bhx{flex:1;min-width:0}
 .cv2-bt{font-size:17px;font-weight:600;letter-spacing:-.01em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-bs{font-size:13px;line-height:1.3;color:var(--cv2-mut);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cv2-narrow .cv2-bt{font-size:14px}
-.cv2-narrow .cv2-bs{font-size:12px;margin-top:0}
+.cv2-narrow .cv2-bt{font-size:15px}
+.cv2-narrow .cv2-bs{display:none}
 .cv2-close{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 14px;border-radius:99px;font-size:13.5px;font-weight:600;
   background:var(--cv2-soft);box-shadow:0 0 0 1px var(--cv2-hair) inset;color:var(--cv2-fg);flex:none}
 .cv2 .cv2-close svg.cv2-i{width:15px;height:15px}
@@ -233,76 +252,66 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .cv2-big small{font-size:12px;font-weight:500;opacity:.75;margin-right:4px;letter-spacing:0}
 .cv2-big.cv2-hero{font-size:30px;letter-spacing:-.03em;line-height:1}
 .cv2-narrow .cv2-big{font-size:16px}
-.cv2-narrow .cv2-big.cv2-hero{font-size:26px}
+.cv2-narrow .cv2-big small{margin-right:3px}
+.cv2-narrow .cv2-big.cv2-hero{font-size:24px}
 .cv2-lab{font-size:13px;color:var(--cv2-mut);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-narrow .cv2-lab{font-size:12px}
+.cv2-fp{font-size:12px;color:var(--cv2-mut);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cv2-lnk{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;white-space:nowrap;padding:7px 13px;border-radius:99px;background:var(--cv2-lnkbg);color:var(--cv2-lnk);flex:none}
 .cv2 .cv2-lnk svg.cv2-i{width:15px;height:15px;transition:transform .2s}
 .cv2-lnk:hover svg.cv2-i{transform:translateX(3px)}
 .cv2-narrow .cv2-lnk{font-size:12.5px;padding:4px 10px}
-
-/* sales back: EGP 100 split */
 .cv2-lead{display:flex;align-items:baseline;gap:10px;min-width:0}
 .cv2-lead .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cv2-split{display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px;flex:none}
-.cv2-narrow .cv2-split{height:10px;border-radius:6px}
-.cv2-split i{display:block;height:100%;transform-origin:left}
-.cv2-is-open .cv2-split i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
-.cv2-split i.cv2-keep{box-shadow:0 0 0 2px #a6f5d2 inset}
-.cv2-leg{display:grid;grid-template-columns:repeat(5,auto);justify-content:space-between;gap:12px}
-.cv2-narrow .cv2-leg{gap:6px}
-.cv2-leg > div{display:flex;flex-direction:column;gap:1px;min-width:0;padding-top:5px;border-top:3px solid var(--sw)}
 .cv2-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
-.cv2-foot .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-foot .cv2-p{min-width:0;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.35}
+.cv2-narrow .cv2-foot{gap:8px}
 
-/* ads back: funnel in four steps, best / worst campaign */
-.cv2-fun{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.cv2-fs{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--cv2-soft);min-width:0}
-.cv2-narrow .cv2-fun{gap:6px}
-.cv2-narrow .cv2-fs{padding:6px 8px;gap:0}
-.cv2-fp{font-size:12px;color:var(--cv2-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cv2-fb{display:block;height:5px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:5px}
-.cv2-fb i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#a87a33,#f0d48e);transform-origin:left}
-.cv2-is-open .cv2-fb i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
-.cv2-fs.cv2-last{box-shadow:inset 0 0 0 1px rgba(246,213,140,.4)}
-.cv2-fs.cv2-last .cv2-big{color:#f6d58c;font-size:26px;line-height:1}
-.cv2-narrow .cv2-fs.cv2-last .cv2-big{font-size:19px}
-.cv2-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.cv2-narrow .cv2-two{gap:6px}
-.cv2-cmpn{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:10px;padding:10px 14px;border-radius:12px;background:var(--cv2-soft);min-width:0}
-.cv2-cmpn.cv2-best{box-shadow:inset 3px 0 0 var(--cv2-fg-g),inset 0 0 0 1px var(--cv2-hair)}
-.cv2-cmpn.cv2-worst{box-shadow:inset 3px 0 0 var(--cv2-fg-b),inset 0 0 0 1px var(--cv2-hair)}
-.cv2-cmpn .cv2-lab{grid-column:1}
-.cv2-cn{grid-column:1;font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.cv2-cmpn .cv2-big{grid-column:2;grid-row:1 / span 2;font-size:24px;letter-spacing:-.02em}
-.cv2-narrow .cv2-cmpn{padding:6px 8px 6px 10px;column-gap:6px}
-.cv2-narrow .cv2-cn{font-size:12px}
-.cv2-narrow .cv2-cmpn .cv2-big{font-size:18px}
+/* three compact tiles (sales deltas, courier figures) */
+.cv2-d3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.cv2-d3 > div{display:flex;flex-direction:column;gap:1px;padding:9px 12px;border-radius:12px;background:var(--cv2-soft);box-shadow:inset 0 0 0 1px var(--cv2-hair);min-width:0}
+.cv2-narrow .cv2-d3{gap:6px}
+.cv2-narrow .cv2-d3 > div{padding:3px 8px;gap:0}
 
-/* shipping back: cash by age, next payout, returns */
-.cv2-age{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:10px}
-.cv2-age > div{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--cv2-soft);min-width:0}
-.cv2-narrow .cv2-age{gap:6px}
-.cv2-narrow .cv2-age > div{padding:6px 8px}
-.cv2-narrow .cv2-age .cv2-big small{display:none}
-.cv2-age .cv2-old{background:rgba(163,36,26,.12);box-shadow:inset 0 0 0 1.5px rgba(163,36,26,.45)}
-.cv2-age .cv2-old .cv2-big{font-size:24px;color:var(--cv2-fg-b);line-height:1.05}
-.cv2-narrow .cv2-age .cv2-old .cv2-big{font-size:18px}
-.cv2-agebar{display:block;height:5px;border-radius:99px;background:rgba(60,20,110,.12);overflow:hidden;margin-top:4px}
-.cv2-agebar i{display:block;height:100%;border-radius:99px;background:#550da6;transform-origin:left}
-.cv2-old .cv2-agebar i{background:var(--cv2-fg-b)}
-.cv2-is-open .cv2-agebar i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .4s both}
-.cv2-foot3{display:flex;align-items:center;gap:22px;min-width:0}
-.cv2-foot3 > div{display:flex;flex-direction:column;gap:1px;min-width:0}
-.cv2-foot3 > .cv2-date{flex-direction:row;align-items:center;gap:10px}
-.cv2-date > div{display:flex;flex-direction:column;gap:1px;min-width:0}
-.cv2-foot3 .cv2-lnk{margin-left:auto}
-.cv2-cal{width:44px;flex:none;border-radius:10px;overflow:hidden;text-align:center;background:rgba(255,255,255,.6);box-shadow:0 0 0 1px var(--cv2-hair)}
-.cv2-cal span{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:#550da6;padding:2px 0}
-.cv2-cal b{display:block;font-size:20px;font-weight:600;line-height:1.3}
-.cv2-narrow .cv2-cal{display:none}
-.cv2-narrow .cv2-foot3{flex-wrap:wrap;gap:4px 18px}
-.cv2-narrow .cv2-foot3 .cv2-lnk{margin-left:0}
+/* sales back: label · value rows */
+.cv2-rows{display:flex;flex-direction:column}
+.cv2-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:5px 0;border-top:1px solid var(--cv2-hair);min-width:0}
+.cv2-row:first-child{border-top:0}
+.cv2-row .cv2-lab{flex:none}
+.cv2-row b{font-size:14px;font-weight:600;min-width:0;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-row b small{font-size:13px;font-weight:500;color:var(--cv2-mut)}
+.cv2-narrow .cv2-row{padding:1px 0;gap:8px}
+.cv2-narrow .cv2-row b{font-size:13px}
+.cv2-narrow .cv2-row b small{font-size:12px}
+
+/* ads back: ROAS lead + purchases, best / worst ad, spend per day */
+.cv2-lead2{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0}
+.cv2-stat{display:flex;flex-direction:column;align-items:flex-end;flex:none}
+.cv2-adl{display:flex;flex-direction:column;gap:6px}
+.cv2-adr{display:grid;grid-template-columns:72px minmax(0,1fr) auto auto;align-items:center;column-gap:12px;padding:7px 10px 7px 14px;border-radius:12px;min-width:0;
+  background:var(--cv2-soft);box-shadow:inset 3px 0 0 var(--c),inset 0 0 0 1px var(--cv2-hair)}
+.cv2-cn{font-size:14px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cv2-ret{font-size:13px;color:var(--cv2-mut);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cv2-ret b{font-size:15px;font-weight:600;color:var(--c)}
+.cv2-act{font-size:12.5px;font-weight:700;line-height:1;padding:5px 10px;border-radius:99px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 40%,transparent)}
+.cv2-narrow .cv2-adl{gap:4px}
+.cv2-narrow .cv2-adr{grid-template-columns:38px minmax(0,1fr) auto auto;column-gap:8px;padding:4px 6px 4px 10px;border-radius:10px}
+.cv2-narrow .cv2-cn{font-size:12.5px}
+.cv2-narrow .cv2-ret{font-size:12px}
+.cv2-narrow .cv2-ret b{font-size:13px}
+.cv2-narrow .cv2-act{font-size:12px;padding:4px 7px}
+
+/* courier back: delivery success, three figures, the call list */
+.cv2-ok{display:flex;flex-direction:column;gap:7px}
+.cv2-okbar{display:block;height:8px;border-radius:99px;background:rgba(60,20,110,.14);overflow:hidden}
+.cv2-okbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#0b6e48,#2fa774);transform-origin:left}
+.cv2-is-open .cv2-okbar i{animation:cv2grow .9s cubic-bezier(.2,.8,.2,1) .35s both}
+.cv2-narrow .cv2-ok{gap:4px}
+.cv2-narrow .cv2-okbar{height:6px}
+.cv2-call{display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;padding:6px 6px 6px 14px;border-radius:12px;
+  background:rgba(122,76,0,.1);box-shadow:inset 0 0 0 1.5px rgba(122,76,0,.32)}
+.cv2-call .cv2-p{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv2-narrow .cv2-call{padding:3px 3px 3px 10px;gap:8px;border-radius:10px}
 
 /* ---- nav ---- */
 .cv2-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:2px}
@@ -311,7 +320,6 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .cv2-dots{display:flex;gap:7px}
 .cv2-dots button{width:7px;height:7px;border-radius:9px;background:var(--cv2-line);transition:width .35s,background .35s}
 .cv2-dots button[aria-selected="true"]{width:26px;background:var(--cv2-acc)}
-.cv2-hint{text-align:center;font-size:12.5px;color:var(--cv2-ui);margin-top:10px}
 @keyframes cv2grow{from{transform:scaleX(0)}}
 @media (max-width:600px){.cv2{--cv2-cw:min(440px,80vw)}.cv2-stage{height:calc(var(--cv2-cw) / 1.586 + 52px)}}
 @media (prefers-reduced-motion:reduce){.cv2 *,.cv2 *::before,.cv2 *::after{animation:none!important;transition-duration:.001s!important;transition-delay:0s!important}}
@@ -492,120 +500,97 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 
 
 /* === MONEY v2 START === */
-/* Money v2 — "Where the money went": gross → net revenue → profit, to scale.
+/* Money v2 — "Where the money went" (AB style): one stacked bar = gross sales split into where every pound went,
+   then a receipt list in two groups (From orders to revenue · From revenue to profit). Checkpoints bold,
+   the profit row green. Tap / Enter on a row opens its short explanation in place.
    Self-contained (mv2- prefix). THEME: light when <html data-theme="light"> or .mv2[data-mv2-theme="light"].
-   Readability rules (see readability-notes): text ≥ 12px (names 14, shares 13, amounts 17–22), contrast ≥ 4.5:1,
-   no text inside a bar, amounts ABOVE the bars, names in a fixed-height row BELOW the plot.
-   Wide block (≥ 960px): waterfall in two phases. Narrower: horizontal-bar journey list, one step per row.
+   Readability: names 15px, sub-labels 13px, amounts 16px (checkpoints 20px, profit 22px), nothing under 12px,
+   no text inside the bar, contrast >= 4.5:1 in both themes. Two columns when the block is >= 760px wide.
    Page hooks: links fire a bubbling "mv2:action" event (detail.go); window.mv2Update(amounts) for live figures. */
 .mv2{--mv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-  --mv2-fg:#eceaf3;--mv2-mut:#a7a3b6;--mv2-dim:#8a8799;--mv2-line:rgba(255,255,255,.08);--mv2-line2:rgba(255,255,255,.15);--mv2-soft:rgba(255,255,255,.035);
-  --mv2-bg:#0d0c12;--mv2-acc:#a275e0;--mv2-good:#45d09a;--mv2-bad:#f06571;--mv2-warn:#f2b64f;
-  --mv2-gross:linear-gradient(180deg,#e2e4f0,#9da2b8);--mv2-net:linear-gradient(180deg,#a275e0,#550da6);--mv2-profit:linear-gradient(180deg,#5ee0ab,#16865f);
+  --mv2-fg:#eceaf3;--mv2-mut:#a7a3b6;--mv2-line:rgba(255,255,255,.08);--mv2-line2:rgba(255,255,255,.15);--mv2-soft:rgba(255,255,255,.035);
+  --mv2-acc:#a275e0;--mv2-good:#45d09a;--mv2-bad:#f06571;--mv2-warn:#f2b64f;--mv2-goodbg:rgba(69,208,154,.09);--mv2-track:rgba(255,255,255,.06);
   container-type:inline-size;font-family:var(--mv2-font);color:var(--mv2-fg);font-variant-numeric:tabular-nums;min-width:0}
-[data-theme="light"] .mv2,.mv2[data-mv2-theme="light"]{--mv2-fg:#17141f;--mv2-mut:#5f5b6c;--mv2-dim:#6c6879;--mv2-line:rgba(20,10,40,.08);--mv2-line2:rgba(20,10,40,.16);--mv2-soft:rgba(85,13,166,.04);
-  --mv2-bg:#fff;--mv2-acc:#550da6;--mv2-good:#12855a;--mv2-bad:#c73a47;--mv2-warn:#8a5c08;--mv2-gross:linear-gradient(180deg,#c9cbdb,#8d91a8)}
+[data-theme="light"] .mv2,.mv2[data-mv2-theme="light"]{--mv2-fg:#17141f;--mv2-mut:#5f5b6c;--mv2-line:rgba(20,10,40,.08);--mv2-line2:rgba(20,10,40,.16);--mv2-soft:rgba(85,13,166,.035);
+  --mv2-acc:#550da6;--mv2-good:#0f7a52;--mv2-bad:#c73a47;--mv2-warn:#8a5c08;--mv2-goodbg:rgba(18,133,90,.08);--mv2-track:rgba(20,10,40,.06)}
 .mv2 *,.mv2 *::before,.mv2 *::after{box-sizing:border-box;margin:0;padding:0}
 :where(.mv2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
 :where(.mv2) a{color:inherit;text-decoration:none}
 .mv2 :focus-visible{outline:2px solid var(--mv2-acc);outline-offset:2px;border-radius:8px}
-.mv2-head{display:flex;align-items:flex-end;gap:10px 24px;flex-wrap:wrap;margin-bottom:28px}
-.mv2-head h3{font-size:18px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
-.mv2-sub{font-size:13px;line-height:1.45;color:var(--mv2-mut);margin-top:4px}
-.mv2-res{margin-left:auto;display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;justify-content:flex-end}
-.mv2-res b{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;color:var(--mv2-good)}
-.mv2-res b small{font-size:13px;font-weight:500;opacity:.8;margin-right:5px}
-.mv2-res span{font-size:13px;line-height:1.45;color:var(--mv2-mut)}
-.mv2-chart{position:relative}
-/* phase labels on their own row, with room below before the tallest amount */
-.mv2-phases{position:relative;height:30px;margin-bottom:22px}
-.mv2-phases span{position:absolute;top:0;height:100%;display:flex;align-items:flex-start;padding:8px 8px 0;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mv2-mut);
-  border-top:2px solid var(--mv2-line2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mv2-phases span:first-child{border-top-color:rgba(240,101,113,.5)}
-.mv2-phases span:last-child{border-top-color:rgba(162,117,224,.6)}
-.mv2-steps{list-style:none;display:grid;grid-template-columns:1.15fr repeat(3,minmax(0,1fr)) 1.15fr repeat(4,minmax(0,1fr)) 1.15fr;gap:0 14px}
-.mv2-b{position:relative;display:flex;flex-direction:column;width:100%;border-radius:12px;padding:0 0 12px;transition:background .25s}
-.mv2-b:hover,.mv2-on .mv2-b{background:var(--mv2-soft)}
-/* plot: 56px reserved above the bars for the amounts, then 300px of bar area */
-.mv2-plot{position:relative;height:300px;margin:56px 6px 0}
-.mv2-bar{position:absolute;left:8%;right:8%;bottom:calc(var(--b) * 1%);height:calc(var(--h) * 1%);min-height:3px;border-radius:7px;background:var(--mv2-c);transform-origin:bottom}
-.mv2-ded .mv2-bar{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
-.mv2-cp .mv2-bar{box-shadow:0 0 26px -6px var(--mv2-glow,transparent)}
-.mv2-on .mv2-bar{outline:2px solid var(--mv2-acc);outline-offset:2px}
-/* amount: always ABOVE its bar (outside it), never inside */
-.mv2-amt{position:absolute;left:0;right:0;top:calc(56px + (100 - var(--b) - var(--h)) * 3px);transform:translateY(calc(-100% - 8px));text-align:center;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;line-height:1.15}
-.mv2-amt small{display:block;font-size:12px;font-weight:500;color:var(--mv2-mut);letter-spacing:.02em;margin-bottom:1px}
-.mv2-cp .mv2-amt{font-size:22px;letter-spacing:-.02em}
-.mv2-ded .mv2-amt{color:var(--mv2-fg)}
-/* connector: from this bar's resulting level to the next column */
-.mv2-conn{position:absolute;left:92%;width:calc(16% + 14px + 12px);bottom:calc(var(--lv) * 1%);border-top:1.5px dashed var(--mv2-line2)}
-.mv2-step:last-child .mv2-conn{display:none}
-/* names: fixed-height row below the plot (2 lines of name + up to 2 lines of share), so nothing can collide */
-.mv2-lab{margin-top:14px;padding:0 4px;min-height:76px;text-align:center;display:flex;flex-direction:column;gap:4px}
-.mv2-lab b{font-size:14px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:break-word}
-.mv2-lab span{font-size:13px;line-height:1.3;color:var(--mv2-mut)}
-.mv2-est{color:var(--mv2-mut);font-weight:500}
-.mv2-dot{display:none}
-.mv2-go .mv2-bar{animation:mv2up .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 70ms)}
-.mv2-go .mv2-amt,.mv2-go .mv2-conn{animation:mv2fade .5s ease both;animation-delay:calc(var(--i) * 70ms + 350ms)}
-@keyframes mv2up{from{transform:scaleY(0)}}
-@keyframes mv2fade{from{opacity:0}}
-.mv2-note{margin-top:4px;font-size:12.5px;line-height:1.4;color:var(--mv2-mut)}
-.mv2-explain{margin-top:18px;display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:14px;background:var(--mv2-soft);border:1px solid var(--mv2-line);min-height:76px}
-.mv2-xi{width:10px;align-self:stretch;border-radius:9px;background:var(--mv2-c);flex:none}
-.mv2-xt{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
-.mv2-xt b{font-size:16px;font-weight:600;line-height:1.35}
-.mv2-xt span{font-size:14px;color:var(--mv2-mut);line-height:1.5}
-.mv2-xt em{font-style:normal;color:var(--mv2-fg);font-weight:500}
+.mv2 h3,.mv2 h4{font-family:inherit;margin:0}
+.mv2 svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mv2-head{margin-bottom:18px}
+.mv2-head h3{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.mv2-sub{font-size:14px;line-height:1.45;color:var(--mv2-mut);margin-top:4px}
+/* the stacked bar */
+.mv2-flow{display:flex;gap:2px;height:14px;border-radius:99px;overflow:hidden;background:var(--mv2-track)}
+.mv2-seg{display:block;height:100%;min-width:3px;background:var(--c);transform-origin:left;transition:opacity .25s,filter .25s;cursor:pointer}
+.mv2-flow:hover .mv2-seg,.mv2.mv2-sel .mv2-seg{opacity:.35}
+.mv2-flow .mv2-seg:hover,.mv2.mv2-sel .mv2-seg.mv2-on{opacity:1;filter:saturate(1.15)}
+.mv2-go .mv2-seg{animation:mv2grow .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 70ms)}
+.mv2-pre .mv2-seg{transform:scaleX(0)}
+.mv2-scale{display:flex;justify-content:space-between;gap:12px;margin-top:8px;font-size:13px;line-height:1.4;color:var(--mv2-mut)}
+.mv2-scale b{color:var(--mv2-fg);font-weight:600}
+.mv2-scale .mv2-kept b{color:var(--mv2-good)}
+/* the receipt */
+.mv2-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;margin-top:24px}
+@container (min-width:760px){.mv2-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}}
+.mv2-gh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:8px;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mv2-mut);border-bottom:1px solid var(--mv2-line2)}
+.mv2-gh span{letter-spacing:0;text-transform:none;font-weight:500;font-size:13px}
+.mv2-list{list-style:none}
+.mv2-row{border-bottom:1px solid var(--mv2-line)}
+.mv2-row:last-child{border-bottom:0}
+.mv2-b{display:grid;grid-template-columns:12px minmax(0,1fr) auto 14px;align-items:center;column-gap:12px;width:100%;min-height:58px;padding:10px 6px 10px 2px;border-radius:10px;transition:background .2s}
+.mv2-b:hover{background:var(--mv2-soft)}
+.mv2-sw{width:12px;height:12px;border-radius:4px;background:var(--c)}
+.mv2-cp .mv2-sw{background:none;box-shadow:inset 0 0 0 2.5px var(--c)}
+.mv2-nm{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mv2-nm b{font-size:15px;font-weight:500;line-height:1.3}
+.mv2-nm b sup{font-size:12px;color:var(--mv2-mut);margin-left:2px;vertical-align:top;line-height:1}
+.mv2-nm small{font-size:13px;line-height:1.35;color:var(--mv2-mut)}
+.mv2-am{font-size:16px;font-weight:500;white-space:nowrap;text-align:right;letter-spacing:-.005em}
+.mv2-ded .mv2-am{color:var(--mv2-mut)}
+.mv2-ded .mv2-am b{color:var(--mv2-fg);font-weight:500}
+.mv2-am small{font-size:12.5px;font-weight:500;color:var(--mv2-mut);margin-right:5px}
+.mv2-chev{color:var(--mv2-mut);transition:transform .25s}
+.mv2-x .mv2-chev{transform:rotate(90deg)}
+.mv2-cp .mv2-nm b{font-size:16px;font-weight:600}
+.mv2-cp .mv2-am{font-size:20px;font-weight:600}
+/* the result row */
+.mv2-row.mv2-profit{border-bottom:0;margin-top:6px}
+.mv2-profit .mv2-b{background:var(--mv2-goodbg);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--mv2-good) 35%,transparent);padding-left:12px;padding-right:12px;grid-template-columns:12px minmax(0,1fr) auto 14px}
+.mv2-profit .mv2-b:hover{background:color-mix(in srgb,var(--mv2-good) 14%,transparent)}
+.mv2-profit .mv2-nm b{color:var(--mv2-fg)}
+.mv2-profit .mv2-am{font-size:22px;color:var(--mv2-good)}
+.mv2-profit.mv2-loss .mv2-am{color:var(--mv2-bad)}
+.mv2-sel .mv2-row.mv2-on > .mv2-b{background:var(--mv2-soft)}
+.mv2-sel .mv2-row.mv2-profit.mv2-on > .mv2-b{background:color-mix(in srgb,var(--mv2-good) 14%,transparent)}
+/* the explanation (opens in place) */
+.mv2-why{display:none;gap:10px 16px;align-items:center;flex-wrap:wrap;margin:0 0 12px 26px;padding:12px 14px;border-radius:12px;background:var(--mv2-soft);border-left:3px solid var(--c);font-size:14px;line-height:1.5;color:var(--mv2-mut)}
+.mv2-why em{font-style:normal;color:var(--mv2-fg)}
+.mv2-why p{flex:1 1 260px;min-width:0}
+.mv2-x .mv2-why{display:flex}
 .mv2-lnk{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--mv2-acc);white-space:nowrap}
-.mv2-lnk svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.mv2-lnk svg{transition:transform .2s}
 .mv2-lnk:hover svg{transform:translateX(3px)}
-.mv2-why{display:none}
-.mv2-foot{margin-top:18px;padding-top:16px;border-top:1px solid var(--mv2-line);display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:14px;line-height:1.5;color:var(--mv2-mut)}
+.mv2-note{font-size:12.5px;color:var(--mv2-mut);margin-top:14px}
+.mv2-foot{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--mv2-line);font-size:14px;line-height:1.5;color:var(--mv2-mut)}
 .mv2-foot b{color:var(--mv2-warn);font-weight:600}
-
-/* ---- narrower than 960px: horizontal-bar journey list (one step per row; labels never touch the bars) ---- */
-@container (max-width:959px){
-  .mv2-head{margin-bottom:18px}
-  .mv2-res{margin-left:0;justify-content:flex-start}
-  .mv2-phases{display:none}
-  .mv2-steps{grid-template-columns:minmax(0,1fr);gap:0;position:relative;margin-top:4px}
-  .mv2-steps::before{content:"";position:absolute;left:9px;top:22px;bottom:22px;width:2px;background:var(--mv2-line2);border-radius:2px}
-  .mv2-ph{display:block!important;font-size:12.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mv2-mut);padding:18px 0 8px 32px}
-  .mv2-ph:first-child{padding-top:4px}
-  .mv2-b{display:grid;grid-template-columns:20px minmax(0,1fr) auto;column-gap:12px;row-gap:10px;align-items:center;padding:12px 12px 14px 0;border-radius:12px}
-  .mv2-dot{display:block;grid-row:1 / span 2;align-self:start;margin-top:3px;width:20px;height:20px;border-radius:50%;background:var(--mv2-bg,#0d0c12);border:2px solid var(--mv2-line2);position:relative;z-index:1}
-  .mv2-dot::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--mv2-c)}
-  .mv2-lab{grid-column:2;grid-row:1;margin:0;padding:0;min-height:0;text-align:left;gap:2px}
-  .mv2-lab b{font-size:15px;-webkit-line-clamp:1;display:block;white-space:nowrap;text-overflow:ellipsis}
-  .mv2-plot{grid-column:2 / -1;grid-row:2;height:10px;margin:0;border-radius:99px;background:var(--mv2-line)}
-  .mv2-bar{left:calc(var(--b) * 1%);width:calc(var(--h) * 1%);min-width:4px;right:auto;top:0;bottom:0;height:auto;border-radius:99px;transform-origin:left}
-  .mv2-amt{position:static;transform:none;grid-column:3;grid-row:1;align-self:start;text-align:right;font-size:17px}
-  .mv2-amt small{display:inline;margin:0 4px 0 0}
-  .mv2-conn{display:none}
-  .mv2-cp .mv2-b{background:var(--mv2-soft);border:1px solid var(--mv2-line2);padding:14px 12px 16px 0;margin:6px 0}
-  .mv2-cp .mv2-plot{height:14px}
-  .mv2-cp .mv2-amt{font-size:24px}
-  .mv2-cp .mv2-lab b{font-size:16px}
-  .mv2-on .mv2-bar{outline:0}
-  .mv2-x .mv2-why{display:flex;flex-direction:column;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5;color:var(--mv2-mut);padding:2px 12px 16px 32px}
-  .mv2-why em{font-style:normal;color:var(--mv2-fg);font-weight:500}
-  .mv2-explain{display:none}
-  .mv2-note{padding-left:32px;margin-top:8px}
-  .mv2-go .mv2-bar{animation-name:mv2right}
+@container (max-width:420px){
+  .mv2-b{column-gap:10px;min-height:54px}
+  .mv2-nm b{font-size:15px}
+  .mv2-am{font-size:15px}
+  .mv2-cp .mv2-am{font-size:18px}
+  .mv2-profit .mv2-am{font-size:20px}
+  .mv2-why{margin-left:0}
 }
-.mv2-ph{display:none}
-.mv2-pre .mv2-bar{visibility:hidden}
-@keyframes mv2right{from{transform:scaleX(0)}}
-@media (prefers-reduced-motion:reduce){.mv2 *{animation:none!important;transition:none!important}}
-/* live update (window.mv2Update): bars glide to their new size; only active once the page has called it */
-.mv2-live .mv2-bar{transition:bottom .5s cubic-bezier(.2,.8,.2,1),height .5s cubic-bezier(.2,.8,.2,1),left .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1)}
-.mv2-live .mv2-amt{transition:top .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes mv2grow{from{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.mv2 *{animation:none!important;transition:none!important}.mv2-pre .mv2-seg{transform:none}}
 /* === MONEY v2 END === */
 
 
 /* === NAV v2 START === */
-/* Nav v2 — top bar (avatar · brand · bell + date pill on phone; search · date · bell · avatar on desktop)
+/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
    and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
    Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
    attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
@@ -627,9 +612,10 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 /* ---- top bar ---- */
 .nv2-top{position:relative;z-index:40;display:flex;align-items:center;gap:10px;min-height:44px}
 .nv2-anc{position:relative}
-.nv2-status{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:99px;font-size:12px;font-weight:500;color:var(--nv2-good);background:color-mix(in srgb,var(--nv2-good) 11%,transparent);border:1px solid color-mix(in srgb,var(--nv2-good) 25%,transparent);white-space:nowrap}
-.nv2-status::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
-.nv2-search{position:relative;flex:0 1 340px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
+/* Profitable / Loss: a tiny dot after the brand name (aria-label + title carry the words) */
+.nv2-sdot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--nv2-good);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-good) 22%,transparent)}
+.nv2-sdot.nv2-loss{background:var(--nv2-bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-bad) 22%,transparent)}
+.nv2-search{position:relative;flex:1 1 340px;max-width:340px;min-width:150px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
 .nv2-search:focus-within{border-color:var(--nv2-acc)}
 .nv2-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:13.5px;color:var(--nv2-fg)}
 .nv2-search input::placeholder{color:var(--nv2-mut)}
@@ -639,21 +625,25 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-res button{display:flex;width:100%;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:var(--nv2-fg)}
 .nv2-res button small{margin-left:auto;font-size:12px;color:var(--nv2-mut)}
 .nv2-res button:hover,.nv2-res button.nv2-hl{background:var(--nv2-panel2)}
-.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
 .nv2-date{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:99px;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s}
 .nv2-date:hover{border-color:var(--nv2-acc)!important}
 .nv2-date small{font-size:12.5px;color:var(--nv2-mut);font-weight:400}
+.nv2-ds{display:none}
 .nv2-date .nv2-i{width:16px;height:16px}
 .nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
 .nv2-ib:hover{border-color:var(--nv2-acc)!important}
 .nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
-.nv2-av{display:flex;align-items:center;gap:9px;height:44px;padding:0 4px;border-radius:99px}
+.nv2-avw{flex:none}
+.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
 .nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
-.nv2-av span{font-size:12.5px;color:var(--nv2-mut)}
-.nv2-brand{display:none;align-items:center;gap:9px;justify-content:center;height:44px;padding:0 6px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
-.nv2-mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-brandw{min-width:0;flex:none}
+.nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
+.nv2-brand:hover{background:var(--nv2-panel2)}
+.nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
 .nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
-.nv2-row2{display:none}
+.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
 /* popovers */
 .nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
   opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
@@ -690,19 +680,27 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
 .nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
 
-/* ---- phone / tablet top ---- */
+/* ---- narrower desktops: the range moves into the menu ---- */
+@media (max-width:1279px){.nv2-dr{display:none}}
+/* ---- phone / tablet top: the same single row; search hidden, compact date ("7 days") ---- */
 @media (max-width:1023px){
-  .nv2-top{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;grid-template-areas:"av brand bell" "row row row";row-gap:14px;column-gap:8px;align-items:center}
-  .nv2-search,.nv2-status-d,.nv2-av span{display:none}
-  .nv2-avw{grid-area:av} .nv2-brandw{grid-area:brand;justify-self:center} .nv2-bellw{grid-area:bell}
-  .nv2-av{padding:0;width:44px;justify-content:center}
-  .nv2-brand{display:flex}
-  .nv2-right{display:contents}
-  .nv2-datew-d{display:none}
-  .nv2-row2{grid-area:row;display:flex;justify-content:center;align-items:center;gap:8px}
-  .nv2-pop{position:absolute}
-  .nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+  .nv2-top{gap:8px}
+  .nv2-brandw{flex:0 1 auto}
+  .nv2-search{display:none}
+  .nv2-dl,.nv2-dr{display:none}
+  .nv2-ds{display:inline}
 }
+@media (max-width:480px){
+  .nv2-top{gap:6px}
+  .nv2-right{gap:6px}
+  .nv2-av,.nv2-ib{width:40px;height:40px}
+  .nv2-av b{width:38px;height:38px}
+  .nv2-dot{top:9px;right:10px}
+  .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
+  .nv2-date{height:40px;padding:0 12px;gap:6px}
+  .nv2-date .nv2-cal{display:none}
+}
+@media (max-width:400px){.nv2-bchev{display:none}}
 
 /* ---- bottom dock ---- */
 .nv2-dock{display:none}
@@ -1428,6 +1426,41 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 }
 @media (prefers-reduced-motion:reduce){.ct2 *{transition:none!important}}
 /* === CITIES v2 END === */
+/* === READ v1 START === */
+/* Readability layer (round 4): 12px text floor, 14px notes, 22/18px panel padding, 24/20px section rhythm. */
+.actions button.qa,
+.actions button.qa.ai,
+.cp small,
+.fb em,
+.fnl-note span,
+.grp h6,
+.kt span.s,
+.lane div.retb,
+.o span.badge,
+.ph span.cnt,
+.ph span.r,
+.ph span.tag.p,
+.s span.dl.g,
+.s span.dl.w,
+.stop span.lb,
+.tags span.tag.g,
+.tags span.tag.n,
+.tags span.tag.p,
+.tags span.tag.w,
+.v small { font-size: 12px !important; }
+:root[data-theme="light"] { --good: #0f7a52; --warn: #8a5c08; --bad: #b83440; }
+.osz { font-size: 14px; line-height: 1.5; }
+.panel:not(.osheet) { padding: 22px; }
+main { gap: 24px; }
+.topgrid { gap: 24px; }
+.tabs-anchor { margin-bottom: -24px; }
+@media (max-width: 600px) {
+  .panel:not(.osheet) { padding: 18px; }
+  main { gap: 20px; }
+  .topgrid { gap: 20px; }
+  .tabs-anchor { margin-bottom: -20px; }
+}
+/* === READ v1 END === */
 </style>
 </head>
 <body>
@@ -1506,24 +1539,9 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   <main>
     <h1 class="sr">Overview</h1>
     <!-- === NAV v2 START === -->
-    <!-- Nav v2: top bar. The dock + sheets part of this block sits at the end of the body. -->
+    <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
     <header class="nv2-top" data-nv2-store="n-theme">
-      <span class="nv2-status nv2-status-d">Profitable</span>
-      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
-        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
-      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span>Frill N Wear<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-c" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
-      <div class="nv2-right">
-        <div class="nv2-anc nv2-datew-d"><button type="button" class="nv2-date" data-nv2-pop="date-d" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-          <div class="nv2-pop" data-nv2-id="date-d" role="menu" aria-label="Date range"></div></div>
-        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
-          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-          </div></div>
-        <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b><span>sam@frillnwear.com</span></button>
+      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
           <div class="nv2-pop" data-nv2-id="me" role="menu">
             <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
@@ -1532,10 +1550,20 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
             <div class="nv2-hr"></div>
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
-      </div>
-      <div class="nv2-row2"><span class="nv2-status">Profitable</span>
-        <div class="nv2-anc"><button type="button" class="nv2-date" data-nv2-pop="date-m" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-          <div class="nv2-pop nv2-c" data-nv2-id="date-m" role="menu" aria-label="Date range"></div></div>
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
+        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
+      <div class="nv2-right">
+        <div class="nv2-anc nv2-datew"><button type="button" class="nv2-date" data-nv2-pop="date" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i nv2-cal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><span class="nv2-ds">7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
+        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+          </div></div>
       </div>
     </header>
     <!-- === NAV v2 END === -->
@@ -1544,93 +1572,76 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     <section class="topgrid">
       <section class="cards-sec rise" style="--d:.05s" aria-label="Sales, ads and shipping cards">
 <!-- === CARDS v2 START === -->
-<!-- Cards v2: Sales / Ads / Shipping carousel. Copy this whole block + the CSS block + the JS block.
+<!-- Cards v2: Sales / Meta Ads / Courier carousel. Copy this whole block + the CSS block + the JS block.
      Back-of-card links fire a bubbling "cv2:action" event (detail.go) — hook it to the page's tab switcher. -->
-<div class="cv2" id="cv2" role="region" aria-roledescription="carousel" aria-label="Sales, ads and shipping cards">
+<div class="cv2" id="cv2" role="region" aria-roledescription="carousel" aria-label="Sales, Meta ads and courier cards">
   <div class="cv2-stage" data-front="sales">
 
     <!-- SALES -->
     <div class="cv2-card cv2-sales" data-key="sales" tabindex="0" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Sales card. Estimated profit after ads EGP 46,671. Press Enter for details.">
+         aria-label="Sales card. Profit you keep EGP 46,671. Margin 18.4%, 175 orders, average order EGP 1,391. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-tag"><i></i><span>Profit ROAS 1.44x · below break-even 1.65x</span></span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></div>
-          <div class="cv2-fhero"><div class="cv2-lbl">Est. profit after ads</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671">46,671</span></div></div>
-          <div class="cv2-bot"><div class="cv2-kv"><div><div class="cv2-k">Margin</div><div class="cv2-v cv2-g">18.4%</div></div><div><div class="cv2-k">Cancelled</div><div class="cv2-v cv2-w">14</div></div></div>
-            <span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-top"><span class="cv2-fn">FN</span><span class="cv2-nm">Sales</span><span class="cv2-tag"><i></i><span>Profit ROAS 1.44x · below 1.65x</span></span></div>
+          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg><span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-fhero"><div class="cv2-lbl">Profit you keep</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="46671">46,671</span></div></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk">Margin</span><span class="cv2-tv cv2-g">18.4%</span></div><div><span class="cv2-tk">Orders</span><span class="cv2-tv">175</span></div><div><span class="cv2-tk"><span class="cv2-tw">Average order</span><span class="cv2-tn">Avg. order</span></span><span class="cv2-tv"><small>EGP</small>1,391</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt">Where each EGP 100 went</div><div class="cv2-bs">Net sales EGP 253,113</div></div>
+          <div class="cv2-bh"><span class="cv2-fn">FN</span><div class="cv2-bhx"><div class="cv2-bt">This week vs last week</div><div class="cv2-bs">Oct 24–30 compared with Oct 17–23</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-lead"><span class="cv2-big cv2-hero cv2-gc"><small>EGP</small>18</span><span class="cv2-p">kept of every EGP 100 · <b>EGP 46,671</b></span></div>
-          <div class="cv2-split" role="img" aria-label="Product cost 29, Meta ads 42, commission 7, Bosta fees 4, you keep 18">
-            <i style="width:29%;background:#c9b0f0"></i><i style="width:42%;background:#f0d48e"></i><i style="width:7%;background:#e7d4ff"></i><i style="width:4%;background:#9a8fb8"></i><i class="cv2-keep" style="width:18%;background:#3fbf8f"></i>
+          <div class="cv2-d3"><div><span class="cv2-lab">Profit</span><span class="cv2-big cv2-gc">▲ 8.1%</span></div><div><span class="cv2-lab">Orders</span><span class="cv2-big cv2-gc">▲ 9.4%</span></div><div><span class="cv2-lab">Revenue</span><span class="cv2-big cv2-gc">▲ 12.4%</span></div></div>
+          <div class="cv2-rows">
+            <div class="cv2-row"><span class="cv2-lab">Best day</span><b>Thu, Oct 29 <small>·</small> EGP 39,600</b></div>
+            <div class="cv2-row"><span class="cv2-lab">Best seller</span><b>Layla Tiered Ruffle Maxi <small>· 27 sold</small></b></div>
+            <div class="cv2-row"><span class="cv2-lab"><span class="cv2-wide">New vs returning customers</span><span class="cv2-nar">New / returning</span></span><b>128 <small>/</small> 47</b></div>
           </div>
-          <div class="cv2-leg">
-            <div style="--sw:#c9b0f0"><span class="cv2-big">29</span><span class="cv2-lab">Product<span class="cv2-wide"> cost</span></span></div>
-            <div style="--sw:#f0d48e"><span class="cv2-big cv2-wc">42</span><span class="cv2-lab">Meta ads</span></div>
-            <div style="--sw:#e7d4ff"><span class="cv2-big">7</span><span class="cv2-lab">Commission</span></div>
-            <div style="--sw:#9a8fb8"><span class="cv2-big">4</span><span class="cv2-lab">Bosta<span class="cv2-wide"> fees</span></span></div>
-            <div style="--sw:#3fbf8f"><span class="cv2-big cv2-gc">18</span><span class="cv2-lab"><span class="cv2-wide">You keep</span><span class="cv2-nar">Kept</span></span></div>
-          </div>
-          <div class="cv2-foot"><span class="cv2-p"><b class="cv2-wc">14</b> cancelled<span class="cv2-wide"> (EGP 19,600)</span> · <b>7</b> returned<span class="cv2-wide"> (EGP 10,150)</span></span><a class="cv2-lnk" href="#" data-cv2-go="ads">Review Meta <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cv2-foot"><span class="cv2-p"><span class="cv2-wide">Ads need to bring <b>EGP 1.65</b> per EGP 1 to break even —&nbsp;now&nbsp;<b class="cv2-wc">1.44</b></span><span class="cv2-nar">Break-even <b>1.65</b> · now <b class="cv2-wc">1.44</b></span></span><a class="cv2-lnk" href="#" data-cv2-go="ads">Review Meta <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
 
-    <!-- ADS -->
+    <!-- META ADS -->
     <div class="cv2-card cv2-ads" data-key="ads" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Ads card. Meta spend EGP 106,807. 1 ad set tired, frequency 4.1. Press Enter for details.">
+         aria-label="Ads card. Meta spend EGP 106,807. Cost per purchase EGP 526. Tired ad set Broad, Women 25 to 44. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-fn">∞</span><span class="cv2-nm">Ads</span><span class="cv2-tag"><i></i><span>1 ad set tired · frequency 4.1</span></span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></div>
+          <div class="cv2-top"><span class="cv2-fn">∞</span><span class="cv2-nm">Ads</span></div>
+          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg><span class="cv2-flipbtn cv2-ic" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
           <div class="cv2-fhero"><div class="cv2-lbl">Meta spend</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="106807">106,807</span></div></div>
-          <div class="cv2-bot"><div class="cv2-kv"><div><div class="cv2-k">Cost / purchase</div><div class="cv2-v"><small>EGP</small>526</div></div><div><div class="cv2-k">Tired ad set</div><div class="cv2-v cv2-txt cv2-bc">Broad · Women 25–44</div></div></div>
-            <span class="cv2-flipbtn cv2-ic" aria-hidden="true"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk"><span class="cv2-tw">Cost per purchase</span><span class="cv2-tn">Per purchase</span></span><span class="cv2-tv"><small>EGP</small>526</span></div><div><span class="cv2-tk">Tired ad set</span><span class="cv2-tv cv2-txt cv2-bc">Broad · Women 25–44</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">∞</span><div class="cv2-bhx"><div class="cv2-bt">From view to purchase</div><div class="cv2-bs">Meta pixel · spent EGP 106,807</div></div>
+          <div class="cv2-bh"><span class="cv2-fn">∞</span><div class="cv2-bhx"><div class="cv2-bt">This week on Meta</div><div class="cv2-bs">Spent EGP 106,807</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-fun" role="img" aria-label="14,620 viewed, 779 added to cart, 327 reached checkout, 203 purchased">
-            <div class="cv2-fs"><span class="cv2-lab"><span class="cv2-wide">View content</span><span class="cv2-nar">Viewed</span></span><span class="cv2-big">14,620</span><span class="cv2-fp">all visitors</span><span class="cv2-fb"><i style="width:100%"></i></span></div>
-            <div class="cv2-fs"><span class="cv2-lab"><span class="cv2-wide">Add to cart</span><span class="cv2-nar">Cart</span></span><span class="cv2-big">779</span><span class="cv2-fp">5%<span class="cv2-wide"> of views</span></span><span class="cv2-fb"><i style="width:62%"></i></span></div>
-            <div class="cv2-fs"><span class="cv2-lab">Checkout</span><span class="cv2-big">327</span><span class="cv2-fp">42%<span class="cv2-wide"> of carts</span></span><span class="cv2-fb"><i style="width:44%"></i></span></div>
-            <div class="cv2-fs cv2-last"><span class="cv2-lab"><span class="cv2-wide">Purchase</span><span class="cv2-nar">Bought</span></span><span class="cv2-big">203</span><span class="cv2-fp">62%<span class="cv2-wide"> of checkouts</span></span><span class="cv2-fb"><i style="width:34%"></i></span></div>
+          <div class="cv2-lead2"><div class="cv2-lead"><span class="cv2-big cv2-hero">2.37x</span><span class="cv2-p">Revenue ROAS · <b class="cv2-gc">▲ 5.7%</b><span class="cv2-wide"> vs last week</span></span></div>
+            <div class="cv2-stat"><span class="cv2-lab">Purchases</span><span class="cv2-big">203</span></div></div>
+          <div class="cv2-adl">
+            <div class="cv2-adr" style="--c:var(--cv2-fg-g)"><span class="cv2-lab"><span class="cv2-wide">Best ad</span><span class="cv2-nar">Best</span></span><b class="cv2-cn">Satin Edit · Video 3</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b>4.10</b></span><span class="cv2-act">Scale</span></div>
+            <div class="cv2-adr" style="--c:var(--cv2-fg-b)"><span class="cv2-lab"><span class="cv2-wide">Worst ad</span><span class="cv2-nar">Worst</span></span><b class="cv2-cn">Retarget · Carousel 2</b><span class="cv2-ret"><span class="cv2-wide">EGP </span>1 → <b>0.90</b></span><span class="cv2-act">Pause</span></div>
           </div>
-          <div class="cv2-two">
-            <div class="cv2-cmpn cv2-best"><span class="cv2-lab">Best<span class="cv2-wide"> campaign</span></span><b class="cv2-cn">Satin Edit · Advantage+</b><span class="cv2-big cv2-gc">3.4x</span></div>
-            <div class="cv2-cmpn cv2-worst"><span class="cv2-lab">Worst<span class="cv2-wide"> campaign</span></span><b class="cv2-cn">Retarget · 30 days</b><span class="cv2-big cv2-bc">1.2x</span></div>
-          </div>
+          <div class="cv2-foot"><span class="cv2-p"><b>EGP 15,258</b>/day<span class="cv2-wide"> · balance lasts</span><span class="cv2-nar"> ·</span> <b class="cv2-wc">~6 days</b><span class="cv2-wide"> (EGP 96,400)</span></span><a class="cv2-lnk" href="#" data-cv2-go="ads"><span class="cv2-wide">Open Ads Manager</span><span class="cv2-nar">Ads Manager</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
 
-    <!-- SHIPPING -->
+    <!-- COURIER -->
     <div class="cv2-card cv2-ship" data-key="ship" tabindex="-1" role="group" aria-roledescription="card" aria-expanded="false"
-         aria-label="Shipping card. Cash on delivery to collect EGP 58,300. Press Enter for details.">
+         aria-label="Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned. EGP 38k stuck 7+ days. Press Enter for details.">
       <div class="cv2-flip">
         <div class="cv2-front">
-          <div class="cv2-top"><span class="cv2-fn">B</span><span class="cv2-nm">Shipping</span><span class="cv2-tag"><i></i><span>EGP 38k stuck 7+ days</span></span></div>
-          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></svg></div>
-          <div class="cv2-fhero"><div class="cv2-lbl">Cash on delivery to collect</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="58300">58,300</span></div></div>
-          <div class="cv2-bot"><div class="cv2-kv"><div><div class="cv2-k">In transit</div><div class="cv2-v">38</div></div><div><div class="cv2-k">Delivered</div><div class="cv2-v cv2-g">121</div></div></div>
-            <span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-top"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><span class="cv2-nm">Courier</span><span class="cv2-tag"><i></i><span>EGP 38k stuck 7+ days</span></span></div>
+          <div class="cv2-chiprow"><span class="cv2-chip"></span><svg class="cv2-i cv2-wave cv2-truck" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3 3.2v2.8h-7"/><circle cx="6.5" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/></svg><span class="cv2-flipbtn">Details <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></svg></span></div>
+          <div class="cv2-fhero"><div class="cv2-lbl">Cash to collect</div><div class="cv2-amt"><span class="cv2-cur">EGP</span><span data-cv2-count="58300">58,300</span></div></div>
+          <div class="cv2-tiles"><div><span class="cv2-tk">In transit</span><span class="cv2-tv">38</span></div><div><span class="cv2-tk">Delivered</span><span class="cv2-tv cv2-g">121</span></div><div><span class="cv2-tk">Returned</span><span class="cv2-tv cv2-bc">7</span></div></div>
         </div>
         <div class="cv2-back"><div class="cv2-bk">
-          <div class="cv2-bh"><span class="cv2-fn">B</span><div class="cv2-bhx"><div class="cv2-bt">Your Bosta cash, by age</div><div class="cv2-bs">EGP 58,300 to collect · 166 parcels</div></div>
+          <div class="cv2-bh"><span class="cv2-logo" role="img" aria-label="Bosta"><svg class="cv2-bosta" aria-hidden="true" focusable="false" viewBox="0 0 111 34" fill="none"><path d="M32.6634 8.83273L17.7948 0.266462C17.2016 -0.0888208 16.4503 -0.0888208 15.8572 0.266462L0.9886 8.83273C0.39544 9.18801 0 9.81962 0 10.5302V23.0835C0 23.7941 0.355896 24.4257 0.9886 24.781L15.8572 33.3473C16.1735 33.5052 16.4899 33.6236 16.8458 33.6236C17.2016 33.6236 17.518 33.5447 17.8344 33.3473L32.7029 24.781C33.2961 24.4257 33.6915 23.7941 33.6915 23.0835V10.5302C33.6519 9.81962 33.2565 9.18801 32.6634 8.83273ZM30.2116 19.9649L24.715 16.8069L30.2116 13.6488V19.9649ZM16.8458 3.66139L28.7485 10.5302L16.8458 17.399L4.90345 10.5302L16.8458 3.66139ZM3.44032 13.6093L8.93695 16.7674L3.44032 19.9255V13.6093ZM16.8458 29.9129L4.90345 23.0441L12.3377 18.7412L15.8176 20.7545C16.134 20.9124 16.4503 21.0308 16.8062 21.0308C17.1621 21.0308 17.4785 20.9518 17.7948 20.7545L21.2747 18.7412L28.709 23.0441L16.8458 29.9129Z" fill="#E30613"/><path d="M65.6826 11.7934C61.57 11.7934 58.7229 14.5962 58.7229 18.6228C58.7229 22.6493 61.57 25.4521 65.6431 25.4521C69.7556 25.4521 72.6028 22.6493 72.6028 18.6228C72.6028 14.5962 69.7556 11.7934 65.6826 11.7934ZM65.6826 22.3335C63.5472 22.3335 62.2027 20.8729 62.2027 18.6228C62.2027 16.3726 63.5868 14.912 65.6826 14.912C67.7389 14.912 69.1625 16.4121 69.1625 18.6228C69.1229 20.8334 67.7389 22.3335 65.6826 22.3335Z" fill="#E30613"/><path d="M80.2743 17.2016C78.653 16.9648 77.2294 16.7674 77.2294 15.6621C77.2294 15.1094 77.6249 14.3988 79.4439 14.3988C80.907 14.3988 81.9747 15.0304 82.2911 16.1358L85.415 15.4252C84.7428 13.0567 82.6865 11.7539 79.6416 11.7539C76.2408 11.7539 73.9473 13.333 73.9473 15.7015C73.9473 19.0175 76.8735 19.4123 79.2462 19.7676C80.907 20.0044 82.3701 20.2018 82.3701 21.3861C82.3701 22.0177 81.8956 22.7677 79.6416 22.7677C77.9412 22.7677 76.7944 22.1361 76.4385 20.9913L73.3146 21.6229C74.0264 24.0704 76.1617 25.3731 79.5625 25.3731C83.3192 25.3731 85.6918 23.7941 85.6918 21.2676C85.7314 17.9911 82.7261 17.5569 80.2743 17.2016Z" fill="#E30613"/><path d="M92.2562 22.4914C91.228 22.4914 90.6348 21.7808 90.6348 20.5571V15.0305H95.9338V12.1487H90.6348V8.12217H87.1945V20.5965C87.1945 23.7151 88.9344 25.4916 91.9398 25.4916C94.5497 25.4916 96.2501 24.3073 96.8433 22.0966L94.0752 21.2282C93.7588 22.0177 93.1261 22.4914 92.2562 22.4914Z" fill="#E30613"/><path d="M107.639 13.8067L107.52 13.6488C106.65 12.425 105.227 11.7934 103.328 11.7934C99.8486 11.7934 97.3573 14.6752 97.3573 18.6227C97.3573 22.6098 99.8486 25.4916 103.249 25.4916C105.147 25.4916 106.571 24.8205 107.481 23.5178L107.599 23.3599V23.3993L108.271 25.1363H111V12.1882H108.271L107.639 13.8067ZM104.159 22.3335C102.142 22.3335 100.798 20.8729 100.798 18.5833C100.798 16.3332 102.103 14.8725 104.159 14.8725C106.215 14.8725 107.56 16.3332 107.56 18.5833C107.56 20.8334 106.176 22.3335 104.159 22.3335Z" fill="#E30613"/><path d="M51.4863 11.7937C49.6673 11.7937 48.2832 12.4253 47.3737 13.649L47.176 13.9254V8.16189H43.7357V25.1365H46.4642L47.176 23.3206L47.2946 23.4785C48.2437 24.8207 49.6673 25.4918 51.5258 25.4918C55.0057 25.4918 57.4179 22.689 57.4179 18.6625C57.3783 14.5965 54.9662 11.7937 51.4863 11.7937ZM50.6163 22.3337C49.0346 22.3337 47.176 21.7021 47.176 18.5835C47.176 16.2939 48.5205 14.8333 50.6559 14.8333C52.6331 14.8333 53.938 16.3334 53.938 18.5835C53.8985 20.8337 52.5935 22.3337 50.6163 22.3337Z" fill="#E30613"/></svg></span><div class="cv2-bhx"><div class="cv2-bt">Delivery health</div><div class="cv2-bs">128 finished · 38 in transit</div></div>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-          <div class="cv2-age">
-            <div><span class="cv2-lab">0–3 days</span><span class="cv2-big"><small>EGP</small>12,100</span><span class="cv2-agebar"><i style="width:31.8%"></i></span></div>
-            <div><span class="cv2-lab">4–7 days</span><span class="cv2-big"><small>EGP</small>8,200</span><span class="cv2-agebar"><i style="width:21.6%"></i></span></div>
-            <div class="cv2-old"><span class="cv2-lab"><b class="cv2-bc">7+ days<span class="cv2-wide"> · 9 customers</span><span class="cv2-nar"> · stuck</span></b></span><span class="cv2-big"><small>EGP</small>38,000</span><span class="cv2-agebar"><i style="width:100%"></i></span></div>
-          </div>
-          <div class="cv2-foot3">
-            <div class="cv2-date"><span class="cv2-cal"><span>Nov</span><b>2</b></span><div><span class="cv2-lab">Next payout<span class="cv2-nar"> · Nov 2</span></span><span class="cv2-big">EGP 20,300</span></div></div>
-            <div><span class="cv2-lab">Returns</span><span class="cv2-big">4.2%<small class="cv2-wide"> 7 of 166</small></span></div>
-            <a class="cv2-lnk" href="#" data-cv2-go="orders">Review shipping <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          </div>
+          <div class="cv2-ok"><div class="cv2-lead"><span class="cv2-big cv2-hero cv2-gc">94.5%</span><span class="cv2-p">delivered<span class="cv2-wide"> · <b>121</b> of <b>128</b> finished</span><span class="cv2-nar"> · 121 of 128</span></span></div>
+            <span class="cv2-okbar" role="img" aria-label="94.5% delivered"><i style="width:94.5%"></i></span></div>
+          <div class="cv2-d3"><div><span class="cv2-lab"><span class="cv2-wide">Average time to deliver</span><span class="cv2-nar">Avg. delivery</span></span><span class="cv2-big">2.4 <small>days</small></span></div><div><span class="cv2-lab"><span class="cv2-wide">Refused at the door</span><span class="cv2-nar">Refused</span></span><span class="cv2-big">5</span><span class="cv2-fp cv2-wide">EGP 450 lost shipping</span></div><div><span class="cv2-lab"><span class="cv2-wide">Next Bosta payout</span><span class="cv2-nar">Payout Nov 2</span></span><span class="cv2-big"><small>EGP</small>20,300</span><span class="cv2-fp cv2-wide">Sun, Nov 2</span></div></div>
+          <div class="cv2-call"><span class="cv2-p"><b class="cv2-wc">9<span class="cv2-wide"> parcels</span></b> stuck 7+ days · <b>EGP 38,000</b><span class="cv2-wide"> — needs a call</span></span><a class="cv2-lnk" href="#" data-cv2-go="orders">Call list <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
@@ -1639,11 +1650,10 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   <div class="cv2-nav">
     <button class="cv2-arr" type="button" data-cv2-prev aria-label="Previous card"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
     <div class="cv2-dots" role="tablist" aria-label="Cards">
-      <button type="button" role="tab" data-cv2-dot="0" aria-label="Sales" aria-selected="true"></button><button type="button" role="tab" data-cv2-dot="1" aria-label="Ads" aria-selected="false"></button><button type="button" role="tab" data-cv2-dot="2" aria-label="Shipping" aria-selected="false"></button>
+      <button type="button" role="tab" data-cv2-dot="0" aria-label="Sales" aria-selected="true"></button><button type="button" role="tab" data-cv2-dot="1" aria-label="Meta ads" aria-selected="false"></button><button type="button" role="tab" data-cv2-dot="2" aria-label="Courier" aria-selected="false"></button>
     </div>
     <button class="cv2-arr" type="button" data-cv2-next aria-label="Next card"><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
   </div>
-  <p class="cv2-hint" aria-live="polite">Swipe or use the arrows · tap the front card for details</p>
 </div>
 <!-- === CARDS v2 END === -->
       </section>
@@ -2149,7 +2159,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
-  var PERIODS=[['today','Today','Oct 31'],['yesterday','Yesterday','Oct 30'],['7d','Last 7 days','Oct 24–30'],['30d','Last 30 days','Oct 1–30'],['month','This month','Oct 1–31']];
+  var PERIODS=[['today','Today','Oct 31','Today'],['yesterday','Yesterday','Oct 30','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–31','Month']];
   var period='7d';
   /* ---- popovers ---- */
   var openPop=null;
@@ -2161,7 +2171,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   function paintDates(){
     $$('[data-nv2-id^="date"]',top).forEach(function(m){m.innerHTML=PERIODS.map(function(p){return '<button type="button" class="nv2-mi" role="menuitemradio" data-nv2-period="'+p[0]+'" aria-checked="'+(p[0]===period)+'">'+p[1]+'<small>'+p[2]+'</small></button>'}).join('')});
     var cur=PERIODS.filter(function(p){return p[0]===period})[0];
-    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
+    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-ds',top).forEach(function(s){s.textContent=cur[3]});$$('.nv2-date',top).forEach(function(b){b.setAttribute('aria-label','Date range: '+cur[1]+', '+cur[2])});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
   }
   paintDates();
   top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
@@ -2217,7 +2227,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 </script>
 <script>
 /* === CARDS v2 START === */
-/* Cards v2 behaviour. Initialises every .cv2 on the page; needs nothing else.
+/* Cards v2 behaviour. Initialises every .cv2 on the page; needs nothing else. No hint text: arrows + dots only.
    Front card: tap / Enter / Space flips it; the card gets wider (never taller) for its back (side cards step aside).
    Tap again, Close, or Esc flips back. Arrows, dots, swipe/drag and ←/→ move the carousel.
    Back links: <a data-cv2-go="ads"> fire  root.dispatchEvent(new CustomEvent('cv2:action',{bubbles:true,detail:{go:'ads'}})). */
@@ -2228,11 +2238,10 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
            1:{x:'70%',y:'6px',z:'-180px',ry:'-30deg',s:.8,o:.95,zi:3},
            2:{x:'-70%',y:'6px',z:'-180px',ry:'30deg',s:.8,o:.95,zi:3}};
   var AWAY={1:{x:'125%',s:.7,o:0},2:{x:'-125%',s:.7,o:0}};
-  var HINT_CLOSED='Swipe or use the arrows · tap the front card for details',HINT_OPEN='Tap the card, Close or Esc to turn it back';
   function init(root){
     if(root.dataset.cv2Ready)return;root.dataset.cv2Ready='1';
     var stage=root.querySelector('.cv2-stage'),cards=[].slice.call(root.querySelectorAll('.cv2-card')),n=cards.length,active=0,open=null;
-    var dots=[].slice.call(root.querySelectorAll('[data-cv2-dot]')),hint=root.querySelector('.cv2-hint');
+    var dots=[].slice.call(root.querySelectorAll('[data-cv2-dot]'));
     function layout(){
       cards.forEach(function(c,i){var d=(i-active+n)%n,p=POS[d],a=open&&d?AWAY[d]:null;
         ['x','y','z','ry','s','o','zi'].forEach(function(k){c.style.setProperty('--cv2-'+k,a&&a[k]!==undefined?a[k]:p[k])});
@@ -2250,14 +2259,14 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
     }
     function openCard(c){
       open=c;size(c);c.classList.add('cv2-is-open');root.classList.add('cv2-has-open');c.setAttribute('aria-expanded','true');
-      layout();if(hint)hint.textContent=HINT_OPEN;
+      layout();
       var r=stage.getBoundingClientRect();if(r.top<0)window.scrollBy({top:r.top-16,behavior:reduce?'auto':'smooth'});
     }
     function closeCard(focus){
       if(!open)return;var c=open;open=null;
       c.classList.remove('cv2-is-open');root.classList.remove('cv2-has-open');c.setAttribute('aria-expanded','false');
       c.style.removeProperty('--cv2-w');
-      layout();if(hint)hint.textContent=HINT_CLOSED;if(focus)c.focus({preventScroll:true});
+      layout();if(focus)c.focus({preventScroll:true});
     }
     function go(i){if(open)closeCard();active=(i+n)%n;layout()}
     var dragX=null,dragged=false;
@@ -2553,8 +2562,9 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 </script>
 <script>
 /* === MONEY v2 START === */
-/* Money v2 behaviour: renders the journey into every [data-mv2] element from MV2_STEPS, draws it to
-   scale, lets each step explain itself (hover / tap / keyboard), grows the bars once when first visible.
+/* Money v2 behaviour: renders the journey into every [data-mv2] element from MV2_STEPS — the stacked bar
+   (gross split into where it went) and the receipt in two groups. Hover a row or a segment to pair them;
+   tap / Enter a row to open its explanation. The bar grows once when first visible.
    Links fire  el.dispatchEvent(new CustomEvent('mv2:action',{bubbles:true,detail:{go:'orders'}})). */
 (function(){
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2562,73 +2572,85 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   var ROOTS=[];
   /* kind: start | ded | cp ; amounts reconcile: 291,263 − 8,400 − 19,600 − 10,150 = 253,113 ; 253,113 − 72,897 − 106,807 − 17,718 − 9,020 = 46,671 */
   var MV2_STEPS=[
-    {k:'start',n:'Gross sales',a:291263,est:1,c:'var(--mv2-gross)',sub:'every order placed',
+    {k:'start',n:'Gross sales',a:291263,est:1,c:'var(--mv2-mut)',note:'196 orders placed',
      why:'Every order placed in the last 7 days, before anything comes off — 196 orders.',todo:'This is demand: ads and the site are bringing buyers in.'},
-    {k:'ded',n:'Discounts',a:8400,est:1,c:'linear-gradient(180deg,#f7a6ae,#c5566a)',
+    {k:'ded',n:'Discounts',a:8400,est:1,c:'#f2a0a9',note:'codes at checkout',
      why:'Codes and automatic discounts taken at checkout.',todo:'Keep a code only if it lifts orders — check which one is used most.',go:'sales',gl:'Review orders'},
-    {k:'ded',n:'Cancelled',a:19600,est:1,c:'linear-gradient(180deg,#f58a95,#b8394d)',sub:'14 orders',
+    {k:'ded',n:'Cancelled',a:19600,est:1,c:'#e46f7e',note:'14 orders',
      why:'14 orders (7.1% of orders) cancelled before they shipped.',todo:'Check courier and COD confirmation calls.',go:'orders',gl:'Review shipping'},
-    {k:'ded',n:'Returned',a:10150,est:1,c:'linear-gradient(180deg,#e9707f,#9c2a3e)',sub:'7 orders',
+    {k:'ded',n:'Returned',a:10150,est:1,c:'#c04a5e',note:'7 parcels',
      why:'7 parcels came back and were refunded (4.2% of parcels).',todo:'Salma Puff-Sleeve and Nour Satin Slip return most — check XS sizing.',go:'products',gl:'Open products'},
-    {k:'cp',n:'Net revenue',a:253113,c:'var(--mv2-net)',glow:'rgba(162,117,224,.75)',sub:'checkpoint',
+    {k:'cp',n:'Net revenue',a:253113,c:'#a275e0',note:'',
      why:'What actually stayed sold — 86.9% of gross. Every cost below comes out of this.',todo:'Use this number, not gross, when you judge ads.'},
-    {k:'ded',n:'Product cost',a:72897,c:'linear-gradient(180deg,#dccbf7,#a68bd6)',sub:'COGS',
+    {k:'ded',n:'Product cost',a:72897,c:'#7c3fc1',note:'COGS',
      why:'What the dresses that sold cost you to make. 94% of products have a cost recorded.',todo:'Add the missing costs so profit is exact.',go:'products',gl:'Open products'},
-    {k:'ded',n:'Meta ads',a:106807,c:'linear-gradient(180deg,#f6dc9c,#b88a3c)',
+    {k:'ded',n:'Meta ads',a:106807,c:'#d8c49a',note:'',
      why:'Your biggest cost: EGP 42 of every 100 of net revenue.',todo:'Move EGP 5,000/day from Retarget (1.20) to Satin Edit (3.40).',go:'ads',gl:'Review Meta'},
-    {k:'ded',n:'Commission',a:17718,c:'linear-gradient(180deg,#efe3ff,#bba3e6)',sub:'7%',
+    {k:'ded',n:'Commission 7%',a:17718,c:'#b493ec',note:'7% of net revenue',
      why:'Payment and platform commission at 7% of net revenue.',todo:'Fixed by contract — nothing to do this week.'},
-    {k:'ded',n:'Bosta fees',a:9020,c:'linear-gradient(180deg,#b9b0d2,#7d7398)',
+    {k:'ded',n:'Bosta fees',a:9020,c:'#8a7f9e',note:'166 parcels',
      why:'Shipping fees for 166 parcels, about EGP 54 each.',todo:'Returns are shipped twice — fewer returns cut this too.',go:'orders',gl:'Review shipping'},
-    {k:'cp',n:'Est. profit after ads',a:46671,c:'var(--mv2-profit)',glow:'rgba(69,208,154,.7)',sub:'18.4% of net',
+    {k:'cp',n:'Est. profit after ads',a:46671,c:'var(--mv2-good)',note:'',
      why:'What you keep: 18.4% of net revenue, 16.0% of gross.',todo:'Profit ROAS is 1.44x, under the 1.65x break-even — ads are the lever.',go:'ads',gl:'Review Meta'}
   ];
   var fmt=function(v){return Math.round(v).toLocaleString('en-US')};
-  var pct=function(v){return (v/GROSS*100).toFixed(1)+'%'};
+  var pct=function(v,of){return (v/(of||GROSS)*100).toFixed(1)+'%'};
   var ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var CHEV='<svg class="mv2-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  function sub(s,i){
+    if(i===0)return s.note+' · 100%';
+    if(i===4)return pct(s.a)+' of gross';
+    if(i===9)return pct(s.a,MV2_STEPS[4].a)+' of net revenue · '+pct(s.a)+' of gross';
+    return (s.note?s.note+' · ':'')+pct(s.a)+' of gross';
+  }
+  function amt(s){var neg=s.a<0;return s.k==='ded'?'− <b>'+fmt(s.a)+'</b>':'<small>EGP</small>'+(neg?'−':'')+fmt(Math.abs(s.a))}
+  function label(s,i){return s.n+(s.est?' (estimated)':'')+', '+(s.k==='ded'?'minus ':'')+'EGP '+fmt(Math.abs(s.a))+', '+sub(s,i)}
+  function rowHtml(s,i){
+    return '<li class="mv2-row mv2-'+(s.k==='ded'?'ded':'cp')+(i===9?' mv2-profit':'')+'" style="--c:'+s.c+'">'
+      +'<button type="button" class="mv2-b" data-i="'+i+'" aria-expanded="false" aria-label="'+label(s,i)+'">'
+      +'<span class="mv2-sw"></span><span class="mv2-nm"><b>'+s.n+(s.est?'<sup>*</sup>':'')+'</b><small>'+sub(s,i)+'</small></span>'
+      +'<span class="mv2-am">'+amt(s)+'</span>'+CHEV+'</button>'
+      +'<div class="mv2-why"><p><em>'+s.why+'</em> '+s.todo+'</p>'+(s.go?'<a class="mv2-lnk" href="#" data-mv2-go="'+s.go+'">'+s.gl+ARW+'</a>':'')+'</div></li>';
+  }
+  function segs(){return MV2_STEPS.map(function(s,i){return s.k==='ded'||i===9?'<span class="mv2-seg" data-i="'+i+'" style="--c:'+s.c+';--i:'+i+';flex:'+Math.max(0,s.a)+' 1 0" title="'+s.n+' · '+pct(Math.max(0,s.a))+'"></span>':''}).join('')}
+  function flowLabel(){return 'Gross sales EGP '+fmt(GROSS)+' split: '+MV2_STEPS.filter(function(s,i){return s.k==='ded'||i===9}).map(function(s){return s.n+' '+pct(s.a)}).join(', ')}
   function init(root){
     if(root.dataset.mv2Ready)return;root.dataset.mv2Ready='1';
-    var lvl=0,html='';
-    MV2_STEPS.forEach(function(s,i){
-      var b,h;
-      if(s.k==='ded'){h=s.a/GROSS*100;b=lvl-h;lvl=b}else{b=0;h=s.a/GROSS*100;lvl=h}
-      s.b=b;s.h=h;s.lv=lvl;
-      if(i===0)html+='<li class="mv2-ph" aria-hidden="true">From orders to revenue</li>';
-      if(i===5)html+='<li class="mv2-ph" aria-hidden="true">From revenue to profit</li>';
-      var sign=s.k==='ded'?'−':'';
-      var share=s.k==='start'?'100% · gross':(i===9?'16.0% of gross':pct(s.a)+' of gross');
-      html+='<li class="mv2-step mv2-'+s.k+'" style="--b:'+b.toFixed(3)+';--h:'+h.toFixed(3)+';--lv:'+lvl.toFixed(3)+';--i:'+i+';--mv2-c:'+s.c+(s.glow?';--mv2-glow:'+s.glow:'')+'">'
-        +'<button type="button" class="mv2-b" data-i="'+i+'" aria-label="'+s.n+(s.est?' (estimated)':'')+', '+sign+'EGP '+fmt(s.a)+', '+share+'">'
-        +'<span class="mv2-dot"></span>'
-        +'<span class="mv2-plot"><span class="mv2-bar"></span><span class="mv2-conn"></span></span><span class="mv2-amt">'+(s.k==='ded'?'':'<small>EGP</small>')+sign+fmt(s.a)+'</span>'
-        +'<span class="mv2-lab"><b>'+s.n+(s.est?'<span class="mv2-est">*</span>':'')+'</b><span>'+share+'</span></span>'
-        +'</button><div class="mv2-why"><span><em>'+s.why+'</em> '+s.todo+'</span>'+(s.go?'<a class="mv2-lnk" href="#" data-mv2-go="'+s.go+'">'+s.gl+ARW+'</a>':'')+'</div></li>';
-    });
-    root.innerHTML='<div class="mv2-head"><div><h3>Where the money went</h3><div class="mv2-sub">Last 7 days · every pound from order to profit · tap a step</div></div>'
-      +'<div class="mv2-res"><b><small>EGP</small>46,671</b><span>kept · 18.4% of net revenue · 16.0% of gross</span></div></div>'
-      +'<div class="mv2-chart"><div class="mv2-phases" aria-hidden="true"><span style="left:0;width:50.4%">From orders to revenue</span><span style="left:51.2%;width:48.8%">From revenue to profit</span></div>'
-      +'<ol class="mv2-steps">'+html+'</ol><p class="mv2-note">* estimated from order data</p></div>'
-      +'<div class="mv2-explain" aria-live="polite"></div>'
+    var a='',b='';
+    MV2_STEPS.forEach(function(s,i){if(i<5)a+=rowHtml(s,i);else b+=rowHtml(s,i)});
+    root.innerHTML='<div class="mv2-head"><h3>Where the money went</h3><div class="mv2-sub">Every pound from order to profit · tap a row for details</div></div>'
+      +'<div class="mv2-flow" role="img" aria-label="'+flowLabel()+'">'+segs()+'</div>'
+      +'<div class="mv2-scale"><span>Gross sales <b>EGP '+fmt(GROSS)+'</b></span><span class="mv2-kept">kept <b>'+pct(MV2_STEPS[9].a)+'</b></span></div>'
+      +'<div class="mv2-cols"><div><h4 class="mv2-gh">From orders to revenue</h4><ol class="mv2-list">'+a+'</ol></div>'
+      +'<div><h4 class="mv2-gh">From revenue to profit</h4><ol class="mv2-list">'+b+'</ol></div></div>'
+      +'<p class="mv2-note">* estimated from order data</p>'
       +'<p class="mv2-foot"><span>Of the net revenue, <b>EGP 58,300</b> is still with Bosta as cash on delivery</span><a class="mv2-lnk" href="#" data-mv2-go="orders">Review shipping'+ARW+'</a></p>';
-    var steps=[].slice.call(root.querySelectorAll('.mv2-step')),ex=root.querySelector('.mv2-explain'),sel=-1;
-    function pick(i){
-      if(i===sel)return;sel=i;var s=MV2_STEPS[i];
-      steps.forEach(function(li,j){li.classList.toggle('mv2-on',j===i);li.querySelector('.mv2-b').setAttribute('aria-expanded',String(j===i))});
-      ex.style.setProperty('--mv2-c',s.c);
-      ex.innerHTML='<span class="mv2-xi"></span><span class="mv2-xt"><b>'+s.n+' · '+(s.k==='ded'?'−':'')+'EGP '+fmt(s.a)+' · '+(s.k==='start'?'100% of gross':pct(s.a)+' of gross')+'</b><span><em>'+s.why+'</em> '+s.todo+'</span></span>'
-        +(s.go?'<a class="mv2-lnk" href="#" data-mv2-go="'+s.go+'">'+s.gl+ARW+'</a>':'');
-    }
+    var R={root:root};
+    function rows(){return [].slice.call(root.querySelectorAll('.mv2-row'))}
+    function hi(i){root.classList.toggle('mv2-sel',i>=0);
+      [].slice.call(root.querySelectorAll('.mv2-seg')).forEach(function(g){g.classList.toggle('mv2-on',+g.dataset.i===i)});
+      rows().forEach(function(li,j){li.classList.toggle('mv2-on',j===i)})}
+    function toggle(i){rows().forEach(function(li,j){var x=j===i&&!li.classList.contains('mv2-x');li.classList.toggle('mv2-x',x);li.querySelector('.mv2-b').setAttribute('aria-expanded',String(x))})}
     root.addEventListener('click',function(e){
-      var a=e.target.closest('[data-mv2-go]');
-      if(a){e.preventDefault();e.stopPropagation();root.dispatchEvent(new CustomEvent('mv2:action',{bubbles:true,detail:{go:a.dataset.mv2Go}}));return}
-      var b=e.target.closest('.mv2-b');if(!b)return;var i=+b.dataset.i;pick(i);
-      steps.forEach(function(li,j){var x=j===i&&!li.classList.contains('mv2-x');li.classList.toggle('mv2-x',x)});
+      var l=e.target.closest('[data-mv2-go]');
+      if(l){e.preventDefault();e.stopPropagation();root.dispatchEvent(new CustomEvent('mv2:action',{bubbles:true,detail:{go:l.dataset.mv2Go}}));return}
+      var t=e.target.closest('.mv2-b,.mv2-seg');if(!t)return;var i=+t.dataset.i;toggle(i);
+      if(t.classList.contains('mv2-seg')){var li=rows()[i];li.querySelector('.mv2-b').focus({preventScroll:true});li.scrollIntoView({block:'nearest',behavior:reduce?'auto':'smooth'})}
     });
-    steps.forEach(function(li,i){var b=li.querySelector('.mv2-b');
-      b.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'&&root.clientWidth>=960)pick(i)});
-      b.addEventListener('focus',function(){pick(i)})});
-    pick(9);
-    ROOTS.push({root:root,steps:steps,repick:function(){var s=sel;sel=-1;pick(s<0?9:s)}});
+    root.addEventListener('pointerover',function(e){if(e.pointerType!=='mouse')return;var t=e.target.closest('.mv2-b,.mv2-seg');hi(t?+t.dataset.i:-1)});
+    root.addEventListener('pointerleave',function(){hi(-1)});
+    root.addEventListener('focusin',function(e){var t=e.target.closest('.mv2-b');if(t)hi(+t.dataset.i)});
+    root.addEventListener('focusout',function(){hi(-1)});
+    R.paint=function(){
+      MV2_STEPS.forEach(function(s,i){var li=rows()[i];
+        li.querySelector('.mv2-am').innerHTML=amt(s);li.querySelector('.mv2-nm small').textContent=sub(s,i);
+        li.querySelector('.mv2-b').setAttribute('aria-label',label(s,i));li.querySelector('.mv2-why em').textContent=s.why;
+        var g=root.querySelector('.mv2-seg[data-i="'+i+'"]');if(g){g.style.flex=Math.max(0,s.a)+' 1 0';g.title=s.n+' · '+pct(Math.max(0,s.a))}});
+      rows()[9].classList.toggle('mv2-loss',MV2_STEPS[9].a<0);
+      root.querySelector('.mv2-flow').setAttribute('aria-label',flowLabel());
+      root.querySelector('.mv2-scale').innerHTML='<span>Gross sales <b>EGP '+fmt(GROSS)+'</b></span><span class="mv2-kept">'+(MV2_STEPS[9].a<0?'lost':'kept')+' <b>'+pct(Math.abs(MV2_STEPS[9].a))+'</b></span>';
+    };
+    ROOTS.push(R);
     if(reduce||!('IntersectionObserver' in window))return;
     root.classList.add('mv2-pre');
     var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){root.classList.remove('mv2-pre');root.classList.add('mv2-go');io.disconnect()}},{threshold:.15});
@@ -2637,30 +2659,15 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   /* Live update — window.mv2Update(amounts). amounts = 10 numbers in step order
      [gross, discounts, cancelled, returned, net revenue, product cost, Meta ads, commission, Bosta fees, profit]
      (they must reconcile like the real ones). Call with nothing / null to restore the actual figures.
-     Re-scales the bars to the new gross and rewrites amounts, shares, the result line and the open explanation.
-     Does not change the look; used by W's what-if simulator. */
+     Rewrites the bar, the amounts, the shares and the explanations; does not change the look. */
   var BASE_A=MV2_STEPS.map(function(s){return s.a});
-  function share(s,i){return s.k==='start'?'100% · gross':pct(s.a)+' of gross'}
   window.mv2Update=function(am){
     am=am&&am.length===10?am:BASE_A;GROSS=am[0];
     MV2_STEPS.forEach(function(s,i){s.a=am[i]});
-    var net=am[4],pr=am[9],pn=(pr/net*100).toFixed(1)+'%';
+    var net=am[4],pr=am[9];
     MV2_STEPS[4].why='What actually stayed sold — '+pct(net)+' of gross. Every cost below comes out of this.';
-    MV2_STEPS[9].why='What you keep: '+pn+' of net revenue, '+pct(pr)+' of gross.';MV2_STEPS[9].sub=pn+' of net';
-    ROOTS.forEach(function(R){var lvl=0;
-      R.root.classList.add('mv2-live');
-      MV2_STEPS.forEach(function(s,i){var li=R.steps[i],b,h;
-        if(s.k==='ded'){h=s.a/GROSS*100;b=lvl-h;lvl=b}else{b=0;h=Math.max(0,s.a/GROSS*100);lvl=h}
-        li.style.setProperty('--b',b.toFixed(3));li.style.setProperty('--h',h.toFixed(3));li.style.setProperty('--lv',lvl.toFixed(3));
-        var sign=s.k==='ded'||s.a<0?'−':'';
-        li.querySelector('.mv2-amt').innerHTML=(s.k==='ded'?'':'<small>EGP</small>')+sign+fmt(Math.abs(s.a));
-        li.querySelector('.mv2-lab > span').textContent=share(s,i);
-        li.querySelector('.mv2-b').setAttribute('aria-label',s.n+', '+sign+'EGP '+fmt(Math.abs(s.a))+', '+share(s,i));
-        var w=li.querySelector('.mv2-why em');if(w)w.textContent=s.why});
-      var rb=R.root.querySelector('.mv2-res b'),rs=R.root.querySelector('.mv2-res span');
-      rb.innerHTML='<small>EGP</small>'+(pr<0?'−':'')+fmt(Math.abs(pr));rb.style.color=pr<0?'var(--mv2-bad)':'';
-      rs.textContent=(pr<0?'lost':'kept')+' · '+pn+' of net revenue · '+pct(pr)+' of gross';
-      R.repick()});
+    MV2_STEPS[9].why='What you '+(pr<0?'lose':'keep')+': '+pct(pr,net)+' of net revenue, '+pct(pr)+' of gross.';
+    ROOTS.forEach(function(R){R.paint()});
   };
   function boot(){[].slice.call(document.querySelectorAll('[data-mv2]')).forEach(init)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
