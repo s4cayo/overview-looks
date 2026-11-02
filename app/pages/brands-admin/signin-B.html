@@ -175,28 +175,12 @@ main{gap:24px}
 
 /* sticky section tabs (J's style, same as Orders/Shipping) */
 .tabs-anchor{height:0;margin-bottom:-24px}
-.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
-.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:100%;padding:5px;border-radius:99px;
-  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
-.seg::-webkit-scrollbar{display:none}
-.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
-:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
-:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
-.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
-.seg button:hover{color:var(--text)}
-.seg button.on{color:#fff}
-.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
-.seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
-:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
-.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+/* the tab bar itself is TABS v1 from the Overview, added last by build.py */
 .pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
 .pane[hidden]{display:none}
 .pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media (max-width:600px){.tabs-anchor{margin-bottom:-20px}.tabbar{margin:0 -16px;padding:0 16px}.seg button{padding:9px 13px;font-size:13px}}
+@media (max-width:600px){.tabs-anchor{margin-bottom:-20px}}
 
 /* small segmented filter (pill buttons) */
 .pills{display:flex;gap:6px;flex-wrap:wrap}
@@ -448,10 +432,10 @@ body{min-height:100vh}
 
 /* #2 the "i" icon keeps its 18px look but gets an invisible 44px hit area */
 :root .tip{position:relative}
-:root .tip::after{content:"";position:absolute;inset:-13px}
+:root .tip::after{content:"";position:absolute;inset:-14px;border-radius:50%}
 /* inline links inside a sentence: a taller hit area, same look */
-:root .consent a,:root .mock button,:root .lnk,:root .alt,:root .legal a{position:relative}
-:root .consent a::after,:root .mock button::after,:root .lnk::after,:root .legal a::after{content:"";position:absolute;inset:-14px -4px}
+:root .consent a,:root .mock button,:root .alt,:root .legal a{position:relative}
+:root .consent a::after,:root .mock button::after,:root .legal a::after{content:"";position:absolute;inset:-14px -4px}
 :root .alt::after{content:"";position:absolute;inset:-8px 0}
 :root .pwt::after{content:"";position:absolute;inset:-6px -2px}
 /* brands D carousel dots: 24×8 look, 44×44 hit area */
@@ -493,6 +477,81 @@ body{min-height:100vh}
 :root .gl > div{padding:12px 0}
 :root .pr-row{padding:16px 12px;margin:0 -12px;width:calc(100% + 24px)}
 /* === AUDIT v1 (brands / admin / sign-in) END === */
+/* === TABS v1 START === */
+/* Tabs v1 (round 16, audit fix 6): THE one tab style for every page that has sections — the Overview's sticky pill bar.
+   A dark (white in light mode) frosted pill, centred, max 780px wide, that sticks 12px under the top of the screen;
+   the active tab is a purple gradient pill (#7c3fc1 → #550da6) that SLIDES under the labels (span.ind, moved by
+   script); inactive labels are muted 15px/500 (14px on phones), an optional count chip (.n, .n.r = red) sits after a
+   label and hides on phones. On a phone the bar runs edge to edge and scrolls sideways; every tab is ≥44px tall.
+   Markup:  <div class="tabs-anchor" id="tabsAnchor" aria-hidden="true"></div>
+            <div class="tabbar" id="tabbar"><div class="seg" role="tablist" aria-label="…" id="seg">
+              <span class="ind" id="ind" aria-hidden="true"></span>
+              <button role="tab" id="t-x" aria-controls="p-x" aria-selected="true" class="on" data-tab="x">X</button> …
+            </div></div>   + one <section class="pane" id="p-x" role="tabpanel"> per tab.
+   Behaviour: the "sticky tabs" part of the page script (place() sizes .ind to the .on tab; ←/→/Home/End move; the
+   IntersectionObserver on #tabsAnchor adds .stuck). Tokens used: --line2 --muted --text --pl --bad --lt-line. */
+.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:min(100%,780px);padding:5px;border-radius:99px;
+  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
+.seg::-webkit-scrollbar{display:none}
+.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
+  box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:15px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button:hover{color:var(--text)}
+.seg button.on{color:#fff}
+.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+.seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
+.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+.seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line,rgba(40,20,70,.12));box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
+:root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+@media (max-width:1023px){.seg button{min-height:44px}}
+@media (max-width:600px){
+  .tabbar{margin:0 -16px;padding:0 16px}
+  .seg{width:100%}
+  .seg button{padding:9px 13px;font-size:14px}
+  .seg .n{display:none}
+}
+/* === TABS v1 END === */
+/* === TAP v1 START === */
+/* Tap v1 (round 16, audit fix 2): below 1024px every tappable thing has a hit area of at least 44×44px (Apple HIG,
+   WCAG 2.5.5). Paste this block AS-IS after a page's other CSS: it only names shared classes (NAV v2, TABS v1, CARDS v2,
+   PRODUCTS v2, CITIES v2, the "i" icon, .lnk text links), so a class the page doesn't use costs nothing.
+   Two techniques, never mixed on one element:
+   · real size where the control already reads as a bar or a chip (top bar, tabs, segment buttons, chips, dots);
+   · an invisible ::after hit box where growing it would change the look — the 18px "i" icons keep their circle and get
+     inset:-14px (its 16px inner box + 28 = 44 with the 1px ring), text links keep their line and get a 44px-tall box, small pills a centred ≥44 box.
+   Don't add an element here that already draws its own ::after. Desktop (mouse) sizes are untouched, except the
+   Ctrl K hint, which follows the 12px minimum everywhere. */
+.nv2-kbd{font-size:12px}
+@media (max-width:1023px){
+  /* NAV v2 top bar: avatar, brand switch, date picker, bell */
+  :root .nv2-av,:root .nv2-ib{width:44px;height:44px}
+  :root .nv2-brand,:root .nv2-date{min-height:44px;height:44px}
+  /* TABS v1 (also in that block) */
+  :root .seg button{min-height:44px}
+  /* chips and segment buttons: sort tabs, cover / delivery days, "show more", copy */
+  :root .pv2-sort button,:root .pv2-seg button,:root .pv2-copy,:root .ct2 .ct2-tog{min-height:44px;height:auto}
+  :root .pv2-seg button{min-width:44px}
+  /* CARDS v2 carousel dots: a 44×44 button, the dot itself stays 6px (16px when on) */
+  :root .cv2-dots button{min-width:44px;height:44px;padding:0}
+  /* the "i" icons (.xp-b, Shipping B's button.tip, PSHEET's .ip-tip): same 18px circle, 44×44 hit box */
+  :root :is(.xp-b,button.tip,.ip-tip){position:relative}
+  :root :is(.xp-b,button.tip,.ip-tip)::after{content:"";position:absolute;inset:-14px;border-radius:50%}
+  /* text links ("All orders", "Recover", "Top up", "See details", back-links): 44px tall, no layout change */
+  :root :is(.lnk,.ph .lnk){position:relative}
+  :root :is(.lnk,.ph .lnk)::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%)}
+  /* small pills on the card backs (Close, Ads Manager, …): a centred box of at least 44×44 */
+  :root :is(.cv2-close,.cv2-lnk){position:relative}
+  :root :is(.cv2-close,.cv2-lnk)::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+  /* shared top-bar popover rows (date options, Profile, Dark mode, Sign out, brand list) were 42px */
+  :root .nv2-mi{min-height:44px}
+}
+/* === TAP v1 END === */
 </style>
 </head>
 <body>
