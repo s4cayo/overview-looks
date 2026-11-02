@@ -11,14 +11,15 @@
     products: BASE + "pages/inventory-products/products-A.html",
     inventory: BASE + "pages/inventory-products/inventory-A.html",
     assistant: BASE + "pages/assistant/G-gemini.html",
-    competitors: BASE + "pages/competitors/competitors-A.html"
+    competitors: BASE + "pages/competitors/competitors-A.html",
+    connections: BASE + "pages/settings/connections-B.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",
-    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors" };
+    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors", connections: "connections" };
   // data-*-go keys used by the pages (Orders pages call Orders "sales" and Shipping "orders").
   var KEY = { overview: "overview", sales: "orders", orders: "shipping", products: "products",
-    inventory: "inventory", assistant: "assistant", competitors: "competitors" };
-  var SOON = /^(all brands|meta ads|ads manager|ads report|ads|connections|settings|admin|workspace|brands|adsmanager|elsewhere)$/;
+    inventory: "inventory", assistant: "assistant", competitors: "competitors", connections: "connections" };
+  var SOON = /^(all brands|meta ads|ads manager|ads report|ads|settings|admin|workspace|brands|adsmanager|elsewhere)$/;
 
   var here = Object.keys(URL).find(function (k) { return location.pathname === URL[k]; });
 
@@ -62,7 +63,7 @@
     }
     // Sidebar, phone bar and full-screen menu.
     if (inSide || inDock || inMenu) {
-      var k = el.getAttribute("data-nv2-go") || el.getAttribute("data-go") || el.getAttribute("data-ip-go") || el.getAttribute("data-cp-go");
+      var k = el.getAttribute("data-nv2-go") || el.getAttribute("data-go") || el.getAttribute("data-ip-go") || el.getAttribute("data-cp-go") || el.getAttribute("data-st-go");
       var page = (k && KEY[k]) || LABEL[label(el)];
       if (page) { go(page, e); return; }
       if ((k && SOON.test(k)) || SOON.test(label(el))) {

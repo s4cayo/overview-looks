@@ -530,8 +530,8 @@ main{max-width:1240px}
 .ip-tag.p{color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent)}
 
 /* swatch thumb */
-.ip-th{position:relative;width:44px;height:44px;border-radius:12px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2))}
-.ip-th svg{width:20px;height:30px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.ip-th{position:relative;width:40px;height:50px;border-radius:10px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.ip-th svg{width:18px;height:27px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
 
 /* ---- product detail (drawer on desktop, bottom sheet on phone) ---- */
 .ip-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
@@ -545,6 +545,7 @@ main{max-width:1240px}
 .ip-sheet .pv2-grab{display:none}
 @media (max-width:767px){.ip-sheet .pv2-grab{display:block;margin:0 auto 2px}}
 .ip-sheet .pv2-sh{align-items:flex-start}
+.ip-sheet .pv2-shsw{width:44px;height:55px;border-radius:11px}
 .ip-meta{font-size:13px;color:var(--pv2-mut);margin-top:3px}
 .ip-sec{display:flex;flex-direction:column;gap:12px;padding-top:20px;border-top:1px solid var(--pv2-line)}
 .ip-sech{display:flex;align-items:baseline;gap:10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pv2-mut)}
@@ -557,10 +558,20 @@ main{max-width:1240px}
 .ip-btn svg{transition:transform .2s}.ip-btn:hover svg{transform:translateX(3px)}
 /* the four numbers: equal tiles, label above, value on one baseline */
 .ip-four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.ip-four > div{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.ip-four > div{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px 60px;min-height:76px;justify-content:center;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
 .ip-four span{font-size:13px;color:var(--pv2-mut)}
 .ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ip-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
+.ip-ni{position:absolute;left:14px;top:16px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 15%,transparent)}
+.ip-ni svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-four .ip-left{grid-column:1 / -1}
+.ip-lsz{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.ip-lsz i{display:inline-flex;align-items:baseline;gap:5px;font-style:normal;font-size:13px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--pv2-bg3)}
+.ip-lsz i em{font-style:normal;font-weight:500;color:var(--pv2-mut)}
+.ip-lsz i.r{color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent)}
+.ip-lsz i.w{color:var(--pv2-warn);background:color-mix(in srgb,var(--pv2-warn) 14%,transparent)}
+.ip-lsz i.u{color:var(--pv2-mut)}
+@media (max-width:420px){.ip-four > div{padding-left:14px;padding-top:56px;justify-content:flex-start}.ip-ni{top:14px}.ip-four .ip-left{padding-left:60px;padding-top:14px}}
 /* by-size table: every column lines up */
 .ip-sz{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
 .ip-sz th,.ip-sz td{padding:10px 0;border-top:1px solid var(--pv2-line);text-align:right;vertical-align:top;white-space:nowrap}
@@ -652,6 +663,51 @@ main{max-width:1240px}
 @media (max-width:1100px){.pa-att.d2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.pa-att.d2{gap:10px}.d2 .pa-spot{padding:16px 10px 14px}.d2 .pa-stack .pa-ring{width:44px;height:44px;padding:3px}.d2 .pa-stack .pa-ring + .pa-ring{margin-left:-16px}}
 
+
+.pa-cat{container-type:inline-size}
+.pa-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.pa-tools .ip-search{flex:1 1 280px}
+.pa-tools .pv2-sort{flex:none}
+.pa-chips{margin-bottom:18px}
+.pa-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@container (max-width:1060px){.pa-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container (max-width:640px){.pa-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.pa-cards .pv2-card{text-align:left}
+.pa-cards .pv2-sw{height:auto;aspect-ratio:4 / 5}
+.pa-cards .pv2-sw svg{width:30%;height:auto;aspect-ratio:46 / 70}
+.pa-cards .pv2-mv.u{color:var(--pv2-mut);font-size:18px;font-weight:600}
+.pa-cards .pv2-ptag.n{color:#e3dcef}
+.pa-cards .pv2-strip.one{grid-template-columns:minmax(0,1fr)}
+.pa-cards .pv2-strip.one .pv2-sz span{font-size:12px}
+@container (max-width:640px){.pa-cards .pv2-card{padding:10px}.pa-cards .pv2-mv{font-size:18px}.pa-cards .pv2-mv.u{font-size:16px}.pa-cards .pv2-nm{font-size:13.5px}.pa-cards .pv2-sub{font-size:12px}}
+.pa-cards .pv2-card > *{min-width:0}
+@container (max-width:520px){
+  .pa-cards{grid-template-columns:minmax(0,1fr);gap:10px}
+  .pa-cards .pv2-card{display:grid;grid-template-columns:108px minmax(0,1fr);column-gap:14px;grid-template-areas:"sw nm" "sw mk" "sw mv" "sw sub" "st st" "cap cap";padding:12px;align-items:start}
+  .pa-cards .pv2-sw{grid-area:sw;height:auto;aspect-ratio:4 / 5;align-self:start}
+  .pa-cards .pv2-nm{grid-area:nm;margin-top:0;min-height:0;font-size:14px}
+  .pa-cards .pv2-mk{grid-area:mk;margin-top:4px}.pa-cards .pv2-mv{grid-area:mv;font-size:20px}.pa-cards .pv2-sub{grid-area:sub;font-size:12.5px}
+  .pa-cards .pv2-ptag{top:auto;bottom:7px;left:7px;right:auto}.pa-cards .pv2-sw:has(.pv2-ptag) .pv2-left{bottom:36px}
+  .pa-cards .pv2-strip{grid-area:st}.pa-cards .pv2-cap{grid-area:cap}
+}
+.pa-foot{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--pv2-mut)}
+
+/* sizes across every product */
+.pa-szs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.pa-sz{display:flex;flex-direction:column;gap:6px;padding:14px 12px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.pa-sz > span{font-size:13px;font-weight:600;color:var(--pv2-mut)}
+.pa-sz > b{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.pa-sz > b small{font-size:12.5px;font-weight:500;color:var(--pv2-mut);margin-left:4px;letter-spacing:0}
+.pa-bar{height:6px;border-radius:99px;background:var(--pv2-track);overflow:hidden}
+.pa-bar i{display:block;height:100%;width:var(--w);border-radius:99px;background:linear-gradient(90deg,#550da6,#a275e0)}
+.pa-sz em{font-style:normal;font-size:12.5px;color:var(--pv2-mut);white-space:nowrap}
+.pa-sz em.r{color:var(--pv2-bad);font-weight:600}
+.pa-sz.top{border-color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 12%,var(--pv2-bg2))}
+.pa-sz.hot{border-color:color-mix(in srgb,var(--pv2-bad) 60%,transparent)}
+.pa-szsum{font-size:14px;line-height:1.5;margin-bottom:16px}
+.pa-szsum b{font-weight:600}
+.pa-szsum .r{color:var(--pv2-bad)}
+@media (max-width:760px){.pa-szs{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pa-sz{padding:12px 10px}.pa-sz > b{font-size:19px}}
 </style>
 <script>
 /* === PERIODS v1 START === */
@@ -1155,6 +1211,13 @@ var IPU=(function(){
   var PERKEY=function(){return (window.PER&&PER.cur)||'7d'};
 
   /* the full product detail: verdict · four numbers · sizes · returns by size · what to do */
+  /* icons for the number tiles in the product detail */
+  var NI=(function(){var g=function(d){return '<i class="ip-ni" aria-hidden="true"><svg viewBox="0 0 24 24">'+d+'</svg></i>'};return {
+    stock:g('<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>'),
+    sold:g('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>'),
+    rev:g('<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/>'),
+    profit:g('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'),
+    margin:g('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>')}})();
   function detail(p,v,opts){
     opts=opts||{};var d=p.P,P=IP.PER[PERKEY()],t=IP.topSize(p),w=IP.worstSize(p),one=p.sizes.length===1;
     var chips=['rev','profit','margin','units'].map(function(k){var r=rankOf(k,p);return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-ip-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>'+(r?'#'+r:'—')+'</b></button>'}).join('')
@@ -1182,10 +1245,12 @@ var IPU=(function(){
       +'<div><p class="pv2-verdict">'+verdict(p,v)+'</p><div class="pv2-chips">'+chips+'</div></div>'
       +acts.filter(function(a){return a.indexOf('ip-unknown')>0}).join('')
       +'<div class="ip-four">'
-      +'<div><span>Sold</span><b>'+fmt(d.u)+'</b></div>'
-      +'<div><span>Revenue</span><b><small>EGP</small> '+fmt(d.rev)+'</b></div>'
-      +'<div><span>Profit</span>'+(d.profit==null?'<b class="ip-unk">Unknown</b>':'<b><small>EGP</small> '+fmt(d.profit)+'</b>')+'</div>'
-      +'<div><span>Margin'+tip('Of every EGP 100 sold, how much you keep after the cost of the item. Ads and shipping are not taken off here.')+'</span>'+(!d.u?'<b class="ip-unk">—</b>':d.margin==null?'<b class="ip-unk">Unknown</b>':'<b>'+d.margin.toFixed(1)+'%</b>')+'</div></div>'
+      +'<div class="ip-left" style="--k:var(--pv2-acc)">'+NI.stock+'<span>Pieces left</span><b>'+(p.unknownSizes.length===p.sizes.length?'<span class="ip-unk">Not tracked</span>':fmt(p.left)+(p.unknownSizes.length?'<small> + '+p.unknownSizes.join(', ')+' not tracked</small>':''))+'</b>'
+        +(one?'':'<div class="ip-lsz">'+p.sizes.map(function(s,j){var x=p.stock[j];return '<i class="'+stockCls(x)+'"><em>'+s+'</em>'+(x==null?'?':x===0?'out':x)+'</i>'}).join('')+'</div>')+'</div>'
+      +'<div style="--k:#4f8ff0">'+NI.sold+'<span>Sold</span><b>'+fmt(d.u)+'</b></div>'
+      +'<div style="--k:var(--pv2-good)">'+NI.rev+'<span>Revenue</span><b><small>EGP</small> '+fmt(d.rev)+'</b></div>'
+      +'<div style="--k:#d99a3a">'+NI.profit+'<span>Profit</span>'+(d.profit==null?'<b class="ip-unk">Unknown</b>':'<b><small>EGP</small> '+fmt(d.profit)+'</b>')+'</div>'
+      +'<div style="--k:#c45fd0">'+NI.margin+'<span>Margin'+tip('Of every EGP 100 sold, how much you keep after the cost of the item. Ads and shipping are not taken off here.')+'</span>'+(!d.u?'<b class="ip-unk">—</b>':d.margin==null?'<b class="ip-unk">Unknown</b>':'<b>'+d.margin.toFixed(1)+'%</b>')+'</div></div>'
       +'<div class="ip-sec"><div class="ip-sech">'+(one?'Sold · stock · returns':'By size')+'<span>'+P.label+'</span></div>'
       +'<table class="ip-sz"><thead><tr><th scope="col">Size</th><th scope="col">Stock left</th><th scope="col">Sold</th><th scope="col">Returned'+tip('Pieces that came back, out of the pieces shipped in that size. Grey means fewer than '+IP.MIN_SHIP+' shipped, too few to judge.')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'
       +(notes.length?'<p class="ip-note">'+notes.join(' ')+'</p>':'')

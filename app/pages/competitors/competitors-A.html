@@ -542,6 +542,31 @@ main{max-width:1240px}
 
 .ca-pend{display:flex;align-items:center;gap:12px;padding:30px 8px;color:var(--muted);font-size:14px;line-height:1.5}
 .ca-foot{font-size:13px;color:var(--muted);margin-top:16px;display:flex;align-items:center}
+
+/* Worth a look — the Products A spotlight tiles (pa-spot), same sizes and rules, ca- prefix */
+.ca-ring{position:relative;width:72px;height:72px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--track) 0)}
+.ca-ring.dash{background:none;border:2.5px dashed var(--c);padding:3px}
+.ca-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px var(--panel);color:#fff;font-weight:700;font-size:15px}
+.ca-face svg{width:20px;height:30px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.ca-pbadge{position:absolute;right:-6px;bottom:-2px;min-width:26px;height:22px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:var(--c);box-shadow:0 0 0 3px var(--panel)}
+.ca-stack{position:relative;display:flex;align-items:center;flex:none}
+.ca-stack .ca-ring{width:52px;height:52px;padding:4px}
+.ca-stack .ca-ring + .ca-ring{margin-left:-18px}
+.ca-stack .ca-face svg{width:14px;height:21px}
+.ca-stack .ca-pbadge{right:-8px}
+.ca-att{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ca-spot{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 14px 16px;border-radius:16px;min-width:0;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 12%,var(--panel2)),var(--panel2) 70%);border:1px solid color-mix(in srgb,var(--c) 26%,var(--line));transition:border-color .2s,transform .2s}
+.ca-spot:hover{border-color:var(--c);transform:translateY(-2px)}
+.ca-pics{height:76px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.ca-txt{display:flex;flex-direction:column;gap:3px}
+.ca-t{font-size:15px;font-weight:600;line-height:1.3;color:var(--text)}
+.ca-t em{font-style:normal;color:var(--c)}
+.ca-s{font-size:13px;line-height:1.4;color:var(--muted)}
+.ca-go{margin-top:auto;padding-top:6px;font-size:13px;font-weight:600;color:var(--pl);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ca-go svg{transition:transform .2s}.ca-spot:hover .ca-go svg{transform:translateX(3px)}
+@media (max-width:1100px){.ca-att{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.ca-att{gap:10px}.ca-spot{padding:16px 10px 14px}.ca-stack .ca-ring{width:44px;height:44px;padding:3px}.ca-stack .ca-ring + .ca-ring{margin-left:-16px}}
 </style>
 <script>
 /* === PERIODS v1 START === */
@@ -689,7 +714,7 @@ window.perSet=function(key){
 
       <section class="cp-panel" aria-labelledby="ca-att-h" id="ca-attp">
         <div class="cp-ph"><h3 id="ca-att-h">Worth a look</h3></div>
-        <div class="cp-att" id="ca-att"></div>
+        <div class="ca-att" id="ca-att"></div>
       </section>
 
       <div class="tabs-anchor" id="ca-anchor"></div>
@@ -1192,9 +1217,35 @@ var CPU=(function(){
     var m=$('#ca-msg');m.className='ca-msg'+(CPU.msg&&CPU.msg.k?' '+CPU.msg.k:'');
     m.innerHTML=CPU.msg?(!CPU.msg.k?'<span class="cp-spin" aria-hidden="true"></span>':'')+esc(CPU.msg.t):'';
   }
-  function worth(){var w=CPU.worth();$('#ca-attp').hidden=!w.length;
-    $('#ca-att').innerHTML=w.map(function(r){return '<button type="button" class="cp-arow" data-ca-store="'+r.s.id+'" data-ca-view="'+(r.tone==='g'?'out':'sale')+'">'+CPU.thumb(r.x)+
-      '<span><b>'+r.b+'</b><small>'+r.sm+'</small></span><span class="cp-link">See it '+CPU.ARW+'</span></button>'}).join('')}
+  /* ---- worth a look: picture-led spotlights, one fact (15px) + one detail line (13px) each, like Products A ---- */
+  var MK={lilas:['#c58ad8','#6d3fa0'],zamalek:['#5fa3a3','#24585c'],selene:['#d99a7a','#8c4a33']};
+  function face(c,inner){return '<span class="ca-face" style="--c1:'+c[0]+';--c2:'+c[1]+'">'+(inner||DRESS)+'</span>'}
+  function ring(c,pct,badge,dash,inner){return '<span class="ca-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--pct:'+pct+'"':'')+'>'+face(c,inner)+(badge?'<span class="ca-pbadge">'+badge+'</span>':'')+'</span>'}
+  function stack(cs,badge,dash,inners){return '<span class="ca-stack">'+cs.slice(0,3).map(function(c,i){return ring(c,null,null,dash,inners&&inners[i])}).join('')+(badge?'<span class="ca-pbadge">'+badge+'</span>':'')+'</span>'}
+  function first(n){return n.split(' ')[0]}
+  function list(n){return n.length>2?n.slice(0,-1).join(', ')+' and '+n[n.length-1]:n.join(' and ')}
+  var DRESS=(function(){var t=document.createElement('div');t.innerHTML=CPU.thumb({t:'x',c:['#000','#000']});var s=t.querySelector('svg');return s?s.outerHTML:''})();
+  function spots(){var out=[],S=CP.STORES.filter(function(s){return s.status!=='pending'});
+    /* 1 · their sell-outs you still stock */
+    var outs=[];S.forEach(function(s){s.soldOut.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(o&&o.stock>0&&!outs.some(function(y){return y.o===o}))outs.push({x:x,o:o,s:s})})});
+    if(outs.length){var left=outs.reduce(function(a,r){return a+r.o.stock},0);
+      out.push({c:'var(--good)',pics:outs.length===1?ring(outs[0].x.c,100,null):stack(outs.map(function(r){return r.x.c}),null),
+        t:'<em>'+outs.length+'</em> sold out there, not here',s:list(outs.map(function(r){return first(r.o.n)}))+' · '+left+' left',go:'See them',a:'s:'+outs[0].s.id+':out'})}
+    /* 2 · the biggest cut under one of your prices */
+    var cut=null;S.forEach(function(s){s.onSale.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(!o||o.stock===0)return;var g=o.price-x.pr;if(g>=150&&(!cut||g>cut.g))cut={x:x,o:o,g:g,s:s}})});
+    if(cut)out.push({c:'var(--warn)',pics:ring(cut.x.c,100,'−'+cut.x.off+'%'),t:'<em>EGP '+CP.fmt(cut.g)+'</em> under your '+first(cut.o.n),s:cut.s.name+' · '+cut.x.type+' at EGP '+CP.fmt(cut.x.pr),go:'See it',a:'p:'+cut.x.key});
+    /* 3 · a store we could not read */
+    var bad=CP.STORES.filter(function(s){return !s.ok&&s.status!=='pending'})[0];
+    if(bad)out.push({c:'var(--bad)',pics:ring(MK[bad.id]||['#a275e0','#550da6'],null,'!',true,bad.name[0]),t:'<em>Can’t read</em> '+bad.name,s:bad.status.charAt(0).toUpperCase()+bad.status.slice(1)+' · prices from '+bad.read.split(',')[0],go:'Check again',a:'c'});
+    /* 4 · how much moved, following the date picker */
+    var ev=CPU.events(null);
+    if(ev.length){var per=S.map(function(s){return [s,CPU.events(s).length]}).filter(function(r){return r[1]}).sort(function(a,b){return b[1]-a[1]});
+      out.push({c:'var(--pl)',pics:stack(per.map(function(r){return MK[r[0].id]||['#a275e0','#550da6']}),null,false,per.map(function(r){return r[0].name[0]})),
+        t:'<em>'+ev.length+'</em> '+(ev.length===1?'change':'changes')+' '+CPU.periodWord(),s:per.map(function(r){return r[0].name+' '+r[1]}).join(' · '),go:'See changes',a:'s:'+per[0][0].id+':chg'})}
+    return out}
+  function worth(){var w=spots();$('#ca-attp').hidden=!w.length;
+    $('#ca-att').innerHTML=w.map(function(r){return '<button type="button" class="ca-spot" data-ca-a="'+r.a+'" style="--c:'+r.c+'"><span class="ca-pics" aria-hidden="true">'+r.pics+'</span>'+
+      '<span class="ca-txt"><span class="ca-t">'+r.t+'</span><span class="ca-s">'+esc(r.s)+'</span></span><span class="ca-go">'+r.go+' '+CPU.ARW+'</span></button>'}).join('')}
   function tabs(){var seg=$('#ca-seg');
     seg.innerHTML='<span class="ind" aria-hidden="true"></span>'+CP.STORES.map(function(s){var st=CPU.status(s);
       return '<button type="button" role="tab" data-ca-tab="'+s.id+'" aria-selected="'+(s.id===cur)+'" class="'+(s.id===cur?'on':'')+'"><span class="cp-dot '+st.dot+'" aria-hidden="true"></span>'+esc(s.name)+'<span class="sr">, '+st.short+'</span></button>'}).join('');
@@ -1235,7 +1286,10 @@ var CPU=(function(){
     var t=e.target.closest('[data-ca-tab]');if(t){cur=t.dataset.caTab;tabs();pane();var a=$('#ca-anchor');if(a.getBoundingClientRect().top<0)a.scrollIntoView();return}
     var pd=e.target.closest('[data-cp-prod]');if(pd){var x=CPU.byKey(pd.dataset.cpProd);if(x)CPU.open(CPU.product(x),pd,x.t);return}
     var v=e.target.closest('[data-ca-v]');if(v){view=v.dataset.caV;pane();var nb=$('[data-ca-v="'+view+'"]');if(nb)nb.focus({preventScroll:true});return}
-    var w=e.target.closest('[data-ca-store]');if(w){cur=w.dataset.caStore;view=w.dataset.caView;tabs();pane();$('#ca-anchor').scrollIntoView({behavior:CPU.reduce?'auto':'smooth'});return}
+    var w=e.target.closest('[data-ca-a]');if(w){var a=w.dataset.caA.split(':');
+      if(a[0]==='c'){CPU.checkAll();return}
+      if(a[0]==='p'){var x=CPU.byKey(a[1]);if(x){cur=x.store.id;view=x.so===x.v?'out':x.osa?'sale':'low';tabs();pane();CPU.open(CPU.product(x),w,x.t)}return}
+      cur=a[1];view=a[2];tabs();pane();$('#ca-anchor').scrollIntoView({behavior:CPU.reduce?'auto':'smooth'});return}
   });
   $('#ca-check').addEventListener('click',CPU.checkAll);
   $('#ca-edit').addEventListener('click',function(e){CPU.open('<div class="cp-sh"><div><h2>'+(CP.STORES.length?'Edit stores':'Add stores')+'</h2><p>Watch up to three competitor stores. Each one is read every '+CP.EVERY+' hours.</p></div><button type="button" class="cp-x" aria-label="Close">'+CPU.XI+'</button></div>'+CPU.formHtml(),e.currentTarget)});
