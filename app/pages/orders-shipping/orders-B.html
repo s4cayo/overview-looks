@@ -573,6 +573,19 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
 .tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
+
+/* swipe rows (filter chips) on the phone: a fade + arrow says "more this way"; both go once you reach the end */
+.ip-swipew{position:relative}
+.ip-more{display:none}
+@media (max-width:600px){
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
+  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
+  .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
+    color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
+  .ip-more .ip-i{width:15px;height:15px}
+  .ip-swipew.end::after,.ip-swipew.end .ip-more{opacity:0;pointer-events:none}
+  .ip-swipe{padding-right:44px!important}
+}
 /* === PERIODS v1 START === */
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
@@ -1067,7 +1080,7 @@ main{gap:24px}
       <div class="grp"><h6>Grow</h6>
         <a href="#" data-go="ads"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
         <a href="#" data-go="adsmanager"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
-        <a href="#" data-go="assistant"><svg class="i"><use href="#i-spark"/></svg>Assistant</a>
+        <a href="#" data-go="assistant"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
         <a href="#" data-go="competitors"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
       </div>
       <div class="grp"><h6>Workspace</h6>
@@ -1232,7 +1245,7 @@ main{gap:24px}
       <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
       <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
     </div>
-    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Assistant</span></a>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
     <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
     <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
     <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
@@ -1634,7 +1647,17 @@ var IPU=(function(){
     addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
   })();
 
-  return {tip:tip,$:$,$$:$$,reduce:reduce,toast:toast,go:go,pageUrl:pageUrl,params:params,open:open,close:close,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
+  /* swipe rows: wrap each .ip-swipe so a fade + arrow can show there is more to the right (phone only, via CSS) */
+  function swipeHints(){$$('.ip-swipe').forEach(function(row){if(row.parentNode.classList.contains('ip-swipew'))return;
+    var w=document.createElement('div');w.className='ip-swipew';row.parentNode.insertBefore(w,row);w.appendChild(row);
+    var b=document.createElement('button');b.type='button';b.className='ip-more';b.setAttribute('aria-label','Show more filters');
+    b.innerHTML='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';w.appendChild(b);
+    function upd(){var max=row.scrollWidth-row.clientWidth;w.classList.toggle('end',row.scrollLeft>=max-4);w.classList.toggle('start',row.scrollLeft>4)}
+    b.addEventListener('click',function(){row.scrollBy({left:row.clientWidth*.7,behavior:reduce?'auto':'smooth'})});
+    row.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
+    if('MutationObserver' in window)new MutationObserver(upd).observe(row,{childList:true});upd()})}
+
+  return {tip:tip,swipeHints:swipeHints,$:$,$$:$$,reduce:reduce,toast:toast,go:go,pageUrl:pageUrl,params:params,open:open,close:close,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
     detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,perKey:PERKEY};
 })();
 

@@ -10,14 +10,15 @@
     shipping: BASE + "pages/orders-shipping/shipping-B.html",
     products: BASE + "pages/inventory-products/products-A.html",
     inventory: BASE + "pages/inventory-products/inventory-A.html",
-    assistant: BASE + "pages/assistant/G-gemini.html"
+    assistant: BASE + "pages/assistant/G-gemini.html",
+    competitors: BASE + "pages/competitors/competitors-A.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",
-    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant" };
+    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors" };
   // data-*-go keys used by the pages (Orders pages call Orders "sales" and Shipping "orders").
   var KEY = { overview: "overview", sales: "orders", orders: "shipping", products: "products",
-    inventory: "inventory", assistant: "assistant" };
-  var SOON = /^(all brands|meta ads|ads manager|ads report|ads|competitors|connections|settings|admin|workspace|brands|adsmanager|elsewhere)$/;
+    inventory: "inventory", assistant: "assistant", competitors: "competitors" };
+  var SOON = /^(all brands|meta ads|ads manager|ads report|ads|connections|settings|admin|workspace|brands|adsmanager|elsewhere)$/;
 
   var here = Object.keys(URL).find(function (k) { return location.pathname === URL[k]; });
 
@@ -61,7 +62,7 @@
     }
     // Sidebar, phone bar and full-screen menu.
     if (inSide || inDock || inMenu) {
-      var k = el.getAttribute("data-nv2-go") || el.getAttribute("data-go") || el.getAttribute("data-ip-go");
+      var k = el.getAttribute("data-nv2-go") || el.getAttribute("data-go") || el.getAttribute("data-ip-go") || el.getAttribute("data-cp-go");
       var page = (k && KEY[k]) || LABEL[label(el)];
       if (page) { go(page, e); return; }
       if ((k && SOON.test(k)) || SOON.test(label(el))) {
@@ -76,6 +77,7 @@
     var qa = el.getAttribute("data-qa1");
     if (qa === "orders") { go("orders", e); return; }
     if (qa === "shipping") { go("shipping", e); return; }
+    if (qa === "competitors") { go("competitors", e); return; }
   }, true);
 
   // Keep light/dark the same when moving between pages.
