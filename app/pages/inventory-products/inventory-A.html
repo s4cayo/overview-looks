@@ -613,6 +613,19 @@ main{max-width:1240px}
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .ip-tipb.on{visibility:visible;opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
+/* round 14 type scale (STYLE-GUIDE "Type and spacing scale"): the product's name is the card's title (20/650), the four
+   number tiles are its key figures, section heads and table text one step up, 13px minimum for secondary text */
+.pv2.ip-sheet .pv2-sht small{font-size:13px}
+.pv2.ip-sheet .pv2-sht b{font-size:20px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
+.pv2.ip-sheet .pv2-verdict{font-size:17px}
+.pv2.ip-sheet .ip-four b{font-size:28px;letter-spacing:-.015em}
+.pv2.ip-sheet .ip-four span{font-size:14px}
+.pv2.ip-sheet .ip-sech{font-size:15px}
+.pv2.ip-sheet .ip-sz{font-size:15px}
+.pv2.ip-sheet .ip-sz thead th{font-size:13px}
+.pv2.ip-sheet .ip-dl{font-size:15px}
+.pv2.ip-sheet .ip-btn{font-size:14px}
+@media (max-width:600px){.pv2.ip-sheet .pv2-sht b{font-size:18px}.pv2.ip-sheet .ip-four b{font-size:24px}}
 /* === PSHEET v1 END === */
 
 /* sticky tabs: N's .seg, sized for these pages */
