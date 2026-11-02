@@ -699,6 +699,104 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
   color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent);border:1px solid color-mix(in srgb,var(--pv2-bad) 32%,transparent)}
 .pv2-ctl > span{display:inline-flex;align-items:center}
 .pv2-tbl th .xp-b{margin:0 0 0 6px}
+/* round 13 (Sam's notes): "Products Analytics" title, the money figure leads each card, rounder + higher-contrast
+   cards with more air, sharper size bars with a vivid top size, solid status pills, and a roomier planner with rich
+   fabric swatches and purple Order buttons. 8-pt spacing; nothing under 12px. Overrides only — later rules win. */
+.pv2{--pv2-card:#17141f;--pv2-cardln:rgba(255,255,255,.1);--pv2-bar:#4b3a6b;--pv2-bartop:linear-gradient(180deg,#c99bff 0%,#9a5cf0 45%,#7c3fc1 100%);
+  --pv2-glow:0 0 0 1.5px #c9a6ff,0 6px 16px -4px rgba(162,117,224,.75);--pv2-pbad:#ff9aa3;--pv2-pwarn:#ffd27a;--pv2-pok:#7fe3b8}
+[data-theme="light"] .pv2,.pv2[data-pv2-theme="light"]{--pv2-card:#fbf9fe;--pv2-cardln:rgba(60,20,110,.13);--pv2-bar:#d6c6ee;--pv2-bartop:linear-gradient(180deg,#8f55db 0%,#7c3fc1 45%,#550da6 100%);
+  --pv2-glow:0 0 0 1.5px #550da6,0 6px 14px -4px rgba(85,13,166,.45);--pv2-pbad:#b3202f;--pv2-pwarn:#875a00;--pv2-pok:#0f7a52}
+.pv2-grid{gap:24px}
+.pv2-panel{border-radius:24px;padding:24px;border-color:var(--pv2-line2)}
+/* section header: title + period on the left, the sort on the right */
+.pv2-ph{margin-bottom:24px;gap:16px}
+.pv2-ttl{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pv2-ttl h3{font-size:20px;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+.pv2-ttl p{font-size:13px;color:var(--pv2-mut);line-height:1.4;display:flex;flex-wrap:wrap;gap:0 8px}
+.pv2-ttl p b{font-weight:600;color:var(--pv2-fg)}
+.pv2-per{font-size:13px}
+.pv2-sort{border-radius:14px;padding:4px}
+.pv2-sort button{height:32px;padding:0 14px;border-radius:10px}
+.pv2-sind{top:4px;bottom:4px;border-radius:10px}
+.pv2-cards{gap:16px}
+.pv2-hint{font-size:13px;margin-top:16px}
+/* card */
+.pv2-card{border-radius:20px;padding:12px 12px 16px;background:var(--pv2-card);border-color:var(--pv2-cardln)}
+[data-theme="light"] .pv2 .pv2-card,.pv2[data-pv2-theme="light"] .pv2-card{box-shadow:0 1px 2px rgba(40,20,80,.05)}
+.pv2-card:hover{transform:translateY(-2px)}
+.pv2-sw{height:104px;border-radius:14px}
+.pv2-rank{top:8px;left:8px;height:26px;min-width:26px;border-radius:9px;font-size:13px;background:rgba(10,8,16,.78)}
+.pv2-nm,.pv2-mk,.pv2-sub,.pv2-strip,.pv2-cap{margin-left:4px;margin-right:4px}
+.pv2-nm{margin-top:12px;font-size:14.5px}
+.pv2-mk{margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.pv2-mv{font-size:28px;font-weight:700;letter-spacing:-.025em;line-height:1.15;margin-top:4px}
+.pv2-mv small{font-size:13px;font-weight:600;margin-right:6px;letter-spacing:.02em;vertical-align:2px}
+.pv2-sub{font-size:13px;margin-top:4px;min-height:18px}
+/* status pills on the photo: solid glass, bright text — readable on any fabric */
+.pv2-ptag,.pv2-left{font-size:12px;font-weight:600;line-height:1;padding:5px 9px;border-radius:99px;background:rgba(12,9,20,.84);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 2px 8px -2px rgba(0,0,0,.45)}
+.pv2-ptag{top:8px;right:8px;border:1px solid currentColor}
+.pv2-ptag.g{color:#8ff0c8}.pv2-ptag.w{color:#ffd98a}.pv2-ptag.r{color:#ffb0b5}
+.pv2-left{left:8px;bottom:8px;color:#fff;border:1.5px solid var(--ul);display:inline-flex;align-items:center}
+.pv2-left i{width:7px;height:7px;margin-right:6px;box-shadow:0 0 6px var(--ul)}
+/* size histogram: crisp bars, the top size in the spotlight */
+.pv2-strip{gap:6px;margin-top:16px;padding-top:16px}
+.pv2-sz{gap:6px}
+.pv2-sz .pv2-t{height:40px;border-radius:6px;background:var(--pv2-track);box-shadow:0 0 0 1px var(--pv2-line) inset;overflow:visible}
+.pv2-sz .pv2-t i{border-radius:4px 4px 6px 6px;background:var(--pv2-c,var(--pv2-bar))}
+.pv2-sz span{font-size:12px;font-weight:600;line-height:20px;height:20px;min-width:24px;padding:0 4px;text-align:center;border-radius:99px}
+.pv2-sz.pv2-top .pv2-t{box-shadow:none}
+.pv2-sz.pv2-top .pv2-t i{box-shadow:var(--pv2-glow)}
+.pv2-sz.pv2-top span{color:#fff;background:var(--pv2-hc,linear-gradient(135deg,#7c3fc1,#550da6))}
+.pv2-cap{font-size:13px;margin-top:12px;min-height:18px}
+.pv2-cap b{font-weight:700}
+@container (max-width:560px){.pv2-panel{padding:16px;border-radius:20px}.pv2-cards{gap:12px}.pv2-card{padding:8px 8px 12px;border-radius:16px}
+  .pv2-sw{height:92px;border-radius:12px}.pv2-mv{font-size:22px}.pv2-nm{font-size:13.5px}
+  .pv2-nm,.pv2-mk,.pv2-sub,.pv2-cap{margin-left:2px;margin-right:2px}.pv2-strip{gap:2px;margin-left:0;margin-right:0}
+  .pv2-sub{white-space:normal;min-height:36px}.pv2-sz span{min-width:0;padding:0 3px;letter-spacing:-.03em;white-space:nowrap;overflow:visible}
+  .pv2-ttl h3{font-size:18px}.pv2-ph{margin-bottom:16px}}
+/* low stock + planner */
+.pv2-stock .pv2-ph{margin-bottom:16px}
+.pv2-stock .pv2-ph h3{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.pv2-badge{font-size:13px;padding:4px 12px;color:var(--pv2-pbad);background:color-mix(in srgb,var(--pv2-bad) 16%,transparent);border:1px solid color-mix(in srgb,var(--pv2-bad) 36%,transparent)}
+.pv2-plan{gap:16px;padding:16px;border-radius:18px}
+.pv2-ctl{gap:8px 16px}
+.pv2-ctl > span{font-size:13px;min-width:120px;color:var(--pv2-fg);font-weight:500}
+.pv2-seg{gap:4px;padding:4px;border-radius:12px}
+.pv2-seg button{height:32px;min-width:48px;padding:0 12px;border-radius:8px;font-size:13px}
+.pv2-seg button:not([aria-pressed="true"]):hover{color:var(--pv2-fg);background:var(--pv2-bg3)}
+.pv2-sum{font-size:14px;line-height:1.5;margin:24px 0 16px}
+.pv2-sum .r{color:var(--pv2-pbad)}
+.pv2-copy{height:40px;padding:0 16px;border-radius:12px;font-size:13.5px;margin-top:0;background:color-mix(in srgb,var(--pv2-acc) 10%,transparent);border-color:color-mix(in srgb,var(--pv2-acc) 40%,transparent)!important}
+.pv2-copy:hover{background:color-mix(in srgb,var(--pv2-acc) 18%,transparent)}
+.pv2-copied{font-size:13px;font-weight:600;margin-left:12px}
+.pv2-prods{margin-top:16px}
+.pv2-prow{grid-template-columns:44px minmax(0,1fr) auto;gap:8px 16px;padding:16px 0;min-height:64px}
+.pv2-swc{width:44px;height:44px;border-radius:12px;border:0;position:relative;overflow:hidden;display:grid;place-items:center;
+  background:repeating-linear-gradient(115deg,rgba(255,255,255,.16) 0 2px,transparent 2px 6px),linear-gradient(150deg,var(--c1),var(--c2));
+  box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 4px 10px -4px var(--c2)}
+.pv2-swc svg{width:16px;height:24px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.pv2-pn{font-size:14.5px}
+.pv2-pm{font-size:13px;gap:4px 8px}
+.pv2-pm > span[aria-hidden]{display:none}
+.pv2-pill{font-size:12.5px;padding:2px 10px;font-weight:700;color:var(--pv2-pbad);background:color-mix(in srgb,var(--pv2-bad) 17%,transparent);border-color:color-mix(in srgb,var(--pv2-bad) 45%,transparent)}
+.pv2-pill.w{color:var(--pv2-pwarn);background:color-mix(in srgb,var(--pv2-warn) 17%,transparent);border-color:color-mix(in srgb,var(--pv2-warn) 45%,transparent)}
+.pv2-pill.n{color:var(--pv2-fg);font-weight:600;background:var(--pv2-bg2);border-color:var(--pv2-line2)}
+.pv2-ord{font-size:13px;height:36px;padding:0 12px 0 16px;border-radius:12px;display:inline-flex;align-items:center;justify-content:space-between;gap:4px;min-width:112px;
+  background:linear-gradient(135deg,#7c3fc1,#550da6);box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 8px 18px -8px rgba(124,63,193,.9);transition:transform .2s,box-shadow .2s}
+.pv2-ord svg.pv2-i{width:14px;height:14px;stroke-width:2.4;transition:transform .3s}
+.pv2-open .pv2-ord svg.pv2-i{transform:rotate(90deg)}
+.pv2-prow:hover .pv2-ord:not(.ok){transform:translateY(-1px);box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 10px 22px -8px rgba(124,63,193,1)}
+.pv2-ord.ok{box-shadow:none;padding:0 14px;color:var(--pv2-pok);background:color-mix(in srgb,var(--pv2-good) 14%,transparent)}
+.pv2-run{height:6px;margin-top:4px}
+.pv2-call{margin:0 0 8px 60px;font-size:13.5px}
+.pv2-call{color:var(--pv2-pbad)}.pv2-call.ok{color:var(--pv2-pok)}
+.pv2-tbl{width:calc(100% - 60px);margin:0 0 16px 60px}
+.pv2-tbl th{font-size:12px}
+.pv2-tbl td.r{color:var(--pv2-pbad)}.pv2-tbl td.w{color:var(--pv2-pwarn)}
+@container (max-width:560px){.pv2-ctl > span{min-width:0;width:100%}.pv2-call{margin-left:0}.pv2-tbl{width:100%;margin-left:0}
+  .pv2-prow{grid-template-columns:40px minmax(0,1fr) auto;gap:8px 12px}.pv2-swc{width:40px;height:40px}.pv2-ord{padding:0 8px 0 12px;min-width:104px}
+  .pv2-pn{white-space:normal;align-items:flex-start;line-height:1.3}.pv2-pn svg.pv2-i{margin-top:2px}}
 /* === PRODUCTS v2 END === */
 /* === PSHEET v1 START === */
 /* PSHEET v1 (round 11) — the ONE product card: a drawer on desktop, a bottom sheet on the phone. Byte-identical in
@@ -3515,12 +3613,12 @@ window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock 
   var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
   /* base = last 7 days. sold/ship/ret are per size XS..XXL and add up to u / shipped / returns. stock = units on hand now. */
   var PR=[
-    {id:'layla',n:'Layla Tiered Ruffle Maxi Dress',main:'Layla Tiered Ruffle Maxi',col:'Dusty Rose',rev:39794,profit:25223,u:27,sold:[2,9,7,5,3,1],ship:[3,6,9,7,4,3],ret:[1,0,0,1,0,1],stock:[2,1,9,7,6,5],tag:['g','Healthy'],c:['#d8a1ad','#9c5a6c'],sw:'#c99a9a'},
-    {id:'nour',n:'Nour Satin Slip Dress',main:'Nour Satin Slip',col:'Champagne',rev:38231,profit:22736,u:30,sold:[2,5,10,8,3,2],ship:[5,7,10,8,3,3],ret:[2,1,1,1,0,1],stock:[3,8,12,10,7,6],c:['#e6cfa6','#a98a5c'],sw:'#e2cfa6'},
-    {id:'jasmine',n:'Jasmine Wrap Midi Dress',main:'Jasmine Wrap Midi',col:'Sage',rev:33447,profit:21871,u:24,sold:[1,3,6,8,4,2],ship:[1,4,7,7,3,3],ret:[0,0,1,0,0,1],stock:[6,0,2,2,8,5],tag:['w','Low stock'],c:['#b4c6aa','#6c8462'],sw:'#9aae94'},
-    {id:'salma',n:'Salma Puff-Sleeve Mini Dress',main:'Salma Puff-Sleeve Mini',col:'Ivory',rev:22377,profit:13549,u:23,sold:[3,8,6,4,1,1],ship:[6,5,7,5,2,2],ret:[3,0,0,0,1,1],stock:[7,6,3,9,5,5],c:['#efe7d6','#b9ab8e'],sw:'#efe7d6'},
-    {id:'farida',n:'Farida Linen Shirt Dress',main:'Farida Linen Shirt',col:'Sand',rev:18181,profit:11271,u:15,sold:[1,3,6,3,1,1],ship:[1,3,6,5,1,1],ret:[0,0,1,0,0,0],stock:[6,9,12,10,8,6],c:['#d4c3a8','#8f7c60'],sw:'#d4c3a8'},
-    {id:'mariam',n:'Mariam Pleated Chiffon Dress',main:'Mariam Pleated Chiffon',col:'Navy',rev:19868,profit:11231,u:12,sold:[1,2,3,4,1,1],ship:[1,2,4,3,2,2],ret:[0,0,0,0,0,1],stock:[5,6,4,4,7,5],c:['#4b5a8f','#232b4d'],sw:'#283a63'}
+    {id:'layla',n:'Layla Tiered Ruffle Maxi Dress',main:'Layla Tiered Ruffle Maxi',col:'Dusty Rose',rev:39794,profit:25223,u:27,sold:[2,9,7,5,3,1],ship:[3,6,9,7,4,3],ret:[1,0,0,1,0,1],stock:[2,1,9,7,6,5],tag:['g','Healthy'],c:['#d8a1ad','#9c5a6c'],sw:'#c99a9a',rc:['#ec93ab','#a0354f']},
+    {id:'nour',n:'Nour Satin Slip Dress',main:'Nour Satin Slip',col:'Champagne',rev:38231,profit:22736,u:30,sold:[2,5,10,8,3,2],ship:[5,7,10,8,3,3],ret:[2,1,1,1,0,1],stock:[3,8,12,10,7,6],c:['#e6cfa6','#a98a5c'],sw:'#e2cfa6',rc:['#f2c36b','#a8701a']},
+    {id:'jasmine',n:'Jasmine Wrap Midi Dress',main:'Jasmine Wrap Midi',col:'Sage',rev:33447,profit:21871,u:24,sold:[1,3,6,8,4,2],ship:[1,4,7,7,3,3],ret:[0,0,1,0,0,1],stock:[6,0,2,2,8,5],tag:['w','Low stock'],c:['#b4c6aa','#6c8462'],sw:'#9aae94',rc:['#a6d08f','#4a7d3c']},
+    {id:'salma',n:'Salma Puff-Sleeve Mini Dress',main:'Salma Puff-Sleeve Mini',col:'Ivory',rev:22377,profit:13549,u:23,sold:[3,8,6,4,1,1],ship:[6,5,7,5,2,2],ret:[3,0,0,0,1,1],stock:[7,6,3,9,5,5],c:['#efe7d6','#b9ab8e'],sw:'#efe7d6',rc:['#fff7e3','#d6bd8c']},
+    {id:'farida',n:'Farida Linen Shirt Dress',main:'Farida Linen Shirt',col:'Sand',rev:18181,profit:11271,u:15,sold:[1,3,6,3,1,1],ship:[1,3,6,5,1,1],ret:[0,0,1,0,0,0],stock:[6,9,12,10,8,6],c:['#d4c3a8','#8f7c60'],sw:'#d4c3a8',rc:['#e2bf8c','#94693a']},
+    {id:'mariam',n:'Mariam Pleated Chiffon Dress',main:'Mariam Pleated Chiffon',col:'Navy',rev:19868,profit:11231,u:12,sold:[1,2,3,4,1,1],ship:[1,2,4,3,2,2],ret:[0,0,0,0,0,1],stock:[5,6,4,4,7,5],c:['#4b5a8f','#232b4d'],sw:'#283a63',rc:['#6a80d6','#1d2a66']}
   ];
   /* period dataset: units sold, returns and shipped per product (order as PR); sizes are spread from the 7-day mix */
   var pv2Periods={
@@ -3588,11 +3686,11 @@ window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock 
       var bars=el.querySelectorAll('.pv2-sz'),cap=el.querySelector('.pv2-cap');cap.classList.toggle('r',v==='ret');
       if(v==='ret'){var rates=d.ship.map(function(s,j){return s?d.ret[j]/s:0}),w=worstSize(p);
         bars.forEach(function(sz,j){var i=sz.querySelector('i');i.style.setProperty('--v',(d.ship[j]?Math.max(8,Math.min(100,rates[j]/.5*100)):0)+'%');i.style.setProperty('--pv2-c',rateColor(rates[j]));
-          sz.classList.toggle('pv2-top',j===w);sz.style.setProperty('--pv2-hc','var(--pv2-bad)')});
+          sz.classList.toggle('pv2-top',j===w);sz.style.setProperty('--pv2-hc','#c73a47');sz.style.setProperty('--pv2-glow','0 0 0 1.5px #ff9aa3,0 6px 16px -4px rgba(240,101,113,.7)')});
         cap.innerHTML=w>=0?'<b>'+SZ[w]+' returns most</b> · '+d.ret[w]+' of '+d.ship[w]:'No returns';
       }else{var mx=Math.max.apply(0,d.sold),t=topSize(p);
-        bars.forEach(function(sz,j){var i=sz.querySelector('i');i.style.setProperty('--v',(mx?d.sold[j]/mx*100:0)+'%');i.style.setProperty('--pv2-c',j===t?'linear-gradient(180deg,#b88cf0,#6a1fc4)':'rgba(162,117,224,.42)');
-          sz.classList.toggle('pv2-top',j===t);sz.style.removeProperty('--pv2-hc')});
+        bars.forEach(function(sz,j){var i=sz.querySelector('i');i.style.setProperty('--v',(mx?d.sold[j]/mx*100:0)+'%');i.style.setProperty('--pv2-c',j===t?'var(--pv2-bartop)':'var(--pv2-bar)');
+          sz.classList.toggle('pv2-top',j===t);sz.style.removeProperty('--pv2-hc');sz.style.removeProperty('--pv2-glow')});
         cap.innerHTML=t>=0?'<b>'+SZ[t]+' sells most</b> · '+Math.round(d.sold[t]/d.u*100)+'%':'No sales yet';
       }
       var mn=Math.min.apply(0,p.stock),ms=p.stock.indexOf(mn);
@@ -3657,10 +3755,10 @@ window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock 
     list.sort(function(a,b){return a[1].first.lasts-b[1].first.lasts});
     box.innerHTML=list.map(function(x){var p=x[0],pl=x[1],f=pl.first,col=f.lasts<del?'var(--pv2-bad)':f.lasts<del+7?'var(--pv2-warn)':'var(--pv2-good)',w=isFinite(f.lasts)?Math.max(4,Math.min(100,f.lasts/(cov+del)*100)):100;
       return '<div class="pv2-prod'+(stockState.open[p.id]?' pv2-open':'')+'" data-id="'+p.id+'"><button type="button" class="pv2-prow" aria-expanded="'+!!stockState.open[p.id]+'">'
-        +'<span class="pv2-swc" style="background:'+p.sw+'"></span><span class="pv2-pn">'+p.main+'<svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></span>'
-        +'<span class="pv2-ord'+(pl.ord?'':' ok')+'">'+(pl.ord?'Order '+pl.ord:'Enough stock')+'</span>'
+        +'<span class="pv2-swc" style="--c1:'+p.rc[0]+';--c2:'+p.rc[1]+'">'+DRESS+'</span><span class="pv2-pn">'+p.main+'<svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></span>'
+        +'<span class="pv2-ord'+(pl.ord?'':' ok')+'">'+(pl.ord?'Order '+pl.ord+ARW:'Enough stock')+'</span>'
         +'<span class="pv2-pm"><b>'+pl.left+' left</b><span aria-hidden="true">·</span>'+(f.lasts===0?'<span class="pv2-pill">'+f.s+' is sold out now</span>'
-          :'<span class="'+(f.lasts<del?'r':'')+'">'+(isFinite(f.lasts)?f.s+' '+when(f.lasts):'no sales '+pv2Periods[state.period].phrase)+'</span>')+'</span>'
+          :'<span class="pv2-pill'+(f.lasts<del?'':f.lasts<del+7?' w':' n')+'">'+(isFinite(f.lasts)?f.s+' '+when(f.lasts):'no sales '+pv2Periods[state.period].phrase)+'</span>')+'</span>'
         +'<span class="pv2-run"><i style="--w:'+w+'%;--c:'+col+'"></i></span></button>'
         +'<div class="pv2-det"><div><p class="pv2-call'+(f.lasts>=del+7?' ok':'')+'">'+(isFinite(f.lasts)?f.s+' '+when(f.lasts):'No sales '+pv2Periods[state.period].phrase+' — nothing to plan from this period')+(f.lasts<del&&f.lasts>0?' — before a '+del+'-day delivery could land':'')+'</p>'
         +'<table class="pv2-tbl"><thead><tr><th>Size</th><th>Sells/day</th><th>In stock</th><th>Lasts'+xpb('pv2last','how long it lasts',att(xpLasts(p,pl)))+'</th><th>Order</th></tr></thead><tbody>'
@@ -3683,7 +3781,7 @@ window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock 
   function init(el){
     root=el;
     root.innerHTML='<div class="pv2-wrap"><div class="pv2-grid">'
-      +'<section class="pv2-panel pv2-top" aria-label="Top products"><div class="pv2-ph"><h3>Top products</h3><span class="pv2-per"></span>'
+      +'<section class="pv2-panel pv2-top" aria-label="Top products"><div class="pv2-ph"><div class="pv2-ttl"><h3>Products Analytics</h3><p><b>Top products</b><span class="pv2-per"></span></p></div>'
       +'<div class="pv2-sort" role="group" aria-label="Sort products by"><span class="pv2-sind" aria-hidden="true"></span>'
       +['rev','profit','margin','ret'].map(function(k){return '<button type="button" data-s="'+k+'" aria-pressed="'+(k==='rev')+'">'+VIEW[k]+'</button>'}).join('')+'</div></div>'
       +'<div class="pv2-cards"></div><p class="pv2-hint">Tap a card to see why it ranks</p></section>'
