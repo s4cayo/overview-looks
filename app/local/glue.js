@@ -13,7 +13,7 @@
     assistant: BASE + "pages/assistant/G-gemini.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",
-    products: "products", inventory: "inventory", assistant: "assistant", "ask ai": "assistant" };
+    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant" };
   // data-*-go keys used by the pages (Orders pages call Orders "sales" and Shipping "orders").
   var KEY = { overview: "overview", sales: "orders", orders: "shipping", products: "products",
     inventory: "inventory", assistant: "assistant" };

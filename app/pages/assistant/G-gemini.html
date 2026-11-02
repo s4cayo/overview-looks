@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Assistant</title>
+<title>Tricky</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -837,9 +837,24 @@ body:not(.as-is-empty) .g-glow::after{animation:none;opacity:0}
   .as-xbar .as-xname{flex-basis:calc(100% - 48px)}
 }
 @media (prefers-reduced-motion:reduce){.as-xvbg,.as-xvp{transition:none}}
+/* chats drawer on phone/tablet: the page behind is locked, the list never runs into the bottom edge */
+html.g-lock,html.g-lock body{overflow:hidden;overscroll-behavior:none}
+.g-side,.g-list{overscroll-behavior:contain}
+@media (max-width:1179px){
+  .g-side{height:100dvh;padding-bottom:max(14px,env(safe-area-inset-bottom,0px))}
+  .g-list{padding-bottom:28px;-webkit-mask:linear-gradient(to bottom,transparent,#000 14px,#000 calc(100% - 28px),transparent);mask:linear-gradient(to bottom,transparent,#000 14px,#000 calc(100% - 28px),transparent)}
+}
+/* on this page the bottom bar spans exactly the question box's width, so the two line up */
+@media (max-width:1023px){
+  .nv2-dock{padding:0 max(16px,calc(50% - 390px))}
+  .nv2-dock .nv2-pill{flex:1;justify-content:space-between;border-radius:32px}
+  .nv2-dock .nv2-pill > *{flex:1;width:auto;border-radius:26px}
+}
 /* phone: simpler. New chat = logo, greeting, three plain suggestions. Chats = answers use the full width. */
 @media (max-width:600px){
-  .g-glow::before,.g-glow::after{display:none}
+  .g-glow::before{opacity:.7}
+  .g-glow::after{opacity:.6;animation-duration:9s}
+  .g-glow::before,.g-glow::after{-webkit-mask:var(--g-tile) 0 0/60px 73px,radial-gradient(70% 34% at 50% 34%,#000 0%,transparent 80%);-webkit-mask-composite:source-in;mask:var(--g-tile) 0 0/60px 73px intersect,radial-gradient(70% 34% at 50% 34%,#000 0%,transparent 80%)}
   .g-hello::before{width:48px;margin-bottom:14px}
   .as-is-empty .g-head .as-mw{display:none}
   .g-hello h2{font-size:26px}
@@ -960,7 +975,7 @@ window.perSet=function(key){
       <div class="grp"><h6>Grow</h6>
         <a href="#"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
         <a href="#"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
-        <a class="on" href="#" aria-current="page"><svg class="i"><use href="#i-spark"/></svg>Assistant</a>
+        <a class="on" href="#" aria-current="page"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
         <a href="#"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
       </div>
       <div class="grp"><h6>Workspace</h6>
@@ -973,7 +988,7 @@ window.perSet=function(key){
 
   <div class="content">
   <main>
-    <h1 class="sr">Assistant</h1>
+    <h1 class="sr">Tricky</h1>
     <!-- === NAV v2 START === -->
     <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
     <header class="nv2-top" data-nv2-store="n-theme">
@@ -1006,7 +1021,7 @@ window.perSet=function(key){
     <div class="g-shell">
       <aside class="g-side" id="g-side" aria-label="Chats">
         <div class="g-stop">
-          <span class="g-name"><span class="g-star" aria-hidden="true"></span>Assistant</span>
+          <span class="g-name"><span class="g-star" aria-hidden="true"></span>Tricky</span>
           <button type="button" class="g-ib g-collapse" data-g-collapse aria-label="Hide chats" title="Hide chats"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg></button>
           <button type="button" class="g-ib g-x" data-g-close aria-label="Close chats"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
@@ -1043,7 +1058,7 @@ window.perSet=function(key){
               <div class="g-crow">
                 <label class="as-cb" title="Add photos or videos"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="sr">Add photos or videos</span><input type="file" class="sr" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime" multiple data-as-file></label>
                 <label class="sr" for="as-in">Ask the assistant</label>
-                <textarea id="as-in" rows="1" placeholder="Ask about your store" autocomplete="off" data-as-in></textarea>
+                <textarea id="as-in" rows="1" placeholder="Ask Tricky" autocomplete="off" data-as-in></textarea>
                 <div class="g-cm"><div class="as-mw as-modelw"><button type="button" class="as-mbtn" data-as-model aria-haspopup="menu" aria-expanded="false" aria-label="Choose the AI model"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span data-as-model-label>Claude Sonnet 5.5</span><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
   <div class="as-menu" role="menu" aria-label="AI model" data-as-model-menu></div></div></div>
                 <button type="submit" class="as-send" data-as-send aria-label="Send"><svg class="as-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
@@ -1089,7 +1104,7 @@ window.perSet=function(key){
       <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
       <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
     </div>
-    <a href="#" class="nv2-mr" aria-current="page" data-as-focus data-nv2-close><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Assistant</span></a>
+    <a href="#" class="nv2-mr" aria-current="page" data-as-focus data-nv2-close><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
     <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
     <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
     <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
@@ -1804,8 +1819,8 @@ AS_DATA.sugs = [
   try{ if(localStorage.getItem('g-closed')==='1') document.body.classList.add('g-closed') }catch(e){}
   function glow(){var m=document.querySelector('.g-stage');if(!m)return;var r=m.getBoundingClientRect();document.documentElement.style.setProperty('--g-gx',((r.left+r.width/2)/innerWidth*100).toFixed(1)+'%')}
   function setClosed(c){document.body.classList.toggle('g-closed',c);try{localStorage.setItem('g-closed',c?'1':'0')}catch(e){}glow()}
-  function open(){if(!drawer()){setClosed(false);return}last=document.activeElement;side.classList.add('is-on');scrim.classList.add('is-on');openB.setAttribute('aria-expanded','true');setTimeout(function(){var f=side.querySelector('[aria-current="true"]')||side.querySelector('button');f&&f.focus({preventScroll:true})},60)}
-  function close(){if(!side.classList.contains('is-on'))return;side.classList.remove('is-on');scrim.classList.remove('is-on');openB.setAttribute('aria-expanded','false');if(last&&last.focus)last.focus({preventScroll:true})}
+  function open(){if(!drawer()){setClosed(false);return}last=document.activeElement;side.classList.add('is-on');scrim.classList.add('is-on');document.documentElement.classList.add('g-lock');openB.setAttribute('aria-expanded','true');setTimeout(function(){var f=side.querySelector('[aria-current="true"]')||side.querySelector('button');f&&f.focus({preventScroll:true})},60)}
+  function close(){if(!side.classList.contains('is-on'))return;side.classList.remove('is-on');scrim.classList.remove('is-on');document.documentElement.classList.remove('g-lock');openB.setAttribute('aria-expanded','false');if(last&&last.focus)last.focus({preventScroll:true})}
   openB.addEventListener('click',open);
   document.addEventListener('click',function(e){if(e.target.closest('[data-g-close]'))close();if(e.target.closest('[data-g-collapse]'))setClosed(true)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
