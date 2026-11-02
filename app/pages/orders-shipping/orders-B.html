@@ -665,6 +665,57 @@ html.nv2-lock{scrollbar-gutter:stable}
 
 /* selected tab pill: a shadow that fits inside the bar, so the scroll edge never cuts it into a hard line */
 .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22)}
+
+/* === TYPE v1 START === */
+/* Type v1 (round 14): the app-wide scale from STYLE-GUIDE.md "Type and spacing scale". Same steps as the Overview's
+   TYPE v1 block: page title 28 · section title 20 (18 on phones) · key money figure 32 (26) · small stat 20 (18) ·
+   row name 15 · row amount 16 · secondary 13 · min 12. Spacing: title -> content 16 · inside a panel 24 (20) ·
+   between panels 24 (16). The shared product drawer (PSHEET) is scaled by the Overview, not here. */
+:root .ip-head h1{font-size:28px;font-weight:700}
+:root .ip{gap:24px}
+:root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:24px}
+:root .pv2-ph{margin-bottom:16px}
+:root .pv2-ph h3{font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
+:root .ip .seg button{font-size:15px}
+:root .ip-meta,:root .pv2-per{font-size:13px}
+/* products A: revenue is the biggest thing on a card */
+:root .pa-cards .pv2-mv{font-size:32px;line-height:1.15;letter-spacing:-.02em}
+:root .pa-cards .pv2-mv small{font-size:14px}
+:root .pa-cards .pv2-mv.u{font-size:20px}
+:root .pa-cards .pv2-nm{font-size:15px}
+:root .pa-cards .pv2-mk,:root .pa-cards .pv2-sub,:root .pa-cards .pv2-cap{font-size:13px}
+:root .pa-sz > b{font-size:20px}
+:root .pa-sz > b small,:root .pa-sz em{font-size:13px}
+/* products B */
+:root .pb-g b{font-size:32px}
+:root .pb-g small{font-size:13px}
+:root .pb-nm b{font-size:15px}
+:root .pb-nm small,:root .pb-v b small{font-size:13px}
+:root .pb-v b{font-size:16px}
+/* inventory A */
+:root .ia-t .pa-n{font-size:32px}
+:root .ia-t .pa-n small{font-size:15px}
+:root .ia-gn b{font-size:15px}
+:root .ia-tot,:root .ia-ro b{font-size:16px}
+:root .ia-tot small{font-size:13px}
+:root .ia-big{font-size:32px;letter-spacing:-.02em}
+:root .ip th{font-size:13px}
+/* inventory B */
+:root .ib-big{font-size:32px}
+:root .ib-ol b{font-size:15px}
+:root .ib-ol em{font-size:16px}
+:root .ib-sub .ib-lab small,:root .ib-row small{font-size:13px}
+@media (max-width:600px){
+  :root .ip-head h1{font-size:24px}
+  :root .ip{gap:16px}
+  :root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:20px}
+  :root .pv2-ph h3{font-size:18px}
+  :root .ip .seg button{font-size:14px}
+  :root .pa-cards .pv2-mv,:root .pb-g b,:root .ia-t .pa-n,:root .ia-big,:root .ib-big{font-size:26px}
+  :root .pa-cards .pv2-mv.u{font-size:18px}
+  :root .pa-sz > b{font-size:18px}
+}
+/* === TYPE v1 END === */
 /* === PERIODS v1 START === */
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
