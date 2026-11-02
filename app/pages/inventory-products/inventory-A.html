@@ -630,20 +630,18 @@ main{max-width:1240px}
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
-/* swipe rows (filter chips) on the phone: the row fades into a soft accent glow with a nudging arrow,
-   which says "more this way" better than a lone dot; it goes once you reach the end */
+/* swipe rows (filter chips) on the phone: a fade + arrow says "more this way"; both go once you reach the end */
 .ip-swipew{position:relative}
 .ip-more{display:none}
-@keyframes ipNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 @media (max-width:600px){
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
   .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
-  .ip-more{display:flex;align-items:center;justify-content:flex-end;position:absolute;right:-16px;top:-2px;bottom:-2px;z-index:2;width:84px;padding-right:16px;border:0!important;border-radius:0;
-    color:var(--pv2-acc);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pv2-acc) 16%,var(--pv2-bg)) 58%,color-mix(in srgb,var(--pv2-acc) 22%,var(--pv2-bg)));transition:opacity .25s}
-  .ip-more .ip-i{width:20px;height:20px;stroke-width:2.4;animation:ipNudge 1.8s ease-in-out infinite}
-  .ip-swipew.end .ip-more{opacity:0;pointer-events:none}
-  .ip-swipe{padding-right:60px!important}
+  .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
+    color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
+  .ip-more .ip-i{width:15px;height:15px}
+  .ip-swipew.end::after,.ip-swipew.end .ip-more{opacity:0;pointer-events:none}
+  .ip-swipe{padding-right:44px!important}
 }
-@media (prefers-reduced-motion:reduce){.ip-more .ip-i{animation:none}}
 
 /* product picture inside a coloured ring: the ring IS the indicator (Products "Worth a look", Inventory tiles) */
 .pa-ring{position:relative;width:64px;height:64px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--pv2-track) 0)}
