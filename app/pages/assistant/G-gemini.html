@@ -278,6 +278,16 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
+/* round 11: bottom dock — the current page is the accent colour with a soft capsule behind its icon (no black disc
+   crowding the label); same rule as the Products / Inventory pages */
+.nv2-dock .nv2-pill > *{position:relative}
+.nv2-dock .nv2-pill > * > *{position:relative}
+.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
+  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
+
 /* Nav v2: below 1024px the dock's Menu sheet replaces the sidebar */
 @media (max-width:1023px){.side{display:none!important}.burger{display:none!important}.content{padding-left:22px;padding-right:22px}}
 @media (max-width:600px){.content{padding-left:16px;padding-right:16px}}
@@ -740,12 +750,15 @@ body.g-closed .g-open,body.g-closed .g-newsq{display:grid}
   .g-shell .as-md{font-size:15.5px}
   .g-shell .as-prop{padding:16px 16px 18px}
 }
-/* phone/tablet: the chat header is pinned to the top with its own background (text never shows through), and hides while scrolling down */
+/* phone/tablet: the chat header stays pinned with NO band behind it (Sam: no pillar, no background). It hides while
+   scrolling down; once the page is scrolled, a soft fade (no edge) sits under it so the buttons never land on text */
 @media (max-width:1179px){
-  .g-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--g-bg) 90%,transparent);
-    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 100vmax color-mix(in srgb,var(--g-bg) 90%,transparent);clip-path:inset(0 -100vmax);
-    transition:transform .3s cubic-bezier(.2,.8,.2,1)}
-  .g-head.is-hid{transform:translateY(calc(-100% - env(safe-area-inset-top,0px) - 2px))}
+  .g-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .g-head::before{content:"";position:absolute;z-index:-1;top:calc(-1 * env(safe-area-inset-top,0px));bottom:-18px;left:-50vw;right:-50vw;
+    background:linear-gradient(var(--g-bg) 60%,transparent);opacity:0;transition:opacity .2s;pointer-events:none}
+  .g-head.is-float::before{opacity:1}
+  .g-main{overflow-x:clip}
+  .g-head.is-hid{transform:translateY(calc(-100% - env(safe-area-inset-top,0px) - 20px))}
 }
 /* nothing to scroll on a new chat; the page never rubber-bands */
 @media (max-width:1023px){
@@ -972,7 +985,7 @@ window.perSet=function(key){
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
@@ -1029,7 +1042,7 @@ window.perSet=function(key){
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
       <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -1038,9 +1051,9 @@ window.perSet=function(key){
           <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
           <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
       </div>
     </header>
@@ -1147,7 +1160,7 @@ window.perSet=function(key){
 <section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
   <div class="nv2-grab" aria-hidden="true"></div>
   <div class="nv2-sh"><span class="nv2-mark" style="width:34px;height:34px;border-radius:10px"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><h2>Ask the assistant</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></form>
   <p class="nv2-sugh">Try asking</p>
   <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Why is profit ROAS below break-even?</button>
   <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Which campaign should I cut this week?</button>
@@ -1422,7 +1435,7 @@ AS_DATA.sugs = [
     check: '<path d="M20 6L9 17l-5-5"/>',
     warn: '<path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>',
     x: '<path d="M6 6l12 12M18 6L6 18"/>',
-    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    arrow: '<path d="M9 6l6 6-6 6"/>',
     up: '<path d="M12 19V5M6 11l6-6 6 6"/>',
     stop: '<rect x="7" y="7" width="10" height="10" rx="2"/>',
     copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>',
@@ -1892,7 +1905,8 @@ AS_DATA.sugs = [
   /* the chat header (chats + new chat): pinned, steps away while you scroll down, back as soon as you scroll up */
   var lastY=scrollY;
   addEventListener('scroll',function(){var y=scrollY,d=y-lastY;if(Math.abs(d)<6)return;
-    head.classList.toggle('is-hid',d>0&&y>80&&!side.classList.contains('is-on')&&!kbOn);lastY=y},{passive:true});
+    head.classList.toggle('is-hid',d>0&&y>80&&!side.classList.contains('is-on')&&!kbOn);lastY=y});
+  addEventListener('scroll',function(){head.classList.toggle('is-float',scrollY>8)},{passive:true});
   document.addEventListener('as:render',function(){requestAnimationFrame(fit)});
   window.addEventListener('resize',function(){requestAnimationFrame(fit)});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);

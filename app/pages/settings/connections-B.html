@@ -276,6 +276,15 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
+/* round 11: bottom dock — the current page is the accent colour with a soft capsule behind its icon (no black disc
+   crowding the label); same rule as the Products / Inventory pages */
+.nv2-dock .nv2-pill > *{position:relative}
+.nv2-dock .nv2-pill > * > *{position:relative}
+.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
+  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
 /* ===== shared by the settings + account mockups (st- prefix). Base tokens + nav come from the Overview. ===== */
 /* light mode: status colours a step darker so text on them reaches 4.5:1 (same as the Orders/Shipping pages) */
 :root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
@@ -654,7 +663,7 @@ html.st-lock,html.st-lock body{overflow:hidden}
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
@@ -710,7 +719,7 @@ html.st-lock,html.st-lock body{overflow:hidden}
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
       <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -719,9 +728,9 @@ html.st-lock,html.st-lock body{overflow:hidden}
           <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
           <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
       </div>
     </header>
@@ -1099,8 +1108,8 @@ ST.detailBody=function(p){
   if(!p.wallet){var sub={x:{assets:'Page & Pixel',ai:'Model'},keys:'Keys'};
     var sec=function(t,d,html){return '<section class="dsec"><div class="dsec-h"><h4>'+t+'</h4><p>'+d+'</p></div><div class="dsec-b">'+html+'</div></section>'};
     return '<div class="donep">'+sec('Overview','How the connection is doing.',ov)+
-      (extra?sec(xname,p.assets?'What we use from your Meta business.':'Who answers and how.',extra.replace('<p class="hint">What we use from your Meta business.</p>','')):'')+
-      sec('Keys',p.keys.length?'Stored encrypted. You only ever see the last 4 characters.':'Only needed if you connect by hand. Stored encrypted.',keys.replace(/<p class="hint lockline">[\s\S]*?<\/p>/,''))+'</div>'}
+      sec('Keys',p.keys.length?'Stored encrypted. You only ever see the last 4 characters.':'Only needed if you connect by hand. Stored encrypted.',keys.replace(/<p class="hint lockline">[\s\S]*?<\/p>/,''))+
+      (extra?sec(xname,p.assets?'What we use from your Meta business.':'Who answers and how.',extra.replace('<p class="hint">What we use from your Meta business.</p>','')):'')+'</div>'}
   return '<div class="dtabs" role="tablist" aria-label="'+E(p.name)+' sections">'+tabs.map(function(t,i){return '<button type="button" role="tab" data-dtab="'+t[0]+'" aria-selected="'+(i===0)+'"'+(i?' tabindex="-1"':'')+'>'+t[1]+'</button>'}).join('')+'</div>'+
     tabs.map(function(t,i){return '<div class="dpane" data-dpane="'+t[0]+'" role="tabpanel"'+(i?' hidden':'')+'>'+body[t[0]]+'</div>'}).join('')};
 ST.detailFoot=function(p){

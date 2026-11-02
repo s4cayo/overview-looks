@@ -483,7 +483,6 @@ main{max-width:1240px}
 .pv2-ptag,.pv2-left,.pv2-sz span{font-size:12px}
 .ip{display:flex;flex-direction:column;gap:22px}
 .ip .muted{color:var(--pv2-mut)}
-.ip-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 /* page heading */
 .ip-head{display:flex;align-items:flex-end;gap:12px 20px;flex-wrap:wrap;margin-top:6px}
@@ -519,7 +518,6 @@ main{max-width:1240px}
 @media (max-width:600px){.ip .pv2-sort{width:100%;display:flex}.ip .pv2-sort button{flex:1;padding:0 4px;text-align:center;font-size:12.5px}}
 
 /* empty / unknown */
-.ip-unk{color:var(--pv2-mut)!important;font-weight:500!important}
 .ip-empty{padding:34px 16px;text-align:center;color:var(--pv2-mut);font-size:14px;line-height:1.5}
 .ip-empty button{color:var(--pv2-acc);font-weight:600;margin-left:6px}
 .ip-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap;line-height:18px}
@@ -533,6 +531,13 @@ main{max-width:1240px}
 .ip-th{position:relative;width:40px;height:50px;border-radius:10px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2))}
 .ip-th svg{width:18px;height:27px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
 
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card: a drawer on desktop, a bottom sheet on the phone. Byte-identical in
+   previews/N-final.html, inventory-products/products-A.html + inventory-A.html and orders-shipping/orders-B.html
+   (scratchpad/r11/psheet_check.py). Copied from Products A; change it in all four or nowhere. Its header, verdict,
+   chips and action row use the PRODUCTS v2 classes (.pv2 tokens, .pv2-sh/-shsw/-sht/-close/-grab/-verdict/-chip/-act). */
+.ip-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-unk{color:var(--pv2-mut)!important;font-weight:500!important}
 /* ---- product detail (drawer on desktop, bottom sheet on phone) ---- */
 .ip-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
 .ip-scrim.on{opacity:1;pointer-events:auto}
@@ -581,7 +586,7 @@ main{max-width:1240px}
 .ip-sz td:last-child,.ip-sz thead th:last-child{width:32%}
 .ip-sz tbody th{font-weight:600}
 .ip-sz tbody th i{display:inline-block;font-style:normal;font-size:12px;font-weight:600;line-height:18px;padding:0 7px;margin-left:6px;border-radius:99px;color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent);vertical-align:1px}
-.ip-sz tr.top th{color:var(--pv2-acc)}
+.ip-sz tr.ip-ztop th{color:var(--pv2-acc)}
 .ip-sz td .pc{font-weight:500}
 .ip-sz td .m{color:var(--pv2-mut);font-weight:500}
 .ip-sz td.r{color:var(--pv2-bad)}
@@ -600,6 +605,15 @@ main{max-width:1240px}
 .ip-toast.on{opacity:1;transform:translate(-50%,0)}
 :root[data-theme="light"] .ip-toast{background:#17141f;color:#fff}
 @media (min-width:1024px){.ip-toast{bottom:32px}}
+/* the card's "i" — the same look as the pages' .tip (INFO-ICON.md), under its own class because the Overview's .tip is a chart tooltip */
+.ip-tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.ip-tip:hover,.ip-tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.ip-tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.ip-tipb.on{visibility:visible;opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
+/* === PSHEET v1 END === */
 
 /* sticky tabs: N's .seg, sized for these pages */
 .ip .tabbar{top:calc(env(safe-area-inset-top,0px) + 10px)}
@@ -607,7 +621,6 @@ main{max-width:1240px}
 .ip .seg button{padding:10px 18px}
 @media (max-width:600px){.ip .tabbar{margin:0 -16px;padding:0 16px}.ip .seg{width:100%}.ip .seg button{padding:9px 12px;font-size:13px}.ip .seg .n{display:none}}
 .ip .pane{scroll-margin-top:84px}
-@media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
 
 /* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
 .tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
@@ -617,32 +630,67 @@ main{max-width:1240px}
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
-/* swipe rows (filter chips) on the phone: a fade + arrow says "more this way"; both go once you reach the end */
+/* swipe rows (filter chips) on the phone: the row fades into a soft accent glow with a nudging arrow,
+   which says "more this way" better than a lone dot; it goes once you reach the end */
 .ip-swipew{position:relative}
 .ip-more{display:none}
+@keyframes ipNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
 @media (max-width:600px){
-  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
   .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
-  .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
-    color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
-  .ip-more .ip-i{width:15px;height:15px}
-  .ip-swipew.end::after,.ip-swipew.end .ip-more{opacity:0;pointer-events:none}
-  .ip-swipe{padding-right:44px!important}
+  .ip-more{display:flex;align-items:center;justify-content:flex-end;position:absolute;right:-16px;top:-2px;bottom:-2px;z-index:2;width:84px;padding-right:16px;border:0!important;border-radius:0;
+    color:var(--pv2-acc);background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--pv2-acc) 16%,var(--pv2-bg)) 58%,color-mix(in srgb,var(--pv2-acc) 22%,var(--pv2-bg)));transition:opacity .25s}
+  .ip-more .ip-i{width:20px;height:20px;stroke-width:2.4;animation:ipNudge 1.8s ease-in-out infinite}
+  .ip-swipew.end .ip-more{opacity:0;pointer-events:none}
+  .ip-swipe{padding-right:60px!important}
 }
+@media (prefers-reduced-motion:reduce){.ip-more .ip-i{animation:none}}
+
+/* product picture inside a coloured ring: the ring IS the indicator (Products "Worth a look", Inventory tiles) */
+.pa-ring{position:relative;width:64px;height:64px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--pv2-track) 0)}
+.pa-ring.dash{background:none;border:2.5px dashed var(--c);padding:3px}
+.pa-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px var(--pv2-bg)}
+.pa-face svg{width:20px;height:30px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.pa-badge{position:absolute;right:-6px;bottom:-2px;min-width:26px;height:22px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:var(--c);box-shadow:0 0 0 3px var(--pv2-bg)}
+.pa-stack{position:relative;display:flex;align-items:center;flex:none}
+.pa-stack .pa-ring{width:46px;height:46px;padding:4px}
+.pa-stack .pa-ring + .pa-ring{margin-left:-16px}
+.pa-stack .pa-face svg{width:14px;height:21px}
+.pa-stack .pa-badge{right:-8px}
+.ip-out .pa-face{filter:grayscale(1) brightness(.85)}
+
+/* bottom dock: the current page is the accent colour with a soft capsule behind its icon,
+   instead of a solid black disc that crowded the label ("Products" touched its edges) */
+.nv2-dock .nv2-pill > *{position:relative}
+.nv2-dock .nv2-pill > * > *{position:relative}
+.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
+  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
+
+/* selected tab pill: a shadow that fits inside the bar, so the scroll edge never cuts it into a hard line */
+.seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22)}
 
 /* ===== Inventory A — restock first, sticky tabs ===== */
-.ia-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.ia-t{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:18px;background:var(--pv2-bg);border:1px solid var(--pv2-line);text-align:left;min-width:0;transition:border-color .2s,transform .2s,box-shadow .2s}
-[data-theme="light"] .ia-t{box-shadow:0 1px 2px rgba(24,16,40,.04),0 10px 28px -20px rgba(40,20,80,.25)}
-.ia-t:hover{border-color:color-mix(in srgb,var(--c) 55%,transparent);transform:translateY(-2px)}
-.ia-t > span{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--pv2-mut)}
-.ia-t > span i{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
-.ia-t b{font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.05;color:var(--c2,var(--pv2-fg))}
-.ia-t b small{font-size:14px;font-weight:500;color:var(--pv2-mut);margin-left:6px;letter-spacing:0}
-.ia-t em{font-style:normal;font-size:13px;color:var(--pv2-mut);line-height:1.4}
-.ia-t em strong{color:var(--pv2-fg);font-weight:600}
+/* top tiles: the product pictures in a coloured ring say what is wrong; one fact line, one detail line */
+.ia-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ia-t{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 14px 16px;border-radius:16px;min-width:0;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 12%,var(--pv2-bg2)),var(--pv2-bg2) 70%);border:1px solid color-mix(in srgb,var(--c) 26%,var(--pv2-line));transition:border-color .2s,transform .2s}
+.ia-t:hover{border-color:var(--c);transform:translateY(-2px)}
+.ia-t .pa-pics{height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.ia-t .pa-stack .pa-ring{width:52px;height:52px;padding:4px}
+.ia-t .pa-stack .pa-ring + .pa-ring{margin-left:-18px}
+.ia-t .pa-txt{display:flex;flex-direction:column;gap:3px}
+.ia-t .pa-t{font-size:15px;font-weight:600;line-height:1.3;color:var(--pv2-fg)}
+.ia-t .pa-t em{font-style:normal;color:var(--c)}
+.ia-t .pa-s{font-size:13px;line-height:1.4;color:var(--pv2-mut)}
+.ia-t .pa-s strong{color:var(--pv2-fg);font-weight:600}
+.ia-t .pa-go{margin-top:auto;padding-top:6px;font-size:13px;font-weight:600;color:var(--pv2-acc);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.ia-t .pa-go svg{transition:transform .2s}
+.ia-t:hover .pa-go svg{transform:translateX(3px)}
+.ia-t.none{opacity:.7}
 @media (max-width:1100px){.ia-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.ia-tiles{gap:10px}.ia-t{padding:13px 14px;border-radius:16px}.ia-t b{font-size:25px}.ia-t > span{font-size:12.5px}.ia-t em{font-size:12.5px}}
+@media (max-width:600px){.ia-tiles{gap:10px}.ia-t{padding:16px 10px 14px}.ia-t .pa-stack .pa-ring{width:44px;height:44px;padding:3px}.ia-t .pa-stack .pa-ring + .pa-ring{margin-left:-16px}}
 
 .ia-panes .pane{margin-top:16px}
 .ia-panes .pv2-panel{padding:22px 24px}
@@ -860,7 +908,7 @@ window.perSet=function(key){
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
       <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -869,9 +917,9 @@ window.perSet=function(key){
           <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
           <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
       </div>
     </header>
@@ -1076,6 +1124,14 @@ window.perSet=function(key){
 /* === NAV v2 END === */
 </script>
 <script>
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card, byte-identical in previews/N-final.html, inventory-products/products-A.html
+   + inventory-A.html and orders-shipping/orders-B.html (scratchpad/r11/psheet_check.py). Copied from Products A.
+   IP      the product catalogue + period maths. Call IP.compute(PSHEET.perKey()) before building a card.
+   PSHEET  .open(html, returnFocusEl) · .close() · .isOpen() · .sheetEl() · .detail(p, view, opts) the card's HTML
+           · .refresh(html) re-renders an open card in place (keeps its scroll) · .perKey() the date period (PER.cur, else 7d)
+           · events: document "ip:sheet" {open}. Links in the card are real hrefs: window.PSHEET_BASE is the folder of
+           products-A.html relative to the page ('' beside it, '../pages/inventory-products/' from previews/). */
 /* ===== IP DATA — one catalogue for the Products + Inventory mockups =====
    The first six products are the Overview's PRODUCTS v2 data, unchanged (same 7-day sold/shipped/returned per size,
    same stock, same per-period units). Seven more complete the catalogue and carry the real edge cases the app handles:
@@ -1183,43 +1239,23 @@ var IP=(function(){
     byId:function(id){return PR.filter(function(p){return p.id===id})[0]}};
 })();
 
-/* ===== IP COMMON — helpers shared by the four mockups =====
-   ipToast(msg) · ipSheet.open(html, returnFocusEl) / .close() · ipDetail(p, view, opts) product detail HTML
-   Navigation: this mockup pair is products-X.html ⇄ inventory-X.html (X = A or B). Everything else in the app
-   answers with a toast so no click is dead. */
-var IPU=(function(){
+var PSHEET=(function(){
   var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fmt=IP.fmt;
-  var ARW='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var ARW='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var EXT='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
   var XI='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
   var LETTER=(location.pathname.match(/-(A|B)\.html/)||[])[1]||'A';
-  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'your profile',signout:'Sign out',elsewhere:'that page'};
 
   /* ---- toast ---- */
   var toastEl=null,toastT=null;
   function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='ip-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
     toastEl.textContent=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},3200)}
 
-  /* ---- navigation ---- */
-  function pageUrl(page,q){return page+'-'+LETTER+'.html'+(q?'?'+q:'')}
-  function go(where,q){
-    if(where==='products'||where==='inventory'){
-      if(document.body.dataset.page===where){window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
-      location.href=pageUrl(where,q);return}
-    toast('This mockup covers Inventory and Products. In the app this opens '+(NAMES[where]||'that page')+'.');
-  }
-  document.addEventListener('nv2:nav',function(e){var g=e.detail.go;
-    if(/Dress|Set|Cardigan|Scarf|Skirt|Kaftan/.test(e.detail.q||'')){var p=IP.PR.filter(function(x){return e.detail.q.indexOf(x.main.split(' ')[0])===0})[0];if(p){go('products','p='+p.id);return}}
-    go(g)});
-  document.addEventListener('click',function(e){var a=e.target.closest('[data-ip-go]');if(!a)return;e.preventDefault();go(a.dataset.ipGo,a.dataset.ipQ||'')});
-  /* the bell's stock note follows this catalogue */
-  function bell(){var c=IP.counts(),n=$('.nv2-note[data-nv2-go="products"] b');if(n)n.textContent=c.low+' sizes running low · '+c.out+' sold out';
-    var nn=$('.nv2-note[data-nv2-go="products"]');if(nn)nn.dataset.nv2Go='inventory';
-    var l=$('.nv2-note[data-nv2-go="inventory"] .nv2-nl');if(l)l.firstChild.textContent='Open inventory '}
-  var params=new URLSearchParams(location.search);
+  /* ---- links (Products ⇄ Inventory) ---- */
+  function pageUrl(page,q){return (window.PSHEET_BASE||'')+page+'-'+LETTER+'.html'+(q?'?'+q:'')}
 
   /* ---- sheet ---- */
   var sheet,scrim,back=null;
@@ -1233,6 +1269,7 @@ var IPU=(function(){
     document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:true}}))}
   function close(){if(!sheet||!sheet.classList.contains('on'))return;sheet.classList.remove('on');scrim.classList.remove('on');if(back&&back.focus)back.focus({preventScroll:true});
     document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:false}}))}
+  function refresh(html){if(!sheet)return;var y=sheet.scrollTop;sheet.innerHTML=html;sheet.scrollTop=y}
 
   /* ---- product helpers ---- */
   var VIEW={rev:'Revenue',profit:'Profit',margin:'Margin',units:'Units sold',ret:'Returns'};
@@ -1282,7 +1319,7 @@ var IPU=(function(){
     /* one row per size: sold · in stock · returned — the same columns line up for every size */
     var rows=p.sizes.map(function(s,j){var st=p.stock[j],top=j===t&&d.u,sh=d.ship[j],rt=d.ret[j],few=sh<IP.MIN_SHIP,hot=j===w;
       var retTxt=!sh?'<span class="m">—</span>':!rt||few?'<span class="m">'+rt+' of '+sh+'</span>':rt+' of '+sh+' <span class="pc">· '+Math.round(rt/sh*100)+'%</span>';
-      return '<tr'+(top?' class="top"':'')+'><th scope="row">'+s+(top?' <i>Top</i>':'')+'</th>'
+      return '<tr'+(top?' class="ip-ztop"':'')+'><th scope="row">'+s+(top?' <i>Top</i>':'')+'</th>'
         +'<td class="'+stockCls(st)+'">'+(st==null?'not tracked':st===0?'sold out':st)+'</td><td>'+d.sold[j]+'</td>'
         +'<td'+(hot?' class="r"':'')+'>'+retTxt+'</td></tr>'}).join('');
     var notes=[];
@@ -1316,6 +1353,65 @@ var IPU=(function(){
   }
   document.addEventListener('click',function(e){var b=e.target.closest('[data-ip-shopify]');if(!b)return;e.preventDefault();
     var p=IP.byId(b.dataset.id);toast(b.dataset.ipShopify==='cost'?'In the app this opens '+p.main+' in Shopify admin, at the “Cost per item” field.':'In the app this opens '+p.main+' in Shopify admin, at “Track quantity”.')});
+
+  /* the card's "i": hover, focus or tap it to read what a term means. One bubble, placed by script so no panel clips it
+     (the pages' .tip / Shipping B OS.tip behaviour, under .ip-tip). */
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+  function tip(t){return '<button type="button" class="ip-tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=null,cur=null,pin=false;
+    function bub(){if(!b){b=document.createElement('div');b.className='ip-tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b)}return b}
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;bub().textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;if(b)b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.ip-tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.ip-tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.ip-tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+    document.addEventListener('ip:sheet',function(e){if(!e.detail.open)close()});
+  })();
+
+  return {$:$,$$:$$,reduce:reduce,toast:toast,pageUrl:pageUrl,open:open,close:close,refresh:refresh,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
+    detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,tip:tip,perKey:PERKEY};
+})();
+/* === PSHEET v1 END === */
+
+/* ===== IP COMMON — page glue around PSHEET v1 (the shared product card, in data.js): Products ⇄ Inventory
+   navigation, the bell, the page's own "i" tips (.tip), swipe rows and the ring helpers. IPU = PSHEET + these,
+   so page code keeps calling IPU / U. Navigation: products-X.html ⇄ inventory-X.html (X = A or B); everything
+   else in the app answers with a toast so no click is dead. ===== */
+var IPU=(function(){
+  var S=PSHEET,$=S.$,$$=S.$$,reduce=S.reduce,toast=S.toast,pageUrl=S.pageUrl,DRESS=S.DRESS;
+  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'your profile',signout:'Sign out',elsewhere:'that page'};
+
+  /* ---- navigation ---- */
+  function go(where,q){
+    if(where==='products'||where==='inventory'){
+      if(document.body.dataset.page===where){window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
+      location.href=pageUrl(where,q);return}
+    toast('This mockup covers Inventory and Products. In the app this opens '+(NAMES[where]||'that page')+'.');
+  }
+  document.addEventListener('nv2:nav',function(e){var g=e.detail.go;
+    if(/Dress|Set|Cardigan|Scarf|Skirt|Kaftan/.test(e.detail.q||'')){var p=IP.PR.filter(function(x){return e.detail.q.indexOf(x.main.split(' ')[0])===0})[0];if(p){go('products','p='+p.id);return}}
+    go(g)});
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-ip-go]');if(!a)return;e.preventDefault();go(a.dataset.ipGo,a.dataset.ipQ||'')});
+  /* the bell's stock note follows this catalogue */
+  function bell(){var c=IP.counts(),n=$('.nv2-note[data-nv2-go="products"] b');if(n)n.textContent=c.low+' sizes running low · '+c.out+' sold out';
+    var nn=$('.nv2-note[data-nv2-go="products"]');if(nn)nn.dataset.nv2Go='inventory';
+    var l=$('.nv2-note[data-nv2-go="inventory"] .nv2-nl');if(l)l.firstChild.textContent='Open inventory '}
+  var params=new URLSearchParams(location.search);
+
+  /* product picture in a coloured ring (pct fills the ring, dash = dashed ring), and an overlapping stack of them */
+  function face(p){return '<span class="pa-face" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span>'}
+  function ring(p,pct,badge,dash){return '<span class="pa-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--pct:'+pct+'"':'')+'>'+face(p)+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
+  function stack(list,dash,badge){return '<span class="pa-stack">'+list.slice(0,3).map(function(p){return ring(p,null,null,dash)}).join('')+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
 
   /* "i" tips: hover, focus or tap a small i to read what a hard term means. One shared bubble, placed by script so no panel clips it.
      Copied from Shipping B (OS.tip) — the same icon and bubble on every page. */
@@ -1351,8 +1447,9 @@ var IPU=(function(){
     if('MutationObserver' in window)new MutationObserver(upd).observe(row,{childList:true});upd()})}
 
   bell();
-  return {tip:tip,swipeHints:swipeHints,$:$,$$:$$,reduce:reduce,toast:toast,go:go,pageUrl:pageUrl,params:params,open:open,close:close,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
-    detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,perKey:PERKEY};
+  var U={};for(var k in S)U[k]=S[k];
+  U.go=go;U.params=params;U.swipeHints=swipeHints;U.tip=tip;U.face=face;U.ring=ring;U.stack=stack;
+  return U;
 })();
 
 /* ===== Inventory A behaviour ===== */
@@ -1370,15 +1467,18 @@ var IPU=(function(){
 
   /* ---- tiles ---- */
   function tiles(){
-    var late=0,lateP={};PR.forEach(function(p){if(IP.DEAD.indexOf(p)>=0)return;var pl=IP.plan(p,st.cover,st.del);pl.rows.forEach(function(r){if(!r.unk&&r.lasts>0&&r.lasts<st.del){late++;lateP[p.id]=1}})});
+    var late=0,lateP=[];PR.forEach(function(p){if(IP.DEAD.indexOf(p)>=0)return;var pl=IP.plan(p,st.cover,st.del);pl.rows.forEach(function(r){if(!r.unk&&r.lasts>0&&r.lasts<st.del){late++;if(lateP.indexOf(p)<0)lateP.push(p)}})});
     var so=soldOut(),soN=so.reduce(function(a,x){return a+x.s.length},0),miss=0;so.forEach(function(x){x.s.forEach(function(s){var j=x.p.sizes.indexOf(s);miss+=x.p.P.perDay[j]*x.p.price})});
     var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0),unk=PR.reduce(function(a,p){return a+p.unknownSizes.length},0);
+    var unkP=unknowns(),more=function(l){return l.length>3?'+'+(l.length-3):null},pl=function(n,w){return n+' '+w+(n===1?'':'s')};
     var T=[
-      {t:'restock',c:'var(--pv2-bad)',c2:'var(--pv2-bad)',l:'Run out before a delivery lands',b:late+'<small>sizes</small>',e:'In '+Object.keys(lateP).length+' products · '+st.del+'-day delivery'},
-      {t:'out',c:'var(--pv2-bad)',l:'Sold out now',b:soN+'<small>sizes</small>',e:miss?'About <strong>EGP '+fmt(miss)+'</strong> a day not sold':'No sales '+P().phrase+' to estimate from'},
-      {t:'dead',c:'var(--pv2-mut)',l:'Not selling',b:IP.DEAD.length+'<small>products</small>',e:'At least <strong>EGP '+fmt(cash)+'</strong> of stock sitting still'},
-      {t:'unk',c:'var(--pv2-warn)',l:'Stock unknown',b:unk+'<small>sizes</small>',e:'Shopify isn’t counting them'}];
-    $('#ia-tiles').innerHTML=T.map(function(x){return '<button type="button" class="ia-t" data-totab="'+x.t+'" style="--c:'+x.c+(x.c2?';--c2:'+x.c2:'')+'"><span><i></i>'+x.l+'</span><b>'+x.b+'</b><em>'+x.e+'</em></button>'}).join('');
+      {t:'restock',c:'var(--pv2-bad)',l:lateP,t1:'<em>'+pl(late,'size')+'</em> run out before a delivery lands',s:'In '+pl(lateP.length,'product')+' · '+st.del+'-day delivery',go:'Plan restock'},
+      {t:'out',c:'var(--pv2-bad)',l:so.map(function(x){return x.p}),cls:' ip-out',t1:'<em>'+pl(soN,'size')+'</em> sold out now',s:miss?'About <strong>EGP '+fmt(miss)+'</strong> a day not sold':'No sales '+P().phrase+' to estimate from',go:'See them'},
+      {t:'dead',c:'var(--pv2-mut)',l:IP.DEAD,dash:1,t1:'<em>'+pl(IP.DEAD.length,'product')+'</em> barely selling',s:'At least <strong>EGP '+fmt(cash)+'</strong> of stock sitting still',go:'See them'},
+      {t:'unk',c:'var(--pv2-warn)',l:unkP,dash:1,t1:'<em>'+pl(unk,'size')+'</em> with stock unknown',s:'Shopify isn’t counting them',go:'See why'}];
+    $('#ia-tiles').innerHTML=T.map(function(x){var pics=x.l.length?'<span class="pa-pics'+(x.cls||'')+'">'+U.stack(x.l,x.dash,more(x.l))+'</span>':'';
+      return '<button type="button" class="ia-t'+(x.l.length?'':' none')+'" data-totab="'+x.t+'" style="--c:'+x.c+'">'+pics
+        +'<span class="pa-txt"><span class="pa-t">'+x.t1+'</span><span class="pa-s">'+x.s+'</span></span><span class="pa-go">'+x.go+' '+U.ARW+'</span></button>'}).join('');
     $('[data-n=restock]').textContent=late||'';$('[data-n=out]').textContent=soN;$('[data-n=dead]').textContent=IP.DEAD.length;$('[data-n=unk]').textContent=unk;$('[data-n=all]').textContent=PR.length;
   }
 
@@ -1447,9 +1547,12 @@ var IPU=(function(){
     if(typeof openP==='function')openP(p,b);else U.open(U.detail(p,'units',{noRestock:true})+'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a>',b)});
 
   /* ---- detail sheet for a product (All stock) ---- */
-  function openP(p,from){var pl=IP.plan(p,st.cover,st.del);
-    U.open(U.detail(p,'units',{noRestock:true})+(pl.ord?'<a class="pv2-act" href="#" data-plan="'+p.id+'"><span>Order <b>'+pl.ord+'</b> to cover '+st.cover+' days</span><b>See the plan '+U.ARW+'</b></a>':'')
-      +'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a>',from)}
+  function openP(p,from,v){var pl=IP.plan(p,st.cover,st.del),html=U.detail(p,v||'units',{noRestock:true})+(pl.ord?'<a class="pv2-act" href="#" data-plan="'+p.id+'"><span>Order <b>'+pl.ord+'</b> to cover '+st.cover+' days</span><b>See the plan '+U.ARW+'</b></a>':'')
+      +'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a>';
+    st.card=p;if(v&&U.isOpen())U.refresh(html);else U.open(html,from)}
+  /* the card's rank chips: show the same card ranked by the chosen measure */
+  document.addEventListener('click',function(e){var r=e.target.closest('.ip-sheet [data-ip-rank]');if(!r||!st.card||!U.isOpen())return;var k=r.dataset.ipRank;
+    openP(st.card,null,k);var nb=U.sheetEl().querySelector('[data-ip-rank="'+k+'"]');if(nb)nb.focus({preventScroll:true})});
 
   /* ---- sticky tabs (N's tab bar) ---- */
   var seg=$('#seg'),ind=$('#ind'),bar=$('#tabbar'),anchor=$('#tabsAnchor'),tabs=$$('[role=tab]',seg);

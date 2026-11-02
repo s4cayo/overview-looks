@@ -285,6 +285,15 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
+/* round 11: bottom dock — the current page is the accent colour with a soft capsule behind its icon (no black disc
+   crowding the label); same rule as the Products / Inventory pages */
+.nv2-dock .nv2-pill > *{position:relative}
+.nv2-dock .nv2-pill > * > *{position:relative}
+.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
+  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
 /* ===== CP COMMON — page chrome shared by Competitors A + B (cp- prefix) ===== */
 .content{padding:22px 34px 60px}
 main{max-width:1240px}
@@ -296,6 +305,7 @@ main{max-width:1240px}
 .seg .n{font-size:12px}
 .cp{display:flex;flex-direction:column;gap:22px;min-width:0}
 .cp-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cp-i.cp-chev{width:15px;height:15px}
 .cp .muted{color:var(--muted)}
 
 /* page heading */
@@ -686,7 +696,7 @@ window.perSet=function(key){
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
       <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -695,9 +705,9 @@ window.perSet=function(key){
           <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
           <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
       </div>
     </header>
@@ -1007,7 +1017,7 @@ var CPU=(function(){
   var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fmt=CP.fmt;
-  var ARW='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var ARW='<svg class="cp-i cp-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var EXT='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
   var XI='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
   var WARN='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
@@ -1082,7 +1092,7 @@ var CPU=(function(){
      Photos count, type, colour, date added and description are public in Shopify's products.json but not saved today. */
   var SZ=['XS','S','M','L','XL','XXL'];
   function byKey(k){var r=null;CP.STORES.forEach(function(s){s.products.forEach(function(x){if(x.key===k)r=x})});return r}
-  function product(x){var s=x.store,o=x.like&&CP.OURS[x.like];
+  function product(x){var s=x.store;
     var state=x.so===x.v?'<span class="cp-tag r">Sold out</span>':x.osa?'<span class="cp-tag g">'+x.off+'% off</span>':x.so?'<span class="cp-tag w">'+x.so+' of '+x.v+' sizes gone</span>':'<span class="cp-tag n">Full price</span>';
     var h='<div class="cp-sh"><div class="cp-pd-top">'+thumb(x,true)+'<span class="cp-pd-ph">'+(x.photos?x.photos+' photos on their page':'No photo on their page')+'</span></div>'+
       '<button type="button" class="cp-x" aria-label="Close">'+XI+'</button></div>';
@@ -1092,12 +1102,6 @@ var CPU=(function(){
     h+='<section class="cp-pd-s"><h3>Sizes</h3><div class="cp-pd-sz">'+x.sizes.map(function(z){
       return '<div class="cp-pd-row'+(z.avail?'':' out')+'"><b>'+z.n+'</b><span class="cp-pr">'+money(z.pr)+(z.was?'<s class="cp-was"><span class="sr">was </span>'+fmt(z.was)+'</s>':'')+'</span>'+
         (z.avail?(z.was?'<span class="cp-tag g">On sale</span>':'<span class="cp-tag n">In stock</span>'):'<span class="cp-tag r">Sold out</span>')+'</div>'}).join('')+'</div></section>';
-    if(o){var gap=x.pr-o.price;
-      var gapT=o.stock===0?'<span class="cp-tag n">Sold out at yours</span>':Math.abs(gap)<25?'<span class="cp-tag n">Same as yours</span>':gap<0?'<span class="cp-tag w">Theirs is '+money(-gap)+' cheaper</span>':'<span class="cp-tag p">Theirs is '+money(gap)+' dearer</span>';
-      var outs=x.sizes.filter(function(z){return !z.avail}).map(function(z){var j=o.one?0:SZ.indexOf(z.n),n=j<0?null:o.sz[j];
-        return '<li><b>'+z.n+'</b> '+(n==null?'your stock isn’t tracked':n===0?'you’re out too':'you have <b>'+n+'</b>')+'</li>'}).join('');
-      h+='<section class="cp-pd-s"><h3>Next to yours</h3><button type="button" class="cp-pd-our" data-cp-go="products"><span><b>'+esc(o.n)+'</b><small>'+money(o.price)+' · '+(o.stock==null?'stock not tracked':o.stock+' left')+'</small></span>'+gapT+'</button>'+
-        (outs?'<p class="cp-pd-k">Sizes they’re out of</p><ul class="cp-pd-outs">'+outs+'</ul>':'')+'</section>'}
     var hist=CP.EVENTS.filter(function(e){return e.p===x}).map(function(e){
       return '<li><span class="cp-tag '+e.tone+'">'+e.label+'</span><span>'+(e.size?'Size '+esc(e.size)+' · ':'')+(e.old!=null?fmt(e.old)+' → ':'')+money(e.nw)+'</span><time>'+e.day+', '+e.time+'</time></li>'}).join('');
     h+='<section class="cp-pd-s"><h3>History</h3><ul class="cp-pd-hist">'+hist+'<li><span class="cp-tag n">Added</span><span>Put on their store at '+money(x.cmp||x.pr)+'</span><time>'+x.added+'</time></li></ul></section>';
@@ -1226,14 +1230,14 @@ var CPU=(function(){
   function list(n){return n.length>2?n.slice(0,-1).join(', ')+' and '+n[n.length-1]:n.join(' and ')}
   var DRESS=(function(){var t=document.createElement('div');t.innerHTML=CPU.thumb({t:'x',c:['#000','#000']});var s=t.querySelector('svg');return s?s.outerHTML:''})();
   function spots(){var out=[],S=CP.STORES.filter(function(s){return s.status!=='pending'});
-    /* 1 · their sell-outs you still stock */
-    var outs=[];S.forEach(function(s){s.soldOut.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(o&&o.stock>0&&!outs.some(function(y){return y.o===o}))outs.push({x:x,o:o,s:s})})});
-    if(outs.length){var left=outs.reduce(function(a,r){return a+r.o.stock},0);
-      out.push({c:'var(--good)',pics:outs.length===1?ring(outs[0].x.c,100,null):stack(outs.map(function(r){return r.x.c}),null),
-        t:'<em>'+outs.length+'</em> sold out there, not here',s:list(outs.map(function(r){return first(r.o.n)}))+' · '+left+' left',go:'See them',a:'s:'+outs[0].s.id+':out'})}
-    /* 2 · the biggest cut under one of your prices */
-    var cut=null;S.forEach(function(s){s.onSale.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(!o||o.stock===0)return;var g=o.price-x.pr;if(g>=150&&(!cut||g>cut.g))cut={x:x,o:o,g:g,s:s}})});
-    if(cut)out.push({c:'var(--warn)',pics:ring(cut.x.c,100,'−'+cut.x.off+'%'),t:'<em>EGP '+CP.fmt(cut.g)+'</em> under your '+first(cut.o.n),s:cut.s.name+' · '+cut.x.type+' at EGP '+CP.fmt(cut.x.pr),go:'See it',a:'p:'+cut.x.key});
+    /* 1 · the store with the most sold-out products (Sam: say what THEY did, never match to ours) */
+    var so=S.filter(function(s){return s.soldOut.length}).sort(function(a,b){return b.soldOut.length-a.soldOut.length})[0];
+    if(so){var n=so.soldOut.length,nm=so.soldOut.map(function(x){return x.t.split(' – ')[0]});
+      out.push({c:'var(--good)',pics:n===1?ring(so.soldOut[0].c,100,null):stack(so.soldOut.map(function(x){return x.c}),null),
+        t:'<em>'+so.name+'</em> sold out '+n+' '+(n===1?'product':'products'),s:(n>2?nm.slice(0,2).join(', ')+' and '+(n-2)+' more':list(nm)),go:'See them',a:'s:'+so.id+':out'})}
+    /* 2 · the biggest sale running at a competitor */
+    var cut=null;S.forEach(function(s){s.onSale.forEach(function(x){if(!cut||x.off>cut.x.off)cut={x:x,s:s}})});
+    if(cut)out.push({c:'var(--warn)',pics:ring(cut.x.c,100,'−'+cut.x.off+'%'),t:'<em>'+cut.s.name+'</em> put a dress on sale',s:cut.x.t.split(' – ')[0]+' · now EGP '+CP.fmt(cut.x.pr)+', was '+CP.fmt(cut.x.cmp),go:'See it',a:'p:'+cut.x.key});
     /* 3 · a store we could not read */
     var bad=CP.STORES.filter(function(s){return !s.ok&&s.status!=='pending'})[0];
     if(bad)out.push({c:'var(--bad)',pics:ring(MK[bad.id]||['#a275e0','#550da6'],null,'!',true,bad.name[0]),t:'<em>Can’t read</em> '+bad.name,s:bad.status.charAt(0).toUpperCase()+bad.status.slice(1)+' · prices from '+bad.read.split(',')[0],go:'Check again',a:'c'});
@@ -1256,7 +1260,7 @@ var CPU=(function(){
   function card(x,k){var badge=k==='sale'?'<span class="ca-badge g">−'+x.off+'%</span>':k==='out'?'<span class="ca-badge r">Sold out</span>':'<span class="ca-badge w">'+x.so+' of '+x.v+' gone</span>';
     return '<button type="button" class="ca-card" data-cp-prod="'+x.key+'">'+
       '<span class="ca-thw">'+CPU.thumb(x,true)+badge+'</span><span class="ca-nm">'+esc(x.t)+'</span><span class="ca-pz">'+CPU.price(x)+'</span>'+
-      '<span class="ca-sz">'+CPU.sizes(x,k)+'</span>'+CPU.vs(x,k)+'</button>'}
+      '<span class="ca-sz">'+CPU.sizes(x,k)+'</span></button>'}
   function changes(s){var ev=CPU.events(s);if(!ev.length)return '<p class="cp-empty">No changes found '+CPU.periodWord()+'. Pick a longer period in the date picker to see older ones.</p>';
     var out='',day='';ev.forEach(function(e){if(e.day!==day){day=e.day;out+='<h4 class="ca-day">'+e.dayName+'</h4>'}
       var pr=e.old!=null?'<span class="cp-pr"><s class="cp-was" style="margin:0"><span class="sr">was </span>'+CP.fmt(e.old)+'</s><span class="ca-arrow" aria-hidden="true">→</span>'+CPU.money(e.nw)+'</span>':'<span class="cp-pr">'+CPU.money(e.nw)+'</span>';

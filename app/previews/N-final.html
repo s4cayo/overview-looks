@@ -600,18 +600,9 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-cap b{color:var(--pv2-fg);font-weight:600}
 .pv2-cap.r b{color:var(--pv2-bad)}
 
-/* "why it ranks" sheet: popover anchored to the card on desktop, bottom sheet on phone */
-.pv2-scrim{position:fixed;inset:0;z-index:80;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
-.pv2-scrim.pv2-on{opacity:1;pointer-events:auto}
-.pv2-sheet{position:absolute;z-index:81;width:min(460px,100%);background:var(--pv2-bg);border:1px solid var(--pv2-line2);border-radius:20px;box-shadow:var(--pv2-shadow);
-  padding:22px 24px 24px;display:flex;flex-direction:column;gap:20px;transform-origin:var(--ox,50%) 0;visibility:hidden}
-.pv2-sheet.pv2-on{visibility:visible;animation:pv2in .55s cubic-bezier(.2,.8,.2,1) both}
-@keyframes pv2in{from{opacity:0;transform:perspective(1200px) rotateY(-70deg) scale(.92)}}
-.pv2-sheet.pv2-phone{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;max-height:88vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px));transform-origin:50% 100%}
-.pv2-sheet.pv2-phone.pv2-on{animation:pv2up .45s cubic-bezier(.2,.8,.2,1) both}
-@keyframes pv2up{from{transform:translateY(100%)}}
+/* round 11: a card opens the PSHEET v1 product card (the Products page's); these are the header / verdict / chip / action
+   pieces it shares with Products, Inventory and Orders */
 .pv2-grab{display:none;width:40px;height:5px;border-radius:9px;background:var(--pv2-line2);margin:0 auto -6px}
-.pv2-phone .pv2-grab{display:block}
 .pv2-sh{display:flex;align-items:center;gap:12px}
 .pv2-shsw{width:46px;height:46px;border-radius:12px;background:linear-gradient(160deg,var(--c1),var(--c2));flex:none;display:grid;place-items:center}
 .pv2-shsw svg{width:20px;height:30px}
@@ -653,8 +644,6 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-act > b svg{transition:transform .2s}
 .pv2-act.pv2-ok{color:var(--pv2-good);font-weight:500;border-style:dashed}
 @container (max-width:560px){.pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.pv2-sheet.pv2-phone .pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}
-.pv2-sheet.pv2-phone .pv2-act{flex-direction:column;align-items:flex-start}
 
 /* ---- low stock + restock planner ---- */
 .pv2-stock .pv2-ph{margin-bottom:12px}
@@ -700,33 +689,9 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-tbl td.w{color:var(--pv2-warn);font-weight:600}
 .pv2-tbl td b{font-weight:700}
 @container (max-width:560px){.pv2-call{margin-left:0}.pv2-tbl{width:100%;margin-left:0}.pv2-ctl > span{min-width:0;width:100%}}
-@media (prefers-reduced-motion:reduce){.pv2 *,.pv2-sheet{animation:none!important;transition:none!important}}
-/* round 9 (order changed in round 10: Stock left · Sold · Returned): the product detail lists Sold · Returned · Stock left (always) then Revenue · Profit · Margin on one left
-   edge with one right-aligned number column, and a by-size table with all three; sold-out sizes sit in a red pill;
-   Cover / Delivery / Lasts carry an Explain v1 "i" with this product's numbers; the restock summary wraps. */
-.pv2-facts{display:flex;flex-direction:column;padding-top:14px;border-top:1px solid var(--pv2-line)}
-.pv2-fr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 16px;align-items:baseline;padding:9px 0;border-top:1px solid var(--pv2-line)}
-.pv2-fr:first-child{border-top:0;padding-top:0}
-.pv2-fr.pv2-fsep{border-top:1px solid var(--pv2-line2);margin-top:4px;padding-top:12px}
-.pv2-fr > span{font-size:14px;color:var(--pv2-fg);min-width:0}
-.pv2-fr > span small{display:block;font-size:12.5px;color:var(--pv2-mut);margin-top:1px}
-.pv2-fr > b{font-size:17px;font-weight:600;white-space:nowrap;text-align:right;letter-spacing:-.01em}
-.pv2-fr > b small{font-size:12px;font-weight:500;color:var(--pv2-mut);margin-right:4px;letter-spacing:0}
-.pv2-fr > b.r{color:var(--pv2-bad)}
-.pv2-szb2{display:flex;flex-direction:column;gap:6px;padding-top:14px;border-top:1px solid var(--pv2-line)}
-.pv2-szb2 .pv2-szh{font-size:12.5px;color:var(--pv2-mut)}
-.pv2-st{width:100%;border-collapse:collapse;font-size:14px}
-.pv2-st th{font-size:12.5px;font-weight:500;color:var(--pv2-mut);text-align:right;padding:0 0 6px;white-space:nowrap}
-.pv2-st th:first-child,.pv2-st td:first-child{text-align:left;padding-left:8px}
-.pv2-st th:last-child,.pv2-st td:last-child{padding-right:8px}
-.pv2-st td{text-align:right;padding:7px 0;border-top:1px solid var(--pv2-line);white-space:nowrap}
-.pv2-st td:first-child{font-weight:600}
-.pv2-st td.r{color:var(--pv2-bad);font-weight:600}
-.pv2-st td.w{color:var(--pv2-warn);font-weight:600}
-.pv2-st tr.pv2-top td{background:color-mix(in srgb,var(--pv2-acc) 10%,transparent)}
-.pv2-st tr.pv2-topr td{background:color-mix(in srgb,var(--pv2-bad) 10%,transparent)}
-.pv2-st tr.pv2-top td:first-child,.pv2-st tr.pv2-topr td:first-child{border-radius:8px 0 0 8px}
-.pv2-st tr.pv2-top td:last-child,.pv2-st tr.pv2-topr td:last-child{border-radius:0 8px 8px 0}
+@media (prefers-reduced-motion:reduce){.pv2 *{animation:none!important;transition:none!important}}
+/* round 9 (order changed in round 10): sold-out sizes sit in a red pill; Cover / Delivery / Lasts carry an Explain v1 "i"
+   with this product's numbers; the restock summary wraps. */
 .pv2-sum{text-wrap:pretty;overflow-wrap:anywhere}
 .pv2-sum .r{display:inline}
 .pv2-pm{white-space:normal;overflow:visible;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;line-height:1.4}
@@ -735,6 +700,89 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .pv2-ctl > span{display:inline-flex;align-items:center}
 .pv2-tbl th .xp-b{margin:0 0 0 6px}
 /* === PRODUCTS v2 END === */
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card: a drawer on desktop, a bottom sheet on the phone. Byte-identical in
+   previews/N-final.html, inventory-products/products-A.html + inventory-A.html and orders-shipping/orders-B.html
+   (scratchpad/r11/psheet_check.py). Copied from Products A; change it in all four or nowhere. Its header, verdict,
+   chips and action row use the PRODUCTS v2 classes (.pv2 tokens, .pv2-sh/-shsw/-sht/-close/-grab/-verdict/-chip/-act). */
+.ip-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-unk{color:var(--pv2-mut)!important;font-weight:500!important}
+/* ---- product detail (drawer on desktop, bottom sheet on phone) ---- */
+.ip-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.ip-scrim.on{opacity:1;pointer-events:auto}
+.ip-sheet{position:fixed;top:0;right:0;bottom:0;z-index:86;width:min(500px,100vw);overflow:auto;overscroll-behavior:contain;background:var(--pv2-bg);border-left:1px solid var(--pv2-line2);box-shadow:var(--pv2-shadow);
+  padding:22px 26px 32px;display:flex;flex-direction:column;gap:22px;transform:translateX(105%);visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility 0s .45s}
+.ip-sheet.on{transform:none;visibility:visible;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+@media (max-width:767px){
+  .ip-sheet{top:auto;left:0;width:auto;max-height:90vh;border-left:0;border-top:1px solid var(--pv2-line2);border-radius:22px 22px 0 0;padding:12px 18px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(105%)}
+}
+.ip-sheet .pv2-grab{display:none}
+@media (max-width:767px){.ip-sheet .pv2-grab{display:block;margin:0 auto 2px}}
+.ip-sheet .pv2-sh{align-items:flex-start}
+.ip-sheet .pv2-shsw{width:44px;height:55px;border-radius:11px}
+.ip-meta{font-size:13px;color:var(--pv2-mut);margin-top:3px}
+.ip-sec{display:flex;flex-direction:column;gap:12px;padding-top:20px;border-top:1px solid var(--pv2-line)}
+.ip-sech{display:flex;align-items:baseline;gap:10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pv2-mut)}
+.ip-sech span{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:500;font-size:13px}
+.ip-unknown{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--pv2-warn) 9%,var(--pv2-bg2));border:1px solid color-mix(in srgb,var(--pv2-warn) 35%,transparent);font-size:14px;line-height:1.45}
+.ip-unknown b{color:var(--pv2-warn)}
+.ip-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 15px;border-radius:99px;font-size:13.5px;font-weight:600;white-space:nowrap;color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6);align-self:flex-start}
+.ip-btn.ghost{color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important}
+.ip-btn.ghost:hover{border-color:var(--pv2-acc)!important}
+.ip-btn svg{transition:transform .2s}.ip-btn:hover svg{transform:translateX(3px)}
+/* the four numbers: equal tiles, label above, value on one baseline */
+.ip-four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ip-four > div{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px 60px;min-height:76px;justify-content:center;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.ip-four span{font-size:13px;color:var(--pv2-mut)}
+.ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
+.ip-ni{position:absolute;left:14px;top:16px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 15%,transparent)}
+.ip-ni svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-four .ip-left{grid-column:1 / -1}
+.ip-lsz{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.ip-lsz i{display:inline-flex;align-items:baseline;gap:5px;font-style:normal;font-size:13px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--pv2-bg3)}
+.ip-lsz i em{font-style:normal;font-weight:500;color:var(--pv2-mut)}
+.ip-lsz i.r{color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent)}
+.ip-lsz i.w{color:var(--pv2-warn);background:color-mix(in srgb,var(--pv2-warn) 14%,transparent)}
+.ip-lsz i.u{color:var(--pv2-mut)}
+@media (max-width:420px){.ip-four > div{padding-left:14px;padding-top:56px;justify-content:flex-start}.ip-ni{top:14px}.ip-four .ip-left{padding-left:60px;padding-top:14px}}
+/* by-size table: every column lines up */
+.ip-sz{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.ip-sz th,.ip-sz td{padding:10px 0;border-top:1px solid var(--pv2-line);text-align:right;vertical-align:top;white-space:nowrap}
+.ip-sz thead th{border-top:0;padding-top:0;font-size:12.5px;font-weight:500;color:var(--pv2-mut)}
+.ip-sz th:first-child{text-align:left;width:28%}
+.ip-sz td{width:20%;padding-left:12px;font-weight:600}
+.ip-sz td:last-child,.ip-sz thead th:last-child{width:32%}
+.ip-sz tbody th{font-weight:600}
+.ip-sz tbody th i{display:inline-block;font-style:normal;font-size:12px;font-weight:600;line-height:18px;padding:0 7px;margin-left:6px;border-radius:99px;color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent);vertical-align:1px}
+.ip-sz tr.ip-ztop th{color:var(--pv2-acc)}
+.ip-sz td .pc{font-weight:500}
+.ip-sz td .m{color:var(--pv2-mut);font-weight:500}
+.ip-sz td.r{color:var(--pv2-bad)}
+.ip-sz td.w{color:var(--pv2-warn)}
+.ip-sz td.u{color:var(--pv2-mut);font-weight:500}
+.ip-note b.r{color:var(--pv2-bad)}
+.ip-note{font-size:13px;color:var(--pv2-mut);line-height:1.45}
+.ip-note b{color:var(--pv2-fg);font-weight:600}
+.ip-dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:14px}
+.ip-dl dt{color:var(--pv2-mut)}
+.ip-dl dd{font-weight:600;text-align:right}
+
+/* toast (for things that live outside these two pages) */
+.ip-toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(440px,calc(100vw - 32px));
+  padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.4;background:#17141f;color:#f2eefa;box-shadow:0 18px 40px -14px rgba(0,0,0,.7);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.ip-toast.on{opacity:1;transform:translate(-50%,0)}
+:root[data-theme="light"] .ip-toast{background:#17141f;color:#fff}
+@media (min-width:1024px){.ip-toast{bottom:32px}}
+/* the card's "i" — the same look as the pages' .tip (INFO-ICON.md), under its own class because the Overview's .tip is a chart tooltip */
+.ip-tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.ip-tip:hover,.ip-tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.ip-tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.ip-tipb.on{visibility:visible;opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
+/* === PSHEET v1 END === */
 
 
 /* === MONEY v2 START === */
@@ -1035,7 +1083,9 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
 .ph{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 .ph h3{font-size:14px;font-weight:600;letter-spacing:-.005em}
 .ph .r{margin-left:auto;font-size:12px;color:var(--muted);text-align:right}
-.ph .lnk{margin-left:auto;font-size:12.5px;color:var(--pl);display:inline-flex;align-items:center;gap:4px}
+.ph .lnk{margin-left:auto;font-size:12.5px;color:var(--pl);display:inline-flex;align-items:center;gap:2px}
+.ph .lnk .lnk-i{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.ph .lnk:hover .lnk-i{transform:translateX(2px)}
 .k{color:var(--muted);font-size:12px}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
 .s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
@@ -1594,6 +1644,96 @@ button.av2-cp:hover svg.av2-chev,button.av2-cp[aria-expanded="true"] svg.av2-che
 @media (max-width:600px){.av2-jy{font-size:17px}}
 /* round 10: the section starts with Campaigns (the journey header and "From ad spend to profit" were removed) */
 .av2-root{padding-top:20px}
+/* round 11: Campaigns opens with the WINNER as a designed moment (.av2-win — a button that opens camp0's detail):
+   gold crown kicker, name, big ROAS, "spent vs brought back" as two bars, best product + best size; the other two
+   campaigns stay as calm receipt rows below. Cost per order is drawn as a PRICE TAG (.av2-tg): the average order,
+   with the ads slice carved off its left end and what is left after ads; under it the ads-share meter (.av2-mt). */
+.av2-win{appearance:none;-webkit-appearance:none;display:flex;flex-direction:column;gap:16px;width:100%;position:relative;overflow:hidden;
+  padding:18px 18px 16px;border-radius:16px;border:1px solid rgba(216,196,154,.26);color:inherit;font:inherit;text-align:left;cursor:pointer;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(216,196,154,.13),transparent 55%),linear-gradient(155deg,rgba(124,63,193,.30),rgba(85,13,166,.10) 58%,rgba(255,255,255,.015));
+  -webkit-tap-highlight-color:transparent;transition:border-color .2s,transform .2s,box-shadow .2s}
+.av2-win:hover{border-color:rgba(216,196,154,.5);box-shadow:0 14px 34px -22px rgba(162,117,224,.7)}
+:root[data-theme="light"] .av2-win{border-color:rgba(154,123,60,.32);
+  background:radial-gradient(120% 90% at 100% 0%,rgba(216,196,154,.22),transparent 55%),linear-gradient(155deg,#efe5fb,#f8f4fd 55%,#fff)}
+:root[data-theme="light"] .av2-win:hover{border-color:rgba(154,123,60,.6);box-shadow:0 14px 30px -22px rgba(85,13,166,.45)}
+.av2-win > span{display:flex;min-width:0}
+.av2-wk{align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--rc-gold)}
+.av2-wk svg{width:24px;height:24px;padding:5px;border-radius:50%;flex:none;background:rgba(216,196,154,.14);border:1px solid rgba(216,196,154,.3);
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.av2-wk em{margin-left:auto;font-style:normal;letter-spacing:normal;text-transform:none;font-size:12px;font-weight:600;color:var(--rc-ok);
+  padding:3px 10px;border-radius:99px;background:color-mix(in srgb,var(--rc-ok) 13%,transparent);border:1px solid color-mix(in srgb,var(--rc-ok) 28%,transparent)}
+.av2-wtop{align-items:flex-end;justify-content:space-between;gap:6px 16px;flex-wrap:wrap}
+.av2-wnm{display:block!important;min-width:0;font:600 19px/1.25 var(--rc-f);letter-spacing:-.015em}
+.av2-wnm small{display:block;margin-top:3px;font-size:12.5px;font-weight:400;letter-spacing:normal;color:var(--rc-fg-2)}
+.av2-wro{display:flex!important;align-items:baseline;gap:6px;flex:none}
+.av2-wro b{font:500 36px/1 var(--rc-f);letter-spacing:-.03em;color:var(--rc-gold)}
+.av2-wro small{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--rc-fg-3)}
+.av2-wbars{flex-direction:column;gap:9px}
+.av2-wb{display:grid;grid-template-columns:96px minmax(0,1fr) auto;align-items:center;gap:12px}
+.av2-wb > span:first-child{font-size:12.5px;color:var(--rc-fg-2);white-space:nowrap}
+.av2-wb > b{font-weight:600;font-size:14px;white-space:nowrap;text-align:right;min-width:92px}
+.av2-wb.av2-wbk > b{color:var(--rc-ok)}
+.av2-wtr{display:block;height:10px;border-radius:99px;background:var(--rc-track);overflow:hidden}
+.av2-wtr i{display:block;height:100%;border-radius:99px;background:var(--rc-gold);transition:width .6s cubic-bezier(.2,.8,.2,1);transform-origin:left}
+.av2-wbk .av2-wtr i{background:linear-gradient(90deg,#550da6,#7c3fc1 55%,#a275e0)}
+.av2-go .av2-wtr i{animation:av2grow .9s cubic-bezier(.2,.8,.2,1) .2s both}
+.av2-wfx{display:grid!important;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:10px;padding-top:14px;border-top:1px dashed var(--rc-line-hi)}
+.av2-wch{display:flex;align-items:center;gap:10px;min-width:0}
+.av2-wch > span:last-child{min-width:0}
+.av2-wch small{display:block;font-size:12px;color:var(--rc-fg-3)}
+.av2-wch b{display:block;font-weight:600;font-size:13.5px;line-height:1.3}
+.av2-wth{width:40px;height:40px;border-radius:10px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,#e6cfa6,#a98a5c)}
+.av2-wth svg{height:34px;width:auto;margin-top:6px}
+.av2-wth.av2-wsz{background:color-mix(in srgb,#a275e0 14%,transparent);border:1px solid color-mix(in srgb,#a275e0 34%,transparent);color:var(--av2-lnk);font-weight:700;font-size:16px}
+.av2-wgo{align-items:center;justify-content:flex-end;gap:4px;margin-top:-6px;font-size:12.5px;font-weight:600;color:var(--av2-lnk)}
+.av2-wgo svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.av2-win:hover .av2-wgo svg,.av2-win[aria-expanded="true"] .av2-wgo svg{transform:translateX(3px)}
+.av2-oth{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--rc-fg-3);margin:2px 0 -6px 2px!important}
+@container (max-width:440px){
+  .av2-wfx{grid-template-columns:minmax(0,1fr)}
+  .av2-wb{grid-template-columns:84px minmax(0,1fr) auto;gap:10px}
+  .av2-wb > b{min-width:0}
+  .av2-wro b{font-size:32px}
+  .av2-win{padding:16px 14px 14px}
+}
+/* the price tag: the average order; the ads slice is carved off the left end (gold, hatched, dashed cut) */
+.av2-tgw{display:flex;flex-direction:column;gap:12px;padding:18px 18px 16px;border-radius:14px;background:var(--rc-box);border:1px dashed var(--rc-line-hi)}
+.av2-tgh{display:flex;align-items:baseline;justify-content:space-between;gap:4px 12px;flex-wrap:wrap}
+.av2-tgh span{font-size:13px;color:var(--rc-fg-2)}
+.av2-tgh b{font:500 26px/1.1 var(--rc-f);letter-spacing:-.02em;color:var(--rc-fg)}
+.av2-tg{display:flex;height:58px;position:relative;filter:drop-shadow(0 8px 16px rgba(85,13,166,.22))}
+.av2-tg > i{display:flex;flex-direction:column;justify-content:center;min-width:0;font-style:normal;padding:0 12px;line-height:1.2;transition:flex-basis .6s cubic-bezier(.2,.8,.2,1)}
+.av2-tg > i b{font-weight:600;font-size:15px;white-space:nowrap}
+.av2-tg > i small{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av2-tga{flex:0 0 36%;padding-left:24px!important;position:relative;color:var(--rc-gold);
+  clip-path:polygon(18px 0,100% 0,100% 100%,18px 100%,0 50%);border-radius:0 4px 4px 0;
+  background:repeating-linear-gradient(135deg,rgba(216,196,154,.24) 0 6px,rgba(216,196,154,.10) 6px 12px)}
+.av2-tga::before{content:"";position:absolute;left:12px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:50%;border:2px solid var(--rc-gold);opacity:.8}
+.av2-tga small{color:var(--rc-gold);opacity:.85}
+.av2-tga b,.av2-tga small{padding-left:6px}
+.av2-tgl{flex:1 1 auto;margin-left:6px;border-radius:4px 12px 12px 4px;color:#fff;background:linear-gradient(100deg,#550da6,#7c3fc1 60%,#a275e0);position:relative}
+.av2-tgl small{color:rgba(255,255,255,.82)}
+.av2-tgc{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed var(--rc-fg-3);transform:translateX(2px);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.av2-tgc svg{position:absolute;top:-14px;left:-9px;width:16px;height:16px;fill:none;stroke:var(--rc-fg-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;background:var(--rc-box)}
+:root[data-theme="light"] .av2-tga{background:repeating-linear-gradient(135deg,rgba(154,123,60,.20) 0 6px,rgba(154,123,60,.08) 6px 12px)}
+:root[data-theme="light"] .av2-tg{filter:drop-shadow(0 8px 14px rgba(85,13,166,.16))}
+/* the ads-share meter: where this period sits against the ~50% line that eats profit */
+.av2-mt{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px solid var(--rc-line)}
+.av2-mth{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.av2-mth > span{display:flex;align-items:center;flex-wrap:wrap;font-weight:600;font-size:14.5px}
+.av2-mth > span small{flex-basis:100%;font-size:12px;font-weight:400;color:var(--rc-fg-3)}
+.av2-mth > b{font:500 22px/1 var(--rc-f);color:var(--rc-warn)}
+.av2-mth > b.av2-ok{color:var(--rc-ok)} .av2-mth > b.av2-bad{color:var(--rc-bad)}
+.av2-mtt{position:relative;height:6px;border-radius:99px;margin:6px 0 0;background:linear-gradient(90deg,var(--rc-ok),var(--rc-warn) 55%,var(--rc-bad) 80%);opacity:.9}
+.av2-mtt > em{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--rc-fg);border:3px solid var(--av2-panel-solid,#16101f);box-shadow:0 0 0 1px var(--rc-line-hi);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+:root[data-theme="light"] .av2-mtt > em{border-color:#fff}
+.av2-mtt > s{position:absolute;top:-5px;bottom:-5px;left:71.4%;width:0;border-left:1.5px solid var(--rc-fg-2)}
+.av2-mts{display:flex;justify-content:space-between;font-size:12px;color:var(--rc-fg-3)}
+.av2-mts span:last-child{margin-left:auto;position:relative;left:0}
+.av2-mts .av2-mtb{position:absolute;left:71.4%;transform:translateX(-50%);white-space:nowrap}
+.av2-mts{position:relative;min-height:16px}
+.av2-tg{margin-top:10px}
+.av2-root.rc .rc-nm small,.av2-root.rc .rc-am small{font-size:12px}
 /* === ADS v2 END === */
 /* === CITIES v2 START === */
 /* Cities v2 — "Sales by location": ranked rows grouped by country (Egypt first), no map — a map has to zoom out the
@@ -1964,33 +2104,75 @@ main { gap: 24px; }
 /* === FUND v1 END === */
 /* === ATTN v1 START ===
  */
-/* Attn v1 (round 10) — "Needs attention" as a short, calm list of REAL problems only (no good news): one line each —
-   severity dot · plain sentence · amount · chevron — hairlines between, tappable to where it is fixed (the look's
-   [data-go] wiring opens the tab; data-at10-go scrolls to the exact place). Period-based figures follow the date picker
-   (returns, campaign ROAS, sell-outs from the low-stock planner); stuck parcels and the ad balance are as of today.
-   Self-contained (at10-); light when <html data-theme="light">. */
-.at10-wrap{--at10-bad:#f07a84;--at10-warn:#f2c46d;--at10-fg:#efeaf7;--at10-mut:#8f88a2;--at10-acc:#c4a3f2;--at10-line:rgba(255,255,255,.07);container-type:inline-size;min-width:0}
-:root[data-theme="light"] .at10-wrap{--at10-bad:#c43c48;--at10-warn:#a86f00;--at10-fg:#1b1428;--at10-mut:#6f6880;--at10-acc:#550da6;--at10-line:rgba(24,16,40,.09)}
-.at10{display:flex;flex-direction:column}
-.at10-r{display:grid;grid-template-columns:8px minmax(0,1fr) auto 16px;align-items:center;column-gap:12px;min-height:44px;padding:9px 0;border-top:1px solid var(--at10-line);
-  color:var(--at10-fg);text-decoration:none;font-size:14px;line-height:1.35;-webkit-tap-highlight-color:transparent;cursor:pointer}
-.at10-r:first-child{border-top:0;padding-top:2px}
-.at10-d{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 18%,transparent)}
-.at10-t{min-width:0;text-wrap:pretty}
-.at10-n{display:none}
-.at10-v{font-weight:600;font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
-.at10-ch{width:16px;height:16px;fill:none;stroke:var(--at10-mut);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s,stroke .2s}
-.at10-r:hover .at10-t{color:var(--at10-acc)}
-.at10-r:hover .at10-ch{stroke:var(--at10-acc);transform:translateX(2px)}
-.at10-r:focus-visible{outline:2px solid #a275e0;outline-offset:2px;border-radius:8px}
-@container (max-width:430px){
-  .at10-w{display:none}.at10-n{display:inline}
-  .at10-r{column-gap:10px;font-size:13.5px}
-  .at10-v{font-size:13.5px}
+/* Attn v1 (round 11) — "Needs attention" as a stack of torn-off TICKETS, one per real problem (never good news).
+   Each ticket = a stub (what kind of problem: parcel · hanger · megaphone · wallet · bag, and how soon: "Now" filled /
+   "Soon" or "Watch" tinted — severity is a word and a fill, not only a colour) · a perforated edge with two notches ·
+   the one number that matters, the plain-words line and the verb that fixes it ("Chase Bosta", "Pause it", …).
+   Desktop: a tidy stack of slim tickets, urgent first (one line each; a narrow column puts the words under the number).
+   Phone (≤ 600px): a horizontal snap row of upright tickets, the next one peeking in.
+   Whole ticket is one link: the look's [data-go] opens the tab, data-at10-go scrolls to the exact place.
+   Uses the page's own tokens (--panel/--panel2/--line/--bad/--warn/--pl), so light/dark follow <html data-theme>. */
+.at10-wrap{--at-stub:54px;--at-now:var(--bad);--at-soon:var(--warn);container-type:inline-size;min-width:0}
+.at11{list-style:none;display:flex;flex-direction:column;gap:6px;margin:0;padding:0}
+.at11 > li{display:flex;min-width:0;margin:0;padding:0}
+.at11-t{--c:var(--at-soon);position:relative;flex:1;min-width:0;display:grid;grid-template-columns:var(--at-stub) minmax(0,1fr);min-height:40px;
+  border-radius:11px;background:var(--panel2);border:1px solid var(--line);color:var(--text);text-decoration:none;
+  -webkit-tap-highlight-color:transparent;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s}
+:root[data-theme="light"] .at11-t{background:#fbfafd}
+.at11-t.at11-now{--c:var(--at-now)}
+/* the two notches where the stub tears off */
+.at11-t::before,.at11-t::after{content:"";position:absolute;left:calc(var(--at-stub) - 5px);width:10px;height:10px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--line);box-sizing:border-box;z-index:1;pointer-events:none}
+.at11-t::before{top:-5px;clip-path:inset(50% 0 0 0)}
+.at11-t::after{bottom:-5px;clip-path:inset(0 0 50% 0)}
+.at11-stub{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-right:1.5px dashed var(--line2);
+  border-radius:10px 0 0 10px;color:var(--c);background:color-mix(in srgb,var(--c) 7%,transparent)}
+.at11-now .at11-stub{background:color-mix(in srgb,var(--c) 17%,transparent)}
+.at11-stub svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.at11-stub em{font:600 12px/1 Geist,system-ui,sans-serif;font-style:normal;letter-spacing:.01em}
+.at11-b{display:grid;grid-template-columns:5.9rem minmax(0,1fr) auto;grid-template-areas:"v l a";align-items:center;gap:2px 10px;padding:5px 7px 5px 14px;min-width:0}
+.at11-l{grid-area:l;font-size:13px;line-height:1.3;color:var(--muted);min-width:0;text-wrap:pretty}
+.at11-v{grid-area:v;font:600 16px/1.2 Geist,system-ui,sans-serif;letter-spacing:-.01em;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:0;color:var(--text)}
+.at11-now .at11-v{color:var(--c)}
+.at11-v small{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-right:4px}
+.at11-v small.at11-u{margin:0 0 0 4px}
+.at11-a{grid-area:a;justify-self:end;display:inline-flex;align-items:center;gap:1px;font-size:12.5px;font-weight:600;color:var(--pl);white-space:nowrap;
+  padding:4px 6px 4px 10px;border-radius:99px;background:color-mix(in srgb,var(--pl) 11%,transparent);border:1px solid color-mix(in srgb,var(--pl) 20%,transparent);transition:background .2s,border-color .2s}
+.at11-a svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.at11-x{display:none}
+.at11-t:hover{border-color:color-mix(in srgb,var(--pl) 45%,transparent);transform:translateX(2px);box-shadow:0 12px 26px -20px rgba(124,63,193,.8)}
+.at11-t:hover .at11-a{background:color-mix(in srgb,var(--pl) 22%,transparent);border-color:color-mix(in srgb,var(--pl) 40%,transparent)}
+.at11-t:hover .at11-a svg{transform:translateX(2px)}
+.at11-t:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:11px}
+/* one slim line at ~480px: the date picker already names the period, so the returns line drops it there */
+@container (min-width:470px) and (max-width:599px){.at11-p{display:none}}
+@container (min-width:600px){.at11-x{display:inline}.at11-b{grid-template-columns:6.4rem minmax(0,1fr) auto;gap:2px 14px}}
+/* a narrower desktop column: the number and the verb share the top line, the plain words go under */
+@container (max-width:469px){.at11{gap:5px}.at11-b{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"v a" "l l";gap:0 10px;padding:5px 10px 6px 13px}
+  .at11-v{font-size:15px}.at11-l{font-size:12.5px}
+  .at11-a{padding:0;background:none;border:0}.at11-t:hover .at11-a{background:none}}
+/* phone: a horizontal snap row of upright tickets — the stub on top, the tear along its bottom edge, the next one peeking in */
+@media (max-width:600px){
+  .at11{flex-direction:row;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;
+    margin:0 -18px;padding:6px 18px 8px;scroll-padding:0 18px}  /* bleeds to the panel's edge (its 18px phone padding) */
+  .at11::-webkit-scrollbar{display:none}
+  .at11 > li{flex:0 0 min(178px,calc((100% + 8px) / 1.62));scroll-snap-align:start}
+  .at11-t{grid-template-columns:minmax(0,1fr);grid-template-rows:36px auto}
+  .at11-t::before,.at11-t::after{top:calc(36px - 5px);bottom:auto}
+  .at11-t::before{left:-5px;clip-path:inset(0 0 0 50%)}
+  .at11-t::after{left:auto;right:-5px;clip-path:inset(0 50% 0 0)}
+  .at11-stub{flex-direction:row;justify-content:space-between;padding:0 12px;border-right:0;border-bottom:1.5px dashed var(--line2);border-radius:10px 10px 0 0}
+  .at11-stub svg{width:17px;height:17px}
+  .at11-b{grid-template-columns:minmax(0,1fr);grid-template-areas:"v" "l" "a";align-content:start;gap:3px;padding:10px 12px 12px}
+  .at11-v{font-size:19px}
+  .at11-l{min-height:calc(13px * 1.3 * 2)}
+  .at11-l{font-size:13px}
+  .at11-a{justify-self:start;align-self:end;margin-top:6px;padding:4px 6px 4px 10px;background:color-mix(in srgb,var(--pl) 11%,transparent);border:1px solid color-mix(in srgb,var(--pl) 20%,transparent)}
+  .at11-t:hover{transform:none}
 }
 .at10-flash{animation:at10fl 1.6s ease-out}
 @keyframes at10fl{0%,30%{box-shadow:0 0 0 3px rgba(162,117,224,.55)}100%{box-shadow:0 0 0 3px rgba(162,117,224,0)}}
-@media (prefers-reduced-motion:reduce){.at10-ch{transition:none}.at10-flash{animation:none}}
+@media (prefers-reduced-motion:reduce){.at11-t,.at11-a,.at11-a svg{transition:none}.at11-t:hover{transform:none}.at10-flash{animation:none}}
 /* === ATTN v1 END === */
 /* === EXPLAIN v1 START === */
 /* Explain v1 (round 9) — a quiet explain icon beside a label (an eye on the money receipts, a round "i" on ad metrics)
@@ -2067,8 +2249,28 @@ main { gap: 24px; }
 /* §3 a metric label may wrap, but its last word and the "i" stay together */
 .xp-nw{white-space:nowrap}
 /* §4 round buttons <= 380px: slightly smaller circles spread edge to edge, so the labels get room between them */
-@media (max-width:400px){.qa1{grid-template-columns:repeat(5,54px);justify-content:space-between;gap:0}}
-@media (max-width:380px){.qa1{grid-template-columns:repeat(5,48px);justify-content:space-between;gap:0}.qa1 .qa1-o{width:48px;height:48px}.qa1 .qa1-b{white-space:nowrap;letter-spacing:-.01em}}
+/* round 11: four buttons (Orders removed) — even columns at every width, full-size circles on phone too */
+.qa1{grid-template-columns:repeat(4,minmax(0,1fr));max-width:480px}
+@media (max-width:400px){.qa1{gap:0}.qa1 .qa1-b{white-space:nowrap}}
+/* round 11: an icon tile instead of the colour square on receipt rows that carry one (Order health, Buyer cities) */
+.rc .rc-row:has(> i.rc-ic){grid-template-columns:32px minmax(0,1fr) auto;column-gap:12px}
+.rc .rc-row > i.rc-ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.rc .rc-row > i.rc-ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* round 11: Buyer cities without the dotted box around the list */
+.ct2 .rc-receipt{border:0;background:none;padding:0;border-radius:0}
+.ct2 .ct2-dl{padding-left:44px}.ct2 .ct2-tog{padding-left:44px}
+.ct2 .rc-row > i.rc-ic{color:var(--rc-acc);background:color-mix(in srgb,var(--rc-acc) 14%,transparent)}
+:root[data-theme="light"] .rc .rc-row > i.rc-ic{color:color-mix(in srgb,var(--c) 75%,#1b1428)}
+:root[data-theme="light"] .ct2 .rc-row > i.rc-ic{color:var(--rc-acc)}
+/* round 11: bottom dock — the current page is the accent colour with a soft capsule behind its icon (no black disc
+   crowding the label); same rule as the Products / Inventory pages */
+.nv2-dock .nv2-pill > *{position:relative}
+.nv2-dock .nv2-pill > * > *{position:relative}
+.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
+  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
 /* === ROUND 10b END === */
 </style>
 <script>
@@ -2137,7 +2339,7 @@ window.perSet=function(key){
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
   <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
@@ -2194,7 +2396,7 @@ window.perSet=function(key){
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
           </div></div>
       <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -2203,9 +2405,9 @@ window.perSet=function(key){
           <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
         <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
           <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
-            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
-            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
           </div></div>
       </div>
     </header>
@@ -2238,7 +2440,7 @@ window.perSet=function(key){
             <div class="cv2-row" data-cv2-best><span class="cv2-lab" data-cv2-t="s_bestlab">Best day</span><b><span data-cv2-t="s_besta">Thu, Oct 29</span> <small>·</small> <span data-cv2-t="s_bestb">EGP 39,600</span></b></div>
             <div class="cv2-row"><span class="cv2-lab">Best seller</span><b>Layla Tiered Ruffle Maxi <small>· <span data-cv2-t="s_sold">27 sold</span></small></b></div>
           </div>
-          <div class="cv2-foot"><span class="cv2-p"><span class="cv2-wide">Ads need to bring <b>EGP <span data-cv2-t="s_be">1.65</span></b> per EGP 1 to break even —&nbsp;now&nbsp;<b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span><span class="cv2-nar">Break-even <b data-cv2-t="s_be">1.65</b> · now <b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span></span><a class="cv2-lnk" href="#" data-cv2-go="account">Review account <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+          <div class="cv2-foot"><span class="cv2-p"><span class="cv2-wide">Ads need to bring <b>EGP <span data-cv2-t="s_be">1.65</span></b> per EGP 1 to break even —&nbsp;now&nbsp;<b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span><span class="cv2-nar">Break-even <b data-cv2-t="s_be">1.65</b> · now <b class="cv2-wc" data-cv2-t="s_now" data-cv2-tone="now">1.44</b></span></span><a class="cv2-lnk" href="#" data-cv2-go="account">Review account <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div>
         </div></div>
       </div>
     </div>
@@ -2254,7 +2456,7 @@ window.perSet=function(key){
         </div>
         <div class="cv2-back"><div class="cv2-bk cv2-abk">
           <div class="cv2-bh"><span class="cv2-fn cv2-meta" role="img" aria-label="Meta"><svg class="cv2-mk" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg></span><div class="cv2-bhx"><div class="cv2-bt cv2-wide" data-cv2-t="a_title">This week on ads</div><a class="cv2-bt cv2-btl cv2-nar" href="#" data-cv2-go="ads"><span data-cv2-t="a_title">This week on ads</span><svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><div class="cv2-bs" data-cv2-t="a_sub">Oct 24–30 · spent EGP 106,807</div></div>
-            <a class="cv2-lnk cv2-amg cv2-wide" href="#" data-cv2-go="ads">Ads Manager <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="cv2-lnk cv2-amg cv2-wide" href="#" data-cv2-go="ads">Ads Manager <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
             <button class="cv2-close" type="button" data-cv2-close aria-label="Close"><span>Close</span> <svg class="cv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
           <div class="cv2-a3"><div><b data-cv2-t="a_purch">203</b><span>Purchases</span></div><div><b data-cv2-t="a_reach">420,500</b><span>Reach</span></div><div><b data-cv2-t="a_clicks">17,800</b><span>Clicks</span></div></div>
           <div class="cv2-abal">
@@ -2306,7 +2508,6 @@ window.perSet=function(key){
 <div class="qa1" role="group" aria-label="Quick actions">
   <button class="qa1-b" type="button" data-qa1="restock"><span class="qa1-o qa1-badge"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg></span>Restock</button>
   <button class="qa1-b" type="button" data-qa1="meta"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 3v18h18M7 15l4-4 3 3 6-7"/></svg></span>Ads</button>
-  <button class="qa1-b" type="button" data-qa1="orders"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>Orders</button>
   <button class="qa1-b" type="button" data-qa1="shipping"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></g></svg></span>Shipping</button>
   <button class="qa1-b" type="button" data-qa1="competitors"><span class="qa1-o"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></g></svg></span>Competitors</button>
 </div>
@@ -2351,13 +2552,13 @@ window.perSet=function(key){
         <div class="ph"><h3>Needs attention</h3><span class="cnt">5</span></div>
         <div class="att">
 <!-- === ATTN v1 START === -->
-<div class="at10-wrap"><div class="at10" role="list">
-  <a href="#" class="at10-r" role="listitem" data-go="orders" data-at10-go="stuck" style="--c:var(--at10-bad)" aria-label="9 parcels stuck 7+ days, EGP 38,000. Open shipping"><i class="at10-d" aria-hidden="true"></i><span class="at10-t"><span>9 parcels stuck 7+ days</span></span><b class="at10-v">EGP 38,000</b><svg class="at10-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
-  <a href="#" class="at10-r" role="listitem" data-go="products" data-at10-go="sell" style="--c:var(--at10-warn)" aria-label="Products that will sell out before restock arrives. Open low stock"><i class="at10-d" aria-hidden="true"></i><span class="at10-t"><span class="at10-w"><span data-at10-t="sell">3 products will sell out before restock arrives</span></span><span class="at10-n"><span data-at10-t="selln">3 products sell out before restock</span></span></span><b class="at10-v"></b><svg class="at10-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
-  <a href="#" class="at10-r" role="listitem" data-go="ads" data-at10-go="camp" style="--c:var(--at10-bad)" aria-label="Retarget, 30 days, is losing money. Open campaigns"><i class="at10-d" aria-hidden="true"></i><span class="at10-t"><span class="at10-w">Retarget · 30 days is losing money</span><span class="at10-n">Retarget · 30 days loses money</span></span><b class="at10-v"><span data-at10-t="roas">1.20x</span></b><svg class="at10-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
-  <a href="#" class="at10-r" role="listitem" data-go="ads" data-at10-go="fund" style="--c:var(--at10-warn)" aria-label="Ad balance runs out Fri, Nov 6. Open account funding"><i class="at10-d" aria-hidden="true"></i><span class="at10-t"><span class="at10-w">Ad balance runs out Fri, Nov 6</span><span class="at10-n">Ad balance ends Fri, Nov 6</span></span><b class="at10-v">6 days</b><svg class="at10-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
-  <a href="#" class="at10-r" role="listitem" data-go="orders" data-at10-go="ret" style="--c:var(--at10-warn)" aria-label="Returns this period, mostly Salma Puff-Sleeve size XS. Open returns"><i class="at10-d" aria-hidden="true"></i><span class="at10-t"><span class="at10-w"><span data-at10-t="ret">7 returns this week</span> · Salma Puff-Sleeve, size XS</span><span class="at10-n"><span data-at10-t="retn">7 returns</span> · mostly Salma</span></span><b class="at10-v"><span data-at10-t="retv">EGP 10,150</span></b><svg class="at10-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
-</div></div>
+<div class="at10-wrap"><ul class="at11" aria-label="Problems to fix">
+  <li><a href="#" class="at11-t at11-now" data-go="orders" data-at10-go="stuck"><span class="at11-stub" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8M7.5 5.5l9 5"/></svg><em>Now</em></span><span class="at11-b"><span class="sr">Urgent: </span><span class="at11-l">9 parcels stuck<span class="at11-x"> with Bosta</span> 7+ days</span><b class="at11-v"><small>EGP</small>38,000</b><span class="at11-a">Chase Bosta<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></span></a></li>
+  <li><a href="#" class="at11-t at11-now" data-go="ads" data-at10-go="camp"><span class="at11-stub" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.5v3l2.2.6L17 18V6L5.2 9.9z"/><path d="M7.5 14.8V18a2 2 0 0 0 4 0v-1.9M20.5 9.5v5"/></svg><em>Now</em></span><span class="at11-b"><span class="sr">Urgent: </span><span class="at11-l">Retarget · 30 days loses money</span><b class="at11-v"><span data-at10-t="roas">1.20x</span><small class="at11-u">ROAS</small></b><span class="at11-a">Pause it<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></span></a></li>
+  <li><a href="#" class="at11-t" data-go="ads" data-at10-go="fund"><span class="at11-stub" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-4a2 2 0 0 0 0 4h4v3a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/></svg><em>Soon</em></span><span class="at11-b"><span class="sr">Soon: </span><span class="at11-l">Ad balance runs out Fri, Nov 6</span><b class="at11-v">6 days</b><span class="at11-a">Top up<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></span></a></li>
+  <li><a href="#" class="at11-t" data-go="products" data-at10-go="sell"><span class="at11-stub" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.6 6.2a2.4 2.4 0 1 1 3.4 2.2c-.6.3-1 .9-1 1.6v.6M12 10.6 3.2 16.7c-.7.5-.4 1.6.5 1.6h16.6c.9 0 1.2-1.1.5-1.6L12 10.6"/></svg><em>Soon</em></span><span class="at11-b"><span class="sr">Soon: </span><span class="at11-l" data-at10-t="sell">will sell out before restock arrives</span><b class="at11-v" data-at10-t="selln">3 products</b><span class="at11-a">Restock<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></span></a></li>
+  <li><a href="#" class="at11-t" data-go="orders" data-at10-go="ret"><span class="at11-stub" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M13.5 10.5 10 14l3.5 3.5"/></svg><em>Watch</em></span><span class="at11-b"><span class="sr">Watch: </span><span class="at11-l"><span data-at10-t="retn">7 returns</span><span class="at11-p"> <span data-at10-t="ret">this week</span></span> · mostly Salma<span class="at11-x"> Puff-Sleeve, size</span> XS</span><b class="at11-v"><small>EGP</small><span data-at10-t="retv">10,150</span></b><span class="at11-a">See returns<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></span></a></li>
+</ul></div>
 <!-- === ATTN v1 END === -->
         </div>
         <a class="ask" href="#" id="ask"><span class="o"><svg class="i"><use href="#i-spark"/></svg></span><span class="t">Ask the assistant<small>“Why is profit ROAS below break-even?”</small></span><svg class="i"><use href="#i-arrow"/></svg></a>
@@ -2447,7 +2648,7 @@ window.perSet=function(key){
 <!-- === CITIES v2 END === -->
       </section>
       <section class="panel s12">
-        <div class="ph"><h3>Recent orders</h3><a class="lnk" href="#">All orders →</a></div>
+        <div class="ph"><h3>Recent orders</h3><a class="lnk" href="#" data-app-go="orders">All orders <svg class="lnk-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div>
         <div class="olist">
           <div class="row"><span class="id">#FNW10982</span><span class="k dt">Oct 30</span><span class="tags"><span class="tag w">Pending</span><span class="tag n">Unfulfilled</span><span class="tag n">Not tracked</span></span><span class="amt2">2,930</span></div>
           <div class="row"><span class="id">#FNW10981</span><span class="k dt">Oct 29</span><span class="tags"><span class="tag w">Pending</span></span><span class="amt2">710</span></div>
@@ -2470,8 +2671,24 @@ window.perSet=function(key){
 
     <article class="av2-box rc-col">
       <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></span>Campaigns</h3><span class="rc-tag">ROAS · tap one for details</span></div>
+      <button type="button" class="av2-win" data-xp="camp0" data-xp-wide aria-label="Best campaign: Satin Edit · Advantage+. Open details">
+        <span class="av2-wk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/></svg>Best campaign<em>Scale it</em></span>
+        <span class="av2-wtop">
+          <span class="av2-wnm">Satin Edit · Advantage+<small>Running since <span data-av2-c0="Running since">Oct 12</span> · <span data-av2-c0="Orders">128</span> orders</small></span>
+          <span class="av2-wro"><b data-av2-t="cp0_roas">3.40x</b><small>ROAS</small></span>
+        </span>
+        <span class="av2-wbars">
+          <span class="av2-wb"><span>You spent</span><span class="av2-wtr"><i data-av2-wsp style="width:29%"></i></span><b data-av2-c0="Spend">EGP 47,091</b></span>
+          <span class="av2-wb av2-wbk"><span>It brought back</span><span class="av2-wtr"><i style="width:100%"></i></span><b data-av2-c0="Sales">EGP 160,109</b></span>
+        </span>
+        <span class="av2-wfx">
+          <span class="av2-wch"><span class="av2-wth" aria-hidden="true"><svg viewBox="0 0 46 70"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/></svg></span><span><small>Best product</small><b data-av2-c0w="Winner product">Nour Satin Slip Dress</b></span></span>
+          <span class="av2-wch"><span class="av2-wth av2-wsz" aria-hidden="true" data-av2-wsz>M</span><span><small>Best size</small><b data-av2-c0w="Winner size">M · 38% of its orders</b></span></span>
+        </span>
+        <span class="av2-wgo">See details<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span>
+      </button>
+      <p class="av2-oth">Other campaigns</p>
       <div class="rc-receipt">
-        <button type="button" class="rc-row av2-cp" data-xp="camp0" data-xp-wide style="--c:var(--rc-ok)"><i></i><span class="rc-nm">Satin Edit · Advantage+<small>Scale it</small></span><span class="rc-am rc-ok" data-av2-t="cp0_roas">3.40x</span><svg class="av2-i av2-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
         <button type="button" class="rc-row av2-cp" data-xp="camp1" data-xp-wide style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Broad · Women 25–44<small>Seen 4.1 times · new creative</small></span><span class="rc-am rc-warn" data-av2-t="cp1_roas">2.10x</span><svg class="av2-i av2-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
         <button type="button" class="rc-row av2-cp" data-xp="camp2" data-xp-wide style="--c:var(--rc-bad)"><i></i><span class="rc-nm">Retarget · 30 days<small>Below break-even · cut</small></span><span class="rc-am rc-bad" data-av2-t="cp2_roas">1.20x</span><svg class="av2-i av2-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
         <div class="rc-row rc-total av2-cpt" style="--c:#a275e0"><i></i><span class="rc-nm">All campaigns</span><span class="rc-am rc-plain" data-av2-t="cp_all">2.37x</span></div>
@@ -2481,19 +2698,27 @@ window.perSet=function(key){
 
     <article class="av2-box rc-col">
       <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>Cost per order vs average order</h3></div>
-      <div class="rc-receipt">
-        <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Average order</span><span class="rc-am" data-av2-t="av_aov">EGP 1,446</span></div>
-        <div class="rc-row" style="--c:#d8c49a"><i></i><span class="rc-nm">Ads cost per order<small>paid to the ad platforms</small></span><span class="rc-am rc-neg" data-av2-t="av_cpo">EGP 526</span></div>
-        <div class="rc-row rc-total" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Ads cost you<button type="button" class="xp-b" data-xp="a_share" aria-label="Explain: ads cost you this share of sales">i</button><small>of the sales they brought</small></span><span class="rc-am rc-warn" data-av2-t="av_share">42%</span></div>
+      <div class="av2-tgw">
+        <div class="av2-tgh"><span>Your average order</span><b data-av2-t="av_aov">EGP 1,446</b></div>
+        <div class="av2-tg" role="img" data-av2-tgl aria-label="Average order EGP 1,446: EGP 526 goes to ads, EGP 920 is left">
+          <i class="av2-tga" data-av2-tga style="flex-basis:36%"><b data-av2-t="av_cpo">EGP 526</b><small>to ads</small></i>
+          <i class="av2-tgl"><b data-av2-left>EGP 920</b><small>left after ads</small></i>
+          <span class="av2-tgc" data-av2-tgc style="left:36%" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg></span>
+        </div>
+        <div class="av2-mt">
+          <div class="av2-mth"><span>Ads cost you<button type="button" class="xp-b" data-xp="a_share" aria-label="Explain: ads cost you this share of sales">i</button><small>of the sales they brought</small></span><b data-av2-t="av_share" data-av2-shc>42%</b></div>
+          <div class="av2-mtt" aria-hidden="true"><s></s><em data-av2-mk style="left:60%"></em></div>
+          <div class="av2-mts" aria-hidden="true"><span>0%</span><span class="av2-mtb">50% eats profit</span><span></span></div>
+        </div>
       </div>
-      <p class="rc-note">Each order costs <b data-av2-t="av_cpo">EGP 526</b> in ads; the average order is <b data-av2-t="av_aov">EGP 1,446</b>.</p>
+      <p class="rc-note">Each order costs <b data-av2-t="av_cpo">EGP 526</b> in ads, so <b data-av2-left>EGP 920</b> of the average order is left for the dress, delivery and profit.</p>
     </article>
 
     <article class="av2-box rc-col">
       <div class="rc-ph"><h3 class="rc-h2"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>What to do next</h3></div>
       <div class="rc-receipt">
-        <a class="rc-row av2-act" href="#" data-av2-go="adsmanager" style="--c:var(--rc-ok)"><i></i><span class="rc-nm">Move EGP 5,000/day to Satin Edit<small>from Retarget · 30 days</small></span><span class="rc-am av2-lnk">Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
-        <a class="rc-row av2-act" href="#" data-av2-go="topup" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Ad balance lasts ~6 days<small>EGP 96,400 left</small></span><span class="rc-am av2-lnk">Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="rc-row av2-act" href="#" data-av2-go="adsmanager" style="--c:var(--rc-ok)"><i></i><span class="rc-nm">Move EGP 5,000/day to Satin Edit<small>from Retarget · 30 days</small></span><span class="rc-am av2-lnk">Ads Manager <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+        <a class="rc-row av2-act" href="#" data-av2-go="topup" style="--c:var(--rc-warn)"><i></i><span class="rc-nm">Ad balance lasts ~6 days<small>EGP 96,400 left</small></span><span class="rc-am av2-lnk">Top up <svg class="av2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
       </div>
     </article>
 
@@ -2582,10 +2807,10 @@ window.perSet=function(key){
 <div class="rc rc-col" aria-labelledby="ohr-h1">
   <div class="rc-ph"><h2 class="rc-h2" id="ohr-h1"><span class="rc-hic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Order health</h2><span class="rc-tag">196 placed</span></div>
   <div class="rc-receipt">
-    <div class="rc-row" style="--c:#a275e0"><i></i><span class="rc-nm">Orders placed<small>182 web · 14 admin</small></span><span class="rc-am">196</span></div>
-    <div class="rc-row" style="--c:#f06571"><i></i><span class="rc-nm">Cancelled<small>7.1% of orders</small></span><span class="rc-am rc-neg">− 14</span></div>
-    <div class="rc-row" style="--c:#f2c46d"><i></i><span class="rc-nm">Returned<small>4.2% of 166 parcels</small></span><span class="rc-am rc-neg">− 7</span></div>
-    <div class="rc-row rc-total" style="--c:#5fd3a8"><i></i><span class="rc-nm">Kept orders<small>161 web · 14 admin</small></span><span class="rc-am">175</span></div>
+    <div class="rc-row" style="--c:#a275e0"><i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg></i><span class="rc-nm">Orders placed<small>182 web · 14 admin</small></span><span class="rc-am">196</span></div>
+    <div class="rc-row" style="--c:#f06571"><i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/></svg></i><span class="rc-nm">Cancelled<small>7.1% of orders</small></span><span class="rc-am rc-neg">− 14</span></div>
+    <div class="rc-row" style="--c:#f2c46d"><i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></i><span class="rc-nm">Returned<small>4.2% of 166 parcels</small></span><span class="rc-am rc-neg">− 7</span></div>
+    <div class="rc-row rc-total" style="--c:#5fd3a8"><i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></i><span class="rc-nm">Kept orders<small>161 web · 14 admin</small></span><span class="rc-am">175</span></div>
   </div>
   <p class="rc-note"><b>164</b> of them are paid and kept so far.</p>
 </div>
@@ -2604,7 +2829,7 @@ window.perSet=function(key){
         </section>
 
       <section class="osec">
-        <div class="ph"><h3>Abandoned checkouts</h3><a class="lnk" href="#">Recover →</a></div>
+        <div class="ph"><h3>Abandoned checkouts</h3><a class="lnk" href="#" data-app-go="orders">Recover <svg class="lnk-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div>
         <p class="oline"><span><b>101</b> open</span><span><b>EGP 163,020</b> left in carts</span><span><b class="g">13</b> recovered</span><span><b>75</b> contactable</span></p>
         <div class="olist2">
           <div><span class="mono">#AC54203</span><span class="who"><b>Malak Hany</b> Alexandria · Oct 27</span><b>5,990</b></div>
@@ -2680,6 +2905,8 @@ window.perSet=function(key){
       if(j!==null){e.preventDefault();e.stopPropagation();show(tabs[j].dataset.tab,false,true)}});
   });
   $$('[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();show(a.dataset.go,true)})});
+  /* links to another page of the app; in the joined app glue.js takes them first */
+  $$('[data-app-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();if(window.qa1Note)qa1Note('Opens the Orders page in the app.')})});
   if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)},{threshold:0}).observe(anchor);
   var paneW=0;function paneMin(){if(innerWidth===paneW)return;paneW=innerWidth;document.documentElement.style.setProperty('--pane-min',(innerHeight-96)+'px')}
   paneMin();addEventListener('resize',paneMin);
@@ -2990,18 +3217,279 @@ window.cv2SetPeriod=function(P){
 
 </script>
 <script>
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card, byte-identical in previews/N-final.html, inventory-products/products-A.html
+   + inventory-A.html and orders-shipping/orders-B.html (scratchpad/r11/psheet_check.py). Copied from Products A.
+   IP      the product catalogue + period maths. Call IP.compute(PSHEET.perKey()) before building a card.
+   PSHEET  .open(html, returnFocusEl) · .close() · .isOpen() · .sheetEl() · .detail(p, view, opts) the card's HTML
+           · .refresh(html) re-renders an open card in place (keeps its scroll) · .perKey() the date period (PER.cur, else 7d)
+           · events: document "ip:sheet" {open}. Links in the card are real hrefs: window.PSHEET_BASE is the folder of
+           products-A.html relative to the page ('' beside it, '../pages/inventory-products/' from previews/). */
+/* ===== IP DATA — one catalogue for the Products + Inventory mockups =====
+   The first six products are the Overview's PRODUCTS v2 data, unchanged (same 7-day sold/shipped/returned per size,
+   same stock, same per-period units). Seven more complete the catalogue and carry the real edge cases the app handles:
+     Hana   — no unit cost in Shopify on any size  → profit unknown (never 0)
+     Mona   — no cost on XL / XXL                   → profit unknown, cash tied up "at least"
+     Dalia  — Shopify does not track its stock      → stock unknown (never "0 left")
+     Rana   — XXL untracked                         → one size unknown
+     Yasmin — every size sold out
+     Lina   — nothing sold in 30 days; Mona sold 1, Reem 3, Sara 5 → the slow sellers (≤5 sales in 30 days)
+     Nadia  — one-size product (no size letters)
+   stock: null = Shopify does not track it. cost: number, null (none recorded) or per-size array. Today = Fri Oct 30. */
+var IP=(function(){
+  var SZ=['XS','S','M','L','XL','XXL'];
+  var sum=function(a){return a.reduce(function(x,y){return x+(y||0)},0)};
+  var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
+  var PR=[
+    {id:'layla',n:'Layla Tiered Ruffle Maxi Dress',main:'Layla Tiered Ruffle Maxi',col:'Dusty Rose',type:'Dress',rev7:39794,profit7:25223,u7:27,sold:[2,9,7,5,3,1],ship:[3,6,9,7,4,3],ret:[1,0,0,1,0,1],stock:[2,1,9,7,6,5],c:['#d8a1ad','#9c5a6c'],sw:'#c99a9a',dlv:[29,32]},
+    {id:'nour',n:'Nour Satin Slip Dress',main:'Nour Satin Slip',col:'Champagne',type:'Dress',rev7:38231,profit7:22736,u7:30,sold:[2,5,10,8,3,2],ship:[5,7,10,8,3,3],ret:[2,1,1,1,0,1],stock:[3,8,12,10,7,6],c:['#e6cfa6','#a98a5c'],sw:'#e2cfa6',dlv:[30,36]},
+    {id:'jasmine',n:'Jasmine Wrap Midi Dress',main:'Jasmine Wrap Midi',col:'Sage',type:'Dress',rev7:33447,profit7:21871,u7:24,sold:[1,3,6,8,4,2],ship:[1,4,7,7,3,3],ret:[0,0,1,0,0,1],stock:[6,0,2,2,8,5],c:['#b4c6aa','#6c8462'],sw:'#9aae94',dlv:[23,25]},
+    {id:'salma',n:'Salma Puff-Sleeve Mini Dress',main:'Salma Puff-Sleeve Mini',col:'Ivory',type:'Dress',rev7:22377,profit7:13549,u7:23,sold:[3,8,6,4,1,1],ship:[6,5,7,5,2,2],ret:[3,0,0,0,1,1],stock:[7,6,3,9,5,5],c:['#efe7d6','#b9ab8e'],sw:'#efe7d6',dlv:[22,27]},
+    {id:'farida',n:'Farida Linen Shirt Dress',main:'Farida Linen Shirt',col:'Sand',type:'Dress',rev7:18181,profit7:11271,u7:15,sold:[1,3,6,3,1,1],ship:[1,3,6,5,1,1],ret:[0,0,1,0,0,0],stock:[6,9,12,10,8,6],c:['#d4c3a8','#8f7c60'],sw:'#d4c3a8',dlv:[16,17]},
+    {id:'mariam',n:'Mariam Pleated Chiffon Dress',main:'Mariam Pleated Chiffon',col:'Navy',type:'Dress',rev7:19868,profit7:11231,u7:12,sold:[1,2,3,4,1,1],ship:[1,2,4,3,2,2],ret:[0,0,0,0,0,1],stock:[5,6,4,4,7,5],c:['#4b5a8f','#232b4d'],sw:'#283a63',dlv:[13,14]},
+    {id:'hana',n:'Hana Smocked Midi Dress',main:'Hana Smocked Midi',col:'Terracotta',type:'Dress',price:1350,cost:null,u7:12,sold:[1,2,4,3,1,1],ship:[1,2,5,3,1,1],ret:[0,0,1,0,0,0],stock:[4,6,8,5,3,2],c:['#d99a7a','#9a4e33'],sw:'#c27a5a',dlv:[12,13]},
+    {id:'dalia',n:'Dalia Linen Wide-Leg Set',main:'Dalia Linen Wide-Leg Set',col:'Olive',type:'Set',price:1650,cost:750,u7:9,sold:[0,2,3,2,1,1],ship:[0,2,3,2,1,1],ret:[0,0,0,0,0,0],stock:[null,null,null,null,null,null],c:['#a6ad80','#5e6740'],sw:'#7d8656',dlv:[9,9]},
+    {id:'rana',n:'Rana Knit Cardigan',main:'Rana Knit Cardigan',col:'Oatmeal',type:'Knitwear',price:900,cost:738,u7:10,sold:[1,2,3,2,1,1],ship:[1,2,3,3,1,1],ret:[0,0,0,1,0,0],stock:[5,9,11,10,6,null],c:['#e3d8c4','#a8987c'],sw:'#d9ccb4',dlv:[10,11]},
+    {id:'yasmin',n:'Yasmin Ribbed Maxi Dress',main:'Yasmin Ribbed Maxi',col:'Black',type:'Dress',price:1200,cost:520,u7:6,sold:[0,1,2,2,1,0],ship:[0,1,2,2,1,0],ret:[0,0,0,0,0,0],stock:[0,0,0,0,0,0],c:['#55505e','#1d1b22'],sw:'#2a2730',dlv:[6,6],out:'Oct 27'},
+    {id:'nadia',n:'Nadia Silk Scarf',main:'Nadia Silk Scarf',col:'Print',type:'Accessory',price:450,cost:140,u7:12,sold:[12],ship:[12],ret:[0],stock:[11],sizes:['One size'],c:['#c9a6e6','#6d3fa0'],sw:'#a77fd0',dlv:[12,12]},
+    {id:'mona',n:'Mona Tulle Midi Skirt',main:'Mona Tulle Midi Skirt',col:'Blush',type:'Skirt',price:850,cost:[300,300,300,300,null,null],u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,0,1,0,0,0],stock:[6,8,9,8,6,4],c:['#f0c4cf','#b67a8a'],sw:'#e6b3bf',dlv:[0,0],lastSale:'Oct 9'},
+    {id:'lina',n:'Lina Embroidered Kaftan',main:'Lina Embroidered Kaftan',col:'Teal',type:'Dress',price:1450,cost:560,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],stock:[10,12,14,12,9,7],c:['#5fa3a3','#24585c'],sw:'#2f7a7c',dlv:[0,0],lastSale:'Aug 21'},
+    {id:'reem',n:'Reem Velvet Blazer',main:'Reem Velvet Blazer',col:'Burgundy',type:'Jacket',price:1900,cost:820,u7:1,sold:[0,0,1,0,0,0],ship:[0,0,1,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,1,1,0,0],stock:[3,7,8,6,5,2],c:['#a8475e','#5a1a2c'],sw:'#7d2a3e',dlv:[1,1],lastSale:'Oct 26'},
+    {id:'sara',n:'Sara Lace Blouse',main:'Sara Lace Blouse',col:'White',type:'Top',price:750,cost:260,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,2,1,1,0],stock:[5,9,11,9,6,4],c:['#f2eee8','#b8b0a4'],sw:'#ece6dc',dlv:[0,0],lastSale:'Oct 21'}
+  ];
+  /* per-period units sold / returned / shipped, in PR order (first six = the Overview's pv2Periods) */
+  var PER={
+    today:    {label:'Today',range:'Oct 30',days:1,phrase:'today',pace:"today's pace",
+               u:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], r:[0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0], s:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], pm:[1,1,1,1,1,1]},
+    yesterday:{label:'Yesterday',range:'Oct 29',days:1,phrase:'yesterday',pace:"yesterday's pace",
+               u:[3,5,4,3,0,2, 1,2,2,0,1,0,0,0,0], r:[0,1,0,1,0,0, 0,0,0,0,0,0,0,0,0], s:[3,6,4,4,0,2, 1,2,2,0,1,0,0,0,0], pm:[1,1,1,1,1,1]},
+    '7d':     {label:'Last 7 days',range:'Oct 24–30',days:7,phrase:'last 7 days',pace:"the last 7 days' pace",
+               u:[27,30,24,23,15,12, 12,9,10,6,12,0,0,1,0], r:[3,6,2,5,1,1, 1,0,1,0,0,0,0,0,0], s:[32,36,25,27,17,14, 13,9,11,6,12,0,0,1,0], pm:[1,1,1,1,1,1]},
+    '30d':    {label:'Last 30 days',range:'Oct 1–30',days:30,phrase:'last 30 days',pace:"the last 30 days' pace",
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]},
+    month:    {label:'This month',range:'Oct 1–30',days:30,phrase:'this month',pace:"this month's pace",
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]}
+  };
+  PR.forEach(function(p){
+    p.sizes=p.sizes||SZ;
+    if(p.rev7==null)p.rev7=p.price*p.u7;
+    if(p.price==null)p.price=Math.round(p.rev7/p.u7);
+    if(p.cost===undefined)p.cost=Math.round((p.rev7-p.profit7)/p.u7);
+    p.costAt=function(j){return Array.isArray(this.cost)?this.cost[j]:this.cost};
+    p.costMissing=p.sizes.filter(function(s,j){return p.costAt(j)==null}).length;   /* sizes with no recorded cost */
+    p.stockKnown=p.stock.filter(function(x){return x!=null});
+    p.unknownSizes=p.sizes.filter(function(s,j){return p.stock[j]==null});
+    p.left=sum(p.stockKnown);
+  });
+  /* largest-remainder split of total over the weights; always adds up exactly */
+  function spread(total,w){var W=sum(w),raw=w.map(function(x){return W?x/W*total:0}),out=raw.map(Math.floor),left=total-sum(out);
+    if(!W){out[Math.floor(w.length/2)]+=total;return out}
+    raw.map(function(x,i){return [x-Math.floor(x),i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,left).forEach(function(q){out[q[1]]++});return out}
+  function compute(key){
+    var P=PER[key];
+    PR.forEach(function(p,i){
+      var u=P.u[i],r=P.r[i],s=P.s[i],is7=key==='7d',base=p.sold30&&(!p.u7||!is7)?p.sold30:p.sold;
+      var sold=is7?p.sold.slice():spread(u,base),ret=is7?p.ret.slice():spread(r,p.ret.some(Boolean)?p.ret:p.ship),ship=is7?p.ship.slice():spread(s,p.ship.some(Boolean)?p.ship:base);
+      for(var j=0;j<sold.length;j++)if(ret[j]>ship[j])ship[j]=ret[j];
+      var over=sum(ship)-s;while(over>0){var best=-1,bv=0;for(var x=0;x<ship.length;x++){var room=ship[x]-ret[x];if(room>bv){bv=room;best=x}}if(best<0)break;ship[best]--;over--}
+      var rev,profit;
+      if(i<6){var k=u/p.u7;rev=p.rev7*k;profit=p.profit7*k*P.pm[i]}
+      else{rev=u*p.price;profit=p.costMissing?null:sold.reduce(function(a,n,j){return a+n*(p.price-p.costAt(j))},0)}
+      /* profit is UNKNOWN (null) when any size that sold has no cost, or the product has no cost at all */
+      if(p.costMissing&&(p.cost===null||sold.some(function(n,j){return n&&p.costAt(j)==null})||!u))profit=null;
+      var d={u:u,rev:rev,profit:profit,sold:sold,ret:ret,ship:ship,r:r,s:s};
+      d.margin=profit==null||!rev?null:profit/rev*100;d.rate=s?r/s*100:0;
+      d.perDay=sold.map(function(n){return n/P.days});
+      p.P=d;
+    });
+  }
+  /* stock maths (Cayo Perico): lasts = stock / units per day; order = per-day × (cover + delivery) − stock */
+  function plan(p,cover,del){
+    var rows=p.sizes.map(function(s,j){var rate=p.P.perDay[j],st=p.stock[j],unk=st==null,lasts=unk?null:rate>0?st/rate:(st?Infinity:0);
+      return {s:s,j:j,rate:rate,st:st,unk:unk,lasts:lasts,ord:!unk&&rate>0?Math.max(0,Math.ceil(rate*(cover+del)-st)):0}});
+    var known=rows.filter(function(r){return !r.unk});
+    var first=known.slice().sort(function(a,b){return a.lasts-b.lasts})[0]||null;
+    return {rows:rows,first:first,ord:sum(rows.map(function(r){return r.ord})),late:!!first&&first.lasts<del,unk:rows.length-known.length};
+  }
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dateIn(days){var d=new Date(2026,9,30);d.setDate(d.getDate()+Math.floor(days));return MON[d.getMonth()]+' '+d.getDate()}
+  function when(d){if(d==null)return 'stock unknown';if(d===0)return 'sold out';if(!isFinite(d))return 'not selling';if(d<1)return 'runs out today';if(d<2)return 'runs out tomorrow';return 'runs out ~'+dateIn(d)}
+  function short(d){if(d==null)return '?';if(d===0)return 'out';if(!isFinite(d))return '—';if(d<1)return '<1 day';var n=Math.floor(d);return n+(n===1?' day':' days')}
+  /* a size's returns are only judged when at least 3 were shipped — fewer is noise (test_returns_insights) */
+  var MIN_SHIP=3;
+  function worstSize(p){var best=-1,bv=-1,d=p.P;for(var j=0;j<d.ship.length;j++){if(d.ship[j]<MIN_SHIP||!d.ret[j])continue;var v=d.ret[j]/d.ship[j];if(v>bv||(v===bv&&d.ret[j]>d.ret[best])){bv=v;best=j}}return best}
+  function topSize(p){var a=p.P.sold,m=Math.max.apply(0,a);return m?a.indexOf(m):-1}
+  function rateColor(v){if(v<=0)return 'rgba(150,140,170,.28)';var t=Math.min(1,v/.4);return 'hsl('+(38-38*t)+','+(78+10*t)+'%,'+(62-8*t)+'%)'}
+  /* not selling = the slowest products: at most 5 sales in the last 30 days with stock still on the shelf,
+     fewest sales first (fixed rule, independent of the date picker) */
+  var SLOW_MAX=5;
+  function n30(p){return PER['30d'].u[PR.indexOf(p)]}
+  var DEAD=PR.filter(function(p){return n30(p)<=SLOW_MAX&&p.left>0}).sort(function(a,b){return n30(a)-n30(b)});
+  function tied(p){var k=0,unk=0;p.stock.forEach(function(st,j){if(st==null)return;var c=p.costAt(j);if(c==null)unk+=st;else k+=st*c});return {cash:k,unk:unk}}
+  var LOW=4;
+  function counts(){var low=0,out=0;PR.forEach(function(p){p.stock.forEach(function(x){if(x==null)return;if(x===0)out++;else if(x<=LOW)low++})});return {low:low,out:out}}
+  return {SZ:SZ,PR:PR,PER:PER,sum:sum,fmt:fmt,compute:compute,plan:plan,when:when,short:short,dateIn:dateIn,worstSize:worstSize,topSize:topSize,rateColor:rateColor,MIN_SHIP:MIN_SHIP,DEAD:DEAD,SLOW_MAX:SLOW_MAX,n30:n30,tied:tied,LOW:LOW,counts:counts,
+    byId:function(id){return PR.filter(function(p){return p.id===id})[0]}};
+})();
+
+var PSHEET=(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt=IP.fmt;
+  var ARW='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  var EXT='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  var XI='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
+  var LETTER=(location.pathname.match(/-(A|B)\.html/)||[])[1]||'A';
+
+  /* ---- toast ---- */
+  var toastEl=null,toastT=null;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='ip-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},3200)}
+
+  /* ---- links (Products ⇄ Inventory) ---- */
+  function pageUrl(page,q){return (window.PSHEET_BASE||'')+page+'-'+LETTER+'.html'+(q?'?'+q:'')}
+
+  /* ---- sheet ---- */
+  var sheet,scrim,back=null;
+  function ensure(){if(sheet)return;scrim=document.createElement('div');scrim.className='ip-scrim';
+    sheet=document.createElement('section');sheet.className='pv2 ip-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-labelledby','ip-st');
+    document.body.appendChild(scrim);document.body.appendChild(sheet);scrim.addEventListener('click',close);
+    sheet.addEventListener('click',function(e){if(e.target.closest('[data-ip-close]'))close()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()})}
+  function open(html,from){ensure();back=from||document.activeElement;sheet.innerHTML=html;sheet.scrollTop=0;sheet.classList.add('on');scrim.classList.add('on');
+    var c=sheet.querySelector('[data-ip-close]');if(c)setTimeout(function(){c.focus({preventScroll:true})},reduce?0:60);
+    document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:true}}))}
+  function close(){if(!sheet||!sheet.classList.contains('on'))return;sheet.classList.remove('on');scrim.classList.remove('on');if(back&&back.focus)back.focus({preventScroll:true});
+    document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:false}}))}
+  function refresh(html){if(!sheet)return;var y=sheet.scrollTop;sheet.innerHTML=html;sheet.scrollTop=y}
+
+  /* ---- product helpers ---- */
+  var VIEW={rev:'Revenue',profit:'Profit',margin:'Margin',units:'Units sold',ret:'Returns'};
+  function val(p,v){var d=p.P;return v==='rev'?d.rev:v==='profit'?d.profit:v==='margin'?d.margin:v==='units'?d.u:d.rate}
+  /* unknown profit / margin always sorts LAST, never as zero */
+  function sorted(list,v){return list.slice().sort(function(a,b){var x=val(a,v),y=val(b,v);
+    if(v==='ret'){if(!a.P.s!==!b.P.s)return a.P.s?-1:1;return (y-x)||(b.P.r-a.P.r)||(b.P.u-a.P.u)}
+    if(x==null&&y==null)return b.P.u-a.P.u;if(x==null)return 1;if(y==null)return -1;
+    if((v==='margin')&&(!a.P.u||!b.P.u)&&a.P.u!==b.P.u)return a.P.u?-1:1;
+    return (y-x)||(b.P.u-a.P.u)})}
+  function rankOf(v,p){var l=sorted(IP.PR,v),i=l.indexOf(p);var x=val(p,v);return (x==null||(v!=='units'&&!p.P.u&&v!=='ret'))?null:i+1}
+  function sw(p,cls){return '<span class="'+(cls||'ip-th')+'" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span>'}
+  function money(n){return n==null?'Unknown':'EGP '+fmt(n)}
+  function pct(n){return n==null?'Unknown':n.toFixed(1)+'%'}
+  function stockWord(st){return st==null?'not tracked':st===0?'sold out':st+' left'}
+  function stockCls(st){return st==null?'u':st<=2?'r':st<=IP.LOW?'w':''}
+  function costNote(p){return p.cost===null?'No unit cost in Shopify on any size':p.costMissing?'No unit cost on '+p.sizes.filter(function(s,j){return p.costAt(j)==null}).join(' and '):''}
+
+  function verdict(p,v){
+    var d=p.P,r=rankOf(v,p),P=IP.PER[PERKEY()];
+    if(!d.u&&v!=='ret')return 'No sales '+P.phrase+(p.lastSale?' — the last one was on <b>'+p.lastSale+'</b>.':'.');
+    if(v==='ret'){var w=IP.worstSize(p);if(!d.s)return 'Nothing shipped '+P.phrase+'.';
+      return d.r?'<b>'+d.rate.toFixed(1)+'%</b> came back ('+d.r+' of '+d.s+')'+(w>=0?' — mostly size <b>'+p.sizes[w]+'</b> ('+d.ret[w]+' of '+d.ship[w]+').':' — no single size stands out yet.'):'<b>Nothing came back</b> — '+d.s+' shipped.'}
+    if((v==='profit'||v==='margin')&&d.profit==null)return 'Profit is <b>unknown</b>: '+costNote(p).toLowerCase()+'. It sits last on '+VIEW[v].toLowerCase()+' until a cost is added — not because it earns nothing.';
+    var why=[],ur=rankOf('units',p),mr=rankOf('margin',p);
+    if(ur===1)why.push('sells the most ('+d.u+')');else if(ur<=3)why.push('is a top seller ('+d.u+' sold)');
+    if(mr&&mr<=3)why.push('keeps '+Math.round(d.margin)+'% margin');
+    if(d.margin!=null&&d.margin<30)why.push('keeps only '+Math.round(d.margin)+'% after cost');
+    if(!why.length)why.push('sells '+d.u+(d.margin!=null?' at '+Math.round(d.margin)+'% margin':''));
+    var weak=d.rate>=15?' — but <b>'+d.rate.toFixed(1)+'%</b> come back':'';
+    return '<b>#'+r+'</b> on '+VIEW[v].toLowerCase()+' because it '+why.join(' <b>and</b> ')+weak+'.';
+  }
+  var PERKEY=function(){return (window.PER&&PER.cur)||'7d'};
+
+  /* the full product detail: verdict · four numbers · sizes · returns by size · what to do */
+  /* icons for the number tiles in the product detail */
+  var NI=(function(){var g=function(d){return '<i class="ip-ni" aria-hidden="true"><svg viewBox="0 0 24 24">'+d+'</svg></i>'};return {
+    stock:g('<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>'),
+    sold:g('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>'),
+    rev:g('<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/>'),
+    profit:g('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'),
+    margin:g('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>')}})();
+  function detail(p,v,opts){
+    opts=opts||{};var d=p.P,P=IP.PER[PERKEY()],t=IP.topSize(p),w=IP.worstSize(p),one=p.sizes.length===1;
+    var chips=['rev','profit','margin','units'].map(function(k){var r=rankOf(k,p);return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-ip-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>'+(r?'#'+r:'—')+'</b></button>'}).join('')
+      +'<button type="button" class="pv2-chip'+(v==='ret'?' pv2-cur':'')+'" data-ip-rank="ret" aria-pressed="'+(v==='ret')+'">Returns<b>'+(d.s?d.rate.toFixed(1)+'%':'—')+'</b></button>';
+    /* one row per size: sold · in stock · returned — the same columns line up for every size */
+    var rows=p.sizes.map(function(s,j){var st=p.stock[j],top=j===t&&d.u,sh=d.ship[j],rt=d.ret[j],few=sh<IP.MIN_SHIP,hot=j===w;
+      var retTxt=!sh?'<span class="m">—</span>':!rt||few?'<span class="m">'+rt+' of '+sh+'</span>':rt+' of '+sh+' <span class="pc">· '+Math.round(rt/sh*100)+'%</span>';
+      return '<tr'+(top?' class="ip-ztop"':'')+'><th scope="row">'+s+(top?' <i>Top</i>':'')+'</th>'
+        +'<td class="'+stockCls(st)+'">'+(st==null?'not tracked':st===0?'sold out':st)+'</td><td>'+d.sold[j]+'</td>'
+        +'<td'+(hot?' class="r"':'')+'>'+retTxt+'</td></tr>'}).join('');
+    var notes=[];
+    if(t>=0&&d.u&&!one)notes.push('<b>'+p.sizes[t]+'</b> sells most — '+Math.round(d.sold[t]/d.u*100)+'% of units.');
+    if(w>=0)notes.push('<b class="r">'+p.sizes[w]+'</b> comes back most'+(d.ret[w]/d.ship[w]>=.25?' — check the size chart.':'.'));
+        var acts=[];
+    if(p.costMissing)acts.push('<div class="ip-unknown"><span><b>Profit unknown.</b> '+costNote(p)+', so profit and margin can’t be worked out'+(p.cost===null?'':' for the whole product')+'. It is not zero.</span><button type="button" class="ip-btn ghost" data-ip-shopify="cost" data-id="'+p.id+'">Add cost in Shopify '+EXT+'</button></div>');
+    if(p.unknownSizes.length)acts.push('<div class="ip-unknown"><span><b>Stock unknown'+(p.unknownSizes.length===p.sizes.length?'':' for '+p.unknownSizes.join(', '))+'.</b> Shopify isn’t counting '+(p.unknownSizes.length===p.sizes.length?'this product’s':'that size’s')+' stock, so we can’t say when it runs out.</span><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+EXT+'</button></div>');
+    var pl=IP.plan(p,30,7);
+    if(!opts.noRestock&&pl.first&&pl.first.lasts<14)acts.push('<a class="pv2-act" href="'+pageUrl('inventory','p='+p.id)+'"><span>'+(pl.first.lasts===0?'<b>'+(p.left?pl.first.s+' is sold out':'Every size is sold out')+'</b>':'<b>'+pl.first.s+'</b> '+IP.when(pl.first.lasts))+'</span><b>Plan restock '+ARW+'</b></a>');
+    var dead=IP.DEAD.indexOf(p)>=0;
+    if(dead){var tc=IP.tied(p);acts.push('<div class="ip-unknown"><span><b>Not selling.</b> '+(function(n){return n?n+(n===1?' sale':' sales'):'No sales'})(IP.n30(p))+' in 30 days (last on '+p.lastSale+') — '+p.left+' pieces hold '+(tc.unk?'at least ':'')+'<b style="color:inherit">EGP '+fmt(tc.cash)+'</b> of cost.</span>'+(opts.noRestock?'':'<a class="ip-btn ghost" href="'+pageUrl('inventory','tab=dead')+'">See slow stock '+ARW+'</a>')+'</div>')}
+    var dl=p.dlv[1]?p.dlv[0]+' of '+p.dlv[1]+' orders · '+Math.round(p.dlv[0]/p.dlv[1]*100)+'%':'No orders shipped yet';
+    return '<div class="pv2-grab" aria-hidden="true"></div>'
+      +'<div class="pv2-sh">'+sw(p,'pv2-shsw')+'<div class="pv2-sht"><small>'+p.type+' · '+p.col+'</small><b id="ip-st">'+p.n+'</b><div class="ip-meta">EGP '+fmt(p.price)+(one?' · one size':' · '+p.sizes.length+' sizes')+(p.left||!p.unknownSizes.length?' · '+p.left+' in stock':'')+'</div></div>'
+      +'<button type="button" class="pv2-close" data-ip-close>Close '+XI+'</button></div>'
+      +'<div><p class="pv2-verdict">'+verdict(p,v)+'</p><div class="pv2-chips">'+chips+'</div></div>'
+      +acts.filter(function(a){return a.indexOf('ip-unknown')>0}).join('')
+      +'<div class="ip-four">'
+      +'<div class="ip-left" style="--k:var(--pv2-acc)">'+NI.stock+'<span>Pieces left</span><b>'+(p.unknownSizes.length===p.sizes.length?'<span class="ip-unk">Not tracked</span>':fmt(p.left)+(p.unknownSizes.length?'<small> + '+p.unknownSizes.join(', ')+' not tracked</small>':''))+'</b>'
+        +(one?'':'<div class="ip-lsz">'+p.sizes.map(function(s,j){var x=p.stock[j];return '<i class="'+stockCls(x)+'"><em>'+s+'</em>'+(x==null?'?':x===0?'out':x)+'</i>'}).join('')+'</div>')+'</div>'
+      +'<div style="--k:#4f8ff0">'+NI.sold+'<span>Sold</span><b>'+fmt(d.u)+'</b></div>'
+      +'<div style="--k:var(--pv2-good)">'+NI.rev+'<span>Revenue</span><b><small>EGP</small> '+fmt(d.rev)+'</b></div>'
+      +'<div style="--k:#d99a3a">'+NI.profit+'<span>Profit</span>'+(d.profit==null?'<b class="ip-unk">Unknown</b>':'<b><small>EGP</small> '+fmt(d.profit)+'</b>')+'</div>'
+      +'<div style="--k:#c45fd0">'+NI.margin+'<span>Margin'+tip('Of every EGP 100 sold, how much you keep after the cost of the item. Ads and shipping are not taken off here.')+'</span>'+(!d.u?'<b class="ip-unk">—</b>':d.margin==null?'<b class="ip-unk">Unknown</b>':'<b>'+d.margin.toFixed(1)+'%</b>')+'</div></div>'
+      +'<div class="ip-sec"><div class="ip-sech">'+(one?'Sold · stock · returns':'By size')+'<span>'+P.label+'</span></div>'
+      +'<table class="ip-sz"><thead><tr><th scope="col">Size</th><th scope="col">Stock left</th><th scope="col">Sold</th><th scope="col">Returned'+tip('Pieces that came back, out of the pieces shipped in that size. Grey means fewer than '+IP.MIN_SHIP+' shipped, too few to judge.')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +(notes.length?'<p class="ip-note">'+notes.join(' ')+'</p>':'')
+      +'<dl class="ip-dl"><dt>Delivered</dt><dd>'+dl+'</dd></dl></div>'
+      +acts.filter(function(a){return a.indexOf('ip-unknown')<0}).join('');
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-ip-shopify]');if(!b)return;e.preventDefault();
+    var p=IP.byId(b.dataset.id);toast(b.dataset.ipShopify==='cost'?'In the app this opens '+p.main+' in Shopify admin, at the “Cost per item” field.':'In the app this opens '+p.main+' in Shopify admin, at “Track quantity”.')});
+
+  /* the card's "i": hover, focus or tap it to read what a term means. One bubble, placed by script so no panel clips it
+     (the pages' .tip / Shipping B OS.tip behaviour, under .ip-tip). */
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+  function tip(t){return '<button type="button" class="ip-tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=null,cur=null,pin=false;
+    function bub(){if(!b){b=document.createElement('div');b.className='ip-tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b)}return b}
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;bub().textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;if(b)b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.ip-tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.ip-tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.ip-tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+    document.addEventListener('ip:sheet',function(e){if(!e.detail.open)close()});
+  })();
+
+  return {$:$,$$:$$,reduce:reduce,toast:toast,pageUrl:pageUrl,open:open,close:close,refresh:refresh,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
+    detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,tip:tip,perKey:PERKEY};
+})();
+/* === PSHEET v1 END === */
+</script>
+<script>
 /* === PRODUCTS v2 START === */
 /* Products v2 behaviour. Renders into the first [data-pv2] element. Public hooks (on window):
      pv2SetPeriod(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'  → re-renders cards + planner
      pv2OpenStock()     scrolls to Low stock and opens the most urgent product (for a "Restock" quick action)
      pv2Periods         the period dataset (labels + per-product numbers)
-   Action rows fire  root.dispatchEvent(new CustomEvent('pv2:action',{bubbles:true,detail:{go,product,size}})). */
+   Round 11: a card opens the PSHEET v1 product card — the Products page's own card, same content for the same period. */
+window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock / See slow stock links → inventory-A.html */
 (function(){
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var SZ=['XS','S','M','L','XL','XXL'];
   var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
   var sum=function(a){return a.reduce(function(x,y){return x+y},0)};
-  var ARW='<svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var ARW='<svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
   /* base = last 7 days. sold/ship/ret are per size XS..XXL and add up to u / shipped / returns. stock = units on hand now. */
   var PR=[
@@ -3042,7 +3530,7 @@ window.cv2SetPeriod=function(P){
   function topSize(p){var a=p.P.sold,m=Math.max.apply(0,a);return m?a.indexOf(m):-1}
   function worstSize(p){var best=-1,bv=-1;for(var j=0;j<6;j++){if(!p.P.ship[j])continue;var v=p.P.ret[j]/p.P.ship[j];if(p.P.ret[j]&&(v>bv||(v===bv&&p.P.ret[j]>p.P.ret[best]))){bv=v;best=j}}return best}
   function rateColor(v){if(v<=0)return 'rgba(150,140,170,.28)';var t=Math.min(1,v/.4);return 'hsl('+(38-38*t)+','+(78+10*t)+'%,'+(62-8*t)+'%)'}
-  var root,cardsEl,sheet,scrim,openP=null,stockState={cover:30,del:7,open:{}},tweens=new WeakMap();
+  var root,cardsEl,openP=null,stockState={cover:30,del:7,open:{}},tweens=new WeakMap();
   function tween(el,to,f){var from=parseFloat(el.dataset.cur||0);el.dataset.cur=to;var id={};tweens.set(el,id);
     if(reduce){el.textContent=f(to);return}var t0=null;
     requestAnimationFrame(function step(t){if(tweens.get(el)!==id)return;if(!t0)t0=t;var k=Math.min(1,(t-t0)/650);k=1-Math.pow(1-k,3);el.textContent=f(from+(to-from)*k);if(k<1)requestAnimationFrame(step)})}
@@ -3087,7 +3575,7 @@ window.cv2SetPeriod=function(P){
       }
       var mn=Math.min.apply(0,p.stock),ms=p.stock.indexOf(mn);
       el.querySelector('.pv2-leftslot').innerHTML=mn<=4?'<span class="pv2-left" style="--ul:'+(mn<=1?'#ff8a7a':mn<=2?'#f2c46d':'#a275e0')+'"><i></i>'+(mn?mn+' left · '+SZ[ms]:SZ[ms]+' sold out')+'</span>':'';
-      el.setAttribute('aria-label',p.n+'. '+d.u+' sold. Tap to see why it ranks.');
+      el.setAttribute('aria-label',p.n+'. '+d.u+' sold. Open details.');
     });
   }
   function order(animate){
@@ -3098,65 +3586,23 @@ window.cv2SetPeriod=function(P){
       if(dx||dy)p.el.animate([{transform:'translate('+dx+'px,'+dy+'px) scale(.96)'},{transform:'translate('+dx*.1+'px,'+dy*.1+'px) scale(1.02)',offset:.7},{transform:'none'}],{duration:650,easing:'cubic-bezier(.2,.8,.2,1)'})});
   }
 
-  /* ---------- "why it ranks" sheet ---------- */
-  function verdict(p){
-    var v=state.view,d=p.P,P=pv2Periods[state.period],r=rankOf(v,p);
-    if(!d.u&&v!=='ret')return 'Nothing sold yet — it sits at <b>#'+r+'</b> by default.';
-    if(v==='ret'){var w=worstSize(p);return d.r?'<b>#'+r+'</b> for returns: <b>'+d.rate.toFixed(1)+'%</b> came back — mostly size <b>'+SZ[w]+'</b> ('+d.ret[w]+' of '+d.ship[w]+').':'<b>#'+r+'</b> for returns — <b>nothing came back</b>.'}
-    var why=[],ur=PR.slice().sort(function(a,b){return b.P.u-a.P.u}).indexOf(p)+1,mr=rankOf('margin',p);
-    if(ur===1)why.push('sells the most ('+d.u+')');else if(ur<=2)why.push('is a top seller ('+d.u+' sold)');
-    if(mr<=2)why.push('keeps '+Math.round(d.margin)+'% margin');
-    if(!why.length)why.push('sells '+d.u+' at '+Math.round(d.margin)+'% margin');
-    var weak=d.rate>=15?' — but <b>'+d.rate.toFixed(1)+'%</b> come back':'';
-    return '<b>#'+r+'</b> on '+VIEW[v].toLowerCase()+' because it '+why.join(' <b>AND</b> ')+weak+'.';
-  }
-  function sheetHTML(p){
-    var v=state.view,d=p.P,P=pv2Periods[state.period],ret=v==='ret',t=topSize(p),w=worstSize(p);
-    /* each chip ranks the cards by that measure (same as the sort control) */
-    var chips=['rev','profit','margin'].map(function(k){return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-pv2-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>#'+rankOf(k,p)+'</b></button>'}).join('')
-      +'<button type="button" class="pv2-chip'+(ret?' pv2-cur':'')+'" data-pv2-rank="ret" aria-pressed="'+ret+'">Returns<b>'+d.rate.toFixed(1)+'%</b></button>';
-    /* round 9: every size row shows sold, returned and stock left, whatever the sort */
-    var cells=SZ.map(function(s,j){var st=p.stock[j],top=ret?j===w:j===t;
-      return '<tr class="'+(top?(ret?'pv2-topr':'pv2-top'):'')+'"><td>'+s+'</td>'
-        +'<td class="'+(st===0?'r':st<=2?'r':st<=4?'w':'')+'">'+(st?st:'sold out')+'</td>'
-        +'<td>'+d.sold[j]+'</td><td class="'+(d.ret[j]?'w':'')+'">'+(d.ret[j]||'—')+'</td></tr>'}).join('');
-    var tl=sum(p.stock),lo=Math.min.apply(0,p.stock),ls=p.stock.indexOf(lo);
-    var fr=function(l,sub,v,cls){return '<div class="pv2-fr'+(cls||'')+'"><span>'+l+(sub?'<small>'+sub+'</small>':'')+'</span>'+v+'</div>'};
-    var mn=Math.min.apply(0,p.stock),ms=p.stock.indexOf(mn),act;
-    if(ret&&w>=0&&d.ret[w]/d.ship[w]>=.25)act={t:'<b>'+SZ[w]+'</b> returned '+d.ret[w]+' of '+d.ship[w]+' — the fit may run small or large',l:'Check sizing',go:'sizing',size:SZ[w]};
-    else if(mn<=2)act={t:mn?'Only <b>'+mn+' left in '+SZ[ms]+'</b>':'<b>'+SZ[ms]+' is sold out</b>',l:'Restock',go:'restock',size:SZ[ms]};
-    else act=null;
-    return '<div class="pv2-grab" aria-hidden="true"></div>'
-      +'<div class="pv2-sh"><span class="pv2-shsw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span><div class="pv2-sht"><small>Why it ranks</small><b id="pv2-st">'+p.n+'</b></div>'
-      +'<button type="button" class="pv2-close" data-pv2-close>Close <svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
-      +'<div><p class="pv2-verdict">'+verdict(p)+'</p><div class="pv2-chips">'+chips+'</div></div>'
-      +'<div class="pv2-facts">'
-      +fr('Stock left',lo?'lowest: '+SZ[ls]+' with '+lo:SZ[ls]+' is sold out','<b>'+tl+'</b>')
-      +fr('Sold',P.label,'<b>'+d.u+'</b>')
-      +fr('Returned',d.s?'of '+d.s+' shipped · '+d.rate.toFixed(1)+'%':'nothing shipped yet','<b'+(d.rate>=15?' class="r"':'')+'>'+d.r+'</b>')
-      +fr('Revenue','','<b><small>EGP</small>'+fmt(d.rev)+'</b>',' pv2-fsep')
-      +fr('Profit','','<b><small>EGP</small>'+fmt(d.profit)+'</b>')
-      +fr('Margin','','<b>'+(d.u?d.margin.toFixed(1)+'%':'—')+'</b>')+'</div>'
-      +'<div class="pv2-szb2"><div class="pv2-szh">By size</div><table class="pv2-st"><thead><tr><th>Size</th><th>Stock left</th><th>Sold</th><th>Returned</th></tr></thead><tbody>'+cells+'</tbody></table></div>'
-      +(act?'<a class="pv2-act" href="#" data-pv2-go="'+act.go+'" data-size="'+(act.size||'')+'"><span>'+act.t+'</span><b>'+act.l+' '+ARW+'</b></a>'
-        :'<p class="pv2-act pv2-ok">Stock is fine in every size</p>');
-  }
-  function placeSheet(p){
-    var phone=window.innerWidth<600;sheet.classList.toggle('pv2-phone',phone);
-    if(phone){sheet.style.left=sheet.style.top=sheet.style.width='';return}
-    var R=root.getBoundingClientRect(),c=p.el.getBoundingClientRect(),w=Math.min(460,R.width);
-    var left=Math.max(0,Math.min(R.width-w,c.left-R.left+c.width/2-w/2));
-    sheet.style.width=w+'px';sheet.style.left=left+'px';sheet.style.top=(c.top-R.top-10)+'px';
-    sheet.style.setProperty('--ox',(c.left-R.left+c.width/2-left)+'px');
-  }
+  /* ---------- product card: PSHEET v1, the Products page's card (round 11) ---------- */
+  /* IP (the shared catalogue) computes the card for the period the date picker shows; its ids match PR's */
+  function cardHTML(p,v){IP.compute(PSHEET.perKey());return PSHEET.detail(IP.byId(p.id),v)}
   function openSheet(p){
     if(openP)openP.el.classList.remove('pv2-sel');
-    openP=p;p.el.classList.add('pv2-sel');sheet.innerHTML=sheetHTML(p);placeSheet(p);
-    sheet.classList.remove('pv2-on');void sheet.offsetWidth;sheet.classList.add('pv2-on');scrim.classList.add('pv2-on');
-    sheet.querySelector('[data-pv2-close]').focus({preventScroll:true});
-    if(!sheet.classList.contains('pv2-phone')){var r=sheet.getBoundingClientRect();if(r.bottom>innerHeight||r.top<0)window.scrollBy({top:r.top-Math.max(16,(innerHeight-r.height)/2),behavior:reduce?'auto':'smooth'})}
+    openP=p;p.el.classList.add('pv2-sel');PSHEET.open(cardHTML(p,state.view),p.el);
   }
-  function closeSheet(){if(!openP)return;var p=openP;openP=null;p.el.classList.remove('pv2-sel');sheet.classList.remove('pv2-on');scrim.classList.remove('pv2-on');p.el.focus({preventScroll:true})}
+  function closeSheet(){PSHEET.close()}
+  document.addEventListener('ip:sheet',function(e){if(!e.detail.open&&openP){openP.el.classList.remove('pv2-sel');openP=null}});
+  /* the card's rank chips rank the cards too (as on Products); "Units sold" has no sort here, so only the card changes */
+  document.addEventListener('click',function(e){var r=e.target.closest('.ip-sheet [data-ip-rank]');if(!r||!openP||!PSHEET.isOpen())return;
+    var k=r.dataset.ipRank,sp=openP;
+    if(VIEW[k]&&k!==state.view){var sort=root.querySelector('.pv2-sort');[].forEach.call(sort.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.s===k))});
+      state.view=k;order(true);paintCards();if(root._moveInd)root._moveInd()}
+    PSHEET.refresh(cardHTML(sp,k));var nb=PSHEET.sheetEl().querySelector('[data-ip-rank="'+k+'"]');if(nb)nb.focus({preventScroll:true})});
+  /* the date picker: an open card follows the period (perSet sets PER.cur, then fires per:change) */
+  document.addEventListener('per:change',function(){if(openP&&PSHEET.isOpen())PSHEET.refresh(cardHTML(openP,state.view))});
 
   /* ---------- low stock + restock planner (Cayo Perico logic) ---------- */
   function plan(p){
@@ -3223,26 +3669,16 @@ window.cv2SetPeriod=function(P){
       +'<div class="pv2-plan"><div class="pv2-ctl"><span>Cover'+xpb('pv2cover','cover')+'</span><div class="pv2-seg" data-k="cover">'+[14,30,45,60].map(function(d){return '<button type="button" data-v="'+d+'" aria-pressed="'+(d===30)+'">'+d+'d</button>'}).join('')+'</div></div>'
       +'<div class="pv2-ctl"><span>Delivery takes'+xpb('pv2del','delivery time')+'</span><div class="pv2-seg" data-k="del">'+[3,7,14].map(function(d){return '<button type="button" data-v="'+d+'" aria-pressed="'+(d===7)+'">'+d+'d</button>'}).join('')+'</div></div></div>'
       +'<p class="pv2-sum" aria-live="polite"></p><button type="button" class="pv2-copy"><svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Copy list for supplier</button><span class="pv2-copied" aria-live="polite"></span>'
-      +'<div class="pv2-prods"></div></section></div></div>'
-      +'<div class="pv2-scrim"></div><div class="pv2-sheet" role="dialog" aria-modal="true" aria-labelledby="pv2-st"></div>';
-    cardsEl=root.querySelector('.pv2-cards');sheet=root.querySelector('.pv2-sheet');scrim=root.querySelector('.pv2-scrim');
+      +'<div class="pv2-prods"></div></section></div></div>';
+    cardsEl=root.querySelector('.pv2-cards');
     compute(state.period);buildCards();order(false);paintCards();paintStock();
     var sort=root.querySelector('.pv2-sort'),sind=root.querySelector('.pv2-sind');
     function moveInd(){var b=sort.querySelector('[aria-pressed="true"]');if(!b.offsetWidth)return;sind.style.left=b.offsetLeft+'px';sind.style.width=b.offsetWidth+'px'}
+    root._moveInd=moveInd;
     sort.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||b.getAttribute('aria-pressed')==='true')return;
       [].forEach.call(sort.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',String(x===b))});moveInd();closeSheet();
       state.view=b.dataset.s;order(true);paintCards()});
     root.addEventListener('click',function(e){
-      var g=e.target.closest('[data-pv2-go]');
-      if(g){e.preventDefault();var p=openP;closeSheet();
-        if(g.dataset.pv2Go==='restock'&&p){window.pv2OpenStock(p.id);return}
-        root.dispatchEvent(new CustomEvent('pv2:action',{bubbles:true,detail:{go:g.dataset.pv2Go,product:p&&p.id,size:g.dataset.size}}));return}
-      if(e.target.closest('[data-pv2-close]')){closeSheet();return}
-      var ch=e.target.closest('[data-pv2-rank]');
-      if(ch&&openP){var k=ch.dataset.pv2Rank,sp=openP;if(k===state.view)return;
-        [].forEach.call(sort.querySelectorAll('button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.s===k))});moveInd();
-        state.view=k;order(true);paintCards();sheet.innerHTML=sheetHTML(sp);placeSheet(sp);
-        var nb=sheet.querySelector('[data-pv2-rank="'+k+'"]');if(nb)nb.focus({preventScroll:true});return}
       var seg=e.target.closest('.pv2-seg button');
       if(seg){var k=seg.parentNode.dataset.k;stockState[k]=+seg.dataset.v;[].forEach.call(seg.parentNode.children,function(x){x.setAttribute('aria-pressed',String(x===seg))});paintStock();return}
       var row=e.target.closest('.pv2-prow');
@@ -3251,16 +3687,14 @@ window.cv2SetPeriod=function(P){
         function fallback(){var ta=root.querySelector('.pv2-fallback');if(!ta){ta=document.createElement('textarea');ta.className='pv2-fallback';ta.readOnly=true;root.querySelector('.pv2-prods').before(ta)}ta.value=txt;ta.focus();ta.select();msg.textContent='Select-all and copy'}
         try{navigator.clipboard.writeText(txt).then(function(){msg.textContent='Copied ✓';setTimeout(function(){msg.textContent=''},2200)},fallback)}catch(err){fallback()}}
     });
-    scrim.addEventListener('click',closeSheet);
-    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
-    window.addEventListener('resize',function(){moveInd();if(openP)placeSheet(openP)});
+    window.addEventListener('resize',moveInd);
     if(document.fonts)document.fonts.ready.then(moveInd);
     if('ResizeObserver' in window)new ResizeObserver(moveInd).observe(sort);
     /* animate the cards in the first time the block becomes visible */
     if('IntersectionObserver' in window&&!reduce){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){PR.forEach(function(p){var mv=p.el.querySelector('.pv2-mvn');mv.dataset.cur=0});paintCards();moveInd();io.disconnect()}});io.observe(cardsEl)}
   }
   window.pv2Periods=pv2Periods;
-  window.pv2SetPeriod=function(key){if(!pv2Periods[key]||!root)return;state.period=key;closeSheet();compute(key);order(true);paintCards();paintStock()};
+  window.pv2SetPeriod=function(key){if(!pv2Periods[key]||!root)return;state.period=key;compute(key);order(true);paintCards();paintStock()};
   window.pv2OpenStock=function(id){if(!root)return;var first=id||(root._list&&root._list[0][0].id);stockState.open={};stockState.open[first]=true;paintStock();
     var el=root.querySelector('#pv2-stock');el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
   function boot(){var el=document.querySelector('[data-pv2]');if(el)init(el)}
@@ -3304,7 +3738,7 @@ window.cv2SetPeriod=function(P){
   ];
   var fmt=function(v){return Math.round(v).toLocaleString('en-US')};
   var pct=function(v,of){return (v/(of||GROSS)*100).toFixed(1)+'%'};
-  var ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var ARW='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var CHEV='<svg class="mv2-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   function sub(s,i){
     if(i===0)return s.note+' · 100%';
@@ -3412,6 +3846,26 @@ window.cv2SetPeriod=function(P){
       if(nt)nt.innerHTML=loss?'At <b>'+P.t.av_roas+'</b> the ads bring sales, but after every cost this period <b>loses '+P.t.av_profit.replace('−','')+'</b>.'
         :raw<be?'At <b>'+P.t.av_roas+'</b> you are below break-even <b>'+P.t.av_be+'</b> — the ads are not paying for themselves.'
         :'Break-even is <b>'+P.t.av_be+'</b> — at '+P.t.av_roas+' your ads pay for themselves, but the profit left is thin.';
+      /* round 11: the winner hero (from P.xp.camp0 — the same facts its detail shows) and the price tag (AOV − CPO) */
+      var n=function(x){return parseFloat(String(x||'').replace(/[^\d.]/g,''))||0},egp=function(x){return 'EGP '+Math.round(x).toLocaleString('en-US')};
+      var c0=P.xp&&P.xp.camp0&&P.xp.camp0[1],f={};
+      if(c0){var re=/<(span|small)>([^<]*)<\/\1><b>([^<]*)<\/b>/g,m;while((m=re.exec(c0)))f[m[2]]=m[3]}
+      q('[data-av2-c0]').forEach(function(e){var v=f[e.getAttribute('data-av2-c0')];if(v)e.textContent=v});
+      q('[data-av2-c0w]').forEach(function(e){var v=f[e.getAttribute('data-av2-c0w')];if(v)e.textContent=v});
+      var wsz=root.querySelector('[data-av2-wsz]');if(wsz&&f['Winner size'])wsz.textContent=f['Winner size'].split(' ')[0];
+      var wsp=root.querySelector('[data-av2-wsp]'),sp=n(f.Spend),sa=n(f.Sales);
+      if(wsp&&sp&&sa)wsp.style.width=Math.max(4,Math.min(100,sp/sa*100)).toFixed(1)+'%';
+      var aov=n(P.t.av_aov),cpo=n(P.t.av_cpo);
+      if(aov&&cpo){
+        var tp=Math.max(18,Math.min(70,cpo/aov*100)),lf=egp(aov-cpo);
+        q('[data-av2-left]').forEach(function(e){e.textContent=lf});
+        var ta=root.querySelector('[data-av2-tga]'),tc=root.querySelector('[data-av2-tgc]'),tg=root.querySelector('[data-av2-tgl]');
+        if(ta)ta.style.flexBasis=tp.toFixed(1)+'%';if(tc)tc.style.left=tp.toFixed(1)+'%';
+        if(tg)tg.setAttribute('aria-label','Average order '+P.t.av_aov+': '+P.t.av_cpo+' goes to ads, '+lf+' is left');
+      }
+      var sh=n(P.t.av_share),mk=root.querySelector('[data-av2-mk]'),shc=root.querySelector('[data-av2-shc]');
+      if(mk)mk.style.left=Math.max(2,Math.min(98,sh/70*100)).toFixed(1)+'%';
+      if(shc){shc.classList.toggle('av2-ok',sh<30);shc.classList.toggle('av2-bad',sh>=50)}
     };
   }
   function boot(){[].slice.call(document.querySelectorAll('.av2-root')).forEach(function(r){init(r);if(window.PER&&PER[PER.cur])r.av2Set(PER[PER.cur])})}
@@ -3441,6 +3895,20 @@ window.cv2SetPeriod=function(P){
   var CHEV='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg>';
   /* the dot: the brand purple, quieter down the ranking; "Other cities" grey */
   var dot=function(rank,other){return other?'var(--rc-fg-3)':'color-mix(in srgb,var(--rc-acc) '+Math.max(35,100-(rank-1)*9)+'%,transparent)'};
+  /* round 11: a small landmark per city (Cairo Tower, the pyramids, the lighthouse…); a map pin for the rest */
+  var PIN='<path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>';
+  var NEWTOWN='<path d="M4 21V10l6-3v14M10 21V4l9 3v14M3 21h18M13 10h3M13 14h3M6.5 13h1M6.5 16.5h1"/>';
+  var LM={
+    'Cairo':'<path d="M12 2.5v2.5M10.2 7.5c0-2.6 3.6-2.6 3.6 0zM10.6 7.5 10 19h4l-.6-11.5M8 19h8M7 21.5h10"/>',
+    'Giza':'<path d="M2.5 20 9 9l6.5 11zM13 15.8l2.6-4.3L22 20h-6.5M9 9l1.6 11"/>',
+    'Alexandria':'<path d="M9.5 21 10.6 9h2.8l1.1 12M8 21h8M10 9h4M10.8 9V6.5h2.4V9M12 6.5V4.5M7.5 5.5 5 4.5M16.5 5.5 19 4.5M3 18c2 0 2-1 4-1"/>',
+    'New Cairo':NEWTOWN,'6th of October':NEWTOWN,'Sheikh Zayed':NEWTOWN,
+    'Mansoura':'<path d="M5 21v-6.5a7 5.5 0 0 1 14 0V21M3 21h18M12 6.5V9M10 21v-4a2 2 0 0 1 4 0v4"/>',
+    'Tanta':'<path d="M5 21v-6.5a7 5.5 0 0 1 14 0V21M3 21h18M12 6.5V9M10 21v-4a2 2 0 0 1 4 0v4"/>',
+    'Riyadh':'<path d="M7.5 21 10 5.5a2 2 0 0 1 4 0L16.5 21M10.6 12h2.8M6 21h12"/>',
+    'Dubai':'<path d="M12 2.5V21M10 21V9.5l2-4 2 4V21M7.5 21v-6h2.5M14 15h2.5v6M6 21h12"/>'
+  };
+  var ico=function(name){return '<i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true">'+(LM[name]||PIN)+'</svg></i>'};
   function init(root){
     if(root.dataset.ct2Ready)return;root.dataset.ct2Ready='1';
     var max=0,rank=0,h='';
@@ -3453,7 +3921,7 @@ window.cv2SetPeriod=function(P){
         var other=!!r[5],hide=more>0&&i>=SHOW;if(!other)rank++;
         h+='<div class="ct2-row'+(other?' ct2-other':'')+(hide?' ct2-more':'')+'"'+(hide?' hidden':'')+'>'
           +'<button type="button" class="rc-row ct2-r" aria-expanded="false" aria-label="'+r[0]+', '+g.c+': '+r[1]+' orders, '+pct(r[1])+'. Show details" style="--c:'+dot(rank,other)+'">'
-          +'<i></i><span class="rc-nm">'+r[0]+'<small>'+(other?'the rest of '+(g.short||g.c):(g.short||g.c))+'</small></span>'
+          +ico(r[0])+'<span class="rc-nm">'+r[0]+'<small>'+(other?'the rest of '+(g.short||g.c):(g.short||g.c))+'</small></span>'
           +'<span class="rc-am">'+r[1]+' orders<small>'+pct(r[1])+'</small></span>'
           +'<span class="rc-bar" aria-hidden="true"><b style="transform:scaleX('+Math.max(.02,r[1]/max).toFixed(3)+')"></b></span></button>'
           +'<div class="ct2-det"><div><div class="ct2-dl">'
@@ -3464,7 +3932,7 @@ window.cv2SetPeriod=function(P){
       });
       if(more>0)h+='<button type="button" class="ct2-tog" aria-expanded="false" data-ct2-more="'+more+'" data-ct2-c="'+g.c+'">Show '+more+' more in '+g.c+CHEV+'</button>';
     });
-    h+='<div class="rc-row rc-total" style="--c:var(--rc-acc)"><i></i><span class="rc-nm">All locations</span><span class="rc-am rc-plain">'+TOTAL+' orders</span></div></div>';
+    h+='<div class="rc-row rc-total" style="--c:var(--rc-acc)"><i class="rc-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 2.5 14.4 0 17M12 3.5c-2.5 2.6-2.5 14.4 0 17"/></svg></i><span class="rc-nm">All locations</span><span class="rc-am rc-plain">'+TOTAL+' orders</span></div></div>';
     root.innerHTML=h;
     root.addEventListener('click',function(e){
       var t=e.target.closest('.ct2-tog');
@@ -3687,21 +4155,21 @@ window.qa1Note=function(msg){var t=document.querySelector('.qa1-toast');
 </script>
 <script>
 /* === ATTN v1 START === */
-/* Attn v1 behaviour (round 10): fills the period-based figures (Periods v1 "per:change") and, after the page's [data-go]
-   opens the tab, scrolls to the exact place the problem is fixed. */
+/* Attn v1 behaviour (round 11 tickets): fills the period-based figures (Periods v1 "per:change") and, after the page's
+   [data-go] opens the tab, scrolls to the exact place the problem is fixed. */
 (function(){
   var W=document.querySelector('.at10-wrap');if(!W)return;
   var PH={today:'today',yesterday:'yesterday','7d':'this week','30d':'in 30 days',month:'this month'};
   function set(k,v){[].forEach.call(W.querySelectorAll('[data-at10-t="'+k+'"]'),function(e){e.textContent=v})}
   function fill(P){
     if(!P||!P.t)return;
-    var n=parseInt(String(P.t.c_ret).replace(/[^0-9]/g,''),10)||0,rs=n+' return'+(n===1?'':'s');
-    set('ret',rs+' '+(PH[P.key]||''));set('retn',rs);
-    set('retv','EGP '+String(P.t.est_ret||'').replace(/[^0-9,]/g,''));
+    var n=parseInt(String(P.t.c_ret).replace(/[^0-9]/g,''),10)||0;
+    set('retn',n+' return'+(n===1?'':'s'));set('ret',PH[P.key]||'');
+    set('retv',String(P.t.est_ret||'').replace(/[^0-9,]/g,''));
     if(P.t.cp2_roas)set('roas',P.t.cp2_roas);
     var s=document.querySelector('#pv2-stock .pv2-sum .r b'),k=s?parseInt(s.textContent,10)||0:0;
-    set('sell',k?k+' product'+(k===1?'':'s')+' will sell out before restock arrives':'Some sizes are running low');
-    set('selln',k?k+' product'+(k===1?'':'s')+' sell'+(k===1?'s':'')+' out before restock':'Some sizes running low');
+    set('selln',k?k+' product'+(k===1?'':'s'):'Low sizes');
+    set('sell',k?'will sell out before restock arrives':'are running out before restock arrives');
   }
   function flash(el){if(!el)return;el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});
     el.classList.remove('at10-flash');void el.offsetWidth;el.classList.add('at10-flash');setTimeout(function(){el.classList.remove('at10-flash')},1700)}
