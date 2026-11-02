@@ -740,6 +740,26 @@ body.g-closed .g-open,body.g-closed .g-newsq{display:grid}
   .g-shell .as-md{font-size:15.5px}
   .g-shell .as-prop{padding:16px 16px 18px}
 }
+/* nothing to scroll on a new chat; the page never rubber-bands */
+@media (max-width:1023px){
+  html.nv2-docked body.as-is-empty{padding-bottom:0!important}
+  .as-is-empty .content{padding-bottom:0}
+  .as-is-empty .g-stage{padding-bottom:calc(var(--as-ch,64px) + 104px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:600px) and (max-height:700px){
+  .as-is-empty .g-hello::before{width:40px;margin-bottom:8px}
+  .as-is-empty .g-sugs{padding-top:12px}
+  .as-is-empty .g-sugs .as-sug{padding:11px 4px}
+}
+html.g-still,html.g-still body{overflow:hidden;overscroll-behavior:none}
+/* keyboard open (phone/tablet): the question box rides just above it, the bottom bar steps aside */
+@media (max-width:1023px){
+  body.g-kb .g-cwrap,body.g-kb.as-is-empty .g-cwrap{bottom:calc(var(--g-kb,0px) + 8px)!important;transition:none}
+  body.g-kb .nv2-dock{opacity:0;pointer-events:none;transform:translateY(calc(100% + 30px))}
+  /* typing on a new chat: the greeting re-centres in the space above the box; suggestions come back when the keyboard closes */
+  body.g-kb.as-is-empty .g-sugs{display:none}
+  body.g-kb.as-is-empty .g-stage{padding-bottom:calc(var(--as-ch,64px) + var(--g-kb,0px) + 24px)}
+}
 @media (prefers-reduced-motion:reduce){.g-side,.g-scrim,.g-cwrap,.g-glow{transition:none!important}.g-shell .as-av,.g-shell .as-live .as-tl,.g-shell .as-caret{animation:none!important}.g-shell .as-live .as-tl{color:var(--g-mut)}}
 /* Scale Trick brand layer: the S mark over the greeting, the brand diamond for the assistant, the diamond tile pattern */
 :root{
@@ -1827,6 +1847,36 @@ AS_DATA.sugs = [
   document.addEventListener('as:opened',close);document.addEventListener('as:picked',close);
   window.addEventListener('resize',function(){if(!drawer())close();glow()});
   glow();
+
+  /* new chat: the screen is exactly the visible height, so there is nothing to scroll into */
+  var root=document.documentElement,main=document.querySelector('.g-main'),vv=window.visualViewport,kbOn=false;
+  var app=document.querySelector('.app'),content=document.querySelector('.content');
+  function px(el,prop){return el?parseFloat(getComputedStyle(el)[prop])||0:0}
+  function fit(){
+    var empty=document.body.classList.contains('as-is-empty');
+    root.classList.remove('g-still');main.style.minHeight='';side.style.maxHeight='';
+    if(!empty||(kbOn&&!matchMedia('(max-width:1023px)').matches))return;
+    main.style.minHeight='0px';
+    var bodyPad=px(document.body,'paddingTop')+px(document.body,'paddingBottom');
+    if(!drawer()){var st=side.getBoundingClientRect().top+scrollY;side.style.maxHeight=Math.max(240,innerHeight-st-px(content,'paddingBottom')-bodyPad)+'px'}
+    main.style.minHeight=Math.max(innerHeight-(main.getBoundingClientRect().top+scrollY)-px(content,'paddingBottom')-bodyPad,0)+'px';
+    if(app.offsetHeight+bodyPad<=innerHeight+1){root.classList.add('g-still');scrollTo(0,0)}
+  }
+  /* the on-screen keyboard: lift the question box to sit just above it, and move the bottom bar out of the way */
+  function kb(){
+    if(!vv)return;
+    var k=Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)),on=k>80&&document.activeElement&&document.activeElement.matches('[data-as-in]');
+    root.style.setProperty('--g-kb',k+'px');
+    if(on!==kbOn){kbOn=on;document.body.classList.toggle('g-kb',on);fit();
+      if(on&&!matchMedia('(max-width:1023px)').matches){var c=document.querySelector('.g-shell .as-composer');c&&c.scrollIntoView({block:'nearest'})}}
+  }
+  if(vv){vv.addEventListener('resize',kb);vv.addEventListener('scroll',kb)}
+  document.addEventListener('focusin',function(e){if(e.target.matches('[data-as-in]'))setTimeout(kb,250)});
+  document.addEventListener('focusout',function(e){if(e.target.matches('[data-as-in]'))setTimeout(kb,250)});
+  document.addEventListener('as:render',function(){requestAnimationFrame(fit)});
+  window.addEventListener('resize',function(){requestAnimationFrame(fit)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  fit();
 })();
 
 </script>

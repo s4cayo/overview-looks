@@ -621,33 +621,65 @@ main{max-width:1240px}
 
 /* ===== Products A — card gallery ===== */
 /* worth a look: one spotlight per issue — the product picture inside a coloured ring that IS the indicator */
-.pa-att{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-@media (max-width:1100px){.pa-att{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.pa-spot{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:16px;text-align:left;min-width:0;
-  background:linear-gradient(160deg,color-mix(in srgb,var(--c) 10%,var(--pv2-bg2)),var(--pv2-bg2) 60%);border:1px solid color-mix(in srgb,var(--c) 28%,var(--pv2-line));transition:border-color .2s,transform .2s,box-shadow .2s}
-.pa-spot:hover{border-color:var(--c);transform:translateY(-2px);box-shadow:0 16px 30px -20px var(--c)}
-.pa-pics{display:flex;align-items:center;min-height:76px}
-/* single product: the ring fills to the figure (returns %, days of stock left) */
-.pa-ring{position:relative;width:76px;height:76px;border-radius:50%;padding:5px;flex:none;background:conic-gradient(var(--c) calc(var(--p,100) * 1%),var(--pv2-track) 0)}
+/* worth a look — three designs to choose from (Sam, 2026-11-02). Shared: the product picture inside a coloured ring that
+   IS the indicator, and only TWO text sizes: 15px for the fact, 13px for the rest. */
+.pa-ring{position:relative;width:64px;height:64px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--pv2-track) 0)}
 .pa-ring.dash{background:none;border:2.5px dashed var(--c);padding:3px}
-.pa-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 3px var(--pv2-bg2)}
-.pa-face svg{width:24px;height:36px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
-.pa-badge{position:absolute;right:-6px;bottom:-2px;min-width:28px;height:24px;padding:0 7px;border-radius:99px;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;background:var(--c);box-shadow:0 0 0 3px var(--pv2-bg2)}
-/* several products: overlapping rings */
-.pa-stack{display:flex;align-items:center}
-.pa-stack .pa-ring{width:52px;height:52px;padding:3px}
-.pa-stack .pa-ring + .pa-ring{margin-left:-14px}
-.pa-stack .pa-face svg{width:16px;height:24px}
-.pa-more{margin-left:6px;font-size:13px;font-weight:600;color:var(--pv2-mut)}
-.pa-lab{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--c)}
-.pa-lab i{width:8px;height:8px;border-radius:50%;background:var(--c)}
-.pa-big{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.05;color:var(--pv2-fg)}
-.pa-big small{display:block;margin-top:3px;font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
-.pa-who{font-size:13.5px;line-height:1.4;color:var(--pv2-mut)}
-.pa-who b{color:var(--pv2-fg);font-weight:600}
-.pa-go{margin-top:auto;font-size:13px;font-weight:600;color:var(--pv2-acc);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.pa-spot:hover .pa-go svg{transform:translateX(3px)}.pa-go svg{transition:transform .2s}
-@media (max-width:600px){.pa-att{gap:10px}.pa-spot{padding:14px 12px;gap:8px}.pa-ring{width:64px;height:64px;padding:4px}.pa-stack .pa-ring{width:44px;height:44px}.pa-stack .pa-ring + .pa-ring{margin-left:-16px}.pa-pics{min-height:64px}.pa-big{font-size:22px}}
+.pa-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px var(--pv2-bg)}
+.pa-face svg{width:20px;height:30px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.pa-badge{position:absolute;right:-6px;bottom:-2px;min-width:26px;height:22px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:var(--c);box-shadow:0 0 0 3px var(--pv2-bg)}
+.pa-stack{position:relative;display:flex;align-items:center;flex:none}
+.pa-stack .pa-ring{width:46px;height:46px;padding:4px}
+.pa-stack .pa-ring + .pa-ring{margin-left:-16px}
+.pa-stack .pa-face svg{width:14px;height:21px}
+.pa-stack .pa-badge{right:-8px}
+.pa-t{font-size:15px;font-weight:600;line-height:1.3;color:var(--pv2-fg)}
+.pa-t em{font-style:normal;color:var(--c)}
+.pa-s{font-size:13px;line-height:1.4;color:var(--pv2-mut)}
+.pa-go{font-size:13px;font-weight:600;color:var(--pv2-acc);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.pa-go svg{transition:transform .2s}
+.pa-spot{text-align:left;min-width:0;transition:border-color .2s,background .2s,transform .2s}
+.pa-spot:hover .pa-go svg,.pa-spot.pa-go:hover svg{transform:translateX(3px)}
+/* the design picker (mockup only) */
+.pa-pick{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--pv2-mut)}
+.pa-pick .pv2-seg button{min-width:34px}
+
+/* Design 1 · List — one row per issue: ring · fact over detail · arrow */
+.pa-att.d1{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+.d1 .pa-spot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 6px;border-top:1px solid var(--pv2-line);border-radius:12px}
+.d1 .pa-spot:nth-child(-n+2){border-top:0}
+.d1 .pa-spot:hover{background:var(--pv2-bg2)}
+.d1 .pa-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.d1 .pa-pics{width:96px;display:flex;justify-content:center}
+.d1 .pa-go > span{display:none}
+@media (max-width:760px){.pa-att.d1{grid-template-columns:minmax(0,1fr)}.d1 .pa-spot:nth-child(2){border-top:1px solid var(--pv2-line)}.d1 .pa-pics{width:84px}.d1 .pa-stack .pa-ring{width:38px;height:38px;padding:3px}.d1 .pa-stack .pa-ring + .pa-ring{margin-left:-17px}}
+
+/* Design 2 · Tiles — the picture leads, everything centred */
+.pa-att.d2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.d2 .pa-spot{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 14px 16px;border-radius:16px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 12%,var(--pv2-bg2)),var(--pv2-bg2) 70%);border:1px solid color-mix(in srgb,var(--c) 26%,var(--pv2-line))}
+.d2 .pa-spot:hover{border-color:var(--c);transform:translateY(-2px)}
+.d2 .pa-pics{height:76px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.d2 .pa-ring{width:72px;height:72px}
+.d2 .pa-stack .pa-ring,.d3 .pa-stack .pa-ring{width:52px;height:52px;padding:4px}
+.d2 .pa-stack .pa-ring + .pa-ring,.d3 .pa-stack .pa-ring + .pa-ring{margin-left:-18px}
+.d2 .pa-txt{display:flex;flex-direction:column;gap:3px}
+.d2 .pa-go{margin-top:auto;padding-top:6px}
+@media (max-width:1100px){.pa-att.d2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.pa-att.d2{gap:10px}.d2 .pa-spot{padding:16px 10px 14px}.d2 .pa-stack .pa-ring{width:44px;height:44px;padding:3px}.d2 .pa-stack .pa-ring + .pa-ring{margin-left:-16px}}
+
+/* Design 3 · Stories — a row of rings like stories; tap one to read it below */
+.pa-att.d3{display:flex;flex-direction:column;gap:14px}
+.d3 .pa-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.d3 .pa-story{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 4px;border-radius:14px;transition:background .2s}
+.d3 .pa-story:hover{background:var(--pv2-bg2)}
+.d3 .pa-story .pa-pics{height:76px;display:flex;align-items:center;justify-content:center}
+.d3 .pa-story .pa-ring{width:72px;height:72px}
+.d3 .pa-story[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 12%,transparent)}
+.d3 .pa-cap{font-size:13px;font-weight:600;line-height:1.3;color:var(--c);text-align:center}
+.d3 .pa-detail{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);border:1px solid color-mix(in srgb,var(--c) 35%,var(--pv2-line))}
+.d3 .pa-detail .pa-txt{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+@media (max-width:600px){.d3 .pa-rail{gap:4px}.d3 .pa-story{padding:8px 2px}.d3 .pa-story .pa-ring{width:62px;height:62px}.d3 .pa-story .pa-pics{height:66px}.d3 .pa-stack .pa-ring{width:36px;height:36px;padding:3px}.d3 .pa-stack .pa-ring + .pa-ring{margin-left:-20px}.d3 .pa-detail{flex-direction:column;align-items:flex-start;gap:8px}}
 
 .pa-cat{container-type:inline-size}
 .pa-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
@@ -834,7 +866,7 @@ window.perSet=function(key){
       </header>
 
       <section class="pv2-panel" aria-labelledby="pa-att-h">
-        <div class="pv2-ph"><h3 id="pa-att-h">Worth a look</h3></div>
+        <div class="pv2-ph"><h3 id="pa-att-h">Worth a look</h3><div class="pa-pick"><span>Design</span><div class="pv2-seg" id="pa-look" role="group" aria-label="Worth a look design"><button type="button" data-v="1" aria-pressed="true">1</button><button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="false">3</button></div></div></div>
         <div class="pa-att" id="pa-att"></div>
       </section>
 
@@ -1291,23 +1323,37 @@ var IPU=(function(){
 
   /* ---- worth a look: picture-led spotlights ---- */
   function face(p){return '<span class="pa-face" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+U.DRESS+'</span>'}
-  function ring(p,pct,badge,dash){return '<span class="pa-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--p:'+pct+'"':'')+'>'+face(p)+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
-  function stack(list,dash){var shown=list.slice(0,4);return '<span class="pa-stack">'+shown.map(function(p){return ring(p,null,null,dash)}).join('')+(list.length>4?'<span class="pa-more">+'+(list.length-4)+'</span>':'')+'</span>'}
+  function ring(p,pct,badge,dash){return '<span class="pa-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--pct:'+pct+'"':'')+'>'+face(p)+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
+  function stack(list,dash,badge){return '<span class="pa-stack">'+list.slice(0,3).map(function(p){return ring(p,null,null,dash)}).join('')+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
   function names(list){var n=list.map(function(p){return p.main.split(' ')[0]});return n.length>2?n.slice(0,-1).join(', ')+' and '+n[n.length-1]:n.join(' and ')}
-  function attention(){
-    var cards=[],P=IP.PER[U.perKey()];
+  /* one fact (15px) and one detail line (13px) per issue — every design draws the same four */
+  function spots(){
+    var out=[],P=IP.PER[U.perKey()];
     var worst=null;PR.forEach(function(p){p.P.ship.forEach(function(sh,j){if(sh<IP.MIN_SHIP||!p.P.ret[j])return;var r=p.P.ret[j]/sh;if(!worst||r>worst.r)worst={p:p,j:j,r:r}})});
     if(worst){var w=worst.p,pc=Math.round(worst.r*100);
-      cards.push({c:'var(--pv2-bad)',pics:ring(w,pc,w.sizes[worst.j]),lab:'Comes back most',big:pc+'%<small>returned</small>',who:'<b>'+w.main+'</b>, size '+w.sizes[worst.j]+' · '+w.P.ret[worst.j]+' of '+w.P.ship[worst.j]+' '+P.phrase,go:'See sizes',a:'p:'+w.id+':ret'})}
+      out.push({c:'var(--pv2-bad)',pics:ring(w,pc,w.sizes[worst.j]),cap:'Comes back most',t:'<em>'+pc+'%</em> of size '+w.sizes[worst.j]+' came back',s:w.main+' · '+w.P.ret[worst.j]+' of '+w.P.ship[worst.j]+' '+P.phrase,go:'See sizes',a:'p:'+w.id+':ret'})}
     var soon=null;PR.forEach(function(p){var pl=IP.plan(p,30,7);if(pl.first&&pl.first.lasts>0&&isFinite(pl.first.lasts)&&(!soon||pl.first.lasts<soon.l))soon={p:p,l:pl.first.lasts,s:pl.first.s}});
-    if(soon){var d=soon.l,one=soon.p.sizes.length===1;
-      cards.push({c:'var(--pv2-warn)',pics:ring(soon.p,Math.max(6,Math.round(Math.min(1,d/7)*100)),one?null:soon.s),lab:'Runs out first',big:(d<1?'Today':d<2?'Tomorrow':IP.dateIn(d))+'<small>before a 7-day delivery</small>',who:'<b>'+soon.p.main+'</b>'+(one?'':', size '+soon.s)+' · '+IP.short(d)+' of stock left',go:'Plan restock',a:'i:'+soon.p.id})}
+    if(soon){var d=soon.l,one=soon.p.sizes.length===1,when=d<1?'today':d<2?'tomorrow':'on '+IP.dateIn(d);
+      out.push({c:'var(--pv2-warn)',pics:ring(soon.p,Math.max(6,Math.round(Math.min(1,d/7)*100)),one?null:soon.s),cap:'Runs out first',t:(one?'Runs':'Size '+soon.s+' runs')+' out <em>'+when+'</em>',s:soon.p.main+' · before a 7-day delivery lands',go:'Plan restock',a:'i:'+soon.p.id})}
     var dead=IP.DEAD;if(dead.length){var cash=dead.reduce(function(a,p){return a+IP.tied(p).cash},0),part=dead.some(function(p){return IP.tied(p).unk});
-      cards.push({c:'var(--pv2-mut)',pics:stack(dead,true),lab:'Barely selling',big:(part?'≥ ':'')+'EGP '+fmt(cash)+'<small>sitting still</small>',who:'<b>'+names(dead)+'</b> · '+IP.SLOW_MAX+' or fewer sales in 30 days',go:'Show them',a:'f:dead'})}
+      out.push({c:'var(--pv2-mut)',pics:stack(dead,true,dead.length>3?'+'+(dead.length-3):null),cap:'Barely selling',t:'<em>'+(part?'≥ ':'')+'EGP '+fmt(cash)+'</em> of stock sitting still',s:names(dead)+' · '+IP.SLOW_MAX+' or fewer sales in 30 days',go:'Show them',a:'f:dead'})}
     var nc=PR.filter(F.nocost.t);
-    if(nc.length)cards.push({c:'var(--pv2-acc)',pics:stack(nc),lab:'Profit unknown',big:nc.length+(nc.length===1?' product':' products')+'<small>no cost in Shopify</small>',who:'<b>'+names(nc)+'</b> · add the cost to see profit',go:'Show them',a:'f:nocost'});
-    $('#pa-att').innerHTML=cards.map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span><span class="pa-lab"><i></i>'+r.lab+'</span><span class="pa-big">'+r.big+'</span><span class="pa-who">'+r.who+'</span><span class="pa-go">'+r.go+' '+U.ARW+'</span></button>'}).join('');
+    if(nc.length)out.push({c:'var(--pv2-acc)',pics:stack(nc,false,null),cap:'Profit unknown',t:'<em>'+nc.length+'</em> '+(nc.length===1?'product has':'products have')+' no cost',s:names(nc)+' · add the cost in Shopify to see profit',go:'Show them',a:'f:nocost'});
+    return out}
+  var look=(function(){var v=U.params.get('look');if(!v)try{v=localStorage.getItem('pa-look')}catch(e){}return /^[123]$/.test(v||'')?v:'1'})(),pick=0;
+  function attention(){
+    var list=spots(),box=$('#pa-att'),ARW=U.ARW;box.className='pa-att d'+look;
+    $$('#pa-look button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.v===look))});
+    var txt=function(r){return '<span class="pa-txt"><span class="pa-t">'+r.t+'</span><span class="pa-s">'+r.s+'</span></span>'};
+    if(look==='1')box.innerHTML=list.map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span>'+txt(r)+'<span class="pa-go"><span>'+r.go+'</span> '+ARW+'</span></button>'}).join('');
+    else if(look==='2')box.innerHTML=list.map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span>'+txt(r)+'<span class="pa-go">'+r.go+' '+ARW+'</span></button>'}).join('');
+    else{pick=Math.min(pick,list.length-1);var r=list[pick];
+      box.innerHTML='<div class="pa-rail" role="group" aria-label="Pick one to read">'+list.map(function(x,i){return '<button type="button" class="pa-story" data-i="'+i+'" aria-pressed="'+(i===pick)+'" style="--c:'+x.c+'"><span class="pa-pics">'+x.pics+'</span><span class="pa-cap">'+x.cap+'</span></button>'}).join('')+'</div>'
+        +'<div class="pa-detail" style="--c:'+r.c+'" aria-live="polite">'+txt(r)+'<button type="button" class="pa-spot pa-go" data-a="'+r.a+'" style="--c:'+r.c+'">'+r.go+' '+ARW+'</button></div>'}
   }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('#pa-look button');if(b){look=b.dataset.v;try{localStorage.setItem('pa-look',look)}catch(err){}attention();return}
+    var st2=e.target.closest('.pa-story');if(st2){pick=+st2.dataset.i;attention()}});
 
   /* ---- cards ---- */
   function chips(){
