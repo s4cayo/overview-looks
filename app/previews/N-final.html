@@ -2750,6 +2750,8 @@ html.nv2-lock{scrollbar-gutter:stable}
   /* small pills on the card backs (Close, Ads Manager, …): a centred box of at least 44×44 */
   :root :is(.cv2-close,.cv2-lnk){position:relative}
   :root :is(.cv2-close,.cv2-lnk)::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+  /* shared top-bar popover rows (date options, Profile, Dark mode, Sign out, brand list) were 42px */
+  :root .nv2-mi{min-height:44px}
 }
 /* === TAP v1 END === */
 /* === TABS v1 START === */
