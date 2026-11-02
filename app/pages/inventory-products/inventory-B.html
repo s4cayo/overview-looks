@@ -302,6 +302,141 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
+/* === SIDEBAR v3 START === */
+/* Sidebar v3 (sb3- prefix): a floating glass panel with a fine luminous edge, a brand card on top, a glowing active pill
+   with a light bar that slides between items, a hover glider, and a compact footer (user, plan, collapse to a rail).
+   Desktop only (>= 1024px); below that Nav v2's dock + Menu sheet replace it. Light + dark from <html data-theme>. */
+.app>.side.sb3{
+  --sb3-w:264px; --sb3-gap:12px; --sb3-ease:cubic-bezier(.22,.8,.24,1);
+  --sb3-fg:#eceaf3; --sb3-mut:#a29eb2; --sb3-dim:#77728a; --sb3-ic:#8f8aa1;
+  --sb3-panel:linear-gradient(180deg,rgba(32,22,52,.9) 0%,rgba(18,15,27,.94) 30%,rgba(12,11,17,.96) 100%);
+  --sb3-edge:linear-gradient(180deg,rgba(194,160,240,.55),rgba(162,117,224,.14) 22%,rgba(255,255,255,.05) 55%,rgba(216,196,154,.22) 100%);
+  --sb3-shadow:0 30px 60px -30px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.05);
+  --sb3-glowc:rgba(124,63,193,.30);
+  --sb3-card:rgba(255,255,255,.035); --sb3-card-ln:rgba(255,255,255,.08); --sb3-card-hi:rgba(255,255,255,.06);
+  --sb3-hov:rgba(255,255,255,.05);
+  --sb3-on-bg:linear-gradient(90deg,rgba(124,63,193,.34),rgba(124,63,193,.12) 70%,rgba(124,63,193,.06));
+  --sb3-on-ln:rgba(162,117,224,.34); --sb3-on-fg:#fff; --sb3-on-ic:#cfb2f7;
+  --sb3-on-shadow:0 10px 26px -12px rgba(124,63,193,.85),inset 0 1px 0 rgba(255,255,255,.08);
+  --sb3-bar:linear-gradient(180deg,#e2cdff,#a275e0 55%,#7c3fc1); --sb3-barglow:0 0 12px 1px rgba(162,117,224,.85);
+  --sb3-gold:#d8c49a; --sb3-goldbg:rgba(216,196,154,.10); --sb3-goldln:rgba(216,196,154,.28);
+  --sb3-good:#45d09a; --sb3-ring:#15111f;
+  position:sticky;top:var(--sb3-gap);align-self:flex-start;flex:none;z-index:5;
+  width:var(--sb3-w);height:calc(100vh - 2 * var(--sb3-gap));margin:var(--sb3-gap) 0 var(--sb3-gap) var(--sb3-gap);
+  padding:12px 10px 10px;display:flex;flex-direction:column;gap:12px;
+  border:0;border-radius:22px;background:var(--sb3-panel);box-shadow:var(--sb3-shadow);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  font-family:Geist,"Inter","Segoe UI",system-ui,sans-serif;color:var(--sb3-fg);isolation:isolate;
+  transition:width .35s var(--sb3-ease)}
+:root[data-theme="light"] .app>.side.sb3{
+  --sb3-fg:#17141f; --sb3-mut:#575266; --sb3-dim:#8a8598; --sb3-ic:#7a7489;
+  --sb3-panel:linear-gradient(180deg,#fbf8ff 0%,#ffffff 22%,#ffffff 100%);
+  --sb3-edge:linear-gradient(180deg,rgba(124,63,193,.28),rgba(124,63,193,.08) 24%,rgba(20,10,40,.07) 55%,rgba(168,132,60,.20) 100%);
+  --sb3-shadow:0 1px 2px rgba(24,16,40,.05),0 18px 40px -24px rgba(40,20,80,.30);
+  --sb3-glowc:rgba(162,117,224,.14);
+  --sb3-card:#faf7fe; --sb3-card-ln:rgba(60,20,110,.10); --sb3-card-hi:rgba(255,255,255,.9);
+  --sb3-hov:rgba(85,13,166,.05);
+  --sb3-on-bg:linear-gradient(90deg,rgba(124,63,193,.13),rgba(124,63,193,.05) 75%,rgba(124,63,193,.02));
+  --sb3-on-ln:rgba(124,63,193,.20); --sb3-on-fg:#3c0a78; --sb3-on-ic:#550da6;
+  --sb3-on-shadow:0 8px 20px -14px rgba(85,13,166,.55),inset 0 1px 0 rgba(255,255,255,.8);
+  --sb3-bar:linear-gradient(180deg,#a275e0,#7c3fc1 50%,#550da6); --sb3-barglow:0 0 10px rgba(124,63,193,.45);
+  --sb3-gold:#7d6125; --sb3-goldbg:rgba(168,132,60,.10); --sb3-goldln:rgba(168,132,60,.30);
+  --sb3-good:#14935f; --sb3-ring:#fff;
+  -webkit-backdrop-filter:none;backdrop-filter:none}
+/* fine luminous edge: a 1px gradient ring */
+.app>.side.sb3::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--sb3-edge);pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.sb3 .sb3-glow{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;z-index:-1}
+.sb3 .sb3-glow::before{content:"";position:absolute;left:-30%;right:-30%;top:-100px;height:240px;background:radial-gradient(50% 50% at 50% 50%,var(--sb3-glowc),transparent 70%)}
+.sb3 .sb3-i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* brand card */
+.sb3 .sb3-brand{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:8px 10px 8px 8px;border-radius:16px;cursor:pointer;
+  background:var(--sb3-card);box-shadow:inset 0 0 0 1px var(--sb3-card-ln),inset 0 1px 0 var(--sb3-card-hi);transition:box-shadow .2s}
+.sb3 .sb3-brand:hover{box-shadow:inset 0 0 0 1px var(--sb3-on-ln),inset 0 1px 0 var(--sb3-card-hi)}
+.sb3 .sb3-brand:hover .sb3-ud{color:var(--sb3-fg)}
+.sb3 .sb3-mark{position:relative;width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.03em;
+  background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 8px 18px -8px rgba(124,63,193,.9)}
+.sb3 .sb3-live{position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;background:var(--sb3-good);box-shadow:0 0 0 2.5px var(--sb3-ring),0 0 10px rgba(69,208,154,.6)}
+.sb3 .sb3-bt{display:flex;flex-direction:column;min-width:0;flex:1;gap:2px}
+.sb3 .sb3-bt b{font-size:15px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb3 .sb3-bt small{font-size:12px;color:var(--sb3-mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb3 .sb3-ud{width:18px;height:18px;color:var(--sb3-dim);transition:color .2s}
+
+/* nav */
+.sb3 .sb3-nav{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;overflow-y:auto;overflow-x:hidden;padding:6px 2px 10px;margin:0 -2px;scrollbar-width:none;
+  -webkit-mask:linear-gradient(180deg,transparent,#000 8px,#000 calc(100% - 16px),transparent);mask:linear-gradient(180deg,transparent,#000 8px,#000 calc(100% - 16px),transparent)}
+.sb3 .sb3-nav::-webkit-scrollbar{display:none}
+.sb3 .sb3-grp{display:flex;flex-direction:column;gap:2px}
+.sb3 .sb3-grp h6{display:flex;align-items:center;gap:10px;margin:0;padding:0 12px 6px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--sb3-dim)}
+.sb3 .sb3-grp h6::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--sb3-card-ln),transparent)}
+.sb3 .sb3-nav a{position:relative;z-index:1;display:flex;align-items:center;gap:12px;min-height:40px;padding:0 12px;border-radius:12px;color:var(--sb3-mut);font-size:15px;font-weight:450;letter-spacing:-.005em;
+  text-decoration:none;white-space:nowrap;transition:color .2s,background .2s}
+.sb3 .sb3-nav a>span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.sb3 .sb3-nav a .sb3-i{color:var(--sb3-ic);transition:color .2s,transform .25s var(--sb3-ease)}
+.sb3 .sb3-nav a:hover,.sb3 .sb3-nav a:hover .sb3-i{color:var(--sb3-fg)}
+.sb3:not(.sb3-js) .sb3-nav a:hover{background:var(--sb3-hov)}
+.sb3 .sb3-nav a[aria-current="page"]{color:var(--sb3-on-fg);font-weight:550}
+.sb3 .sb3-nav a[aria-current="page"] .sb3-i{color:var(--sb3-on-ic)}
+.sb3:not(.sb3-js) .sb3-nav a[aria-current="page"]{background:var(--sb3-on-bg);box-shadow:inset 0 0 0 1px var(--sb3-on-ln),var(--sb3-on-shadow)}
+.sb3 .sb3-nav a:focus-visible{outline:2px solid var(--pl);outline-offset:-2px;border-radius:12px}
+/* the sliding active pill + light bar, and the hover glider (both positioned by the Sidebar v3 script) */
+.sb3 .sb3-ind,.sb3 .sb3-hov{position:absolute;left:2px;right:2px;top:0;height:40px;border-radius:12px;pointer-events:none;z-index:0;opacity:0;
+  transition:transform .4s var(--sb3-ease),opacity .2s}
+.sb3 .sb3-ind{background:var(--sb3-on-bg);box-shadow:inset 0 0 0 1px var(--sb3-on-ln),var(--sb3-on-shadow)}
+.sb3 .sb3-ind::before{content:"";position:absolute;left:-1px;top:50%;width:3px;height:20px;margin-top:-10px;border-radius:3px;background:var(--sb3-bar);box-shadow:var(--sb3-barglow)}
+.sb3 .sb3-hov{background:var(--sb3-hov);transition:transform .22s var(--sb3-ease),opacity .18s}
+.sb3.sb3-js .sb3-ind.on,.sb3.sb3-js .sb3-hov.on{opacity:1}
+/* count badge + Tricky's ask chip */
+.sb3 .sb3-badge{font-style:normal;min-width:24px;height:22px;padding:0 7px;border-radius:8px;display:inline-grid;place-items:center;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--sb3-gold);background:var(--sb3-goldbg);box-shadow:inset 0 0 0 1px var(--sb3-goldln)}
+.sb3 .sb3-nav a.sb3-ai .sb3-i{color:#7c3fc1}
+:root:not([data-theme="light"]) .sb3 .sb3-nav a.sb3-ai .sb3-i{color:#c4a3f2;filter:drop-shadow(0 0 6px rgba(162,117,224,.55))}
+.sb3 .sb3-nav a.sb3-ai:hover .sb3-i{transform:rotate(-12deg) scale(1.06)}
+.sb3 .sb3-kbd{font:500 12px/1 Geist,system-ui,sans-serif;padding:5px 8px;border-radius:8px;color:var(--sb3-gold);background:var(--sb3-goldbg);box-shadow:inset 0 0 0 1px var(--sb3-goldln);opacity:.8;transition:opacity .2s}
+.sb3 .sb3-badge::before{content:attr(data-n)}
+.sb3 .sb3-kbd::before{content:attr(data-k)}
+.sb3 .sb3-ai:hover .sb3-kbd,.sb3 .sb3-ai:focus-visible .sb3-kbd{opacity:1}
+
+/* footer: user, plan, collapse */
+.sb3 .sb3-foot{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px;border-radius:16px;background:var(--sb3-card);box-shadow:inset 0 0 0 1px var(--sb3-card-ln),inset 0 1px 0 var(--sb3-card-hi)}
+.sb3 .sb3-av{width:36px;height:36px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;
+  background:linear-gradient(140deg,#a275e0,#550da6);box-shadow:0 0 0 1.5px var(--sb3-ring),0 0 0 3px rgba(216,196,154,.55)}
+.sb3 .sb3-who{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}
+.sb3 .sb3-who b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb3 .sb3-who small{font-size:12px;color:var(--sb3-gold);white-space:nowrap}
+.sb3 .sb3-col{all:unset;box-sizing:border-box;width:40px;height:40px;flex:none;border-radius:12px;display:grid;place-items:center;color:var(--sb3-ic);cursor:pointer;transition:background .2s,color .2s}
+.sb3 .sb3-col:hover{background:var(--sb3-hov);color:var(--sb3-fg)}
+.sb3 .sb3-brand:focus-visible,.sb3 .sb3-col:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
+.sb3 .sb3-col .sb3-i{transition:transform .35s var(--sb3-ease)}
+
+/* collapsed rail */
+.app>.side.sb3.sb3-mini{--sb3-w:80px}
+.sb3.sb3-mini .sb3-bt,.sb3.sb3-mini .sb3-ud,.sb3.sb3-mini .sb3-nav a>span,.sb3.sb3-mini .sb3-kbd,.sb3.sb3-mini .sb3-who,.sb3.sb3-mini .sb3-av{display:none}
+.sb3.sb3-mini .sb3-brand{padding:8px;justify-content:center}
+.sb3.sb3-mini .sb3-grp h6{font-size:0;padding:6px 12px 8px}
+.sb3.sb3-mini .sb3-nav a{justify-content:center;padding:0}
+.sb3.sb3-mini .sb3-badge{position:absolute;top:0;right:4px;min-width:18px;height:18px;padding:0 4px}
+.sb3.sb3-mini .sb3-foot{justify-content:center;padding:8px}
+.sb3.sb3-mini .sb3-col .sb3-i{transform:scaleX(-1)}
+
+@media (max-width:1180px){.app>.side.sb3{--sb3-w:224px;--sb3-gap:10px}}
+/* short screens: tighten the chrome, never the 40px items */
+@media (max-height:820px){.app>.side.sb3{gap:8px;padding-top:10px}
+  .sb3 .sb3-brand,.sb3 .sb3-foot{min-height:48px;padding-block:6px}.sb3 .sb3-mark{width:36px;height:36px}.sb3 .sb3-av{width:32px;height:32px}
+  .sb3 .sb3-nav{gap:10px}.sb3 .sb3-grp h6{padding-bottom:4px}}
+@media (prefers-reduced-motion:reduce){.sb3,.sb3 *,.sb3 *::before{transition:none!important}}
+/* === SIDEBAR v3 END === */
+/* === GLOW v1 START === */
+/* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
+   Dark mode only: a soft halo in the text's OWN colour (white text glows white, green glows green) on section titles,
+   key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
+:root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
+  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
+  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b){
+  text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
+@media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
+/* === GLOW v1 END === */
 /* === PRODUCTS v2 START === */
 /* Products v2 — top products (Revenue / Profit / Margin / Returns, sizes, units per period, "why it ranks" sheet)
    + Low stock grouped by product with a restock planner. Self-contained, pv2- prefix.
@@ -647,8 +782,8 @@ main{max-width:1240px}
 .ip-swipew{position:relative}
 .ip-more{display:none}
 @media (max-width:600px){
-  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
-  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--pv2-bg) 0%,transparent),var(--pv2-bg) 70%);transition:opacity .2s}
+  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,color-mix(in srgb,var(--pv2-bg) 0%,transparent),var(--pv2-bg) 80%)}
   .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
     color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
   .ip-more .ip-i{width:15px;height:15px}
@@ -736,6 +871,19 @@ html.nv2-lock{scrollbar-gutter:stable}
   :root .pa-sz > b{font-size:18px}
 }
 /* === TYPE v1 END === */
+
+/* GLOW v1 additions for these pages: the same dark-mode halo on this page's section titles and key figures */
+:root:not([data-theme="light"]) :is(.pv2-ph h3,.pa-cards .pv2-mv,.pb-g b,.ia-t .pa-n,.ia-big,.ib-big){
+  text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
+@media (prefers-contrast:more){:root :is(.pv2-ph h3,.pa-cards .pv2-mv,.pb-g b,.ia-t .pa-n,.ia-big,.ib-big){text-shadow:none}}
+
+/* === LIGHT v1 START === */
+/* Light v1 (round 15): light mode never reuses the dark-mode shadows. Cool, light shadows instead. */
+:root[data-theme="light"] .tipb{box-shadow:0 12px 28px -12px rgba(40,20,80,.16),0 1px 2px rgba(40,20,80,.06)}
+:root[data-theme="light"] .ip-more{box-shadow:0 4px 12px -4px rgba(40,20,80,.14)}
+:root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
+:root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
+/* === LIGHT v1 END === */
 
 /* ===== Inventory B — run-out timeline ===== */
 .ib-panes .pane{margin-top:16px}
@@ -934,31 +1082,43 @@ window.perSet=function(key){
   <symbol id="i-carousel" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="2"/><path d="M4 7v10M20 7v10"/></symbol>
 </svg>
 <div class="app">
-  <aside class="side" id="side">
-    <div class="logo"><div class="mark">FN</div>Scale Trick</div>
-    <button class="switch"><span class="dot"></span><b>Frill N Wear</b><svg class="i"><use href="#i-chev"/></svg></button>
-    <nav>
-      <div class="grp"><h6>Operate</h6>
-        <a href="#" data-ip-go="overview"><svg class="i"><use href="#i-home"/></svg>Overview</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-grid"/></svg>All brands</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-bag"/></svg>Orders</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-truck"/></svg>Shipping</a>
-        <a class="on" href="#" aria-current="page" data-ip-go="inventory"><svg class="i"><use href="#i-box"/></svg>Inventory</a>
-        <a href="#" data-ip-go="products"><svg class="i"><use href="#i-tag"/></svg>Products</a>
+<!-- === SIDEBAR v3 START === -->
+  <aside class="side sb3" id="side" aria-label="Main navigation">
+    <div class="sb3-glow" aria-hidden="true"></div>
+    <button type="button" class="sb3-brand" aria-haspopup="menu" aria-label="Switch brand, current: Frill N Wear">
+      <span class="sb3-mark" aria-hidden="true">FN<i class="sb3-live"></i></span>
+      <span class="sb3-bt"><b>Frill N Wear</b><small>Scale Trick · Live</small></span>
+      <svg class="sb3-i sb3-ud" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg>
+    </button>
+    <nav class="sb3-nav" aria-label="Sections">
+      <span class="sb3-ind" aria-hidden="true"></span><span class="sb3-hov" aria-hidden="true"></span>
+      <div class="sb3-grp"><h6>Operate</h6>
+        <a href="#" data-nv2-go="overview" title="Overview"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg><span>Overview</span></a>
+        <a href="#" data-nv2-go="brands" title="All brands"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span>All brands</span></a>
+        <a href="#" data-nv2-go="sales" title="Orders"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l-1 12h-11z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg><span>Orders</span></a>
+        <a href="#" data-nv2-go="orders" title="Shipping"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h11v10H3zM14 9.5h4l3 3.5v3.5h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg><span>Shipping</span></a>
+        <a href="#" data-nv2-go="inventory" aria-current="page" title="Inventory"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7.5 12 3.5l-8 4 8 4 8-4zM4 7.5v9l8 4 8-4v-9M12 11.5v9"/></svg><span>Inventory</span><em class="sb3-badge" data-n="9" title="9 running low" aria-hidden="true"></em></a>
+        <a href="#" data-nv2-go="products" title="Products"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12V4.5H11l9.5 9.5-7 7z"/><circle cx="7.8" cy="8.8" r="1.4"/></svg><span>Products</span></a>
       </div>
-      <div class="grp"><h6>Grow</h6>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
+      <div class="sb3-grp"><h6>Grow</h6>
+        <a href="#" data-nv2-go="ads" title="Ads report"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg><span>Ads report</span></a>
+        <a href="#" data-nv2-go="adsmanager" title="Ads Manager"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3l7 4.5v-14L7 9.5z"/><path d="M17.5 9a4 4 0 0 1 0 6"/></svg><span>Ads Manager</span></a>
+        <a href="#" class="sb3-ai" data-nv2-go="assistant" title="Tricky"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.5l1.9 5.1L18 10.5l-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg><span>Tricky</span><kbd class="sb3-kbd" data-k="Ask" aria-hidden="true"></kbd></a>
+        <a href="#" data-nv2-go="competitors" title="Competitors"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
       </div>
-      <div class="grp"><h6>Workspace</h6>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-plug"/></svg>Connections</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-gear"/></svg>Workspace settings</a>
-        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-shield"/></svg>Admin</a>
+      <div class="sb3-grp"><h6>Workspace</h6>
+        <a href="#" data-nv2-go="connections" title="Connections"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg><span>Connections</span></a>
+        <a href="#" data-nv2-go="settings" title="Workspace settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Workspace settings</span></a>
+        <a href="#" data-nv2-go="admin" title="Admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
       </div>
     </nav>
+    <div class="sb3-foot">
+      <span class="sb3-av" aria-hidden="true">SA</span>
+      <span class="sb3-who"><b>Sam Anwar</b><small>Growth plan</small></span>
+      <button type="button" class="sb3-col" aria-label="Collapse sidebar" aria-pressed="false" title="Collapse sidebar"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M9.5 4.5v15M15.5 10l-2 2 2 2"/></svg></button>
+    </div>
   </aside>
+<!-- === SIDEBAR v3 END === -->
   <div class="content">
   <main>
     <!-- === NAV v2 START === -->
@@ -1178,6 +1338,31 @@ window.perSet=function(key){
       if(y<80||acc<-24)dock.classList.remove('nv2-hide');else if(acc>40&&!sheetOpen)dock.classList.add('nv2-hide')},{passive:true})}
 })();
 /* === NAV v2 END === */
+/* === SIDEBAR v3 START === */
+/* Sidebar v3: slides the active pill + light bar to the current item and a hover glider to the hovered one;
+   the footer button collapses the panel to an icon rail (remembered per viewer, best effort). */
+(function(){
+  var side=document.querySelector('.side.sb3');if(!side)return;
+  var nav=side.querySelector('.sb3-nav'),ind=side.querySelector('.sb3-ind'),hov=side.querySelector('.sb3-hov'),col=side.querySelector('.sb3-col');
+  var links=[].slice.call(nav.querySelectorAll('a'));
+  side.classList.add('sb3-js');
+  function put(el,a){if(!a){el.classList.remove('on');return}el.style.transform='translateY('+a.offsetTop+'px)';el.style.height=a.offsetHeight+'px';el.classList.add('on')}
+  function cur(){return nav.querySelector('a[aria-current="page"]')}
+  function place(){put(ind,cur())}
+  links.forEach(function(a){
+    a.addEventListener('mouseenter',function(){put(hov,a===cur()?null:a)});
+    a.addEventListener('click',function(){links.forEach(function(l){l.removeAttribute('aria-current')});a.setAttribute('aria-current','page');hov.classList.remove('on');place()});
+  });
+  nav.addEventListener('mouseleave',function(){hov.classList.remove('on')});
+  function mini(on){side.classList.toggle('sb3-mini',on);col.setAttribute('aria-pressed',on?'true':'false');
+    col.setAttribute('aria-label',on?'Expand sidebar':'Collapse sidebar');col.title=on?'Expand sidebar':'Collapse sidebar'}
+  var m=false;try{m=localStorage.getItem('sb3-mini')==='1'}catch(e){}
+  mini(m);
+  col.addEventListener('click',function(){var on=!side.classList.contains('sb3-mini');mini(on);try{localStorage.setItem('sb3-mini',on?'1':'0')}catch(e){}
+    setTimeout(function(){place();dispatchEvent(new Event('resize'))},380)});
+  place();addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);
+})();
+/* === SIDEBAR v3 END === */
 </script>
 <script>
 /* === PSHEET v1 START === */
@@ -1445,7 +1630,7 @@ var PSHEET=(function(){
    else in the app answers with a toast so no click is dead. ===== */
 var IPU=(function(){
   var S=PSHEET,$=S.$,$$=S.$$,reduce=S.reduce,toast=S.toast,pageUrl=S.pageUrl,DRESS=S.DRESS;
-  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'your profile',signout:'Sign out',elsewhere:'that page'};
+  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',ads:'the Ads report',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'your profile',signout:'Sign out',elsewhere:'that page'};
 
   /* ---- navigation ---- */
   function go(where,q){
@@ -1457,6 +1642,13 @@ var IPU=(function(){
   document.addEventListener('nv2:nav',function(e){var g=e.detail.go;
     if(/Dress|Set|Cardigan|Scarf|Skirt|Kaftan/.test(e.detail.q||'')){var p=IP.PR.filter(function(x){return e.detail.q.indexOf(x.main.split(' ')[0])===0})[0];if(p){go('products','p='+p.id);return}}
     go(g)});
+  /* sidebar v3 links carry data-nv2-go: Products / Inventory navigate; anything else answers with a toast and the
+     current-page pill goes back to this page (the sidebar script moved it on click) */
+  document.addEventListener('click',function(e){var a=e.target.closest('.side [data-nv2-go]');if(!a)return;e.preventDefault();
+    var k=a.dataset.nv2Go;if(k!=='products'&&k!=='inventory'||k!==document.body.dataset.page){
+      $$('.side [data-nv2-go]').forEach(function(l){l.toggleAttribute('aria-current',l.dataset.nv2Go===document.body.dataset.page);if(l.dataset.nv2Go===document.body.dataset.page)l.setAttribute('aria-current','page')});
+      dispatchEvent(new Event('resize'))}
+    go(k)});
   document.addEventListener('click',function(e){var a=e.target.closest('[data-ip-go]');if(!a)return;e.preventDefault();go(a.dataset.ipGo,a.dataset.ipQ||'')});
   /* the bell's stock note follows this catalogue */
   function bell(){var c=IP.counts(),n=$('.nv2-note[data-nv2-go="products"] b');if(n)n.textContent=c.low+' sizes running low · '+c.out+' sold out';

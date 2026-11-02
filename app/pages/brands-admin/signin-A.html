@@ -78,7 +78,6 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .user span{font-size:12.5px;color:var(--muted)}
 .burger{display:none}
 /* ===== shared by the All brands + Admin mockups. Base tokens come from the Overview (N-final). ===== */
-@media (max-width:1180px){.side{width:212px}}
 @media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px}}
 @media (max-width:600px){.content{padding-left:16px;padding-right:16px;padding-top:14px}}
 .grp h6{font-size:12px;letter-spacing:.07em}
@@ -405,6 +404,17 @@ body{min-height:100vh}
   :root .bt{gap:16px}
 }
 /* === TYPE v1 (brands / admin / sign-in) END === */
+/* === GLOW v1 START === */
+/* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
+   Dark mode only: a soft halo in the text's OWN colour (white text glows white, green glows green) on section titles,
+   key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
+:root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
+  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
+  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,
+  .pg-head h1,.sh h2,.sh h3,.dh h2,.bti .bh b,.gf-h b,.bk-h h3,.tb-h b,.bc-h h3,.deck-h h2,.f-h b,.tm b,.plan-h b,.mcard h2,.hero b,.dhero b,.hero strong,.gg .v){
+  text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
+@media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
+/* === GLOW v1 END === */
 </style>
 </head>
 <body>
