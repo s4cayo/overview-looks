@@ -1234,10 +1234,10 @@ var CPU=(function(){
     var so=S.filter(function(s){return s.soldOut.length}).sort(function(a,b){return b.soldOut.length-a.soldOut.length})[0];
     if(so){var n=so.soldOut.length,nm=so.soldOut.map(function(x){return x.t.split(' – ')[0]});
       out.push({c:'var(--good)',pics:n===1?ring(so.soldOut[0].c,100,null):stack(so.soldOut.map(function(x){return x.c}),null),
-        t:'<em>'+so.name+'</em> sold out '+n+' '+(n===1?'product':'products'),s:(n>2?nm.slice(0,2).join(', ')+' and '+(n-2)+' more':list(nm)),go:'See them',a:'s:'+so.id+':out'})}
+        t:'<em>'+so.name+'</em> sold out '+n+' '+(n===1?'product':'products'),s:(n>1?nm[0]+' and '+(n-1)+' more':nm[0]),go:'See them',a:'s:'+so.id+':out'})}
     /* 2 · the biggest sale running at a competitor */
-    var cut=null;S.forEach(function(s){s.onSale.forEach(function(x){if(!cut||x.off>cut.x.off)cut={x:x,s:s}})});
-    if(cut)out.push({c:'var(--warn)',pics:ring(cut.x.c,100,'−'+cut.x.off+'%'),t:'<em>'+cut.s.name+'</em> put a dress on sale',s:cut.x.t.split(' – ')[0]+' · now EGP '+CP.fmt(cut.x.pr)+', was '+CP.fmt(cut.x.cmp),go:'See it',a:'p:'+cut.x.key});
+    var cut=null;S.forEach(function(s){s.onSale.forEach(function(x){if(!cut||(!!x.photos>!!cut.x.photos)||(!!x.photos===!!cut.x.photos&&x.off>cut.x.off))cut={x:x,s:s}})});
+    if(cut)out.push({c:'var(--warn)',pics:ring(cut.x.c,100,'−'+cut.x.off+'%'),t:'<em>'+cut.s.name+'</em> made a sale',s:cut.x.t.split(' – ')[0]+' · EGP '+CP.fmt(cut.x.pr)+', was '+CP.fmt(cut.x.cmp),go:'See it',a:'p:'+cut.x.key});
     /* 3 · a store we could not read */
     var bad=CP.STORES.filter(function(s){return !s.ok&&s.status!=='pending'})[0];
     if(bad)out.push({c:'var(--bad)',pics:ring(MK[bad.id]||['#a275e0','#550da6'],null,'!',true,bad.name[0]),t:'<em>Can’t read</em> '+bad.name,s:bad.status.charAt(0).toUpperCase()+bad.status.slice(1)+' · prices from '+bad.read.split(',')[0],go:'Check again',a:'c'});
