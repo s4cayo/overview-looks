@@ -445,12 +445,12 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:600px){.os-head h1{font-size:24px}.os-head .acts{margin-left:0;width:100%}}
 
 /* buttons */
-.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 16px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
 .ob:hover{border-color:rgba(162,117,224,.55)}
 .ob:active{transform:scale(.97)}
 .ob svg.i{width:16px;height:16px}
 .ob.pri{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
-.ob.sm{height:32px;padding:0 11px;font-size:13px;border-radius:9px}
+.ob.sm{height:32px;padding:0 12px;font-size:13px;border-radius:9px}
 .ob.ic{width:38px;padding:0}
 .ob.sm.ic{width:32px}
 
@@ -510,10 +510,10 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-bulk .ob.pri{background:var(--acc);color:#fff;border-color:transparent}
 :root[data-theme="light"] .os-bulk .ob.pri{background:#a275e0;color:#17141f}
 @media (max-width:1023px){.os-bulk{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
-@media (max-width:480px){.os-bulk{gap:6px;padding:7px 7px 7px 14px;font-size:13px}.os-bulk .hide-s{display:none}}
+@media (max-width:480px){.os-bulk{gap:6px;padding:8px 8px 8px 16px;font-size:13px}.os-bulk .hide-s{display:none}}
 
 /* toast */
-.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:11px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
+.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:12px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
   box-shadow:0 16px 40px -16px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;visibility:hidden;max-width:calc(100vw - 32px);display:flex;gap:9px;align-items:center}
 .os-toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .os-toast svg.i{color:var(--good)}
@@ -533,7 +533,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-db section{padding:18px 0;border-top:1px solid var(--line)}
 .os-db section:first-child{border-top:0}
 .os-db h3{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
-.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid var(--line)}
 .os-df .ob{flex:1 1 auto}
 @media (max-width:600px){
   .os-drawer{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;transform:translateY(105%)}
@@ -556,7 +556,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .kv dt{padding-right:16px}
 .kv dt{color:var(--muted)} .kv dd{text-align:right;font-variant-numeric:tabular-nums}
 .kv .tot{font-weight:600;font-size:16px;padding-top:9px;border-top:1px solid var(--line)}
-.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0}
+.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0}
 .sw{width:40px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
 .sw svg{width:20px;height:30px}
 .items b{font-weight:500;display:block}
@@ -612,7 +612,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button{position:relative;z-index:1;padding:12px 24px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
 .seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
@@ -647,7 +647,7 @@ main{gap:24px}
 .ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
 @media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
 
-.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
 .ob-bars > div:first-child{border-top:0}
 .ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
 .ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
@@ -660,7 +660,7 @@ main{gap:24px}
 .tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
   font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
 .tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
-.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
@@ -705,6 +705,27 @@ main{gap:24px}
 :root[data-theme="light"] button.sb-kt:hover{box-shadow:0 1px 2px rgba(40,20,80,.06),0 12px 24px -16px color-mix(in srgb,var(--dc) 40%,rgba(40,20,80,.2))}
 /* === LIGHT v1 END === */
 
+/* === AUDIT v1 (DESIGN-AUDIT.md §3, approved by Sam 2026-11-03) === */
+/* #2 phone tap areas: everything tappable is at least 44×44 below 1024px; the "i" icon and the checkbox keep their
+   18px look and get an invisible 44px hit box */
+.tip,.cb{position:relative}
+.tip::after,.cb::before{content:"";position:absolute;inset:-13px}
+@media (max-width:1023px){
+  .ob,.ob.sm,.os-sel,.os-search input,.os-filt button,.seg button{min-height:44px}
+  .os-filt button{min-width:44px;justify-content:center}
+  .ob.sm.ic{min-width:44px}
+  .lnk{min-height:44px}
+  .ob-a .m,.ob-c .m{min-height:44px;display:flex;flex-direction:column;justify-content:center}
+  .sb-ch button{min-height:44px}
+}
+/* #3 contrast in light mode: 12px status chips + tags were 3.9–4.4:1 on their own tint; darken the text, keep the tint */
+:root[data-theme="light"] :is(.chip,.ob-tag.w,.ob-tag.b,.sb-vs .eq){color:color-mix(in srgb,var(--cc,currentColor) 72%,#000)}
+:root[data-theme="light"] .ob-tag.w{--cc:var(--warn)} :root[data-theme="light"] .ob-tag.b{--cc:var(--bad)}
+:root[data-theme="light"] .sb-vs .eq{--cc:var(--good)} :root[data-theme="light"] .sb-vs .eq.bd{--cc:var(--bad)}
+/* #10 paragraphs at a readable width; tiles inside a bordered panel keep their soft fill but lose their own border */
+.os-head p,.ob-sh p,.ob-gh p,.sb-hint,.sb-note,.ob-note,.sb-confirm p{max-width:65ch}
+/* === AUDIT v1 END === */
+
 /* ===== page: shipping-B ===== */
 .sb-h1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .sb-by{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--muted);letter-spacing:0;flex:none}
@@ -715,11 +736,11 @@ main{gap:24px}
 .sb-hero .k{font-size:13px;color:var(--muted);display:inline-flex;align-items:center}
 .sb-cash{display:flex;flex-direction:column;gap:12px;min-width:0}
 /* cash to collect, boxed like the Overview's Store pulse: one total box, then two boxes for where the cash is */
-.sb-kt{position:relative;display:flex;flex-direction:column;gap:4px;padding:14px 16px 13px;border-radius:16px;background:var(--panel2);border:1px solid var(--line);min-width:0;text-align:left;
+.sb-kt{position:relative;display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:16px;background:var(--panel2);border:1px solid var(--line);min-width:0;text-align:left;
   transition:transform .25s,border-color .25s,box-shadow .25s}
 button.sb-kt:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--dc) 40%,transparent);box-shadow:0 16px 30px -20px color-mix(in srgb,var(--dc) 70%,transparent)}
 button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
-.sb-tot{padding:16px 18px 14px}
+.sb-tot{padding:16px}
 .sb-tot .sb-big{font-size:40px;font-weight:600;letter-spacing:-.03em;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.1}
 .sb-tot .sb-big small{font-size:16px;color:var(--muted);font-weight:500;margin-right:6px;letter-spacing:0}
 .sb-split{display:flex;gap:3px;height:10px;border-radius:99px;overflow:hidden;margin:12px 0 6px}
@@ -753,7 +774,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb-st small{font-size:12px;color:var(--muted);white-space:nowrap}
 /* two figures under the steps, on the same grid so their left edges line up */
 .sb-ok{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto;padding-top:16px}
-.sb-ok > div{display:flex;flex-direction:column;gap:3px;min-width:0;padding:14px 16px 13px;border-radius:16px;background:var(--panel2);border:1px solid var(--line)}
+.sb-ok > div{display:flex;flex-direction:column;gap:3px;min-width:0;padding:16px;border-radius:16px;background:var(--panel2);border:1px solid var(--line)}
 .sb-ok b{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.15;color:var(--text)}
 .sb-ok b.g{color:var(--good)}
 .sb-ok small{font-size:12.5px;color:var(--muted)}
@@ -774,7 +795,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb-progbar{height:6px;border-radius:99px;background:var(--track);overflow:hidden;margin:-4px 0 6px}
 .sb-progbar i{display:block;height:100%;width:0;background:var(--good);border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
 .sb-grp{font-size:13px;font-weight:500;color:var(--muted);padding:18px 0 4px}
-.sb-c{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);transition:opacity .3s}
+.sb-c{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);transition:opacity .3s}
 .sb-c .m{min-width:0;cursor:pointer}
 .sb-c .m b{font-weight:600;font-size:15px}
 .sb-c .m b span{font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
@@ -825,7 +846,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb-empty{padding:36px 8px;text-align:center;color:var(--muted)}
 @media (max-width:1279px){
   .sb-ph{display:none}
-  .sb-p{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"m m s s" "tr tr py py";row-gap:8px;padding:14px 4px}
+  .sb-p{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-areas:"m m s s" "tr tr py py";row-gap:8px;padding:12px 4px}
   .sb-p .m{grid-area:m} .sb-p .s{grid-area:s;justify-self:end} .sb-p .tr{grid-area:tr;align-self:start} .sb-p .py{grid-area:py;text-align:right}
   .sb-p .py small{display:block}
   .sb-p .c,.sb-p .co{text-align:left;font-size:13.5px}
@@ -860,7 +881,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb-ready b{display:block;font-weight:500}
 .sb-ready small{display:block;font-size:13px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
 .sb-ready strong{font-weight:600;font-variant-numeric:tabular-nums}
-.sb-res{margin-top:14px;padding:14px 16px;border-radius:12px;border:1px solid var(--line2);font-size:14px;display:flex;flex-direction:column;gap:4px}
+.sb-res{margin-top:14px;padding:12px 16px;border-radius:12px;border:1px solid var(--line2);font-size:14px;display:flex;flex-direction:column;gap:4px}
 .sb-res.ok{border-color:color-mix(in srgb,var(--good) 40%,transparent);background:color-mix(in srgb,var(--good) 8%,transparent)}
 .sb-res span{color:var(--muted);font-size:13.5px}
 .sb-res ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-top:6px}
@@ -878,7 +899,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 
 /* cities */
 .sb-ch,.sb-cr{display:grid;grid-template-columns:minmax(0,1.3fr) 90px minmax(0,1.4fr) 100px;gap:14px;align-items:center}
-.sb-ch{padding:10px 4px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.sb-ch{padding:12px 4px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
 .sb-ch button{color:var(--muted);font-size:12.5px;font-weight:500;display:inline-flex;align-items:center;gap:4px}
 .sb-ch button.on,.sb-ch button:hover{color:var(--text)}
 .sb-ch button svg.i{width:14px;height:14px}
@@ -897,7 +918,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 @media (max-width:600px){.sb-ch,.sb-cr{grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr) 64px;gap:8px}.sb-cr .rr{grid-template-columns:1fr}.sb-cr .rr .t{display:none}}
 
 /* payouts */
-.sb-pay > div{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line);font-size:14px}
+.sb-pay > div{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:16px;align-items:center;padding:16px 0;border-top:1px solid var(--line);font-size:14px}
 .sb-pay > div:first-child{border-top:0;padding-top:0}
 .sb-pay .dt b{display:block;font-weight:600}
 .sb-pay .dt small{font-size:12.5px;color:var(--muted)}
@@ -908,7 +929,7 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 
 /* check against Shopify: the two logos side by side, then the gap */
 .sb-vs{display:grid;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr);gap:10px;align-items:stretch;padding:16px 0}
-.sb-vsc{display:grid;grid-template-columns:42px minmax(0,1fr);gap:6px 12px;align-items:center;padding:14px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);min-width:0}
+.sb-vsc{display:grid;grid-template-columns:42px minmax(0,1fr);gap:6px 12px;align-items:center;padding:16px;border-radius:16px;background:var(--panel2);border:1px solid var(--line);min-width:0}
 .sb-vsc .lg{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line)}
 .sb-vsc .lg svg{width:24px;height:26px}
 .sb-vsc .lg .sb-shp{width:22px;height:25px}
@@ -935,6 +956,10 @@ button.sb-kt:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb-two{gap:24px}
 @media (max-width:600px){.sb-hero{padding:20px}.sb-two{gap:16px}}
 /* === TYPE v1 END === */
+
+/* AUDIT v1 #10: tiles inside a bordered panel keep their soft fill but lose their own border; paragraphs ≤65ch */
+.sb-kt,.sb-ok > div,.sb-vsc{border-color:transparent}
+.sb-hint,.sb-note,.sb-confirm p{max-width:65ch}
 
 /* === GLOW v1 START === */
 /* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
@@ -1729,12 +1754,12 @@ OS.page='Shipping';
   function paintParcels(){
     var r=rows(),n=r.length,pages=Math.max(1,Math.ceil(n/PAGE));if(S.page>=pages)S.page=pages-1;var v=r.slice(S.page*PAGE,S.page*PAGE+PAGE);
     $('#sbParR').textContent='Orders placed '+PER[OS.key()].t.range+', plus the orders stuck with Bosta right now.';
-    $('#sbRows').innerHTML=n?'<div class="sb-p sb-ph" aria-hidden="true"><span>Order</span><span>Tracking</span><span>Status</span><span>Attempts</span><span class="c">COD</span><span class="c">Bosta fee</span><span>Cashout</span><span>Exception</span></div>'+v.map(function(x){
+    $('#sbRows').innerHTML=n?'<div class="sb-p sb-ph" aria-hidden="true"><span>Order</span><span>Tracking</span><span>Status</span><span>Attempts</span><span class="c">Cash</span><span class="c">Bosta fee</span><span>Cashout</span><span>Exception</span></div>'+v.map(function(x){
       var pay=x.tries?x.tries+' attempt'+(x.tries>1?'s':''):'<span class="mut">—</span>';
       return '<div class="sb-p" role="button" tabindex="0" data-pid="'+x.id+'" aria-label="Order '+x.id+', '+esc(x.name)+', '+x.st+'">'+
         '<span class="m"><b>#'+x.id+'</b><small>'+x.date+' · '+esc(x.name)+'</small></span><span class="mono tr">'+x.track+'</span>'+
         '<span class="s"><span class="chip '+(x.exc&&open(x)?'stuck':DC[x.f])+'">'+x.st+'</span></span><span class="py">'+pay+'</span>'+
-        '<span class="c" data-l="COD">'+money(x.cod)+'</span><span class="c" data-l="Bosta fee">'+money(x.fee)+'</span>'+
+        '<span class="c" data-l="Cash">'+money(x.cod)+'</span><span class="c" data-l="Bosta fee">'+money(x.fee)+'</span>'+
         '<span class="co" data-l="Cashout">'+(x.cash==='—'?'<span class="mut">—</span>':x.cash)+'</span><span class="ex'+(x.exc&&open(x)?' w':'')+'" data-l="Exception">'+(x.exc?esc(x.exc):'<span class="mut">—</span>')+'</span></div>'}).join('')
       :'<div class="sb-empty">'+(S.q?'No deliveries match “'+esc(S.q)+'”.':'No deliveries match this filter.')+'<br><button type="button" class="ob sm" id="sbReset" style="margin-top:12px">Clear filters</button></div>';
     $('#sbRange').textContent=n?(S.page*PAGE+1)+'–'+(S.page*PAGE+v.length)+' of '+n+' deliveries':'0 deliveries';
@@ -1749,16 +1774,16 @@ OS.page='Shipping';
       gap=f>=1?-1450*Math.round(f):0,exp=col-gap,pend=92980,ret=OS.LEAK[k][3],trk=col+pend+ret;
     $('#sbMonR').textContent=P.c_deliv+' delivered · '+P.label.toLowerCase();
     var row=function(sign,lab,real,v,cls,note,tp){return '<div class="'+(cls||'')+'"><span class="sg" aria-hidden="true">'+sign+'</span><span class="lb"><b>'+lab+(tp?OS.tip(tp):'')+'</b><small>'+real+(note?' · '+note:'')+'</small></span><span class="v">EGP '+fmt(v)+'</span></div>'};
-    $('#sbLed').innerHTML=row('','Cash Bosta collected from customers','Collected COD',col,'','paid in cash at the door','All the cash Bosta couriers took at the door for orders delivered in this period.')+
+    $('#sbLed').innerHTML=row('','Cash Bosta collected from customers','Collected cash',col,'','paid in cash at the door','All the cash Bosta couriers took at the door for orders delivered in this period.')+
       row('−','Bosta fees','Bosta fees',fees,'neg','shipping + cash collection fee','What Bosta charges for each delivered order. Bosta keeps it before paying you.')+
       row('=','Net from Bosta','Net from Bosta',net,'tot g','what Bosta sends to your bank','The money that reaches you: cash collected minus Bosta fees, paid every Monday.');
     var bosta=$('#sbBostaLogo').innerHTML.replace('viewBox="0 0 111 34"','viewBox="0 0 34 34"'),shop=$('#sbShopLogo').innerHTML,mx=Math.max(exp,col)||1;
     var side=function(logo,who,lab,real,v){return '<div class="sb-vsc"><span class="lg">'+logo+'</span><span class="tx"><span class="who">'+who+' · '+lab+'</span><b>EGP '+fmt(v)+'</b><small>'+real+'</small></span><span class="t"><i style="width:'+(v/mx*100)+'%"></i></span></div>'};
-    $('#sbGap').innerHTML='<div class="sb-vs">'+side(shop,'Shopify','says delivered','Expected COD',exp)+'<span class="eq'+(gap<0?' bd':'')+'" aria-hidden="true">'+(gap<0?'≠':'=')+'</span>'+side(bosta,'Bosta','collected','Collected COD',col)+'</div>'+
+    $('#sbGap').innerHTML='<div class="sb-vs">'+side(shop,'Shopify','says delivered','Expected cash',exp)+'<span class="eq'+(gap<0?' bd':'')+'" aria-hidden="true">'+(gap<0?'≠':'=')+'</span>'+side(bosta,'Bosta','collected','Collected cash',col)+'</div>'+
       '<div class="sb-led"><div class="tot '+(gap<0?'bd':'g')+'"><span class="sg" aria-hidden="true">=</span><span class="lb"><b>Payment gap'+OS.tip('The difference between the two. Usually an order Shopify marks as delivered that Bosta has not confirmed yet. Check it in the Delivery status table.')+'</b><small>'+(gap<0?'Bosta collected EGP '+fmt(-gap)+' less than Shopify expects':'Bosta collected what Shopify expected')+'</small></span><span class="v">'+(gap<0?'− EGP '+fmt(-gap):'EGP 0')+'</span></div></div>';
-    $('#sbOpen').innerHTML=row('','Still on the road','Pending COD',pend,'w','not delivered yet, incl. the 9 late 7+ days','Orders Bosta picked up but has not delivered. You get this cash only after the customer pays at the door.')+
-      row('','Came back, never collected','Returned COD',ret,'bd','the customer never paid, nothing to refund','Orders that came back to you. No cash was taken, so there is nothing to refund: you get the products back.')+
-      row('','All cash on orders with Bosta','Tracked COD',trk,'tot','collected + on the road + came back','Everything above added together: all the cash on orders Bosta handled for you this period.');
+    $('#sbOpen').innerHTML=row('','Still on the road','Cash on the road',pend,'w','not delivered yet, incl. the 9 late 7+ days','Orders Bosta picked up but has not delivered. You get this cash only after the customer pays at the door.')+
+      row('','Came back, never collected','Cash that came back',ret,'bd','the customer never paid, nothing to refund','Orders that came back to you. No cash was taken, so there is nothing to refund: you get the products back.')+
+      row('','All cash on orders with Bosta','All tracked cash',trk,'tot','collected + on the road + came back','Everything above added together: all the cash on orders Bosta handled for you this period.');
   }
 
   /* ---------- cities ---------- */

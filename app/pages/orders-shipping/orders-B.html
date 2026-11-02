@@ -735,6 +735,15 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .ip-scrim{background:rgba(32,18,64,.26)}
 :root[data-theme="light"] .ip-sheet{box-shadow:-1px 0 0 rgba(60,20,110,.06),-24px 0 48px -28px rgba(40,20,80,.30)}
 @media (max-width:767px){:root[data-theme="light"] .ip-sheet{box-shadow:0 -1px 0 rgba(60,20,110,.06),0 -20px 44px -24px rgba(40,20,80,.30)}}
+/* round 16 (design audit): readable red size chips in light mode (was 3.9:1), and 44px tap areas on phones */
+:root[data-theme="light"] .ip-lsz i.r{color:#9d1f30;background:#fdeef0}
+:root[data-theme="light"] .ip-lsz i.w{color:#7f5406}
+@media (max-width:1023px){
+  .pv2.ip-sheet .pv2-close,.pv2.ip-sheet .ip-btn{min-height:44px}
+  .pv2.ip-sheet .pv2-chip{min-height:44px;display:inline-flex;align-items:center}
+  .pv2.ip-sheet .ip-x{position:relative}.pv2.ip-sheet .ip-x::after{content:"";position:absolute;inset:-8px}
+  .pv2.ip-sheet .ip-tip{position:relative}.pv2.ip-sheet .ip-tip::after{content:"";position:absolute;inset:-14px}
+}
 /* === PSHEET v1 END === */
 
 /* sticky tabs: N's .seg, sized for these pages */
@@ -858,6 +867,51 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
 /* === LIGHT v1 END === */
+
+/* === AUDIT v1 START === */
+/* Design audit fixes (DESIGN-AUDIT.md section 3, approved 2026-11-03). The shared drawer (PSHEET) is not touched here. */
+/* #2 tap areas: everything tappable is at least 44x44 below 1024px */
+@media (max-width:1023px){
+  :root .ip-link,:root .ip-btn,:root .ip-chip,:root .pv2-copy,:root .ip-search{height:44px}
+  :root .ip .seg button{min-height:44px}
+  :root .ip .pv2-sort button{height:44px}
+  :root .ip .pv2-seg button{height:44px;min-width:48px}
+  :root .ip-more::after{content:"";position:absolute;inset:-7px}
+  :root :is(.ia-skip,.ib-out,.pa-foot) button{position:relative}
+  :root :is(.ia-skip,.ib-out,.pa-foot) button::after{content:"";position:absolute;inset:-12px}
+}
+/* the "i" keeps its 18px look; an invisible 44px box around it takes the tap */
+:root .tip{position:relative}
+:root .tip::after{content:"";position:absolute;inset:-13px}
+/* #3 contrast >= 4.5:1: darker red/amber text on light tints; dark text on the bright badges in dark mode */
+:root[data-theme="light"] :is(.ia-c.w,.ip-tag.w,.ia-sz.w b,.ip .pv2-tbl td.w){color:#7a5208}
+:root[data-theme="light"] :is(.ia-c.r,.ip-tag.r,.ia-sz.o b,.ia-sz.o em,.ip .pv2-tbl td.r){color:#a32a37}
+:root:not([data-theme="light"]) .pa-badge{color:#170d22}
+/* sold-out sizes: struck through, still readable (not faded) */
+:root .ia-sz.o em{text-decoration:line-through;text-decoration-thickness:1.5px}
+/* #4 nothing under 12px */
+:root .pa-cards .pv2-sz span{font-size:12px}
+/* #10 spacing on the 4/8 scale (Inventory used 7px in its tables and 6/10/14 around them) */
+:root .ip .pv2-tbl td{padding:8px 0}
+:root .ip .pv2-tbl th{padding:0 0 8px}
+:root .ia-prods .pv2-prow{padding:16px 0;row-gap:8px}
+:root .ia-prods .pv2-pn{gap:8px}
+:root .ia-prods .pv2-ord{padding:8px 12px}
+:root .ia-gh,:root .ia-gr{gap:8px}
+:root .ia-gn{gap:12px}
+:root .ia-li{gap:12px 16px}
+:root .ia-szs{gap:8px}
+:root .ia-t{gap:8px;padding:16px}
+:root .ia-t .pa-go{padding-top:8px;gap:4px}
+:root :is(.ip-chip,.ip-btn,.pv2-copy,.ip .seg button){gap:8px}
+:root .ip-chip{padding:0 12px}
+:root .ip-btn{padding:0 16px}
+/* one box fewer: the restock plan sits in its panel on a hairline, not in a second bordered box */
+:root .ia-plan{background:none;border:0;border-radius:0;padding:0 0 24px;margin-bottom:8px;border-bottom:1px solid var(--pv2-line);gap:16px 32px}
+@media (max-width:600px){:root .ia-plan{padding:0 0 20px}:root .ia-t{padding:16px 12px}}
+/* paragraphs stay readable: about 65 characters a line */
+:root :is(.ip-head p,.ia-intro,.ia-skip,.pa-szsum,.ib-out,.pa-foot){max-width:65ch}
+/* === AUDIT v1 END === */
 /* === PERIODS v1 START === */
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
@@ -889,12 +943,12 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:600px){.os-head h1{font-size:24px}.os-head .acts{margin-left:0;width:100%}}
 
 /* buttons */
-.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 16px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
 .ob:hover{border-color:rgba(162,117,224,.55)}
 .ob:active{transform:scale(.97)}
 .ob svg.i{width:16px;height:16px}
 .ob.pri{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
-.ob.sm{height:32px;padding:0 11px;font-size:13px;border-radius:9px}
+.ob.sm{height:32px;padding:0 12px;font-size:13px;border-radius:9px}
 .ob.ic{width:38px;padding:0}
 .ob.sm.ic{width:32px}
 
@@ -954,10 +1008,10 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-bulk .ob.pri{background:var(--acc);color:#fff;border-color:transparent}
 :root[data-theme="light"] .os-bulk .ob.pri{background:#a275e0;color:#17141f}
 @media (max-width:1023px){.os-bulk{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
-@media (max-width:480px){.os-bulk{gap:6px;padding:7px 7px 7px 14px;font-size:13px}.os-bulk .hide-s{display:none}}
+@media (max-width:480px){.os-bulk{gap:6px;padding:8px 8px 8px 16px;font-size:13px}.os-bulk .hide-s{display:none}}
 
 /* toast */
-.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:11px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
+.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:12px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
   box-shadow:0 16px 40px -16px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;visibility:hidden;max-width:calc(100vw - 32px);display:flex;gap:9px;align-items:center}
 .os-toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .os-toast svg.i{color:var(--good)}
@@ -977,7 +1031,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-db section{padding:18px 0;border-top:1px solid var(--line)}
 .os-db section:first-child{border-top:0}
 .os-db h3{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
-.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid var(--line)}
 .os-df .ob{flex:1 1 auto}
 @media (max-width:600px){
   .os-drawer{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;transform:translateY(105%)}
@@ -1000,7 +1054,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .kv dt{padding-right:16px}
 .kv dt{color:var(--muted)} .kv dd{text-align:right;font-variant-numeric:tabular-nums}
 .kv .tot{font-weight:600;font-size:16px;padding-top:9px;border-top:1px solid var(--line)}
-.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0}
+.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0}
 .sw{width:40px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
 .sw svg{width:20px;height:30px}
 .items b{font-weight:500;display:block}
@@ -1056,7 +1110,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button{position:relative;z-index:1;padding:12px 24px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
 .seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
@@ -1091,7 +1145,7 @@ main{gap:24px}
 .ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
 @media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
 
-.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
 .ob-bars > div:first-child{border-top:0}
 .ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
 .ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
@@ -1104,7 +1158,7 @@ main{gap:24px}
 .tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
   font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
 .tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
-.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
@@ -1149,6 +1203,27 @@ main{gap:24px}
 :root[data-theme="light"] button.sb-kt:hover{box-shadow:0 1px 2px rgba(40,20,80,.06),0 12px 24px -16px color-mix(in srgb,var(--dc) 40%,rgba(40,20,80,.2))}
 /* === LIGHT v1 END === */
 
+/* === AUDIT v1 (DESIGN-AUDIT.md §3, approved by Sam 2026-11-03) === */
+/* #2 phone tap areas: everything tappable is at least 44×44 below 1024px; the "i" icon and the checkbox keep their
+   18px look and get an invisible 44px hit box */
+.tip,.cb{position:relative}
+.tip::after,.cb::before{content:"";position:absolute;inset:-13px}
+@media (max-width:1023px){
+  .ob,.ob.sm,.os-sel,.os-search input,.os-filt button,.seg button{min-height:44px}
+  .os-filt button{min-width:44px;justify-content:center}
+  .ob.sm.ic{min-width:44px}
+  .lnk{min-height:44px}
+  .ob-a .m,.ob-c .m{min-height:44px;display:flex;flex-direction:column;justify-content:center}
+  .sb-ch button{min-height:44px}
+}
+/* #3 contrast in light mode: 12px status chips + tags were 3.9–4.4:1 on their own tint; darken the text, keep the tint */
+:root[data-theme="light"] :is(.chip,.ob-tag.w,.ob-tag.b,.sb-vs .eq){color:color-mix(in srgb,var(--cc,currentColor) 72%,#000)}
+:root[data-theme="light"] .ob-tag.w{--cc:var(--warn)} :root[data-theme="light"] .ob-tag.b{--cc:var(--bad)}
+:root[data-theme="light"] .sb-vs .eq{--cc:var(--good)} :root[data-theme="light"] .sb-vs .eq.bd{--cc:var(--bad)}
+/* #10 paragraphs at a readable width; tiles inside a bordered panel keep their soft fill but lose their own border */
+.os-head p,.ob-sh p,.ob-gh p,.sb-hint,.sb-note,.ob-note,.sb-confirm p{max-width:65ch}
+/* === AUDIT v1 END === */
+
 /* ===== page: orders-B ===== */
 /* hero: one number + the status mix (legend items filter the list) */
 .ob-hero{display:grid;grid-template-columns:minmax(200px,.8fr) minmax(0,2fr);gap:40px;align-items:center;padding:26px 28px}
@@ -1162,7 +1237,7 @@ main{gap:24px}
 .ob-bar i{display:block;height:100%;transition:flex .5s cubic-bezier(.2,.8,.2,1),opacity .25s}
 .ob-bar.f i:not(.on){opacity:.25}
 .ob-leg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:16px}
-.ob-leg button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px;border-radius:12px;text-align:left;border:1px solid transparent;transition:.2s;min-width:0}
+.ob-leg button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px;border-radius:12px;text-align:left;border:1px solid transparent;transition:.2s;min-width:0}
 .ob-leg button:hover{background:color-mix(in srgb,var(--pl) 6%,transparent)}
 .ob-leg button[aria-pressed="true"]{border-color:var(--line2);background:color-mix(in srgb,var(--pl) 9%,transparent)}
 .ob-leg .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px}
@@ -1171,7 +1246,7 @@ main{gap:24px}
 .ob-leg small{font-size:12.5px;color:var(--muted)}
 .ob-leg small.w{color:var(--warn)}
 @media (max-width:900px){.ob-hero{grid-template-columns:1fr;gap:20px;padding:20px}.ob-big b{font-size:38px}}
-@media (max-width:600px){.ob-leg{grid-template-columns:1fr 1fr;gap:4px}.ob-leg button{padding:10px}}
+@media (max-width:600px){.ob-leg{grid-template-columns:1fr 1fr;gap:4px}.ob-leg button{padding:12px 8px}}
 
 /* list toolbar */
 .ob-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
@@ -1242,7 +1317,7 @@ main{gap:24px}
 .ob-ok{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;padding:16px 0 2px}
 .ob-ok svg.i{color:var(--good)}
 @media (max-width:1100px){.ob-ah,.ob-a{grid-template-columns:minmax(0,1fr) auto}.ob-ah{display:none}.ob-a .tg{grid-column:1}.ob-a .v{grid-row:1;grid-column:2}.ob-a .acts{grid-row:2;grid-column:2}}
-@media (max-width:900px){.ob-asum{grid-template-columns:1fr;gap:8px}.ob-asum button{display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;padding:12px 14px;border-radius:14px}
+@media (max-width:900px){.ob-asum{grid-template-columns:1fr;gap:8px}.ob-asum button{display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;padding:12px 16px;border-radius:16px}
   .ob-asum .tx{display:contents}.ob-asum .tx b{grid-column:3;grid-row:1 / span 2;font-size:22px}.ob-asum .tx span{grid-column:2;grid-row:1}.ob-asum .tx small{grid-column:2;grid-row:2}.ob-asum .ic{grid-row:1 / span 2}}
 @media (max-width:600px){
   .ob-gh .ct{display:none}
@@ -1272,9 +1347,9 @@ main{gap:24px}
 /* products that come back: a plain table, numbers only, the top size in red */
 .ob-szhead,.ob-pr{display:grid;grid-template-columns:minmax(200px,1.2fr) 150px minmax(0,2fr);gap:24px;align-items:center}
 .ob-sh.nb{border-bottom:0;padding-bottom:4px}
-.ob-szhead{padding:10px 0 8px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.ob-szhead{padding:12px 0 8px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
 #obRet .ob-pr:first-child{border-top:0}
-.ob-pr{padding:14px 8px;margin:0 -8px;border-top:1px solid var(--line);cursor:pointer;border-radius:10px;transition:background .15s}
+.ob-pr{padding:12px 8px;margin:0 -8px;border-top:1px solid var(--line);cursor:pointer;border-radius:10px;transition:background .15s}
 .ob-pr:hover{background:color-mix(in srgb,var(--pl) 6%,transparent)}
 .ob-pr:hover .nm b{text-decoration:underline;text-underline-offset:3px}
 .ob-pr:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
@@ -1346,6 +1421,9 @@ main{gap:24px}
 @media (max-width:760px){.ob-lost{padding:20px}}
 @media (max-width:600px){.ob-pair{gap:16px}}
 /* === TYPE v1 END === */
+
+/* AUDIT v1 #10: paragraphs ≤65ch */
+.ob-gh p,.ob-note{max-width:65ch}
 
 /* === GLOW v1 START === */
 /* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").

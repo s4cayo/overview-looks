@@ -811,10 +811,72 @@ main{gap:24px}
 :root[data-theme="light"] .go[disabled]::before{background:#5b3a8c}
 /* Admin C: lighter lift under each brand's circle; a turned-off brand reads as grey text on a pale disc, not white on grey */
 :root[data-theme="light"] .desk{box-shadow:0 1px 2px rgba(40,20,80,.08),0 14px 26px -16px rgba(85,13,166,.40),inset 0 1px 0 rgba(255,255,255,.15)}
-:root[data-theme="light"] .tb.off .room{opacity:.8}
 :root[data-theme="light"] .tb.off .desk{background:#ece9f1;border-color:rgba(60,20,110,.12);box-shadow:none}
 :root[data-theme="light"] .tb.off .desk b,:root[data-theme="light"] .tb.off .desk span{color:#5e5870}
 /* === LIGHT v1 (brands / admin / sign-in) END === */
+/* === AUDIT v1 (brands / admin / sign-in) START === */
+/* DESIGN-AUDIT.md §3, approved by Sam 2026-11-03: #2 tap areas, #3 contrast, #4 12px floor, #6 title weight 700,
+   #10 one box layer, 65ch paragraphs, paddings on 8/12/16. Measured by src/audit.py. Added last on every page. */
+
+/* #6 one page-title weight */
+:root .pg-head h1,:root .hd h1{font-weight:700}
+
+/* #3 a turned-off brand: the text stays readable (was faded with opacity to 2–3.7:1); only its logo goes grey */
+:root .bti.off,:root .bk.off{opacity:1}
+:root .bti.off .bh .av2,:root .bk.off .bk-h .av2,:root .tb.off .tb-h .av2{background:var(--track);color:var(--muted);box-shadow:none}
+:root .tb.off .room{filter:none;opacity:1}
+:root .tb.off .desk{background:var(--track);border-color:var(--line2);box-shadow:none}
+:root .tb.off .desk b,:root .tb.off .desk span{color:var(--muted);text-shadow:none}
+:root:not([data-theme="light"]) .tag{color:#c4a3f0}
+
+/* #2 the "i" icon keeps its 18px look but gets an invisible 44px hit area */
+:root .tip{position:relative}
+:root .tip::after{content:"";position:absolute;inset:-13px}
+/* inline links inside a sentence: a taller hit area, same look */
+:root .consent a,:root .mock button{position:relative}
+:root .consent a::after,:root .mock button::after{content:"";position:absolute;inset:-14px -4px}
+:root .pwt::after{content:"";position:absolute;inset:-6px -2px}
+/* brands D carousel dots: 24×8 look, 44×44 hit area */
+:root .dots button{position:relative}
+:root .dots button::after{content:"";position:absolute;inset:-18px}
+
+/* #2 phone and tablet: everything tappable is at least 44px tall */
+@media (max-width:1023px){
+  :root .ob,:root .ob.sm,:root .pills button,:root .sel,:root .in,:root .srch input,:root .todo a{min-height:44px}
+  :root .seg button{min-height:44px}
+  :root .deck-h .nav .ob{width:44px;padding:0}
+  :root .kp button{min-height:44px}
+  :root .lnk,:root .alt,:root .legal a{display:inline-flex;align-items:center;min-height:44px}
+  :root .legal a{min-width:44px;justify-content:center}
+  :root .sel.cell{min-height:44px}
+}
+
+/* #10 no boxes inside boxes: plan cards and gauges inside a panel lose their border, hairlines divide them */
+:root .panel .plans{gap:0}
+:root .panel .plan{border:0;border-radius:0;padding:4px 16px;border-left:1px solid var(--line)}
+:root .panel .plan:first-child{border-left:0;padding-left:0}
+:root .panel .plan.cur{background:none}
+:root .panel .plan.cur .nm{color:var(--pl)}
+@media (max-width:760px){:root .panel .plan{border-left:0;border-top:1px solid var(--line);padding:16px 0}:root .panel .plan:first-child{border-top:0;padding-top:0}}
+:root .gg{border:0;border-radius:0;padding:8px 12px}
+:root .gs > .gg + .gg{border-left:1px solid var(--line)}
+@media (max-width:760px){:root .gs > .gg + .gg{border-left:0;border-top:1px solid var(--line);padding-top:24px}}
+/* brands D: the flip card's wrapper shares the input class name `in` and was drawing an input's border round each card */
+:root .fc > .in{border:0;background:none;padding:0;border-radius:0;height:100%}
+/* #10 paragraphs stop at a comfortable line length */
+:root main p:not(.mock){max-width:65ch}
+/* #10 paddings snapped to 8/12/16 */
+:root .ob{padding:0 16px}
+:root .ob.sm{padding:0 12px}
+:root .pills button{padding:0 12px}
+:root .chip{padding:0 8px}
+:root .note{padding:12px 16px}
+:root .dh{padding:20px 24px 16px}
+:root .df{padding:16px 24px}
+:root .tmx > *{padding:8px;margin:0 -8px}
+:root .gl > div{padding:12px 0}
+:root .pr-row{padding:16px 12px;margin:0 -12px;width:calc(100% + 24px)}
+/* === AUDIT v1 (brands / admin / sign-in) END === */
 </style>
 </head>
 <body class="no-date">
@@ -888,8 +950,8 @@ main{gap:24px}
         <a href="#" data-nv2-go="competitors" title="Competitors"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
       </div>
       <div class="sb3-grp"><h6>Workspace</h6>
-        <a href="#" data-nv2-go="connections" title="Connections"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg><span>Connections</span></a>
-        <a href="#" data-nv2-go="settings" title="Workspace settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Workspace settings</span></a>
+        <!-- round 16: one Settings entry (Workspace · Connections · Billing · Your account live as tabs inside it) -->
+        <a href="#" data-nv2-go="settings" title="Settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
         <a href="#" class="on" data-nv2-go="admin" aria-current="page" title="Admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
       </div>
     </nav>

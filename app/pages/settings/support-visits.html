@@ -462,9 +462,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .ask > .i{color:#550da6}
 
 /* tab bar: the dark smear it cast on the panel below */
-:root[data-theme="light"] .seg{border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
-:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
-:root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 
 /* account: chart glow, receipts */
 :root[data-theme="light"] .acc{--acc-glow-o:.12;--acc-sel-glow:0 0 0 3px rgba(124,63,193,.10),0 8px 18px -12px rgba(85,13,166,.30);
@@ -522,13 +519,13 @@ html.nv2-lock{scrollbar-gutter:stable}
 .grp h6{font-size:12px}
 [hidden]{display:none!important}
 @media (max-width:1180px){.side{width:212px}}
-@media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px}}
-@media (max-width:600px){.content{padding-left:16px;padding-right:16px;padding-top:14px}}
+@media (max-width:1023px){.side{display:none!important}.content{padding-left:24px;padding-right:24px}}
+@media (max-width:600px){.content{padding-left:16px;padding-right:16px;padding-top:16px}}
 main{gap:24px}
 .content{padding-bottom:120px}
 
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;min-width:0}
-@media (max-width:600px){.panel{padding:18px}main{gap:20px}}
+@media (max-width:600px){.panel{padding:16px}main{gap:20px}}
 .mut{color:var(--muted)}
 .rise{opacity:0;transform:translateY(12px);animation:rise .65s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,0s)}
 @keyframes rise{to{opacity:1;transform:none}}
@@ -554,7 +551,7 @@ main{gap:24px}
 .lnk svg.i{width:15px;height:15px}
 
 /* buttons */
-.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:40px;padding:0 15px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:14px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s,opacity .2s}
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:40px;padding:0 16px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:14px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s,opacity .2s}
 .ob:hover{border-color:rgba(162,117,224,.55)}
 .ob:active{transform:scale(.97)}
 .ob svg.i{width:16px;height:16px}
@@ -571,7 +568,7 @@ main{gap:24px}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* status chips */
-.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap;
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap;
   color:var(--cc,var(--muted));background:color-mix(in srgb,var(--cc,var(--muted)) 13%,transparent)}
 .chip:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
 .chip.ok{--cc:var(--good)} .chip.warn{--cc:var(--warn)} .chip.bad{--cc:var(--bad)} .chip.off{--cc:var(--muted)} .chip.pur{--cc:var(--pl)}
@@ -583,9 +580,9 @@ main{gap:24px}
 .fld{display:flex;flex-direction:column;gap:7px;min-width:0}
 .fld > label,.fld > .lab{font-size:13px;font-weight:500;color:var(--text);display:flex;align-items:center;gap:6px}
 .fld > label small,.fld > .lab small{font-weight:400;color:var(--muted);font-size:12px}
-.inp{width:100%;height:42px;padding:0 13px;border-radius:11px;border:1px solid var(--line2);background:var(--bg);color:var(--text);font:inherit;font-size:14px;transition:border-color .2s,box-shadow .2s}
+.inp{width:100%;height:42px;padding:0 12px;border-radius:11px;border:1px solid var(--line2);background:var(--bg);color:var(--text);font:inherit;font-size:14px;transition:border-color .2s,box-shadow .2s}
 :root[data-theme="light"] .inp{background-color:#fff}
-textarea.inp{height:auto;min-height:96px;padding:11px 13px;line-height:1.5;resize:vertical}
+textarea.inp{height:auto;min-height:96px;padding:12px 12px;line-height:1.5;resize:vertical}
 select.inp{appearance:none;-webkit-appearance:none;padding-right:36px;cursor:pointer;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M8 10l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:16px}
 .inp::placeholder{color:var(--muted)}
@@ -593,11 +590,11 @@ select.inp{appearance:none;-webkit-appearance:none;padding-right:36px;cursor:poi
 .inp[disabled]{opacity:.6}
 .hint{font-size:12.5px;color:var(--muted);line-height:1.5;text-wrap:pretty}
 .hint code,.mono{font-family:"Geist Mono",ui-monospace,monospace;font-size:12.5px}
-.hint code{padding:1px 5px;border-radius:5px;background:color-mix(in srgb,var(--text) 7%,transparent);color:var(--text)}
+.hint code{padding:1px 4px;border-radius:5px;background:color-mix(in srgb,var(--text) 7%,transparent);color:var(--text)}
 .frow{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
 
 /* a saved secret: masked value + Replace / Remove, never the real key */
-.sec{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:42px;padding:6px 6px 6px 13px;border-radius:11px;border:1px solid var(--line2);background:var(--bg)}
+.sec{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:42px;padding:8px 8px 8px 12px;border-radius:11px;border:1px solid var(--line2);background:var(--bg)}
 :root[data-theme="light"] .sec{background:#fff}
 .sec .mono{font-size:13.5px;letter-spacing:.02em;color:var(--text);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sec .mono.none{color:var(--muted);font-family:inherit;font-size:14px}
@@ -620,7 +617,7 @@ details.adv .advb{display:flex;flex-direction:column;gap:18px;padding:4px 0 16px
 
 /* fact list (receipt-style rows: label left, value right, hairlines) */
 .facts{display:flex;flex-direction:column}
-.facts > div{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.facts > div{display:flex;align-items:baseline;gap:14px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
 .facts > div:first-child{border-top:0;padding-top:2px}
 .facts dt{color:var(--muted);flex:none;max-width:48%}
 .facts dd{margin-left:auto;text-align:right;min-width:0;overflow-wrap:anywhere;font-weight:500}
@@ -628,22 +625,22 @@ details.adv .advb{display:flex;flex-direction:column;gap:18px;padding:4px 0 16px
 
 /* money receipt (Account tab layout: dot · label + sub-label · amount, one highlighted total) */
 .rcpt{display:flex;flex-direction:column}
-.rcpt .row{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+.rcpt .row{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--line)}
 .rcpt .row:first-child{border-top:0}
 .rcpt .dot{width:8px;height:8px;border-radius:50%;background:var(--dc,var(--pl));box-shadow:0 0 8px var(--dc,var(--pl))}
 .rcpt .lab b{display:block;font-weight:500;font-size:14px}
 .rcpt .lab small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
 .rcpt .amt{font-variant-numeric:tabular-nums;font-weight:600;font-size:15px;text-align:right;white-space:nowrap}
 .rcpt .amt small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
-.rcpt .tot{margin-top:6px;padding:14px 16px;border-radius:14px;border:0;background:color-mix(in srgb,var(--pl) 11%,transparent)}
+.rcpt .tot{margin-top:6px;padding:16px 16px;border-radius:14px;border:0;background:color-mix(in srgb,var(--pl) 11%,transparent)}
 .rcpt .tot .amt{font-size:18px}
 
 /* inline confirmation */
-.conf{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--bad) 9%,transparent);border:1px solid color-mix(in srgb,var(--bad) 28%,transparent)}
+.conf{display:flex;gap:12px;align-items:flex-start;padding:16px 16px;border-radius:14px;background:color-mix(in srgb,var(--bad) 9%,transparent);border:1px solid color-mix(in srgb,var(--bad) 28%,transparent)}
 .conf > svg.i{color:var(--bad);margin-top:2px}
 .conf p{font-size:14px;line-height:1.5;text-wrap:pretty}
 .conf .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.note{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;font-size:14px;line-height:1.5;
+.note{display:flex;gap:12px;align-items:flex-start;padding:16px 16px;border-radius:14px;font-size:14px;line-height:1.5;
   background:color-mix(in srgb,var(--nc,var(--pl)) 9%,transparent);border:1px solid color-mix(in srgb,var(--nc,var(--pl)) 26%,transparent)}
 .note > svg.i{color:var(--nc,var(--pl));margin-top:2px}
 .note.warn{--nc:var(--warn)} .note.bad{--nc:var(--bad)} .note.ok{--nc:var(--good)}
@@ -669,18 +666,18 @@ details.adv .advb{display:flex;flex-direction:column;gap:18px;padding:4px 0 16px
 .st-drawer{position:fixed;z-index:95;top:12px;right:12px;bottom:12px;width:min(520px,calc(100vw - 24px));display:flex;flex-direction:column;border-radius:22px;
   background:var(--panel);border:1px solid var(--line2);box-shadow:0 30px 80px -20px rgba(0,0,0,.7);transform:translateX(calc(100% + 24px));visibility:hidden;transition:transform .38s cubic-bezier(.2,.8,.2,1),visibility .38s}
 .st-drawer.on{transform:none;visibility:visible}
-.st-drawer .dh{display:flex;align-items:center;gap:14px;padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+.st-drawer .dh{display:flex;align-items:center;gap:14px;padding:20px 24px 16px;border-bottom:1px solid var(--line)}
 .st-drawer .dh h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .st-drawer .dh .sub{font-size:13px;color:var(--muted);margin-top:3px}
 .st-drawer .x{margin-left:auto;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;color:var(--muted);flex:none}
 .st-drawer .x:hover{background:color-mix(in srgb,var(--text) 7%,transparent);color:var(--text)}
-.st-drawer .db{flex:1;overflow:auto;padding:20px 22px 26px;display:flex;flex-direction:column;gap:22px;overscroll-behavior:contain}
-.st-drawer .df{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.st-drawer .db{flex:1;overflow:auto;padding:20px 24px 24px;display:flex;flex-direction:column;gap:22px;overscroll-behavior:contain}
+.st-drawer .df{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid var(--line)}
 .st-drawer .df .sp{flex:1}
 .st-drawer h3{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center}
 @media (max-width:600px){
   .st-drawer{top:auto;left:0;right:0;bottom:0;width:100%;max-height:calc(100dvh - 28px);height:calc(100dvh - 28px);border-radius:22px 22px 0 0;transform:translateY(105%)}
-  .st-drawer .dh{padding:18px 16px 14px}.st-drawer .db{padding:18px 16px 22px}.st-drawer .df{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+  .st-drawer .dh{padding:16px 16px 16px}.st-drawer .db{padding:16px 16px 24px}.st-drawer .df{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
 }
 html.st-lock,html.st-lock body{overflow:hidden}
 
@@ -706,12 +703,12 @@ html.st-lock,html.st-lock body{overflow:hidden}
 .tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
   font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
 .tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
-.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:12px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
 /* toast */
-.st-toast{position:fixed;left:50%;bottom:28px;z-index:300;transform:translate(-50%,12px);max-width:calc(100vw - 32px);padding:11px 16px;border-radius:13px;font-size:14px;
+.st-toast{position:fixed;left:50%;bottom:28px;z-index:300;transform:translate(-50%,12px);max-width:calc(100vw - 32px);padding:12px 16px;border-radius:13px;font-size:14px;
   background:var(--text);color:var(--bg);box-shadow:0 16px 40px -14px rgba(0,0,0,.6);opacity:0;visibility:hidden;transition:opacity .2s,transform .25s,visibility .25s;text-align:center}
 .st-toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
 @media (max-width:1023px){.st-toast{bottom:100px}}
@@ -719,7 +716,7 @@ html.st-lock,html.st-lock body{overflow:hidden}
 /* sticky section tabs (J's style, as on the Shipping page) */
 .tabs-anchor{height:0;margin-bottom:-24px}
 .tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
-.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:100%;padding:5px;border-radius:99px;
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:100%;padding:4px;border-radius:99px;
   background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
 .seg::-webkit-scrollbar{display:none}
@@ -727,18 +724,18 @@ html.st-lock,html.st-lock body{overflow:hidden}
 :root[data-theme="light"] .seg{background:rgba(255,255,255,.95)}  /* its shadows: LIGHT v1 */
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button{position:relative;z-index:1;padding:12px 24px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
 .seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
-.seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
+.seg .n{font-size:12px;padding:0 8px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
 :root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
 .seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
 .pane{scroll-margin-top:80px;min-height:var(--pane-min,0px);display:flex;flex-direction:column;gap:24px}
 .pane[hidden]{display:none}
 .pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media (max-width:600px){.tabs-anchor{margin-bottom:-20px}.tabbar{margin:0 -16px;padding:0 16px}.seg button{padding:9px 14px;font-size:13px}.pane{gap:20px}}
+@media (max-width:600px){.tabs-anchor{margin-bottom:-20px}.tabbar{margin:0 -16px;padding:0 16px}.seg button{padding:8px 16px;font-size:13px}.pane{gap:20px}}
 
 /* radio cards */
 .rc{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
@@ -759,10 +756,26 @@ html.st-lock,html.st-lock body{overflow:hidden}
 .cb:indeterminate:after{content:"";width:8px;height:2px;background:#fff;border-radius:2px}
 .ph > p{flex:0 0 100%;max-width:none}
 .alist .tx small b{color:var(--warn);font-weight:500}
+/* ---------- Settings area: one tab row on every settings page (audit #9) ---------- */
+.stabs{display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--line);margin-bottom:-8px}
+.stabs-k{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+.stabs-row{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 -12px}
+.stabs-row::-webkit-scrollbar{display:none}
+.stabs a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 12px;font-size:15px;font-weight:500;color:var(--muted);
+  white-space:nowrap;border-radius:8px 8px 0 0;transition:color .2s}
+.stabs a:hover{color:var(--text)}
+.stabs a.on{color:var(--text);font-weight:600}
+.stabs a.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;border-radius:2px;background:var(--pl)}
+.stabs a:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+@media (max-width:600px){.stabs-row{margin:0 -16px;padding:0 4px}}
+/* settings pages are not date-bound: no period picker in the top bar */
+.nv2-datew{display:none!important}
+@media (max-width:430px){.stabs-row{gap:0;margin:0 -8px;padding:0}.stabs a{padding:0 8px;font-size:14px}.stabs a.on::after{left:8px;right:8px}}
+@media (max-width:374px){.stabs-row{margin:0 -8px;padding:0}.stabs a{font-size:13px}}
 
 #svNow:empty{display:none}
 .sv-list{list-style:none;display:flex;flex-direction:column}
-.sv{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:6px 24px;padding:18px 0;border-top:1px solid var(--line);align-items:start}
+.sv{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:6px 24px;padding:16px 0;border-top:1px solid var(--line);align-items:start}
 .sv:first-child{border-top:0;padding-top:4px}
 .sv .when b{display:block;font-weight:500;font-size:14px}
 .sv .when small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
@@ -823,6 +836,29 @@ html.st-lock,html.st-lock body{overflow:hidden}
 :root[data-theme="light"] .rcpt .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--dc,var(--pl)) 14%,rgba(255,255,255,0))}
 :root[data-theme="light"] .ws-av.c{background:linear-gradient(140deg,#8a4fd0,#6a22b8)}
 :root[data-theme="light"] .ws-av.b,:root[data-theme="light"] .sv .who .av{background:#ece6f5;color:#3a2a55;box-shadow:inset 0 0 0 1px rgba(60,20,110,.10)}
+
+/* === AUDIT fixes (round 16: #2 tap areas, #3 contrast) === */
+/* #3 light chips: the text is a darker shade of its own colour so it clears 4.5:1 on its tint */
+:root[data-theme="light"] .chip{color:color-mix(in srgb,var(--cc,var(--muted)) 76%,#000);background:color-mix(in srgb,var(--cc,var(--muted)) 10%,#fff)}
+/* #3 white on red needs a deeper red in dark mode (was 3.1:1) */
+:root .ob.dan{background:#b8303b}
+:root .ob.dan:hover{background:#a52a35}
+/* #2 the "i" keeps its 18px look but gets an invisible 44px hit area */
+:root .tip{position:relative}
+:root .tip::after{content:"";position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%);border-radius:50%}
+/* #2 below 1024px every control is at least 44px tall */
+@media (max-width:1023px){
+  :root .ob,:root .ob.sm{height:44px;min-width:44px}
+  :root .inp:not(textarea),:root select.inp,:root .ws-pa select.inp,:root .cfa select.inp{height:44px}
+  :root .seg button{min-height:44px}
+  :root .dtabs button{min-height:44px}
+  :root .st-back{min-height:44px;margin-bottom:0}
+  :root .cf .inp{height:42px}
+  :root .cf{min-height:44px}
+}
+/* #10 paragraphs stop at about 65 characters (the panel sub-line still wraps under its title) */
+:root .ph > p{max-width:none;padding-right:max(0px,calc(100% - 65ch))}
+:root :is(.hint,.st-head p,.conf p,.note > div,.st-dialog p,.da-form p,.mut,.dsec-h p){max-width:65ch}
 
 /* === GLOW v1 START === */
 /* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
@@ -907,8 +943,8 @@ html.st-lock,html.st-lock body{overflow:hidden}
         <a href="#" data-nv2-go="competitors" title="Competitors"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
       </div>
       <div class="sb3-grp"><h6>Workspace</h6>
-        <a href="#" data-nv2-go="connections" aria-current="page" title="Connections"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg><span>Connections</span></a>
-        <a href="#" data-nv2-go="settings" title="Workspace settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Workspace settings</span></a>
+        <!-- round 16: one Settings entry (Workspace · Connections · Billing · Your account live as tabs inside it) -->
+        <a href="#" data-nv2-go="settings" title="Settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
         <a href="#" data-nv2-go="admin" title="Admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
       </div>
     </nav>
@@ -951,8 +987,9 @@ html.st-lock,html.st-lock body{overflow:hidden}
       </div>
     </header>
     <!-- === NAV v2 END === -->
+<nav class="stabs rise" aria-label="Settings"><span class="stabs-k">Settings</span><div class="stabs-row"><a href="workspace-settings.html" data-st-go="settings">Workspace</a><a href="connections-B.html" data-st-go="connections">Connections</a><a href="billing.html" data-st-go="billing">Billing</a><a href="account.html" data-st-go="account" class="on" aria-current="true">Your account</a></div></nav>
     <header class="st-head rise" style="--d:.02s">
-      <div><a href="connections-B.html" class="st-back" data-st-go="connections"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Connections</a>
+      <div><a href="account.html" class="st-back" data-st-go="account"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Your account</a>
         <h1>Support visits</h1><p>Every time our support team opens your workspace it is written down here with the reason they gave, and you get an email. A visit is look-only unless it says otherwise.</p></div>
     </header>
     <div id="svNow"></div>
@@ -995,8 +1032,7 @@ html.st-lock,html.st-lock body{overflow:hidden}
     <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
     <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
     <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
-    <a href="#" class="nv2-mr" aria-current="page" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
-    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" aria-current="page" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
     <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
   </nav>
   <div class="nv2-mbar">
@@ -1224,9 +1260,9 @@ ST.busy=function(btn,label,ms){return new Promise(function(res){var t=btn.innerH
 ST.files=/\.html$/.test(location.pathname);
 ST.NAMES={overview:'the Overview',sales:'Orders',orders:'Shipping',products:'Products',inventory:'Inventory',ads:'the Ads report',adsmanager:'Ads Manager',assistant:'the Assistant',
   competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',brands:'All brands',profile:'your profile',signout:'sign-out',workspace:'Workspace settings',
-  billing:'Billing',visits:'Support visits',delete:'Delete account'};
-ST.FILES={connections:'connections-B.html',settings:'workspace-settings.html',workspace:'workspace-settings.html',billing:'billing.html',visits:'support-visits.html',delete:'delete-account.html'};
-ST.PAGEKEY={'connections-B':'connections','workspace-settings':'settings','billing':'billing','support-visits':'visits','delete-account':'delete'}[document.body.dataset.stPage];
+  billing:'Billing',visits:'Support visits',delete:'Delete account',account:'Your account'};
+ST.FILES={connections:'connections-B.html',settings:'workspace-settings.html',workspace:'workspace-settings.html',billing:'billing.html',visits:'support-visits.html',delete:'delete-account.html',account:'account.html'};
+ST.PAGEKEY={'connections-B':'connections','workspace-settings':'settings','billing':'billing','support-visits':'visits','delete-account':'delete','account':'account'}[document.body.dataset.stPage];
 ST.go=function(go,label){
   if(go==='assistant'&&window.nv2Open){window.nv2Open('ai');return}
   if(go===ST.PAGEKEY||(go==='workspace'&&ST.PAGEKEY==='settings')){window.scrollTo({top:0,behavior:ST.reduce?'auto':'smooth'});return}

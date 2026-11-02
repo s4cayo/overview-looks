@@ -445,12 +445,12 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:600px){.os-head h1{font-size:24px}.os-head .acts{margin-left:0;width:100%}}
 
 /* buttons */
-.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:38px;padding:0 16px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
 .ob:hover{border-color:rgba(162,117,224,.55)}
 .ob:active{transform:scale(.97)}
 .ob svg.i{width:16px;height:16px}
 .ob.pri{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
-.ob.sm{height:32px;padding:0 11px;font-size:13px;border-radius:9px}
+.ob.sm{height:32px;padding:0 12px;font-size:13px;border-radius:9px}
 .ob.ic{width:38px;padding:0}
 .ob.sm.ic{width:32px}
 
@@ -510,10 +510,10 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-bulk .ob.pri{background:var(--acc);color:#fff;border-color:transparent}
 :root[data-theme="light"] .os-bulk .ob.pri{background:#a275e0;color:#17141f}
 @media (max-width:1023px){.os-bulk{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
-@media (max-width:480px){.os-bulk{gap:6px;padding:7px 7px 7px 14px;font-size:13px}.os-bulk .hide-s{display:none}}
+@media (max-width:480px){.os-bulk{gap:6px;padding:8px 8px 8px 16px;font-size:13px}.os-bulk .hide-s{display:none}}
 
 /* toast */
-.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:11px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
+.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:12px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
   box-shadow:0 16px 40px -16px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;visibility:hidden;max-width:calc(100vw - 32px);display:flex;gap:9px;align-items:center}
 .os-toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .os-toast svg.i{color:var(--good)}
@@ -533,7 +533,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .os-db section{padding:18px 0;border-top:1px solid var(--line)}
 .os-db section:first-child{border-top:0}
 .os-db h3{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
-.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:16px 24px;border-top:1px solid var(--line)}
 .os-df .ob{flex:1 1 auto}
 @media (max-width:600px){
   .os-drawer{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;transform:translateY(105%)}
@@ -556,7 +556,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .kv dt{padding-right:16px}
 .kv dt{color:var(--muted)} .kv dd{text-align:right;font-variant-numeric:tabular-nums}
 .kv .tot{font-weight:600;font-size:16px;padding-top:9px;border-top:1px solid var(--line)}
-.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0}
+.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0}
 .sw{width:40px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
 .sw svg{width:20px;height:30px}
 .items b{font-weight:500;display:block}
@@ -612,7 +612,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button{position:relative;z-index:1;padding:12px 24px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
 .seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
@@ -647,7 +647,7 @@ main{gap:24px}
 .ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
 @media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
 
-.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
 .ob-bars > div:first-child{border-top:0}
 .ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
 .ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
@@ -660,7 +660,7 @@ main{gap:24px}
 .tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
   font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
 .tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
-.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
@@ -704,6 +704,27 @@ main{gap:24px}
 :root[data-theme="light"] .panel{box-shadow:0 1px 2px rgba(40,20,80,.05)}
 :root[data-theme="light"] button.sb-kt:hover{box-shadow:0 1px 2px rgba(40,20,80,.06),0 12px 24px -16px color-mix(in srgb,var(--dc) 40%,rgba(40,20,80,.2))}
 /* === LIGHT v1 END === */
+
+/* === AUDIT v1 (DESIGN-AUDIT.md §3, approved by Sam 2026-11-03) === */
+/* #2 phone tap areas: everything tappable is at least 44×44 below 1024px; the "i" icon and the checkbox keep their
+   18px look and get an invisible 44px hit box */
+.tip,.cb{position:relative}
+.tip::after,.cb::before{content:"";position:absolute;inset:-13px}
+@media (max-width:1023px){
+  .ob,.ob.sm,.os-sel,.os-search input,.os-filt button,.seg button{min-height:44px}
+  .os-filt button{min-width:44px;justify-content:center}
+  .ob.sm.ic{min-width:44px}
+  .lnk{min-height:44px}
+  .ob-a .m,.ob-c .m{min-height:44px;display:flex;flex-direction:column;justify-content:center}
+  .sb-ch button{min-height:44px}
+}
+/* #3 contrast in light mode: 12px status chips + tags were 3.9–4.4:1 on their own tint; darken the text, keep the tint */
+:root[data-theme="light"] :is(.chip,.ob-tag.w,.ob-tag.b,.sb-vs .eq){color:color-mix(in srgb,var(--cc,currentColor) 72%,#000)}
+:root[data-theme="light"] .ob-tag.w{--cc:var(--warn)} :root[data-theme="light"] .ob-tag.b{--cc:var(--bad)}
+:root[data-theme="light"] .sb-vs .eq{--cc:var(--good)} :root[data-theme="light"] .sb-vs .eq.bd{--cc:var(--bad)}
+/* #10 paragraphs at a readable width; tiles inside a bordered panel keep their soft fill but lose their own border */
+.os-head p,.ob-sh p,.ob-gh p,.sb-hint,.sb-note,.ob-note,.sb-confirm p{max-width:65ch}
+/* === AUDIT v1 END === */
 
 /* ===== page: shipping-A ===== */
 .sa-h1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}

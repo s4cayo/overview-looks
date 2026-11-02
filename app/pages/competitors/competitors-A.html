@@ -780,8 +780,6 @@ main{max-width:1240px}
 :root[data-theme="light"] .cp-panel{border-color:var(--lt-line);box-shadow:var(--lt-sh2)}
 :root[data-theme="light"] .ca-tile{background:#fff;border-color:var(--lt-line);box-shadow:var(--lt-sh1)}
 :root[data-theme="light"] .ca-tile[aria-pressed="true"]{background:#f4edfc;border-color:rgba(124,63,193,.45)}
-:root[data-theme="light"] .ca-card{border-color:var(--lt-line);box-shadow:var(--lt-sh1)}
-:root[data-theme="light"] .ca-card:hover{border-color:rgba(124,63,193,.32);box-shadow:0 1px 2px rgba(40,20,80,.05),0 10px 22px -16px rgba(85,13,166,.30)}
 :root[data-theme="light"] .ca-spot{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 9%,#fff),#fff 72%);box-shadow:var(--lt-sh1)}
 :root[data-theme="light"] .ca-spot:hover{box-shadow:0 1px 2px rgba(40,20,80,.05),0 10px 22px -16px rgba(40,20,80,.26)}
 :root[data-theme="light"] .ca-face{background:linear-gradient(160deg,color-mix(in srgb,var(--c1) 72%,#2a0f4d),var(--c2))}
@@ -794,6 +792,52 @@ main{max-width:1240px}
 :root[data-theme="light"] .tipb{background:#fff;border-color:var(--lt-line2);box-shadow:0 1px 2px rgba(40,20,80,.06),0 14px 32px -16px rgba(40,20,80,.24)}
 :root[data-theme="light"] .cp-pd-our,:root[data-theme="light"] .cp-th.big{border-color:var(--lt-line)}
 /* === LIGHT END === */
+/* === AUDIT v1 (DESIGN-AUDIT.md §3, fixes #2 #3 #4 #10) === */
+/* #10 one box fewer: product cards are no longer boxes inside the panel — picture, name, price, like a shop grid */
+:root .ca-card{border:0;background:none;padding:0;border-radius:14px;gap:8px}
+:root .ca-card:hover{transform:none}
+:root .ca-card .cp-th.big{transition:transform .25s,box-shadow .25s}
+:root .ca-card:hover .cp-th.big{transform:translateY(-2px);box-shadow:0 12px 24px -16px rgba(40,20,80,.45)}
+:root .ca-card:focus-visible{outline:2px solid var(--pl);outline-offset:4px}
+:root .ca-nm,:root .ca-pz,:root .ca-sz{padding:0}
+:root .ca-cards{gap:24px 16px}
+@container (max-width:620px){:root .ca-cards{gap:20px 12px}}
+@container (max-width:460px){
+  :root .ca-cards{gap:0}
+  :root .ca-card{padding:12px 0;border-radius:0;border-top:1px solid var(--line)}
+  :root .ca-card:first-child{border-top:0;padding-top:0}
+}
+/* #10 paragraphs stay readable: about 65 characters a line */
+:root :is(.cp-note,.cp-empty,.ca-pend,.cp-sh p,.cp-pd-d,.cp-warn,.ca-foot,.tipb){max-width:65ch}
+:root .cp-empty{margin-inline:auto}
+/* #10 paddings on the 4/8/12/16 grid */
+:root .cp-note{padding:12px 16px;gap:12px}
+:root .cp-empty{padding:32px 16px}
+:root .ca-pend{padding:32px 8px}
+:root .ca-ev{padding:12px 4px}
+:root .ca-tile{padding:16px}
+:root .ca-spot{padding:16px 12px}
+:root .cp-chip{padding:0 12px}
+:root .cp-fs{padding:16px 16px 12px}
+:root .cp-sheet{padding:24px 24px 32px}
+:root .tipb{padding:8px 12px}
+@media (max-width:760px){:root .ca-tile{padding:12px}}
+@media (max-width:767px){:root .cp-sheet{padding:12px 16px calc(32px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:600px){:root .ca-spot{padding:16px 12px}:root .cp-fs{padding:12px}}
+/* #3 contrast: on the tinted spotlight tiles the grey line and the purple link measured 4.4:1 in dark — lifted to ≥5.3 */
+:root:not([data-theme="light"]) .ca-spot .ca-s{color:#9c99aa}
+:root:not([data-theme="light"]) .ca-spot .ca-go{color:#b28ce8}
+/* #2 tap areas on phones and tablets: 44px for every button, field and link; the "i" keeps its 18px look */
+.tip{position:relative}
+.tip::after{content:"";position:absolute;inset:-13px;border-radius:50%}
+@media (max-width:1023px){
+  :root .cp-btn,:root .cp-in{height:44px}
+  :root .cp-x{width:44px;height:44px}
+  :root .ca-meta a{min-height:44px}
+  :root .cp-chip{height:44px}
+  :root .seg button{min-height:44px}
+}
+/* === AUDIT v1 END === */
 </style>
 <script>
 /* === PERIODS v1 START === */

@@ -765,6 +765,15 @@ main{max-width:1240px}
 :root[data-theme="light"] .ip-scrim{background:rgba(32,18,64,.26)}
 :root[data-theme="light"] .ip-sheet{box-shadow:-1px 0 0 rgba(60,20,110,.06),-24px 0 48px -28px rgba(40,20,80,.30)}
 @media (max-width:767px){:root[data-theme="light"] .ip-sheet{box-shadow:0 -1px 0 rgba(60,20,110,.06),0 -20px 44px -24px rgba(40,20,80,.30)}}
+/* round 16 (design audit): readable red size chips in light mode (was 3.9:1), and 44px tap areas on phones */
+:root[data-theme="light"] .ip-lsz i.r{color:#9d1f30;background:#fdeef0}
+:root[data-theme="light"] .ip-lsz i.w{color:#7f5406}
+@media (max-width:1023px){
+  .pv2.ip-sheet .pv2-close,.pv2.ip-sheet .ip-btn{min-height:44px}
+  .pv2.ip-sheet .pv2-chip{min-height:44px;display:inline-flex;align-items:center}
+  .pv2.ip-sheet .ip-x{position:relative}.pv2.ip-sheet .ip-x::after{content:"";position:absolute;inset:-8px}
+  .pv2.ip-sheet .ip-tip{position:relative}.pv2.ip-sheet .ip-tip::after{content:"";position:absolute;inset:-14px}
+}
 /* === PSHEET v1 END === */
 
 /* sticky tabs: N's .seg, sized for these pages */
@@ -888,6 +897,54 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
 /* === LIGHT v1 END === */
+
+/* === AUDIT v1 START === */
+/* Design audit fixes (DESIGN-AUDIT.md section 3, approved 2026-11-03). The shared drawer (PSHEET) is not touched here. */
+/* #2 tap areas: everything tappable is at least 44x44 below 1024px */
+@media (max-width:1023px){
+  :root .ip-link,:root .ip-btn,:root .ip-chip,:root .pv2-copy{height:44px}
+  :root .ip-search{height:46px}
+  :root .ip .seg button{min-height:44px}
+  :root .ip .pv2-sort button{height:44px}
+  :root .ip .pv2-seg button{height:44px;min-width:48px}
+  :root .ip-more::after{content:"";position:absolute;inset:-7px}
+  :root :is(.ia-skip,.ib-out,.pa-foot) button{position:relative}
+  :root :is(.ia-skip,.ib-out,.pa-foot) button::after{content:"";position:absolute;inset:-12px}
+}
+/* the "i" keeps its 18px look; an invisible 44px box around it takes the tap */
+:root .tip{position:relative}
+:root .tip::after{content:"";position:absolute;inset:-13px}
+/* #3 contrast >= 4.5:1: darker red/amber text on light tints; dark text on the bright badges in dark mode */
+:root[data-theme="light"] :is(.ia-c.w,.ip-tag.w,.ia-sz.w b,.ip .pv2-tbl td.w){color:#7a5208}
+:root[data-theme="light"] :is(.ia-c.r,.ip-tag.r,.ia-sz.o b,.ia-sz.o em,.ip .pv2-tbl td.r){color:#a32a37}
+:root:not([data-theme="light"]) .pa-badge{color:#170d22}
+:root[data-theme="light"] .ip .seg .n.r{color:#a32a37}
+:root:not([data-theme="light"]) .ip .seg .n.r{color:#ff9aa3}
+/* sold-out sizes: struck through, still readable (not faded) */
+:root .ia-sz.o em{text-decoration:line-through;text-decoration-thickness:1.5px}
+/* #4 nothing under 12px */
+:root .pa-cards .pv2-sz span{font-size:12px}
+/* #10 spacing on the 4/8 scale (Inventory used 7px in its tables and 6/10/14 around them) */
+:root .ip .pv2-tbl td{padding:8px 0}
+:root .ip .pv2-tbl th{padding:0 0 8px}
+:root .ia-prods .pv2-prow{padding:16px 0;row-gap:8px}
+:root .ia-prods .pv2-pn{gap:8px}
+:root .ia-prods .pv2-ord{padding:8px 12px}
+:root .ia-gh,:root .ia-gr{gap:8px}
+:root .ia-gn{gap:12px}
+:root .ia-li{gap:12px 16px}
+:root .ia-szs{gap:8px}
+:root .ia-t{gap:8px;padding:16px}
+:root .ia-t .pa-go{padding-top:8px;gap:4px}
+:root :is(.ip-chip,.ip-btn,.pv2-copy,.ip .seg button){gap:8px}
+:root .ip-chip{padding:0 12px}
+:root .ip-btn{padding:0 16px}
+/* one box fewer: the restock plan sits in its panel on a hairline, not in a second bordered box */
+:root .ia-plan{background:none;border:0;border-radius:0;padding:0 0 16px;margin-bottom:8px;gap:16px 32px}
+@media (max-width:600px){:root .ia-plan{padding:0 0 16px}:root .ia-t{padding:16px 12px}}
+/* paragraphs stay readable: about 65 characters a line */
+:root :is(.ip-head p,.ia-intro,.ia-skip,.pa-szsum,.ib-out,.pa-foot){max-width:65ch}
+/* === AUDIT v1 END === */
 
 /* ===== Products A — card gallery ===== */
 /* worth a look — Sam's pick, design 2 "Tiles" (2026-11-02): the product picture inside a coloured ring that IS the indicator,
@@ -1061,8 +1118,8 @@ window.perSet=function(key){
         <a href="#" data-nv2-go="competitors" title="Competitors"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
       </div>
       <div class="sb3-grp"><h6>Workspace</h6>
-        <a href="#" data-nv2-go="connections" title="Connections"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg><span>Connections</span></a>
-        <a href="#" data-nv2-go="settings" title="Workspace settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>Workspace settings</span></a>
+        <!-- round 16: one Settings entry (Workspace · Connections · Billing · Your account live as tabs inside it) -->
+        <a href="#" data-nv2-go="settings" title="Settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
         <a href="#" data-nv2-go="admin" title="Admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
       </div>
     </nav>
@@ -1107,7 +1164,7 @@ window.perSet=function(key){
     <div class="pv2 ip" id="ip">
       <header class="ip-head">
         <div><h1>Products</h1><p id="pa-count">13 products in your Shopify store</p></div>
-        <div class="ip-hl"><a class="ip-link" href="#" data-ip-go="inventory">Inventory <svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+        <div class="ip-hl"><a class="ip-link" href="#" data-ip-go="inventory">Inventory <svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div>
       </header>
 
       <section class="pv2-panel" aria-labelledby="pa-att-h">
