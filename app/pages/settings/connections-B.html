@@ -276,15 +276,18 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
-/* round 11: bottom dock — the current page is the accent colour with a soft capsule behind its icon (no black disc
-   crowding the label); same rule as the Products / Inventory pages */
-.nv2-dock .nv2-pill > *{position:relative}
-.nv2-dock .nv2-pill > * > *{position:relative}
-.nv2-dock .nv2-pill > *::before{content:"";position:absolute;top:5px;left:50%;width:48px;height:28px;margin-left:-24px;border-radius:99px;
-  background:color-mix(in srgb,var(--nv2-acc) 18%,transparent);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+/* round 11: bottom dock (round 12: no pill any more) — the current page is the accent colour and its icon glows a
+   little; nothing drawn behind it. Round 12 also stops the menu flicker: the page keeps its scrollbar space while the
+   menu is open (no sideways jump behind it), the full-screen menu turns solid at once, and only its rows ease in. */
 .nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
-.nv2-dock .nv2-pill > *[aria-current="page"]::before{opacity:1;transform:none}
-.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600}
+.nv2-dock .nv2-pill > *[aria-current="page"] .nv2-i{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nv2-acc) 75%,transparent))}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600;text-shadow:0 0 10px color-mix(in srgb,var(--nv2-acc) 45%,transparent)}
+html.nv2-lock{scrollbar-gutter:stable}
+.nv2-sheet.nv2-menu{transform:none;transition:opacity .12s,visibility 0s .12s}
+.nv2-sheet.nv2-menu.nv2-on{transition:opacity .09s}
+.nv2-sheet.nv2-menu .nv2-ml{transform:translateY(10px);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.nv2-sheet.nv2-menu.nv2-on .nv2-ml{transform:none;opacity:1;transition-delay:.04s}
+@media (prefers-reduced-motion:reduce){.nv2-sheet.nv2-menu,.nv2-sheet.nv2-menu .nv2-ml{transition:none!important;transform:none}}
 /* ===== shared by the settings + account mockups (st- prefix). Base tokens + nav come from the Overview. ===== */
 /* light mode: status colours a step darker so text on them reaches 4.5:1 (same as the Orders/Shipping pages) */
 :root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
