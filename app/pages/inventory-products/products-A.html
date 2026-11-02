@@ -620,9 +620,8 @@ main{max-width:1240px}
 }
 
 /* ===== Products A — card gallery ===== */
-/* worth a look: one spotlight per issue — the product picture inside a coloured ring that IS the indicator */
-/* worth a look — three designs to choose from (Sam, 2026-11-02). Shared: the product picture inside a coloured ring that
-   IS the indicator, and only TWO text sizes: 15px for the fact, 13px for the rest. */
+/* worth a look — Sam's pick, design 2 "Tiles" (2026-11-02): the product picture inside a coloured ring that IS the indicator,
+   centred tiles, and only TWO text sizes: 15px for the fact, 13px for the rest. */
 .pa-ring{position:relative;width:64px;height:64px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--pv2-track) 0)}
 .pa-ring.dash{background:none;border:2.5px dashed var(--c);padding:3px}
 .pa-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px var(--pv2-bg)}
@@ -639,91 +638,20 @@ main{max-width:1240px}
 .pa-go{font-size:13px;font-weight:600;color:var(--pv2-acc);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .pa-go svg{transition:transform .2s}
 .pa-spot{text-align:left;min-width:0;transition:border-color .2s,background .2s,transform .2s}
-.pa-spot:hover .pa-go svg,.pa-spot.pa-go:hover svg{transform:translateX(3px)}
-/* the design picker (mockup only) */
-.pa-pick{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--pv2-mut)}
-.pa-pick .pv2-seg button{min-width:34px}
-
-/* Design 1 · List — one row per issue: ring · fact over detail · arrow */
-.pa-att.d1{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
-.d1 .pa-spot{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 6px;border-top:1px solid var(--pv2-line);border-radius:12px}
-.d1 .pa-spot:nth-child(-n+2){border-top:0}
-.d1 .pa-spot:hover{background:var(--pv2-bg2)}
-.d1 .pa-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
-.d1 .pa-pics{width:96px;display:flex;justify-content:center}
-.d1 .pa-go > span{display:none}
-@media (max-width:760px){.pa-att.d1{grid-template-columns:minmax(0,1fr)}.d1 .pa-spot:nth-child(2){border-top:1px solid var(--pv2-line)}.d1 .pa-pics{width:84px}.d1 .pa-stack .pa-ring{width:38px;height:38px;padding:3px}.d1 .pa-stack .pa-ring + .pa-ring{margin-left:-17px}}
-
-/* Design 2 · Tiles — the picture leads, everything centred */
+.pa-spot:hover .pa-go svg{transform:translateX(3px)}
 .pa-att.d2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .d2 .pa-spot{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:18px 14px 16px;border-radius:16px;
   background:linear-gradient(180deg,color-mix(in srgb,var(--c) 12%,var(--pv2-bg2)),var(--pv2-bg2) 70%);border:1px solid color-mix(in srgb,var(--c) 26%,var(--pv2-line))}
 .d2 .pa-spot:hover{border-color:var(--c);transform:translateY(-2px)}
 .d2 .pa-pics{height:76px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
 .d2 .pa-ring{width:72px;height:72px}
-.d2 .pa-stack .pa-ring,.d3 .pa-stack .pa-ring{width:52px;height:52px;padding:4px}
-.d2 .pa-stack .pa-ring + .pa-ring,.d3 .pa-stack .pa-ring + .pa-ring{margin-left:-18px}
+.d2 .pa-stack .pa-ring{width:52px;height:52px;padding:4px}
+.d2 .pa-stack .pa-ring + .pa-ring{margin-left:-18px}
 .d2 .pa-txt{display:flex;flex-direction:column;gap:3px}
 .d2 .pa-go{margin-top:auto;padding-top:6px}
 @media (max-width:1100px){.pa-att.d2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.pa-att.d2{gap:10px}.d2 .pa-spot{padding:16px 10px 14px}.d2 .pa-stack .pa-ring{width:44px;height:44px;padding:3px}.d2 .pa-stack .pa-ring + .pa-ring{margin-left:-16px}}
 
-/* Design 3 · Stories — a row of rings like stories; tap one to read it below */
-.pa-att.d3{display:flex;flex-direction:column;gap:14px}
-.d3 .pa-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.d3 .pa-story{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 4px;border-radius:14px;transition:background .2s}
-.d3 .pa-story:hover{background:var(--pv2-bg2)}
-.d3 .pa-story .pa-pics{height:76px;display:flex;align-items:center;justify-content:center}
-.d3 .pa-story .pa-ring{width:72px;height:72px}
-.d3 .pa-story[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 12%,transparent)}
-.d3 .pa-cap{font-size:13px;font-weight:600;line-height:1.3;color:var(--c);text-align:center}
-.d3 .pa-detail{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);border:1px solid color-mix(in srgb,var(--c) 35%,var(--pv2-line))}
-.d3 .pa-detail .pa-txt{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
-@media (max-width:600px){.d3 .pa-rail{gap:4px}.d3 .pa-story{padding:8px 2px}.d3 .pa-story .pa-ring{width:62px;height:62px}.d3 .pa-story .pa-pics{height:66px}.d3 .pa-stack .pa-ring{width:36px;height:36px;padding:3px}.d3 .pa-stack .pa-ring + .pa-ring{margin-left:-20px}.d3 .pa-detail{flex-direction:column;align-items:flex-start;gap:8px}}
-
-.pa-cat{container-type:inline-size}
-.pa-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-.pa-tools .ip-search{flex:1 1 280px}
-.pa-tools .pv2-sort{flex:none}
-.pa-chips{margin-bottom:18px}
-.pa-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-@container (max-width:1060px){.pa-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@container (max-width:640px){.pa-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
-.pa-cards .pv2-card{text-align:left}
-.pa-cards .pv2-sw{height:108px}
-.pa-cards .pv2-mv.u{color:var(--pv2-mut);font-size:18px;font-weight:600}
-.pa-cards .pv2-ptag.n{color:#e3dcef}
-.pa-cards .pv2-strip.one{grid-template-columns:minmax(0,1fr)}
-.pa-cards .pv2-strip.one .pv2-sz span{font-size:12px}
-@container (max-width:640px){.pa-cards .pv2-card{padding:10px}.pa-cards .pv2-sw{height:92px}.pa-cards .pv2-mv{font-size:18px}.pa-cards .pv2-mv.u{font-size:16px}.pa-cards .pv2-nm{font-size:13.5px}.pa-cards .pv2-sub{font-size:12px}}
-.pa-cards .pv2-card > *{min-width:0}
-@container (max-width:520px){
-  .pa-cards{grid-template-columns:minmax(0,1fr);gap:10px}
-  .pa-cards .pv2-card{display:grid;grid-template-columns:108px minmax(0,1fr);column-gap:14px;grid-template-areas:"sw nm" "sw mk" "sw mv" "sw sub" "st st" "cap cap";padding:12px;align-items:start}
-  .pa-cards .pv2-sw{grid-area:sw;height:auto;min-height:112px;align-self:stretch}
-  .pa-cards .pv2-nm{grid-area:nm;margin-top:0;min-height:0;font-size:14px}
-  .pa-cards .pv2-mk{grid-area:mk;margin-top:4px}.pa-cards .pv2-mv{grid-area:mv;font-size:20px}.pa-cards .pv2-sub{grid-area:sub;font-size:12.5px}
-  .pa-cards .pv2-ptag{top:auto;bottom:7px;left:7px;right:auto}.pa-cards .pv2-sw:has(.pv2-ptag) .pv2-left{bottom:36px}
-  .pa-cards .pv2-strip{grid-area:st}.pa-cards .pv2-cap{grid-area:cap}
-}
-.pa-foot{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--pv2-mut)}
-
-/* sizes across every product */
-.pa-szs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
-.pa-sz{display:flex;flex-direction:column;gap:6px;padding:14px 12px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
-.pa-sz > span{font-size:13px;font-weight:600;color:var(--pv2-mut)}
-.pa-sz > b{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
-.pa-sz > b small{font-size:12.5px;font-weight:500;color:var(--pv2-mut);margin-left:4px;letter-spacing:0}
-.pa-bar{height:6px;border-radius:99px;background:var(--pv2-track);overflow:hidden}
-.pa-bar i{display:block;height:100%;width:var(--w);border-radius:99px;background:linear-gradient(90deg,#550da6,#a275e0)}
-.pa-sz em{font-style:normal;font-size:12.5px;color:var(--pv2-mut);white-space:nowrap}
-.pa-sz em.r{color:var(--pv2-bad);font-weight:600}
-.pa-sz.top{border-color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 12%,var(--pv2-bg2))}
-.pa-sz.hot{border-color:color-mix(in srgb,var(--pv2-bad) 60%,transparent)}
-.pa-szsum{font-size:14px;line-height:1.5;margin-bottom:16px}
-.pa-szsum b{font-weight:600}
-.pa-szsum .r{color:var(--pv2-bad)}
-@media (max-width:760px){.pa-szs{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.pa-sz{padding:12px 10px}.pa-sz > b{font-size:19px}}
 </style>
 <script>
 /* === PERIODS v1 START === */
@@ -866,7 +794,7 @@ window.perSet=function(key){
       </header>
 
       <section class="pv2-panel" aria-labelledby="pa-att-h">
-        <div class="pv2-ph"><h3 id="pa-att-h">Worth a look</h3><div class="pa-pick"><span>Design</span><div class="pv2-seg" id="pa-look" role="group" aria-label="Worth a look design"><button type="button" data-v="1" aria-pressed="true">1</button><button type="button" data-v="2" aria-pressed="false">2</button><button type="button" data-v="3" aria-pressed="false">3</button></div></div></div>
+        <div class="pv2-ph"><h3 id="pa-att-h">Worth a look</h3></div>
         <div class="pa-att" id="pa-att"></div>
       </section>
 
@@ -1326,34 +1254,25 @@ var IPU=(function(){
   function ring(p,pct,badge,dash){return '<span class="pa-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--pct:'+pct+'"':'')+'>'+face(p)+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
   function stack(list,dash,badge){return '<span class="pa-stack">'+list.slice(0,3).map(function(p){return ring(p,null,null,dash)}).join('')+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
   function names(list){var n=list.map(function(p){return p.main.split(' ')[0]});return n.length>2?n.slice(0,-1).join(', ')+' and '+n[n.length-1]:n.join(' and ')}
-  /* one fact (15px) and one detail line (13px) per issue — every design draws the same four */
+  /* one fact (15px) and one detail line (13px) per issue */
   function spots(){
     var out=[],P=IP.PER[U.perKey()];
     var worst=null;PR.forEach(function(p){p.P.ship.forEach(function(sh,j){if(sh<IP.MIN_SHIP||!p.P.ret[j])return;var r=p.P.ret[j]/sh;if(!worst||r>worst.r)worst={p:p,j:j,r:r}})});
     if(worst){var w=worst.p,pc=Math.round(worst.r*100);
-      out.push({c:'var(--pv2-bad)',pics:ring(w,pc,w.sizes[worst.j]),cap:'Comes back most',t:'<em>'+pc+'%</em> of size '+w.sizes[worst.j]+' came back',s:w.main+' · '+w.P.ret[worst.j]+' of '+w.P.ship[worst.j]+' '+P.phrase,go:'See sizes',a:'p:'+w.id+':ret'})}
+      out.push({c:'var(--pv2-bad)',pics:ring(w,pc,w.sizes[worst.j]),t:'<em>'+pc+'%</em> of size '+w.sizes[worst.j]+' came back',s:w.main+' · '+w.P.ret[worst.j]+' of '+w.P.ship[worst.j]+' '+P.phrase,go:'See sizes',a:'p:'+w.id+':ret'})}
     var soon=null;PR.forEach(function(p){var pl=IP.plan(p,30,7);if(pl.first&&pl.first.lasts>0&&isFinite(pl.first.lasts)&&(!soon||pl.first.lasts<soon.l))soon={p:p,l:pl.first.lasts,s:pl.first.s}});
     if(soon){var d=soon.l,one=soon.p.sizes.length===1,when=d<1?'today':d<2?'tomorrow':'on '+IP.dateIn(d);
-      out.push({c:'var(--pv2-warn)',pics:ring(soon.p,Math.max(6,Math.round(Math.min(1,d/7)*100)),one?null:soon.s),cap:'Runs out first',t:(one?'Runs':'Size '+soon.s+' runs')+' out <em>'+when+'</em>',s:soon.p.main+' · before a 7-day delivery lands',go:'Plan restock',a:'i:'+soon.p.id})}
+      out.push({c:'var(--pv2-warn)',pics:ring(soon.p,Math.max(6,Math.round(Math.min(1,d/7)*100)),one?null:soon.s),t:(one?'Runs':'Size '+soon.s+' runs')+' out <em>'+when+'</em>',s:soon.p.main+' · before a 7-day delivery lands',go:'Plan restock',a:'i:'+soon.p.id})}
     var dead=IP.DEAD;if(dead.length){var cash=dead.reduce(function(a,p){return a+IP.tied(p).cash},0),part=dead.some(function(p){return IP.tied(p).unk});
-      out.push({c:'var(--pv2-mut)',pics:stack(dead,true,dead.length>3?'+'+(dead.length-3):null),cap:'Barely selling',t:'<em>'+(part?'≥ ':'')+'EGP '+fmt(cash)+'</em> of stock sitting still',s:names(dead)+' · '+IP.SLOW_MAX+' or fewer sales in 30 days',go:'Show them',a:'f:dead'})}
+      out.push({c:'var(--pv2-mut)',pics:stack(dead,true,dead.length>3?'+'+(dead.length-3):null),t:'<em>'+(part?'≥ ':'')+'EGP '+fmt(cash)+'</em> of stock sitting still',s:names(dead)+' · '+IP.SLOW_MAX+' or fewer sales in 30 days',go:'Show them',a:'f:dead'})}
     var nc=PR.filter(F.nocost.t);
-    if(nc.length)out.push({c:'var(--pv2-acc)',pics:stack(nc,false,null),cap:'Profit unknown',t:'<em>'+nc.length+'</em> '+(nc.length===1?'product has':'products have')+' no cost',s:names(nc)+' · add the cost in Shopify to see profit',go:'Show them',a:'f:nocost'});
+    if(nc.length)out.push({c:'var(--pv2-acc)',pics:stack(nc,false,null),t:'<em>'+nc.length+'</em> '+(nc.length===1?'product has':'products have')+' no cost',s:names(nc)+' · add the cost in Shopify to see profit',go:'Show them',a:'f:nocost'});
     return out}
-  var look=(function(){var v=U.params.get('look');if(!v)try{v=localStorage.getItem('pa-look')}catch(e){}return /^[123]$/.test(v||'')?v:'1'})(),pick=0;
   function attention(){
-    var list=spots(),box=$('#pa-att'),ARW=U.ARW;box.className='pa-att d'+look;
-    $$('#pa-look button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.v===look))});
-    var txt=function(r){return '<span class="pa-txt"><span class="pa-t">'+r.t+'</span><span class="pa-s">'+r.s+'</span></span>'};
-    if(look==='1')box.innerHTML=list.map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span>'+txt(r)+'<span class="pa-go"><span>'+r.go+'</span> '+ARW+'</span></button>'}).join('');
-    else if(look==='2')box.innerHTML=list.map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span>'+txt(r)+'<span class="pa-go">'+r.go+' '+ARW+'</span></button>'}).join('');
-    else{pick=Math.min(pick,list.length-1);var r=list[pick];
-      box.innerHTML='<div class="pa-rail" role="group" aria-label="Pick one to read">'+list.map(function(x,i){return '<button type="button" class="pa-story" data-i="'+i+'" aria-pressed="'+(i===pick)+'" style="--c:'+x.c+'"><span class="pa-pics">'+x.pics+'</span><span class="pa-cap">'+x.cap+'</span></button>'}).join('')+'</div>'
-        +'<div class="pa-detail" style="--c:'+r.c+'" aria-live="polite">'+txt(r)+'<button type="button" class="pa-spot pa-go" data-a="'+r.a+'" style="--c:'+r.c+'">'+r.go+' '+ARW+'</button></div>'}
+    var box=$('#pa-att');box.className='pa-att d2';
+    box.innerHTML=spots().map(function(r){return '<button type="button" class="pa-spot" data-a="'+r.a+'" style="--c:'+r.c+'"><span class="pa-pics">'+r.pics+'</span>'
+      +'<span class="pa-txt"><span class="pa-t">'+r.t+'</span><span class="pa-s">'+r.s+'</span></span><span class="pa-go">'+r.go+' '+U.ARW+'</span></button>'}).join('');
   }
-  document.addEventListener('click',function(e){
-    var b=e.target.closest('#pa-look button');if(b){look=b.dataset.v;try{localStorage.setItem('pa-look',look)}catch(err){}attention();return}
-    var st2=e.target.closest('.pa-story');if(st2){pick=+st2.dataset.i;attention()}});
 
   /* ---- cards ---- */
   function chips(){

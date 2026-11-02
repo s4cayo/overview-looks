@@ -740,6 +740,13 @@ body.g-closed .g-open,body.g-closed .g-newsq{display:grid}
   .g-shell .as-md{font-size:15.5px}
   .g-shell .as-prop{padding:16px 16px 18px}
 }
+/* phone/tablet: the chat header is pinned to the top with its own background (text never shows through), and hides while scrolling down */
+@media (max-width:1179px){
+  .g-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--g-bg) 90%,transparent);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 100vmax color-mix(in srgb,var(--g-bg) 90%,transparent);clip-path:inset(0 -100vmax);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .g-head.is-hid{transform:translateY(calc(-100% - env(safe-area-inset-top,0px) - 2px))}
+}
 /* nothing to scroll on a new chat; the page never rubber-bands */
 @media (max-width:1023px){
   html.nv2-docked body.as-is-empty{padding-bottom:0!important}
@@ -760,7 +767,7 @@ html.g-still,html.g-still body{overflow:hidden;overscroll-behavior:none}
   body.g-kb.as-is-empty .g-sugs{display:none}
   body.g-kb.as-is-empty .g-stage{padding-bottom:calc(var(--as-ch,64px) + var(--g-kb,0px) + 24px)}
 }
-@media (prefers-reduced-motion:reduce){.g-side,.g-scrim,.g-cwrap,.g-glow{transition:none!important}.g-shell .as-av,.g-shell .as-live .as-tl,.g-shell .as-caret{animation:none!important}.g-shell .as-live .as-tl{color:var(--g-mut)}}
+@media (prefers-reduced-motion:reduce){.g-side,.g-scrim,.g-cwrap,.g-glow,.g-head{transition:none!important}.g-shell .as-av,.g-shell .as-live .as-tl,.g-shell .as-caret{animation:none!important}.g-shell .as-live .as-tl{color:var(--g-mut)}}
 /* Scale Trick brand layer: the S mark over the greeting, the brand diamond for the assistant, the diamond tile pattern */
 :root{
   --g-star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='3.36 0 17.28 24'%3E%3Cpath d='M12 0A34.56 34.56 0 0 0 20.64 12A34.56 34.56 0 0 0 12 24A34.56 34.56 0 0 0 3.36 12A34.56 34.56 0 0 0 12 0Z'/%3E%3C/svg%3E");
@@ -1849,7 +1856,7 @@ AS_DATA.sugs = [
   glow();
 
   /* new chat: the screen is exactly the visible height, so there is nothing to scroll into */
-  var root=document.documentElement,main=document.querySelector('.g-main'),vv=window.visualViewport,kbOn=false;
+  var root=document.documentElement,main=document.querySelector('.g-main'),head=document.querySelector('.g-head'),vv=window.visualViewport,kbOn=false;
   var app=document.querySelector('.app'),content=document.querySelector('.content');
   function px(el,prop){return el?parseFloat(getComputedStyle(el)[prop])||0:0}
   function fit(){
@@ -1863,20 +1870,33 @@ AS_DATA.sugs = [
     if(app.offsetHeight+bodyPad<=innerHeight+1){root.classList.add('g-still');scrollTo(0,0)}
   }
   /* the on-screen keyboard: lift the question box to sit just above it, and move the bottom bar out of the way */
+  /* Works on iOS Safari and Android Chrome: Chrome can shrink innerHeight together with the visual viewport,
+     so the full height is taken from the layout (clientHeight) and from the last height seen with no keyboard. */
+  var full=0;
+  function typing(){var a=document.activeElement;return !!(a&&a.matches&&a.matches('[data-as-in]'))}
   function kb(){
     if(!vv)return;
-    var k=Math.max(0,Math.round(innerHeight-vv.height-vv.offsetTop)),on=k>80&&document.activeElement&&document.activeElement.matches('[data-as-in]');
+    var layout=Math.max(innerHeight,root.clientHeight),seen=vv.height+vv.offsetTop,t=typing();
+    if(!t)full=Math.max(layout,seen);
+    var k=Math.max(0,Math.round(layout-seen)),on=t&&((full||layout)-seen>120);
     root.style.setProperty('--g-kb',k+'px');
-    if(on!==kbOn){kbOn=on;document.body.classList.toggle('g-kb',on);fit();
+    if(on!==kbOn){kbOn=on;document.body.classList.toggle('g-kb',on);head.classList.remove('is-hid');fit();
       if(on&&!matchMedia('(max-width:1023px)').matches){var c=document.querySelector('.g-shell .as-composer');c&&c.scrollIntoView({block:'nearest'})}}
   }
+  /* follow the keyboard while it slides in or out */
+  function track(){var t0=performance.now();(function f(){kb();if(performance.now()-t0<900)requestAnimationFrame(f)})()}
   if(vv){vv.addEventListener('resize',kb);vv.addEventListener('scroll',kb)}
-  document.addEventListener('focusin',function(e){if(e.target.matches('[data-as-in]'))setTimeout(kb,250)});
-  document.addEventListener('focusout',function(e){if(e.target.matches('[data-as-in]'))setTimeout(kb,250)});
+  document.addEventListener('focusin',function(e){if(e.target.matches('[data-as-in]'))track()});
+  document.addEventListener('focusout',function(e){if(e.target.matches('[data-as-in]'))setTimeout(track,30)});
+
+  /* the chat header (chats + new chat): pinned, steps away while you scroll down, back as soon as you scroll up */
+  var lastY=scrollY;
+  addEventListener('scroll',function(){var y=scrollY,d=y-lastY;if(Math.abs(d)<6)return;
+    head.classList.toggle('is-hid',d>0&&y>80&&!side.classList.contains('is-on')&&!kbOn);lastY=y},{passive:true});
   document.addEventListener('as:render',function(){requestAnimationFrame(fit)});
   window.addEventListener('resize',function(){requestAnimationFrame(fit)});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-  fit();
+  kb();fit();
 })();
 
 </script>
