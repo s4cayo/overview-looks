@@ -678,10 +678,12 @@ main{max-width:1240px}
 .ia-t .pa-pics{height:62px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
 .ia-t .pa-stack .pa-ring{width:52px;height:52px;padding:4px}
 .ia-t .pa-stack .pa-ring + .pa-ring{margin-left:-18px}
-.ia-t .pa-txt{display:flex;flex-direction:column;gap:3px}
-.ia-t .pa-t{font-size:15px;font-weight:600;line-height:1.3;color:var(--pv2-fg)}
-.ia-t .pa-t em{font-style:normal;color:var(--c)}
-.ia-t .pa-s{font-size:13px;line-height:1.4;color:var(--pv2-mut)}
+.ip-head p{text-wrap:balance}
+.ia-t .pa-txt{display:flex;flex-direction:column;gap:4px}
+.ia-t .pa-n{font-size:24px;font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--c)}
+.ia-t .pa-n small{font-size:14px;font-weight:600;margin-left:4px;letter-spacing:0}
+.ia-t .pa-t{font-size:15px;font-weight:600;line-height:1.3;color:var(--pv2-fg);text-wrap:balance}
+.ia-t .pa-s{font-size:13px;line-height:1.45;color:var(--pv2-mut);text-wrap:balance}
 .ia-t .pa-s strong{color:var(--pv2-fg);font-weight:600}
 .ia-t .pa-go{margin-top:auto;padding-top:6px;font-size:13px;font-weight:600;color:var(--pv2-acc);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 .ia-t .pa-go svg{transition:transform .2s}
@@ -702,6 +704,9 @@ main{max-width:1240px}
 .ia-plan .pv2-seg button{height:32px;min-width:46px;font-size:13px}
 .ia-sum{font-size:16px;line-height:1.45}
 .ia-sum b{font-weight:700}.ia-sum .r{color:var(--pv2-bad)}
+.ia-sum > span{display:block}
+.ia-sum > span.r{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:14px}
+.ia-sum > span.r::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
 .ia-sumrow{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;margin-top:8px}
 .ia-plan .pv2-copy{margin-top:0}
 @media (max-width:800px){.ia-plan{grid-template-columns:minmax(0,1fr)}}
@@ -721,7 +726,11 @@ main{max-width:1240px}
 .ia-prods .pv2-tbl td.u{color:var(--pv2-mut)}
 @media (max-width:600px){.ia-prods .pv2-call,.ia-prods .pv2-tbl{margin-left:0}.ia-prods .pv2-tbl{width:100%;font-size:13px}.ia-prods .pv2-tbl .hp{display:none}}
 .ia-skip{font-size:13.5px;color:var(--pv2-mut);margin-top:14px;padding-top:14px;border-top:1px solid var(--pv2-line);line-height:1.5}
-.ia-skip button{color:var(--pv2-acc);font-weight:600}
+.ia-skip button{color:var(--pv2-acc);font-weight:600;white-space:nowrap}
+.ia-skip > b{display:block;color:var(--pv2-fg);font-weight:600;margin-bottom:6px}
+.ia-skip > span{display:block}
+.ia-skip > span + span{margin-top:4px}
+.ia-skip i{font-style:normal;color:var(--pv2-fg)}
 
 /* all stock grid */
 .ia-legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--pv2-mut);margin-bottom:14px}
@@ -1470,13 +1479,13 @@ var IPU=(function(){
     var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0),unk=PR.reduce(function(a,p){return a+p.unknownSizes.length},0);
     var unkP=unknowns(),more=function(l){return l.length>3?'+'+(l.length-3):null},pl=function(n,w){return n+' '+w+(n===1?'':'s')};
     var T=[
-      {t:'restock',c:'var(--pv2-bad)',l:lateP,t1:'<em>'+pl(late,'size')+'</em> run out before a delivery lands',s:'In '+pl(lateP.length,'product')+' · '+st.del+'-day delivery',go:'Plan restock'},
-      {t:'out',c:'var(--pv2-bad)',l:so.map(function(x){return x.p}),cls:' ip-out',t1:'<em>'+pl(soN,'size')+'</em> sold out now',s:miss?'About <strong>EGP '+fmt(miss)+'</strong> a day not sold':'No sales '+P().phrase+' to estimate from',go:'See them'},
-      {t:'dead',c:'var(--pv2-mut)',l:IP.DEAD,dash:1,t1:'<em>'+pl(IP.DEAD.length,'product')+'</em> barely selling',s:'At least <strong>EGP '+fmt(cash)+'</strong> of stock sitting still',go:'See them'},
-      {t:'unk',c:'var(--pv2-warn)',l:unkP,dash:1,t1:'<em>'+pl(unk,'size')+'</em> with stock unknown',s:'Shopify isn’t counting them',go:'See why'}];
+      {t:'restock',c:'var(--pv2-bad)',l:lateP,n:[late,'size'],t1:'Run out before delivery',s:'<span style="white-space:nowrap">'+pl(lateP.length,'product')+' ·</span> <span style="white-space:nowrap">'+st.del+'-day delivery</span>',go:'Plan restock'},
+      {t:'out',c:'var(--pv2-bad)',l:so.map(function(x){return x.p}),cls:' ip-out',n:[soN,'size'],t1:'Sold out now',s:miss?'<strong>EGP '+fmt(miss)+'</strong> a day not sold':'No sales '+P().phrase,go:'See them'},
+      {t:'dead',c:'var(--pv2-mut)',l:IP.DEAD,dash:1,n:[IP.DEAD.length,'product'],t1:'Barely selling',s:'<strong>EGP '+fmt(cash)+'</strong> sitting still',go:'See them'},
+      {t:'unk',c:'var(--pv2-warn)',l:unkP,dash:1,n:[unk,'size'],t1:'Stock unknown',s:'Shopify isn’t counting them',go:'See why'}];
     $('#ia-tiles').innerHTML=T.map(function(x){var pics=x.l.length?'<span class="pa-pics'+(x.cls||'')+'">'+U.stack(x.l,x.dash,more(x.l))+'</span>':'';
       return '<button type="button" class="ia-t'+(x.l.length?'':' none')+'" data-totab="'+x.t+'" style="--c:'+x.c+'">'+pics
-        +'<span class="pa-txt"><span class="pa-t">'+x.t1+'</span><span class="pa-s">'+x.s+'</span></span><span class="pa-go">'+x.go+' '+U.ARW+'</span></button>'}).join('');
+        +'<span class="pa-txt"><span class="pa-n">'+x.n[0]+'<small>'+(x.n[0]===1?x.n[1]:x.n[1]+'s')+'</small></span><span class="pa-t">'+x.t1+'</span><span class="pa-s">'+x.s+'</span></span><span class="pa-go">'+x.go+' '+U.ARW+'</span></button>'}).join('');
     $('[data-n=restock]').textContent=late||'';$('[data-n=out]').textContent=soN;$('[data-n=dead]').textContent=IP.DEAD.length;$('[data-n=unk]').textContent=unk;$('[data-n=all]').textContent=PR.length;
   }
 
@@ -1486,15 +1495,17 @@ var IPU=(function(){
     $('#ia-prods').innerHTML=list.map(function(x){var p=x[0],pl=x[1],f=pl.first,col=f.lasts<st.del?'var(--pv2-bad)':f.lasts<st.del+7?'var(--pv2-warn)':'var(--pv2-good)',w=isFinite(f.lasts)?Math.max(4,Math.min(100,f.lasts/(st.cover+st.del)*100)):100,one=p.sizes.length===1;
       return '<div class="pv2-prod'+(st.open[p.id]?' pv2-open':'')+'" data-id="'+p.id+'"><button type="button" class="pv2-prow" aria-expanded="'+!!st.open[p.id]+'">'
         +thumb(p)+'<span class="pv2-pn">'+p.main+CHEV+'</span><span class="pv2-ord">Order '+pl.ord+'</span>'
-        +'<span class="pv2-pm"><b>'+p.left+' left</b> · <span class="'+(f.lasts<st.del?'r':'')+'">'+(p.left===0?'every size sold out since '+p.out:(one?'':f.s+' ')+IP.when(f.lasts))+'</span></span>'
+        +'<span class="pv2-pm"><b>'+p.left+' left</b> · <span class="'+(f.lasts<st.del?'r':'')+'">'+(p.left===0?'all sizes sold out':(one?'':f.s+' ')+IP.when(f.lasts))+'</span></span>'
         +'<span class="pv2-run"><i style="--w:'+w+'%;--c:'+col+'"></i></span></button>'
         +'<div class="pv2-det"><div><p class="pv2-call'+(f.lasts>=st.del+7?' ok':'')+'">'+(one?'':f.s+' ')+IP.when(f.lasts)+(f.lasts<st.del&&f.lasts>0?' — before a '+st.del+'-day delivery could land':f.lasts===0?' — order now':'')+'</p>'
         +'<table class="pv2-tbl"><thead><tr><th>Size</th><th class="hp">Sells/day</th><th>In stock</th><th>Runs out</th><th>Order</th></tr></thead><tbody>'
         +pl.rows.map(function(r){var t=tone(r.lasts);return '<tr><td>'+r.s+'</td><td class="hp">'+r.rate.toFixed(1)+'</td><td class="'+(r.unk?'u':r.st===0||r.st<=2?'r':r.st<=4?'w':'')+'">'+(r.unk?'not tracked':r.st?r.st:'out')+'</td><td class="'+t+'">'+(r.unk?'?':r.lasts===0?'now':!isFinite(r.lasts)?'—':r.lasts<1?'today':IP.dateIn(r.lasts))+'</td><td>'+(r.ord?'<b>'+r.ord+'</b>':'—')+'</td></tr>'}).join('')
         +'</tbody></table></div></div></div>'}).join('')||'<p class="ip-empty">Every size lasts '+st.cover+' days after a '+st.del+'-day delivery at '+P().pace+'.</p>';
-    $('#ia-sum').innerHTML=tot?'Order <b>'+fmt(tot)+' pieces</b> across '+list.length+' products'+(late?' · <span class="r"><b>'+late+' sizes</b> run out before a delivery could land</span>':''):'Nothing to order for '+st.cover+' days at '+P().pace+'.';
-    var unk=unknowns().map(function(p){return p.main+(p.unknownSizes.length<p.sizes.length?' '+p.unknownSizes.join(', '):'')});
-    $('#ia-skip').innerHTML='Left out of this plan: '+(unk.length?unk.join(' and ')+' (stock not tracked — <button type="button" data-totab="unk">see why</button>)':'')+(IP.DEAD.length?(unk.length?' · ':'')+IP.DEAD.map(function(p){return p.main}).join(' and ')+' (not selling — <button type="button" data-totab="dead">see</button>)':'')+'.';
+    $('#ia-sum').innerHTML=tot?'<span>Order <b>'+fmt(tot)+' pieces</b> for '+list.length+' products</span>'+(late?'<span class="r"><span><b>'+late+' sizes</b> run out before delivery</span></span>':''):'Nothing to order for '+st.cover+' days at '+P().pace+'.';
+    var unk=unknowns().map(function(p){return p.main.split(' ')[0]+(p.unknownSizes.length<p.sizes.length?' ('+p.unknownSizes.join(', ')+')':'')});
+    $('#ia-skip').innerHTML=(unk.length||IP.DEAD.length)?'<b>Left out of this plan</b>'
+      +(unk.length?'<span><i>Stock not tracked:</i> '+unk.join(', ')+' · <button type="button" data-totab="unk">See why</button></span>':'')
+      +(IP.DEAD.length?'<span><i>Barely selling:</i> '+IP.DEAD.map(function(p){return p.main.split(' ')[0]}).join(', ')+' · <button type="button" data-totab="dead">See them</button></span>':''):'';
     st.list=list;
   }
   function copyText(){var lines=['Restock order — '+st.cover+' days of cover, delivery takes '+st.del+' days ('+P().pace+')'];
@@ -1588,7 +1599,7 @@ var IPU=(function(){
   function all(){IP.compute(U.perKey());tiles();restock();grid();lists();tips();place()}
   document.addEventListener('per:change',all);
   var units=PR.reduce(function(a,p){return a+p.left},0),sizes=PR.reduce(function(a,p){return a+p.sizes.length},0);
-  $('#ia-count').textContent=fmt(units)+' pieces in stock · '+PR.length+' products · '+sizes+' sizes';
+  $('#ia-count').textContent=fmt(units)+' pieces in stock across '+PR.length+' products';
   all();
   var pid=U.params.get('p'),tab=U.params.get('tab');
   if(pid&&IP.byId(pid)){var inPlan=(st.list||[]).some(function(x){return x[0].id===pid});
