@@ -2054,6 +2054,22 @@ main { gap: 24px; }
 /* round 9 · this look only */
 .topgrid > .att-panel{align-self:start}
 .att-panel .att{display:block}
+
+/* === ROUND 10b START === */
+/* §1 card text >= 12px: the small "EGP" prefixes, the FN mark and the card name never under 12px; prefixes stay lighter than their figure */
+.cv2-tv small{font-size:max(12px,.64em)}
+.cv2-fn{font-size:max(12px,calc(var(--cv2-u) * 2.9))}
+.cv2-nm{font-size:max(12px,calc(var(--cv2-u) * 4.1))}
+/* §1b sales front on phones: the three tiles share the row by what they hold, so the 12px "EGP" in "EGP 1,446" and "Cancelled/returned" fit whole */
+@media (max-width:400px){.cv2-sales .cv2-tiles.cv2-st{gap:4px;grid-template-columns:minmax(0,1.62fr) minmax(0,.66fr) minmax(0,1.06fr)}.cv2-sales .cv2-st > div{padding-left:5px;padding-right:5px}}
+/* §2 courier front on phones: a touch less padding before each figure so "Stuck 7d+" fits whole */
+@media (max-width:420px){.cv2-ship .cv2-q4{grid-template-columns:minmax(0,.95fr) repeat(2,minmax(0,1fr)) minmax(0,1.05fr)}.cv2-ship .cv2-q4 > div{padding-left:calc(var(--cv2-u) * 2.4)}.cv2-ship .cv2-q4 > div:first-child{padding-left:0}}
+/* §3 a metric label may wrap, but its last word and the "i" stay together */
+.xp-nw{white-space:nowrap}
+/* §4 round buttons <= 380px: slightly smaller circles spread edge to edge, so the labels get room between them */
+@media (max-width:400px){.qa1{grid-template-columns:repeat(5,54px);justify-content:space-between;gap:0}}
+@media (max-width:380px){.qa1{grid-template-columns:repeat(5,48px);justify-content:space-between;gap:0}.qa1 .qa1-o{width:48px;height:48px}.qa1 .qa1-b{white-space:nowrap;letter-spacing:-.01em}}
+/* === ROUND 10b END === */
 </style>
 <script>
 /* === PERIODS v1 START === */
@@ -2499,12 +2515,12 @@ window.perSet=function(key){
       <section class="panel s5">
         <div class="ph"><h3>Ad health</h3></div>
         <div class="ad4">
-          <div class="mini"><div class="k"><span class="xp-lbl">CTR<button type="button" class="xp-b" data-xp="h_ctr" aria-label="Explain: CTR">i</button></span></div><div class="v">1.84%</div></div>
-          <div class="mini"><div class="k"><span class="xp-lbl">CPC<button type="button" class="xp-b" data-xp="h_cpc" aria-label="Explain: CPC">i</button></span></div><div class="v" data-per-t="h_cpc">EGP 6</div></div>
-          <div class="mini"><div class="k"><span class="xp-lbl">Cost / purchase<button type="button" class="xp-b" data-xp="h_cpp" aria-label="Explain: cost per purchase">i</button></span></div><div class="v" data-per-t="h_cpp">EGP 526</div></div>
-          <div class="mini g"><div class="k"><span class="xp-lbl">Ads ROAS<button type="button" class="xp-b" data-xp="h_roas" aria-label="Explain: ads ROAS">i</button></span></div><div class="v" data-per-t="h_roas">2.75x</div></div>
-          <div class="mini w"><div class="k"><span class="xp-lbl">Ads report vs your store<button type="button" class="xp-b" data-xp="h_gap" aria-label="Explain: ads report vs your store">i</button></span></div><div class="v" data-per-t="h_gap">−0.38x</div></div>
-          <div class="mini"><div class="k"><span class="xp-lbl">Purchases<button type="button" class="xp-b" data-xp="h_purch" aria-label="Explain: purchases">i</button></span></div><div class="v" data-per-t="h_purch">203</div></div>
+          <div class="mini"><div class="k"><span class="xp-lbl"><span class="xp-nw">CTR<button type="button" class="xp-b" data-xp="h_ctr" aria-label="Explain: CTR">i</button></span></span></div><div class="v">1.84%</div></div>
+          <div class="mini"><div class="k"><span class="xp-lbl"><span class="xp-nw">CPC<button type="button" class="xp-b" data-xp="h_cpc" aria-label="Explain: CPC">i</button></span></span></div><div class="v" data-per-t="h_cpc">EGP 6</div></div>
+          <div class="mini"><div class="k"><span class="xp-lbl">Cost / <span class="xp-nw">purchase<button type="button" class="xp-b" data-xp="h_cpp" aria-label="Explain: cost per purchase">i</button></span></span></div><div class="v" data-per-t="h_cpp">EGP 526</div></div>
+          <div class="mini g"><div class="k"><span class="xp-lbl">Ads <span class="xp-nw">ROAS<button type="button" class="xp-b" data-xp="h_roas" aria-label="Explain: ads ROAS">i</button></span></span></div><div class="v" data-per-t="h_roas">2.75x</div></div>
+          <div class="mini w"><div class="k"><span class="xp-lbl">Ads report vs your <span class="xp-nw">store<button type="button" class="xp-b" data-xp="h_gap" aria-label="Explain: ads report vs your store">i</button></span></span></div><div class="v" data-per-t="h_gap">−0.38x</div></div>
+          <div class="mini"><div class="k"><span class="xp-lbl"><span class="xp-nw">Purchases<button type="button" class="xp-b" data-xp="h_purch" aria-label="Explain: purchases">i</button></span></span></div><div class="v" data-per-t="h_purch">203</div></div>
         </div>
         <div class="camps">
           <div class="cp g" style="--dc:var(--good)"><span class="d"></span><div><small>Best campaign</small><b>Satin Edit · Advantage+</b></div><span class="x">3.4x</span></div>
