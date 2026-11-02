@@ -746,11 +746,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 }
 /* === PSHEET v1 END === */
 
-/* sticky tabs: N's .seg, sized for these pages */
-.ip .tabbar{top:calc(env(safe-area-inset-top,0px) + 10px)}
-.ip .seg{width:auto;max-width:100%}
-.ip .seg button{padding:10px 18px}
-@media (max-width:600px){.ip .tabbar{margin:0 -16px;padding:0 16px}.ip .seg{width:100%}.ip .seg button{padding:9px 12px;font-size:13px}.ip .seg .n{display:none}}
+/* sticky tabs: TABS v1 from the Overview, unchanged (round 16) */
 .ip .pane{scroll-margin-top:84px}
 
 /* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
@@ -801,8 +797,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (prefers-reduced-motion:reduce){.nv2-sheet.nv2-menu,.nv2-sheet.nv2-menu .nv2-ml{transition:none!important;transform:none}}
 /* === ROUND 10b END === */
 
-/* selected tab pill: a shadow that fits inside the bar, so the scroll edge never cuts it into a hard line */
-.seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22)}
 
 /* === TYPE v1 START === */
 /* Type v1 (round 14): the app-wide scale from STYLE-GUIDE.md "Type and spacing scale". Same steps as the Overview's
@@ -814,7 +808,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:24px}
 :root .pv2-ph{margin-bottom:16px}
 :root .pv2-ph h3{font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
-:root .ip .seg button{font-size:15px}
 :root .ip-meta,:root .pv2-per{font-size:13px}
 /* products A: revenue is the biggest thing on a card */
 :root .pa-cards .pv2-mv{font-size:32px;line-height:1.15;letter-spacing:-.02em}
@@ -848,7 +841,6 @@ html.nv2-lock{scrollbar-gutter:stable}
   :root .ip{gap:16px}
   :root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:20px}
   :root .pv2-ph h3{font-size:18px}
-  :root .ip .seg button{font-size:14px}
   :root .pa-cards .pv2-mv,:root .pb-g b,:root .ia-t .pa-n,:root .ia-big,:root .ib-big{font-size:26px}
   :root .pa-cards .pv2-mv.u{font-size:18px}
   :root .pa-sz > b{font-size:18px}
@@ -864,7 +856,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* Light v1 (round 15): light mode never reuses the dark-mode shadows. Cool, light shadows instead. */
 :root[data-theme="light"] .tipb{box-shadow:0 12px 28px -12px rgba(40,20,80,.16),0 1px 2px rgba(40,20,80,.06)}
 :root[data-theme="light"] .ip-more{box-shadow:0 4px 12px -4px rgba(40,20,80,.14)}
-:root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
 /* === LIGHT v1 END === */
 
@@ -874,22 +865,19 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:1023px){
   :root .ip-link,:root .ip-btn,:root .ip-chip,:root .pv2-copy{height:44px}
   :root .ip-search{height:46px}
-  :root .ip .seg button{min-height:44px}
   :root .ip .pv2-sort button{height:44px}
   :root .ip .pv2-seg button{height:44px;min-width:48px}
   :root .ip-more::after{content:"";position:absolute;inset:-7px}
   :root :is(.ia-skip,.ib-out,.pa-foot) button{position:relative}
   :root :is(.ia-skip,.ib-out,.pa-foot) button::after{content:"";position:absolute;inset:-12px}
 }
-/* the "i" keeps its 18px look; an invisible 44px box around it takes the tap */
-:root .tip{position:relative}
-:root .tip::after{content:"";position:absolute;inset:-13px}
+/* the "i" icons: TAP v1 gives them their 44px hit box */
 /* #3 contrast >= 4.5:1: darker red/amber text on light tints; dark text on the bright badges in dark mode */
 :root[data-theme="light"] :is(.ia-c.w,.ip-tag.w,.ia-sz.w b,.ip .pv2-tbl td.w){color:#7a5208}
 :root[data-theme="light"] :is(.ia-c.r,.ip-tag.r,.ia-sz.o b,.ia-sz.o em,.ip .pv2-tbl td.r){color:#a32a37}
 :root:not([data-theme="light"]) .pa-badge{color:#170d22}
-:root[data-theme="light"] .ip .seg .n.r{color:#a32a37}
-:root:not([data-theme="light"]) .ip .seg .n.r{color:#ff9aa3}
+:root[data-theme="light"] .ip .seg button:not(.on) .n.r{color:#a32a37}
+:root:not([data-theme="light"]) .ip .seg button:not(.on) .n.r{color:#ff9aa3}
 /* sold-out sizes: struck through, still readable (not faded) */
 :root .ia-sz.o em{text-decoration:line-through;text-decoration-thickness:1.5px}
 /* #4 nothing under 12px */
@@ -906,7 +894,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root .ia-szs{gap:8px}
 :root .ia-t{gap:8px;padding:16px}
 :root .ia-t .pa-go{padding-top:8px;gap:4px}
-:root :is(.ip-chip,.ip-btn,.pv2-copy,.ip .seg button){gap:8px}
+:root :is(.ip-chip,.ip-btn,.pv2-copy){gap:8px}
 :root .ip-chip{padding:0 12px}
 :root .ip-btn{padding:0 16px}
 /* one box fewer: the restock plan sits in its panel on a hairline, not in a second bordered box */
@@ -939,7 +927,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .seg::-webkit-scrollbar{display:none}
 .tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
-  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+  box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
 .seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:15px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
@@ -947,7 +935,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
 .seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
 .seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
-:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line,rgba(40,20,70,.12));box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
 :root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
@@ -1484,6 +1472,8 @@ main{gap:24px}
   /* small pills on the card backs (Close, Ads Manager, …): a centred box of at least 44×44 */
   :root :is(.cv2-close,.cv2-lnk){position:relative}
   :root :is(.cv2-close,.cv2-lnk)::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+  /* shared top-bar popover rows (date options, Profile, Dark mode, Sign out, brand list) were 42px */
+  :root .nv2-mi{min-height:44px}
 }
 /* === TAP v1 END === */
 </style>
