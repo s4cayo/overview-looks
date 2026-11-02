@@ -2580,6 +2580,107 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (prefers-reduced-motion:reduce){.sb3,.sb3 *,.sb3 *::before{transition:none!important}}
 /* === SIDEBAR v3 END === */
 /* === LIGHT v1 START === */
+/* Light v1 (round 15): a clean light treatment for the effects the dark look carried over. Light only — every rule is
+   scoped to :root[data-theme="light"], which the head script sets from the switch OR the OS preference, so "prefers light"
+   users get it too. Rules: white surfaces, pale brand tints (#550da6 / #7c3fc1 / #a275e0 / gold #d8c49a), cool shadows
+   rgba(40,20,80,.06–.12), crisp 1px borders, no dark glows. Tints fade to a transparent of the SAME colour (never to
+   `transparent` = black) so nothing goes grey. The desktop sidebar (aside.side) is left alone. */
+:root[data-theme="light"]{--lt-line:rgba(60,20,110,.10);--lt-line2:rgba(60,20,110,.16);
+  --lt-sh1:0 1px 2px rgba(40,20,80,.06);--lt-sh2:0 1px 2px rgba(40,20,80,.05),0 8px 22px -14px rgba(40,20,80,.16)}
+
+/* card carousel: the cards' dark drop shadow was cut off flat by the stage (a grey bar with a hard bottom edge) */
+:root[data-theme="light"] .cv2{--cv2-glowo:.32}
+:root[data-theme="light"] .cv2 .cv2-front,:root[data-theme="light"] .cv2 .cv2-back{
+  box-shadow:0 1px 2px rgba(40,20,80,.10),0 14px 24px -16px rgba(40,20,80,.34),0 0 0 1px rgba(255,255,255,.12) inset}
+:root[data-theme="light"] .cv2 .cv2-card:focus-visible .cv2-front,:root[data-theme="light"] .cv2 .cv2-card:focus-visible .cv2-back{
+  box-shadow:0 0 0 2px var(--cv2-acc),0 14px 24px -16px rgba(40,20,80,.34)}
+
+/* round quick actions: lighter lift, crisp ring */
+:root[data-theme="light"] .qa1 .qa1-o{background:#fff;border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.06),0 6px 16px -10px rgba(40,20,80,.22);backdrop-filter:none;-webkit-backdrop-filter:none}
+:root[data-theme="light"] .qa1 .qa1-b:hover .qa1-o{background:#f6f0fd;border-color:rgba(124,63,193,.28);box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 20px -12px rgba(85,13,166,.30)}
+:root[data-theme="light"] .qa1 .qa1-ai .qa1-o{box-shadow:0 8px 18px -10px rgba(85,13,166,.45),inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* store pulse: white tiles; the corner glows were grey-lavender and brown-beige smudges */
+:root[data-theme="light"] .pu .pu-kt{background:#fff;border-color:var(--lt-line);box-shadow:var(--lt-sh1)}
+:root[data-theme="light"] .pu .pu-kt::before{width:170px;height:170px;right:-78px;top:-92px;background:radial-gradient(closest-side,rgba(162,117,224,.18),rgba(162,117,224,0))}
+:root[data-theme="light"] .pu .pu-kt[style*="--pu-glow"]::before{background:radial-gradient(closest-side,rgba(216,196,154,.38),rgba(216,196,154,0))}
+:root[data-theme="light"] .pu .pu-kt:hover{border-color:rgba(124,63,193,.26);box-shadow:0 1px 2px rgba(40,20,80,.05),0 12px 24px -16px rgba(85,13,166,.28)}
+:root[data-theme="light"] .pu .pu-mbars i{background:linear-gradient(180deg,#c3a6ec,#a27ddb);opacity:1}
+:root[data-theme="light"] .pu .pu-mbars i.pu-hi{background:linear-gradient(180deg,#7c3fc1,#550da6);box-shadow:0 4px 10px -4px rgba(85,13,166,.45)}
+:root[data-theme="light"] .pu .pu-segs i.pu-on.pu-last{box-shadow:none}
+:root[data-theme="light"] .pu .pu-live i{box-shadow:0 0 0 3px rgba(85,13,166,.12)}
+
+/* needs attention tickets: clean blush / cream stubs instead of muddy pink-grey and beige */
+:root[data-theme="light"] .at11-t{background:#fff;border-color:var(--lt-line);box-shadow:var(--lt-sh1)}
+:root[data-theme="light"] .at11-t::before,:root[data-theme="light"] .at11-t::after{border-color:var(--lt-line)}
+:root[data-theme="light"] .at11-stub{background:#fbf6ea;color:#7f5406;border-color:rgba(60,20,110,.14)}
+:root[data-theme="light"] .at11-now .at11-stub{background:#fdeef0;color:#b0283a}
+:root[data-theme="light"] .at11-now .at11-v{color:#b0283a}
+:root[data-theme="light"] .at11-a{color:#550da6;background:#f4edfc;border-color:rgba(85,13,166,.16)}
+:root[data-theme="light"] .at11-t:hover{border-color:rgba(124,63,193,.32);box-shadow:0 1px 2px rgba(40,20,80,.05),0 10px 22px -16px rgba(85,13,166,.30)}
+:root[data-theme="light"] .at11-t:hover .at11-a{background:#ebe0fa;border-color:rgba(85,13,166,.28)}
+@media (max-width:600px){:root[data-theme="light"] .at11-a{background:#f4edfc;border-color:rgba(85,13,166,.16)}}
+
+/* ask the assistant: a pale lavender wash, not a 30% purple fog */
+:root[data-theme="light"] .ask{background:linear-gradient(90deg,#efe6fb,#f9f6fe);border-color:rgba(124,63,193,.22)}
+:root[data-theme="light"] .ask:hover,:root[data-theme="light"] .ask.pulse{border-color:rgba(124,63,193,.5);box-shadow:0 10px 22px -16px rgba(85,13,166,.35)}
+:root[data-theme="light"] .ask .o{box-shadow:0 4px 10px -4px rgba(85,13,166,.45)}
+:root[data-theme="light"] .ask > .i{color:#550da6}
+
+/* tab bar: the dark smear it cast on the panel below */
+:root[data-theme="light"] .seg{border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
+:root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
+
+/* account: chart glow, receipts */
+:root[data-theme="light"] .acc{--acc-glow-o:.12;--acc-sel-glow:0 0 0 3px rgba(124,63,193,.10),0 8px 18px -12px rgba(85,13,166,.30);
+  --acc-sel-bg:linear-gradient(180deg,#f6f0fd,#fff);--acc-card:#fbfafd;
+  --acc-way:linear-gradient(180deg,#fbf6ea,#fefcf8);--acc-way-line:rgba(168,132,60,.30)}
+:root[data-theme="light"] #acc-spG stop:first-child{stop-opacity:.26}
+:root[data-theme="light"] .acc .acc-ic{background:#f6f3fa;border-color:var(--lt-line)}
+
+/* ads: best-campaign hero, funnel, health tiles */
+:root[data-theme="light"] .av2-win{border-color:rgba(168,132,60,.30);
+  background:radial-gradient(110% 90% at 100% 0%,rgba(216,196,154,.30),rgba(216,196,154,0) 55%),linear-gradient(160deg,#f3ebfd,#faf7fe 55%,#fff);
+  box-shadow:0 1px 2px rgba(40,20,80,.05),0 10px 24px -18px rgba(85,13,166,.28)}
+:root[data-theme="light"] .av2-win:hover{border-color:rgba(168,132,60,.55);box-shadow:0 1px 2px rgba(40,20,80,.05),0 14px 28px -18px rgba(85,13,166,.34)}
+:root[data-theme="light"] .fb{background:linear-gradient(90deg,#550da6,#7c3fc1);box-shadow:0 6px 16px -10px rgba(85,13,166,.45)}
+:root[data-theme="light"] .fb span{color:rgba(255,255,255,.92)}
+:root[data-theme="light"] .fb b em{color:#f3dfae}
+:root[data-theme="light"] .fb.last{background:linear-gradient(90deg,#0f7a52,#14875c);box-shadow:0 6px 16px -10px rgba(15,122,82,.45)}
+:root[data-theme="light"] .mini,:root[data-theme="light"] .cp,:root[data-theme="light"] .stat{background:#fbfafd;border-color:var(--lt-line)}
+:root[data-theme="light"] .cp .d{box-shadow:0 0 0 3px color-mix(in srgb,var(--dc) 16%,#fff)}
+
+/* orders: the deep-purple Bosta lane stays, it just needs to sit on the page */
+:root[data-theme="light"] .lane{box-shadow:0 1px 2px rgba(40,20,80,.08),0 12px 26px -18px rgba(40,20,80,.40)}
+
+/* products: cards, size tracks, low-stock planner buttons */
+:root[data-theme="light"] .pv2{--pv2-track:#efeaf6}
+:root[data-theme="light"] .pv2 .pv2-card{border-color:var(--lt-line);box-shadow:var(--lt-sh1)}
+:root[data-theme="light"] .pv2 .pv2-sind{box-shadow:0 4px 10px -4px rgba(85,13,166,.45)}
+:root[data-theme="light"] .pv2 .pv2-ord{box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 4px 12px -6px rgba(85,13,166,.5)}
+:root[data-theme="light"] .pv2 .pv2-prow:hover .pv2-ord:not(.ok){box-shadow:0 0 0 1px rgba(255,255,255,.16) inset,0 8px 16px -8px rgba(85,13,166,.55)}
+:root[data-theme="light"] .pv2 .pv2-ord.ok{box-shadow:none}
+:root[data-theme="light"] .pv2 .pv2-swc{box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 3px 8px -4px rgba(40,20,80,.35)}
+
+/* product drawer: a light scrim instead of a grey-violet fog, and an edge shadow */
+:root[data-theme="light"] .ip-scrim{background:rgba(32,18,64,.26)}
+:root[data-theme="light"] .ip-sheet{box-shadow:-1px 0 0 rgba(60,20,110,.06),-24px 0 48px -28px rgba(40,20,80,.30)}
+@media (max-width:767px){:root[data-theme="light"] .ip-sheet{box-shadow:0 -1px 0 rgba(60,20,110,.06),0 -20px 44px -24px rgba(40,20,80,.30)}}
+
+/* top bar popovers, phone dock, full-screen menu */
+:root[data-theme="light"] .nv2-top,:root[data-theme="light"] .nv2-dock,:root[data-theme="light"] .nv2-sheet,:root[data-theme="light"] .nv2-scrim{
+  --nv2-shadow:0 1px 2px rgba(40,20,80,.06),0 14px 32px -16px rgba(40,20,80,.24);--nv2-line2:rgba(60,20,110,.14)}
+:root[data-theme="light"] .nv2-scrim{background:rgba(32,18,64,.26)}
+:root[data-theme="light"] .nv2-sheet{box-shadow:0 -1px 0 rgba(60,20,110,.06),0 -18px 40px -24px rgba(40,20,80,.28)}
+:root[data-theme="light"] .nv2-sheet.nv2-menu{background:#fbfafd;box-shadow:none}
+:root[data-theme="light"] .nv2-mr[aria-current="page"],:root[data-theme="light"] .nv2-msub a[aria-current="page"]{background:#f1e9fc;color:#550da6}
+:root[data-theme="light"] .nv2-menu .nv2-mr[aria-current="page"] .nv2-i{color:#550da6}
+@media (hover:hover){:root[data-theme="light"] .nv2-mr:not([aria-current]):hover{background:#f6f2fc}}
+:root[data-theme="light"] .nv2-dock .nv2-pill > *[aria-current="page"] .nv2-i{filter:none}
+:root[data-theme="light"] .nv2-dock .nv2-pill > *[aria-current="page"] > span{text-shadow:none}
+:root[data-theme="light"] .nv2-mbtn{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.26),0 0 0 1px rgba(60,20,110,.12)}
+:root[data-theme="light"] .nv2-mask{box-shadow:0 8px 20px -10px rgba(85,13,166,.5)}
 /* === LIGHT v1 END === */
 /* === TYPE v1 START === */
 /* Type v1 (round 14, Sam + a client: "the fonts need to be bigger on the things that are important"). One scale on
