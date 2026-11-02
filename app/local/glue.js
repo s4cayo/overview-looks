@@ -13,14 +13,17 @@
     assistant: BASE + "pages/assistant/G-gemini.html",
     competitors: BASE + "pages/competitors/competitors-A.html",
     connections: BASE + "pages/settings/connections-B.html",
-    admin: BASE + "pages/brands-admin/admin-D.html"
+    admin: BASE + "pages/brands-admin/admin-D.html",
+    ads: BASE + "pages/ads/ads-A.html",
+    adsmanager: BASE + "pages/ads/manager-A.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",
-    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors", connections: "connections", admin: "admin" };
+    products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors", connections: "connections", admin: "admin",
+    "meta ads": "ads", "ads report": "ads", "ads": "ads", "ads manager": "adsmanager" };
   // data-*-go keys used by the pages (Orders pages call Orders "sales" and Shipping "orders").
   var KEY = { overview: "overview", sales: "orders", orders: "shipping", products: "products",
-    inventory: "inventory", assistant: "assistant", competitors: "competitors", connections: "connections", admin: "admin" };
-  var SOON = /^(all brands|meta ads|ads manager|ads report|ads|settings|workspace|brands|adsmanager|elsewhere)$/;
+    inventory: "inventory", assistant: "assistant", competitors: "competitors", connections: "connections", admin: "admin", ads: "ads", adsmanager: "adsmanager" };
+  var SOON = /^(all brands|settings|workspace|brands|elsewhere)$/;
 
   var here = Object.keys(URL).find(function (k) { return location.pathname === URL[k]; });
 
@@ -75,6 +78,8 @@
     // In-page links that open another page of the app ("All orders", "Recover" on the Overview).
     var ag = el.getAttribute("data-app-go");
     if (ag && URL[ag]) { go(ag, e); return; }
+    // Overview "Ads Manager" action row opens the Ads Manager page.
+    if (el.getAttribute("data-av2-go") === "adsmanager") { go("adsmanager", e); return; }
     // In-page links between Products and Inventory.
     var ip = el.getAttribute("data-ip-go");
     if (ip && KEY[ip]) { go(KEY[ip], e); return; }
