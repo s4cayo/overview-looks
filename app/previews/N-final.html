@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- === ACCOUNT v1 START === --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"><!-- === ACCOUNT v1 END === -->
+<!-- === ACCOUNT v1 START === --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..700&display=swap"><!-- === ACCOUNT v1 END === -->
 <script>
 /* theme: remembered choice first, else the OS preference */
 (function(){var t=null;try{t=localStorage.getItem("n-theme")}catch(e){}
@@ -2019,104 +2019,148 @@ main { gap: 24px; }
   --pu-shadow:none;--pu-blur:none;--pu-lfont:600 12px Geist,system-ui,sans-serif;--pu-vfont:600 30px/1.12 Geist,system-ui,sans-serif;--pu-vfont-s:22px}
 :root[data-theme="light"] .pu{--pu-shadow:0 1px 2px rgba(24,16,40,.05),0 12px 30px -20px rgba(40,20,80,.25);--pu-live:var(--p)}
 /* === ACCOUNT v1 START === */
-/* Account v1 = AB-overview's Account tab, self-contained (acc- prefix). AB's font + colours as tokens; light when <html data-theme="light">. */
-.acc{--acc-panel:rgba(17,12,30,.62);--acc-line:rgba(255,255,255,.08);--acc-line-hi:rgba(255,255,255,.14);
-  --acc-fg:#efeaf7;--acc-fg-2:#b0a7c3;--acc-fg-3:#7d7491;--acc-gold:#d8c49a;--acc-ok:#5fd3a8;
-  --acc-sales:#a275e0;--acc-spend:#d8c49a;--acc-chart-dot:#0c0916;--acc-cell:rgba(14,10,24,.92);
+/* Account v1 = the Account tab, self-contained (acc- prefix). Light when <html data-theme="light">.
+   Round 14: the reference's layout in the brand's colours — a chart with date markers, a y-axis fitted to the data and
+   glowing lines with a dot on every value; Estimated / Collected as two summary cards (the chosen one glows purple);
+   a receipt of icon tiles, "− EGP" deductions, a "subtotal" under Cash collected and a connector tree under "Still with
+   Bosta". Type scale (TYPE v1): titles 20px, key figures 30px, row names 15px, amounts 16px, secondary 13px, nothing < 12px. */
+.acc{--acc-panel:rgba(17,12,30,.62);--acc-card:rgba(255,255,255,.035);--acc-line:rgba(255,255,255,.08);--acc-line-hi:rgba(255,255,255,.14);
+  --acc-fg:#f1ecf9;--acc-fg-2:#bfb6d1;--acc-fg-3:#958ca9;--acc-axis:#958ca9;--acc-gold:#d8c49a;--acc-ok:#5fd3a8;--acc-warn:#f2c46d;
+  --acc-sales:#a275e0;--acc-spend:#d8c49a;--acc-chart-dot:#120d1f;--acc-glow-o:.55;--acc-tree:rgba(255,255,255,.22);
+  --acc-way:linear-gradient(180deg,rgba(216,196,154,.10),rgba(216,196,154,.04));--acc-way-line:rgba(216,196,154,.32);
+  --acc-sel-bg:linear-gradient(180deg,rgba(124,63,193,.22),rgba(124,63,193,.06));--acc-sel-line:rgba(162,117,224,.8);
+  --acc-sel-glow:0 0 0 1px rgba(162,117,224,.28),0 0 24px -4px rgba(124,63,193,.6),inset 0 0 22px -10px rgba(162,117,224,.6);
+  --acc-k-mut:#958ca9;--acc-k-red:#f06571;--acc-k-warn:#f2c46d;--acc-k-fg:#f1ecf9;--acc-k-cogs:#8f52d6;--acc-k-gold:#d8c49a;
+  --acc-k-comm:#a275e0;--acc-k-fees:#9a8fb0;--acc-k-ok:#5fd3a8;--acc-tile-glow:1;
   --acc-f:"Inter Tight","Segoe UI",system-ui,sans-serif;--acc-ease:cubic-bezier(.2,.8,.2,1);
-  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:stretch;min-width:0;
-  font:14px/1.45 var(--acc-f);color:var(--acc-fg);letter-spacing:normal;text-align:start;text-transform:none;
+  display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:24px;align-items:start;min-width:0;
+  font:15px/1.45 var(--acc-f);color:var(--acc-fg);letter-spacing:normal;text-align:start;text-transform:none;
   -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
-:root[data-theme="light"] .acc{--acc-panel:#ffffff;--acc-line:rgba(24,16,40,.085);--acc-line-hi:rgba(24,16,40,.15);
-  --acc-fg:#1b1428;--acc-fg-2:#554e66;--acc-fg-3:#878197;--acc-gold:#9a7b3c;--acc-ok:#18946a;
-  --acc-sales:#550da6;--acc-spend:#b89c62;--acc-chart-dot:#ffffff;--acc-cell:#fff}
+:root[data-theme="light"] .acc{--acc-panel:#ffffff;--acc-card:#faf8fd;--acc-line:rgba(24,16,40,.085);--acc-line-hi:rgba(24,16,40,.15);
+  --acc-fg:#1b1428;--acc-fg-2:#4f4861;--acc-fg-3:#6f6880;--acc-axis:#6f6880;--acc-gold:#8a6d33;--acc-ok:#13865f;--acc-warn:#8a5600;
+  --acc-sales:#550da6;--acc-spend:#b89c62;--acc-chart-dot:#ffffff;--acc-glow-o:.2;--acc-tree:rgba(24,16,40,.22);
+  --acc-way:linear-gradient(180deg,rgba(154,123,60,.09),rgba(154,123,60,.03));--acc-way-line:rgba(154,123,60,.34);
+  --acc-sel-bg:linear-gradient(180deg,rgba(124,63,193,.09),rgba(124,63,193,.02)),#fff;--acc-sel-line:#7c3fc1;
+  --acc-sel-glow:0 0 0 3px rgba(124,63,193,.12),0 10px 24px -12px rgba(85,13,166,.45);
+  --acc-k-mut:#6f6880;--acc-k-red:#c23a48;--acc-k-warn:#9a6300;--acc-k-fg:#1b1428;--acc-k-cogs:#550da6;--acc-k-gold:#8a6d33;
+  --acc-k-comm:#7c3fc1;--acc-k-fees:#625a76;--acc-k-ok:#13865f;--acc-tile-glow:0}
 .acc *,.acc *::before,.acc *::after{box-sizing:border-box}
-.acc .acc-panel{position:relative;background:var(--acc-panel);border:1px solid var(--acc-line);border-radius:22px;padding:18px;min-width:0;margin:0;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);display:flex;flex-direction:column;gap:14px;transition:border-color .25s,box-shadow .25s}
+/* panels — on a wide screen the chart panel keeps its own height and stays in view beside the long receipt */
+.acc .acc-panel{position:relative;background:var(--acc-panel);border:1px solid var(--acc-line);border-radius:22px;padding:24px;min-width:0;margin:0;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.04);display:flex;flex-direction:column;gap:16px;transition:border-color .25s}
 .acc .acc-panel:hover{border-color:rgba(162,117,224,.24)}
 :root[data-theme="light"] .acc .acc-panel{background:#fff;box-shadow:0 1px 2px rgba(24,16,40,.05),0 10px 28px -18px rgba(40,20,80,.22);backdrop-filter:none;-webkit-backdrop-filter:none}
-.acc .acc-ph{display:flex;align-items:center;justify-content:space-between;gap:8px 10px;min-height:28px;flex-wrap:wrap;margin:0;padding:0}
-.acc .acc-h2{display:flex;align-items:center;gap:10px;margin:0;padding:0;font:600 15px var(--acc-f);letter-spacing:-.005em;color:inherit;text-transform:none}
-.acc .acc-hic{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;color:var(--acc-gold);background:rgba(216,196,154,.08);border:1px solid rgba(216,196,154,.16);flex:none;margin:0}
-.acc .acc-hic svg{width:14px;height:14px}
-.acc .acc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--acc-fg-2);margin:0}
-.acc .acc-legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-.acc .acc-legend b{font-weight:500;color:var(--acc-fg);margin-left:4px}
-.acc .acc-chart-box{flex:1;display:flex;min-height:0}
-.acc .acc-chart{width:100%;height:auto;display:block;overflow:visible;align-self:center}
-.acc .acc-chart text{fill:var(--acc-fg-3);font:10.5px var(--acc-f)}
-.acc .acc-chart .acc-draw{stroke-dasharray:1200;stroke-dashoffset:1200;animation:acc-draw 1.1s cubic-bezier(.3,.7,.2,1) .1s forwards}
+@media (min-width:1181px){.acc > .acc-panel:first-child{position:sticky;top:64px}}
+.acc .acc-ph{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;min-height:32px;flex-wrap:wrap;margin:0;padding:0}
+.acc .acc-h2{display:flex;align-items:center;gap:12px;margin:0;padding:0;font:650 20px/1.2 var(--acc-f);letter-spacing:-.01em;color:inherit;text-transform:none}
+.acc .acc-hic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:var(--acc-gold);background:rgba(216,196,154,.08);border:1px solid rgba(216,196,154,.18);flex:none;margin:0}
+.acc .acc-hic svg{width:16px;height:16px}
+.acc .acc-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--acc-fg-2);margin:0}
+.acc .acc-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.acc .acc-legend b{font-weight:600;color:var(--acc-fg);margin-left:6px}
+/* chart: drawn in the box's own pixels, so its labels stay 12px at every width */
+.acc .acc-chart-box{position:relative;height:340px;margin:0}
+.acc .acc-chart{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.acc .acc-chart text{fill:var(--acc-axis);font:500 12px var(--acc-f)}
+.acc .acc-chart .acc-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:acc-draw 1.1s cubic-bezier(.3,.7,.2,1) .1s forwards}
+.acc .acc-chart .acc-glowl{opacity:0;animation:acc-glowin .7s ease .5s forwards}
 .acc .acc-chart .acc-fade{opacity:0;animation:acc-fade .7s ease .4s forwards}
 @keyframes acc-draw{to{stroke-dashoffset:0}}
 @keyframes acc-fade{to{opacity:1}}
+@keyframes acc-glowin{to{opacity:var(--acc-glow-o)}}
 @keyframes acc-grow{from{transform:scaleX(0)}}
-.acc .acc-cstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--acc-line);border-radius:14px;overflow:hidden;margin:0}
-.acc .acc-cstats > div{background:var(--acc-cell);padding:10px 14px;min-width:0}
-.acc .acc-cstats span{display:block;font-size:11.5px;color:var(--acc-fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.acc .acc-cstats b{font:400 18px var(--acc-f);white-space:nowrap;color:inherit;letter-spacing:normal}
-.acc .acc-cstats b small{font-size:10px;color:var(--acc-gold);margin-right:4px;letter-spacing:.1em}
-.acc .acc-flowbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;margin:0}
-.acc .acc-flowbar span{display:block;height:100%;transform-origin:left;animation:acc-grow .9s var(--acc-ease) both}
-.acc .acc-receipt{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));border:1px dashed var(--acc-line-hi);border-radius:14px;padding:4px 16px;display:flex;flex-direction:column;justify-content:space-between;flex:1;margin:0}
-:root[data-theme="light"] .acc .acc-receipt{background:#fbfafd}
-.acc .acc-rrow{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--acc-line);margin:0}
-.acc .acc-rrow:first-child{border-top:0}
-.acc .acc-rrow i{width:10px;height:10px;border-radius:3px}
-.acc .acc-rrow .acc-nm small{display:block;font-size:11.5px;color:var(--acc-fg-3)}
-.acc .acc-rrow .acc-am{font:400 14px var(--acc-f);white-space:nowrap;text-align:right}
-.acc .acc-rrow .acc-am.acc-neg{color:var(--acc-fg-2)}
-.acc .acc-rrow.acc-total{border-top:1px solid var(--acc-line-hi);padding:12px 0 10px}
-.acc .acc-rrow.acc-total .acc-nm{font:600 14.5px var(--acc-f)}
-.acc .acc-rrow.acc-total .acc-am{font-size:20px;color:var(--acc-ok)}
-@media (max-width:1020px){.acc{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:860px){
-  .acc .acc-panel{padding:15px;border-radius:18px}
-  .acc .acc-cstats > div{padding:9px 10px}
-  .acc .acc-cstats b{font-size:15px}
+@media (max-width:1180px){.acc .acc-chart-box{height:clamp(240px,32vw,300px)}}
+@media (max-width:559px){.acc .acc-chart-box{height:232px}}
+/* the three figures under the chart */
+.acc .acc-cstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
+.acc .acc-cstats > div{background:var(--acc-card);border:1px solid var(--acc-line);border-radius:14px;padding:12px 16px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.acc .acc-cstats > div > span{display:block;font-size:13px;line-height:1.35;color:var(--acc-fg-2)}
+.acc .acc-cstats b{font:600 20px/1.2 var(--acc-f);white-space:nowrap;color:var(--acc-fg);letter-spacing:-.005em}
+.acc .acc-cstats b small{font:600 12px var(--acc-f);color:var(--acc-gold);margin-right:6px;letter-spacing:.08em}
+@media (max-width:559px){
+  .acc .acc-cstats{grid-template-columns:minmax(0,1fr);gap:8px}
+  .acc .acc-cstats > div{flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 14px}
+  .acc .acc-cstats b{font-size:17px}
+}
+/* Estimated / Collected: two summary cards side by side, the chosen one glows purple (tabs, arrow keys switch) */
+.acc .acc-sw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin:0;container-type:inline-size}
+.acc .acc-swb{appearance:none;-webkit-appearance:none;margin:0;font:inherit;color:var(--acc-fg-2);background:var(--acc-card);cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  padding:16px;border:1px solid var(--acc-line-hi);border-radius:16px;text-align:left;min-width:0;transition:background .25s,border-color .25s,box-shadow .25s,color .25s}
+.acc .acc-swb span{font:600 14px/1.3 var(--acc-f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.acc .acc-swb span small{font-weight:400;font-size:13px;color:var(--acc-fg-3);margin-left:6px}
+/* the figure is as large as its card allows (32px max): --acc-len is its character count, set by the JS */
+.acc .acc-swb b{font:600 30px/1.1 var(--acc-f);font-size:clamp(20px,calc((50cqi - 36px) / (var(--acc-len,10) * .5)),32px);color:var(--acc-fg);white-space:nowrap;letter-spacing:-.02em}
+.acc .acc-swb:hover{border-color:rgba(162,117,224,.45);color:var(--acc-fg)}
+.acc .acc-swb[aria-selected="true"]{background:var(--acc-sel-bg);border-color:var(--acc-sel-line);color:var(--acc-fg);box-shadow:var(--acc-sel-glow)}
+.acc .acc-swb:focus-visible{outline:2px solid var(--acc-sales);outline-offset:3px}
+.acc .acc-views{display:grid;min-height:0}
+.acc .acc-view{grid-area:1 / 1;display:flex;flex-direction:column;gap:16px;min-width:0;transition:opacity .2s}
+.acc .acc-view.acc-off{visibility:hidden;opacity:0}
+.acc .acc-why{margin:0;font-size:13px;line-height:1.5;color:var(--acc-fg-2)}
+/* the flow bar: rounded segments with a soft sheen and glow */
+.acc .acc-flowbar{display:flex;height:12px;border-radius:99px;gap:3px;margin:0}
+.acc .acc-flowbar span{display:block;height:100%;border-radius:99px;min-width:4px;transform-origin:left;animation:acc-grow .9s var(--acc-ease) both;
+  background-image:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0) 75%);box-shadow:0 0 12px -4px rgba(162,117,224,.55)}
+:root[data-theme="light"] .acc .acc-flowbar span{box-shadow:none}
+/* the receipt: icon tile · name + sub-line · amount */
+.acc .acc-receipt{display:flex;flex-direction:column;margin:0;padding:0}
+.acc .acc-rrow{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--acc-line);margin:0}
+.acc .acc-rrow:first-child{border-top:0;padding-top:4px}
+.acc .acc-nm{font:500 15px/1.35 var(--acc-f);min-width:0}
+.acc .acc-nm small{display:block;margin-top:2px;font:400 13px/1.35 var(--acc-f);color:var(--acc-fg-3)}
+.acc .acc-am{font:500 16px var(--acc-f);white-space:nowrap;text-align:right;color:var(--acc-fg)}
+.acc .acc-am.acc-neg{color:var(--acc-fg-2)}
+.acc .acc-nm .xp-b{margin:0 0 0 6px}
+.acc .acc-ic{--c:var(--acc-k-mut);width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:var(--c);flex:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c) 30%,transparent),color-mix(in srgb,var(--c) 12%,transparent));
+  border:1px solid color-mix(in srgb,var(--c) 44%,transparent);
+  box-shadow:0 0 14px -4px color-mix(in srgb,var(--c) calc(var(--acc-tile-glow) * 55%),transparent)}
+.acc .acc-ic svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.acc .acc-ic.acc-solid{background:var(--c);color:#120d1f;border-color:var(--c)}
+:root[data-theme="light"] .acc .acc-ic.acc-solid{color:#fff}
+.acc .acc-rrow.acc-sub{border-top:1px solid var(--acc-line-hi)}
+.acc .acc-rrow.acc-sub .acc-nm,.acc .acc-rrow.acc-sub .acc-am{font-weight:700}
+.acc .acc-rrow.acc-total{border-top:1px solid var(--acc-line-hi);padding:16px 0 4px}
+.acc .acc-rrow.acc-total .acc-nm{font-weight:700;font-size:16px}
+.acc .acc-rrow.acc-total .acc-am{font:700 24px var(--acc-f);color:var(--acc-ok);letter-spacing:-.015em;text-shadow:0 0 18px color-mix(in srgb,var(--acc-ok) calc(var(--acc-tile-glow) * 40%),transparent)}
+.acc .acc-rrow.acc-total .acc-am.acc-loss,.acc .acc-swb b.acc-loss{color:var(--acc-warn)}
+/* "Still with Bosta" children: indented, joined to the parent's tile by a connector */
+.acc .acc-kids{display:flex;flex-direction:column;margin:-8px 0 8px 15px;padding:0}
+.acc .acc-kid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0 6px 28px;margin:0}
+.acc .acc-kid::before{content:"";position:absolute;left:0;top:0;width:20px;height:17px;border-left:1.5px solid var(--acc-tree);border-bottom:1.5px solid var(--acc-tree);border-bottom-left-radius:8px}
+.acc .acc-kid:first-child::before{top:-10px;height:27px}
+.acc .acc-kid:not(:last-child)::after{content:"";position:absolute;left:0;top:8px;bottom:0;border-left:1.5px solid var(--acc-tree)}
+.acc .acc-kid .acc-nm{font-weight:400}
+.acc .acc-kid .acc-am{font-size:15px;font-weight:400;color:var(--acc-fg-2)}
+/* "Still on the way" */
+.acc .acc-way{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px;border-radius:16px;background:var(--acc-way);border:1px solid var(--acc-way-line);margin:0}
+.acc .acc-way .acc-nm{font-weight:650}
+.acc .acc-way .acc-am{font:650 20px var(--acc-f);color:var(--acc-gold);white-space:nowrap;text-align:right}
+@media (min-width:1181px) and (max-width:1399px){.acc{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}}
+@media (max-width:1180px){.acc{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){
+  .acc{gap:16px}
+  .acc .acc-panel{padding:20px;border-radius:18px}
+  .acc .acc-h2{font-size:18px}
+  .acc .acc-sw{gap:8px}
+  .acc .acc-swb{padding:12px 14px}
+  .acc .acc-swb span small{display:block;margin:2px 0 0}
+}
+@media (max-width:400px){
+  .acc .acc-panel{padding:16px}
+  .acc .acc-rrow,.acc .acc-way{grid-template-columns:28px minmax(0,1fr) auto;gap:10px}
+  .acc .acc-ic{width:28px;height:28px;border-radius:9px}
+  .acc .acc-ic svg{width:14px;height:14px}
+  .acc .acc-kids{margin-left:13px}
+  .acc .acc-kid{padding-left:22px}
+  .acc .acc-kid::before{width:15px}
+  .acc .acc-way{grid-template-columns:28px minmax(0,1fr)}
+  .acc .acc-way .acc-am{grid-column:2;text-align:left}
+  .acc .acc-way{padding:14px 12px}
+  .acc .acc-am{font-size:15px}
+  .acc .acc-way .acc-am{font-size:18px}
 }
 @media (prefers-reduced-motion:reduce){.acc *,.acc *::before,.acc *::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}}
-/* round 8: "Where the money went" shows BOTH profits — Estimated (all orders) and Collected (in your pocket) — as a
-   two-way switch whose buttons carry both totals, the chosen receipt under it (both receipts share one grid cell, so
-   switching never changes the height), and the difference highlighted underneath: "Still on the way". The chart beside
-   it fills the panel's height instead of floating in it. */
-.acc{--acc-warn:#f2c46d;--acc-way:rgba(216,196,154,.08);--acc-way-line:rgba(216,196,154,.3)}
-:root[data-theme="light"] .acc{--acc-warn:#8a5600;--acc-way:rgba(154,123,60,.07);--acc-way-line:rgba(154,123,60,.32)}
-.acc .acc-chart-box{position:relative;aspect-ratio:640 / 230}
-.acc .acc-chart-box .acc-chart{position:absolute;inset:0;height:100%}
-@media (max-width:559px){.acc .acc-chart-box{aspect-ratio:360 / 220}}
-/* the two columns need room for the receipts: below 1180px the panels stack (was 1020px) */
-@media (max-width:1180px){.acc{grid-template-columns:minmax(0,1fr)}}
-@media (min-width:1181px){.acc .acc-chart-box{aspect-ratio:auto;min-height:230px}}
-.acc .acc-sw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;padding:4px;border-radius:14px;background:var(--acc-line);margin:0}
-.acc .acc-swb{appearance:none;-webkit-appearance:none;border:0;margin:0;font:inherit;color:var(--acc-fg-2);background:none;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:2px;
-  padding:8px 12px;border-radius:11px;text-align:left;min-width:0;transition:background .2s,color .2s,box-shadow .2s}
-.acc .acc-swb span{font:600 13px var(--acc-f);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.acc .acc-swb span small{font-weight:400;font-size:11.5px;color:var(--acc-fg-3);margin-left:6px}
-.acc .acc-swb b{font:400 18px var(--acc-f);color:var(--acc-fg);white-space:nowrap}
-.acc .acc-swb[aria-selected="true"]{background:var(--acc-cell);color:var(--acc-fg);box-shadow:0 0 0 1px var(--acc-line-hi)}
-.acc .acc-swb:hover{color:var(--acc-fg)}
-.acc .acc-swb:focus-visible{outline:2px solid var(--acc-sales);outline-offset:2px}
-.acc .acc-views{display:grid;flex:1;min-height:0}
-.acc .acc-view{grid-area:1 / 1;display:flex;flex-direction:column;gap:12px;min-width:0;transition:opacity .2s}
-.acc .acc-view.acc-off{visibility:hidden;opacity:0}
-.acc .acc-why{margin:0;font-size:12.5px;line-height:1.45;color:var(--acc-fg-2)}
-.acc .acc-rrow.acc-sub{border-top:1px solid var(--acc-line-hi)}
-.acc .acc-rrow.acc-sub .acc-nm{font-weight:600}
-.acc .acc-rrow.acc-total .acc-am.acc-loss,.acc .acc-swb b.acc-loss{color:var(--acc-warn)}
-.acc .acc-way{display:grid;grid-template-columns:12px minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 16px;border-radius:14px;background:var(--acc-way);border:1px solid var(--acc-way-line);margin:0}
-.acc .acc-way i{width:10px;height:10px;border-radius:3px;background:var(--acc-gold)}
-.acc .acc-way .acc-nm{font-weight:600}
-.acc .acc-way .acc-nm small{display:block;font-weight:400;font-size:11.5px;color:var(--acc-fg-3)}
-.acc .acc-way .acc-am{font:400 18px var(--acc-f);color:var(--acc-gold);white-space:nowrap;text-align:right}
-@media (max-width:860px){.acc .acc-swb{padding:7px 10px}.acc .acc-swb b{font-size:16px}.acc .acc-swb span small{display:block;margin:0}.acc .acc-way{padding:10px 14px}}
-/* round 9: explain eyes beside the labels; "Still with Bosta" split into two smaller sub-lines under it */
-.acc .acc-nm .xp-b{margin:0 0 0 6px}
-.acc .acc-rrow.acc-rsub{grid-template-columns:12px minmax(0,1fr) auto;padding:0 0 9px;border-top:0;margin-top:-4px;font-size:13px}
-.acc .acc-rrow.acc-rsub i{width:1px;height:auto;align-self:stretch;justify-self:center;border-radius:0;background:var(--acc-line-hi)}
-.acc .acc-rrow.acc-rsub .acc-nm{color:var(--acc-fg-2);padding-left:2px}
-.acc .acc-rrow.acc-rsub + .acc-rsub{padding-top:2px}
-.acc .acc-rrow.acc-rsub .acc-am{font-size:13px;color:var(--acc-fg-2)}
-.acc .acc-way .acc-nm .xp-b{margin:0 0 0 6px}
 /* === ACCOUNT v1 END === */
 /* === ACTIONS v1 START === */
 /* Actions v1 = J's round quick actions, self-contained (qa1- prefix). J's colours as tokens; light when <html data-theme="light">. */
@@ -2754,7 +2798,7 @@ window.perSet=function(key){
   <div class="acc-panel">
     <div class="acc-ph"><h2 class="acc-h2"><span class="acc-hic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></svg></span>Sales vs spend</h2>
       <div class="acc-legend"><span><i style="background:var(--acc-sales)"></i>Revenue</span><span><i style="background:var(--acc-spend)"></i>Ad spend<b data-acc-t="acc_spend">EGP 106,807</b></span></div></div>
-    <div class="acc-chart-box"><svg class="acc-chart" id="acc-chart" viewBox="0 0 640 230" role="img" aria-label="Daily revenue and ad spend"></svg></div>
+    <div class="acc-chart-box"><svg class="acc-chart" id="acc-chart" viewBox="0 0 640 300" role="img" aria-label="Daily revenue and ad spend"></svg></div>
     <div class="acc-cstats">
       <div><span data-acc-t="acc_c1">Best day · Thu, Oct 29</span><b><small>EGP</small><span data-acc-t="acc_v1">39,600</span></b></div>
       <div><span data-acc-t="acc_c2">Avg. revenue / day</span><b><small>EGP</small><span data-acc-t="acc_v2">36,159</span></b></div>
@@ -2770,38 +2814,40 @@ window.perSet=function(key){
     <div class="acc-views">
       <div class="acc-view acc-off" id="acc-v-est" role="tabpanel" aria-labelledby="acc-tab-est" aria-hidden="true">
         <p class="acc-why">What lands in your pocket once every order on the way is delivered, after the usual cancellations and returns. Parcels still on the way are counted as if they'll be delivered.</p>
-        <div class="acc-flowbar"><span data-acc-w="f_cogs" style="flex:72897;background:#7c3fc1"></span><span data-acc-w="f_sp" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="f_comm" style="flex:17718;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="f_fees" style="flex:9020;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="f_profit" style="flex:46671;background:var(--acc-ok);animation-delay:.4s"></span></div>
+        <div class="acc-flowbar"><span data-acc-w="f_cogs" style="flex:72897;background-color:#7c3fc1"></span><span data-acc-w="f_sp" style="flex:106807;background-color:#d8c49a;animation-delay:.1s"></span><span data-acc-w="f_comm" style="flex:17718;background-color:#a275e0;animation-delay:.2s"></span><span data-acc-w="f_fees" style="flex:9020;background-color:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="f_profit" style="flex:46671;background-color:var(--acc-ok);animation-delay:.4s"></span></div>
         <div class="acc-receipt">
-          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Ordered<small data-acc-t="est_grossn">196 orders, before discounts</small></span><span class="acc-am" data-acc-t="est_gross">EGP 291,263</span></div>
-          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Discounts</span><span class="acc-am acc-neg" data-acc-t="est_disc">− 8,400</span></div>
-          <div class="acc-rrow"><i style="background:#f06571"></i><span class="acc-nm">Cancelled orders <span data-acc-t="est_cancc">(14)</span><button type="button" class="xp-b" data-xp="x_canc" aria-label="Explain: cancelled orders">i</button><small data-acc-t="est_cancn">7.1% of 196 orders</small></span><span class="acc-am acc-neg" data-acc-t="est_canc">− 19,600</span></div>
-          <div class="acc-rrow"><i style="background:#f2c46d"></i><span class="acc-nm">Returned orders <span data-acc-t="est_retc">(7)</span><button type="button" class="xp-b" data-xp="x_ret" aria-label="Explain: returned orders">i</button><small data-acc-t="est_retn">delivered, then sent back</small></span><span class="acc-am acc-neg" data-acc-t="est_ret">− 10,150</span></div>
-          <div class="acc-rrow acc-sub"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Net revenue</span><span class="acc-am" data-acc-t="acc_rev">EGP 253,113</span></div>
-          <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg" data-acc-t="acc_cogs">− 72,897</span></div>
-          <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Ad spend<small>paid upfront</small></span><span class="acc-am acc-neg" data-acc-t="acc_sp">− 106,807</span></div>
-          <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg" data-acc-t="acc_comm">− 17,718</span></div>
-          <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees<button type="button" class="xp-b" data-xp="x_fees" aria-label="Explain: Bosta fees">i</button></span><span class="acc-am acc-neg" data-acc-t="acc_fees">− 9,020</span></div>
-          <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Estimated profit</span><span class="acc-am" data-acc-t="acc_profit">EGP 46,671</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-mut)"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></i><span class="acc-nm">Ordered<small data-acc-t="est_grossn">196 orders, before discounts</small></span><span class="acc-am" data-acc-t="est_gross">EGP 291,263</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-mut)"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l9 9-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/></svg></i><span class="acc-nm">Discounts</span><span class="acc-am acc-neg" data-acc-t="est_disc">− 8,400</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-red)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m9.5 9.5 5 5M14.5 9.5l-5 5"/></svg></i><span class="acc-nm">Cancelled orders <span data-acc-t="est_cancc">(14)</span><button type="button" class="xp-b" data-xp="x_canc" aria-label="Explain: cancelled orders">i</button><small data-acc-t="est_cancn">7.1% of 196 orders</small></span><span class="acc-am acc-neg" data-acc-t="est_canc">− 19,600</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-warn)"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></i><span class="acc-nm">Returned orders <span data-acc-t="est_retc">(7)</span><button type="button" class="xp-b" data-xp="x_ret" aria-label="Explain: returned orders">i</button><small data-acc-t="est_retn">delivered, then sent back</small></span><span class="acc-am acc-neg" data-acc-t="est_ret">− 10,150</span></div>
+          <div class="acc-rrow acc-sub"><i class="acc-ic acc-solid" style="--c:var(--acc-k-fg)"><svg viewBox="0 0 24 24"><path d="m4 16 5-5 4 4 7-7"/><path d="M15 8h5v5"/></svg></i><span class="acc-nm">Net revenue<small>subtotal</small></span><span class="acc-am" data-acc-t="acc_rev">EGP 253,113</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-cogs)"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></i><span class="acc-nm">Product cost (COGS)</span><span class="acc-am acc-neg" data-acc-t="acc_cogs">− 72,897</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-gold)"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l8 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M19 9a3 3 0 0 1 0 6"/></svg></i><span class="acc-nm">Ad spend<small>paid upfront</small></span><span class="acc-am acc-neg" data-acc-t="acc_sp">− 106,807</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-comm)"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/></svg></i><span class="acc-nm">Commission<small>7% of revenue</small></span><span class="acc-am acc-neg" data-acc-t="acc_comm">− 17,718</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-fees)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></i><span class="acc-nm">Bosta fees<button type="button" class="xp-b" data-xp="x_fees" aria-label="Explain: Bosta fees">i</button></span><span class="acc-am acc-neg" data-acc-t="acc_fees">− 9,020</span></div>
+          <div class="acc-rrow acc-total"><i class="acc-ic" style="--c:var(--acc-k-ok)"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i><span class="acc-nm">Estimated profit</span><span class="acc-am" data-acc-t="acc_profit">EGP 46,671</span></div>
         </div>
       </div>
       <div class="acc-view" id="acc-v-col" role="tabpanel" aria-labelledby="acc-tab-col" aria-hidden="false">
         <p class="acc-why">Cash Bosta has already paid you, minus everything already spent. Ads are paid upfront, so this runs behind.</p>
-        <div class="acc-flowbar"><span data-acc-w="c_cogs" style="flex:56107;background:#7c3fc1"></span><span data-acc-w="c_ads" style="flex:106807;background:#d8c49a;animation-delay:.1s"></span><span data-acc-w="c_comm" style="flex:13637;background:#a275e0;animation-delay:.2s"></span><span data-acc-w="c_fees" style="flex:6575;background:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="c_profit" style="flex:11687;background:var(--acc-ok);animation-delay:.4s"></span></div>
+        <div class="acc-flowbar"><span data-acc-w="c_cogs" style="flex:56107;background-color:#7c3fc1"></span><span data-acc-w="c_ads" style="flex:106807;background-color:#d8c49a;animation-delay:.1s"></span><span data-acc-w="c_comm" style="flex:13637;background-color:#a275e0;animation-delay:.2s"></span><span data-acc-w="c_fees" style="flex:6575;background-color:#8a7f9e;animation-delay:.3s"></span><span data-acc-w="c_profit" style="flex:11687;background-color:var(--acc-ok);animation-delay:.4s"></span></div>
         <div class="acc-receipt">
-          <div class="acc-rrow"><i style="background:var(--acc-fg-3)"></i><span class="acc-nm">Net revenue<small>all orders</small></span><span class="acc-am" data-acc-t="col_net">EGP 253,113</span></div>
-          <div class="acc-rrow"><i style="background:#f2c46d"></i><span class="acc-nm">Still with Bosta<button type="button" class="xp-b" data-xp="c_held" aria-label="Explain: still with Bosta">i</button><small>not paid out yet</small></span><span class="acc-am acc-neg" data-acc-t="col_held">− 58,300</span></div>
-          <div class="acc-rrow acc-rsub"><i></i><span class="acc-nm">Delivered, Bosta hasn't paid you yet<small data-acc-t="b_dln">next payout Mon, Nov 2</small></span><span class="acc-am" data-acc-t="b_dl">20,300</span></div>
-          <div class="acc-rrow acc-rsub"><i></i><span class="acc-nm">Not delivered yet<small data-acc-t="b_ndn">38 parcels · 9 stuck 7+ days</small></span><span class="acc-am" data-acc-t="b_nd">38,000</span></div>
-          <div class="acc-rrow acc-sub"><i style="background:var(--acc-fg)"></i><span class="acc-nm">Cash collected</span><span class="acc-am" data-acc-t="col_cash">EGP 194,813</span></div>
-          <div class="acc-rrow"><i style="background:#7c3fc1"></i><span class="acc-nm">Product cost (COGS)<small>of the collected orders</small></span><span class="acc-am acc-neg" data-acc-t="col_cogs">− 56,107</span></div>
-          <div class="acc-rrow"><i style="background:#d8c49a"></i><span class="acc-nm">Ad spend<small>all of it, paid upfront</small></span><span class="acc-am acc-neg" data-acc-t="col_ads">− 106,807</span></div>
-          <div class="acc-rrow"><i style="background:#a275e0"></i><span class="acc-nm">Commission<small>7% of the cash</small></span><span class="acc-am acc-neg" data-acc-t="col_comm">− 13,637</span></div>
-          <div class="acc-rrow"><i style="background:#8a7f9e"></i><span class="acc-nm">Bosta fees<button type="button" class="xp-b" data-xp="c_fees" aria-label="Explain: Bosta fees">i</button><small data-acc-t="col_feesn">121 delivered parcels</small></span><span class="acc-am acc-neg" data-acc-t="col_fees">− 6,575</span></div>
-          <div class="acc-rrow acc-total"><i style="background:var(--acc-ok)"></i><span class="acc-nm">Collected profit</span><span class="acc-am" data-acc-t="col_profit" data-acc-tone="col">EGP 11,687</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-mut)"><svg viewBox="0 0 24 24"><path d="m4 16 5-5 4 4 7-7"/><path d="M15 8h5v5"/></svg></i><span class="acc-nm">Net revenue<small>all orders</small></span><span class="acc-am" data-acc-t="col_net">EGP 253,113</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-warn)"><svg viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></i><span class="acc-nm">Still with Bosta<button type="button" class="xp-b" data-xp="c_held" aria-label="Explain: still with Bosta">i</button><small>not paid out yet</small></span><span class="acc-am acc-neg" data-acc-t="col_held">− 58,300</span></div>
+          <div class="acc-kids">
+            <div class="acc-kid"><span class="acc-nm">Delivered, Bosta hasn't paid you yet<small data-acc-t="b_dln">next payout Mon, Nov 2</small></span><span class="acc-am" data-acc-t="b_dl">20,300</span></div>
+            <div class="acc-kid"><span class="acc-nm">Not delivered yet<small data-acc-t="b_ndn">38 parcels · 9 stuck 7+ days</small></span><span class="acc-am" data-acc-t="b_nd">38,000</span></div>
+          </div>
+          <div class="acc-rrow acc-sub"><i class="acc-ic acc-solid" style="--c:var(--acc-k-fg)"><svg viewBox="0 0 24 24"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1z"/><path d="M4 7V6a2 2 0 0 1 2-2h10v3"/><circle cx="16" cy="13.5" r="1.2"/></svg></i><span class="acc-nm">Cash collected<small>subtotal</small></span><span class="acc-am" data-acc-t="col_cash">EGP 194,813</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-cogs)"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></i><span class="acc-nm">Product cost (COGS)<small>of the collected orders</small></span><span class="acc-am acc-neg" data-acc-t="col_cogs">− 56,107</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-gold)"><svg viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l8 5V5L7 10H4a1 1 0 0 0-1 1z"/><path d="M19 9a3 3 0 0 1 0 6"/></svg></i><span class="acc-nm">Ad spend<small>all of it, paid upfront</small></span><span class="acc-am acc-neg" data-acc-t="col_ads">− 106,807</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-comm)"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/></svg></i><span class="acc-nm">Commission<small>7% of the cash</small></span><span class="acc-am acc-neg" data-acc-t="col_comm">− 13,637</span></div>
+          <div class="acc-rrow"><i class="acc-ic" style="--c:var(--acc-k-fees)"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></i><span class="acc-nm">Bosta fees<button type="button" class="xp-b" data-xp="c_fees" aria-label="Explain: Bosta fees">i</button><small data-acc-t="col_feesn">121 delivered parcels</small></span><span class="acc-am acc-neg" data-acc-t="col_fees">− 6,575</span></div>
+          <div class="acc-rrow acc-total"><i class="acc-ic" style="--c:var(--acc-k-ok)"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></i><span class="acc-nm">Collected profit</span><span class="acc-am" data-acc-t="col_profit" data-acc-tone="col">EGP 11,687</span></div>
         </div>
       </div>
     </div>
-    <div class="acc-way"><i></i><span class="acc-nm">Still on the way<small>estimated − collected · arrives as Bosta pays, next payout Mon, Nov 2 · EGP 20,300</small></span><span class="acc-am" data-acc-t="way">EGP 34,984</span></div>
+    <div class="acc-way"><i class="acc-ic" style="--c:var(--acc-k-gold)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 2"/></svg></i><span class="acc-nm">Still on the way<small>estimated − collected · arrives as Bosta pays, next payout Mon, Nov 2 · EGP 20,300</small></span><span class="acc-am" data-acc-t="way">EGP 34,984</span></div>
   </div>
 </div>
 <!-- === ACCOUNT v1 END === -->
@@ -4157,65 +4203,87 @@ window.PSHEET_BASE='../pages/inventory-products/';   /* the card's Plan restock 
 </script>
 <script>
 /* === ACCOUNT v1 START === */
-/* Account v1: AB's Sales vs spend chart, drawn into #acc-chart.
+/* Account v1: the Sales vs spend chart, drawn into #acc-chart.
    accSetPeriod(P) — re-fills the Account tab from one period of the page's dataset (Periods v1):
    [data-acc-t="key"] gets P.t[key] (legend, the three figures under the chart, every receipt row), [data-acc-w="key"]
    the flow bars' flex from P.w, [data-acc-tone="key"] acc-loss while P.tone[key] is "w" (a collected profit below zero),
    and the chart is redrawn from P.s — one point per day (7 or 30), or eight three-hour slots for a one-day period.
-   Round 8: "Where the money went" has two receipts — Estimated (all orders) and Collected (in your pocket) — behind a
-   two-way switch ([data-acc-view]); both add up exactly and Estimated − Collected = "Still on the way" (edits8/profit-model.md).
-   On a wide screen the chart takes the height of the panel beside it (its box is measured; a ResizeObserver redraws). */
+   "Where the money went" has two receipts — Estimated (all orders) and Collected (in your pocket) — behind a two-way
+   switch ([data-acc-view]); both add up exactly and Estimated − Collected = "Still on the way" (edits8/profit-model.md).
+   Round 14: the chart is drawn in its box's own pixels (fixed CSS height), the y-axis is fitted to the data (it no
+   longer starts at 0 unless the data does), both lines glow with a dot on every value, and P.s.x labels the x-axis —
+   every label while they fit, an even subset otherwise (30 days). Every receipt amount reads "− EGP 58,300" /
+   "EGP 194,813" (money(): the dataset's bare figures get their currency on the way in). */
 (function(){
   var el=document.getElementById('acc-chart');if(!el)return;
   var box=el.parentNode,last=null,lastH=0,lastW=0;
   var DEF={x:["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],rev:[32640,34915,36702,38388,35551,39600,35317],sp:[14186,14912,15327,16093,15384,16796,14109],unit:"day"};
-  function nice(v){var s=v/3,p=Math.pow(10,Math.floor(Math.log10(s))),m=s/p;return (m<=1?1:m<=1.5?1.5:m<=2?2:m<=2.5?2.5:m<=3?3:m<=4?4:m<=5?5:10)*p}
-  function k(v){return (v>=1000?+(v/1000).toFixed(1):v)+(v>=1000?'k':'')}
-  function size(){
-    var sm=innerWidth<560,W=sm?360:640,H=sm?220:230,r=box.getBoundingClientRect();
-    /* wide layout: draw in the box's own pixels, so the chart fills the panel's height with the same 10.5px labels */
-    if(getComputedStyle(box).aspectRatio==='auto'&&r.width>0&&r.height>0){W=Math.round(r.width);H=Math.round(r.height)}
-    return [W,H,sm];
-  }
+  function nice(v){var p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p}
+  function k(v){return v>=1000?+(v/1000).toFixed(1)+'k':String(v)}
+  function size(){var r=box.getBoundingClientRect();return [Math.round(r.width)||640,Math.round(r.height)||300]}
   function draw(S){
     last=S;
     var rev=S.rev,sp=S.sp,n=rev.length,lst=n-1||1,hour=S.unit==="hour";
-    var d=size(),W=d[0],H=d[1],sm=d[2];lastH=H;lastW=W;
+    var d=size(),W=d[0],H=d[1];lastH=H;lastW=W;
     el.setAttribute("viewBox","0 0 "+W+" "+H);
     el.setAttribute("aria-label",(hour?"Revenue and ad spend by three-hour slot":"Daily revenue and ad spend")+", "+S.x[0]+" to "+S.x[n-1]);
-    var L=sm?30:40,R=12,T=30,B=24,step=nice(Math.max.apply(0,rev.concat(sp))*1.04),max=step*3;
-    var x=function(i){return L+i*(W-L-R)/lst},y=function(v){return T+(1-v/max)*(H-T-B)};
+    /* y-axis fitted to the data: about four nice steps from just under the lowest value to just over the highest */
+    var all=rev.concat(sp),mx=Math.max.apply(0,all),mn=Math.min.apply(0,all);
+    var step=nice(Math.max((mx-mn)/3.2,mx/20,1)),lo=Math.max(0,Math.floor((mn-step*.2)/step)*step),hi=Math.ceil((mx+step*.05)/step)*step;
+    var L=W<480?38:46,R=14,T=14,B=34,pw=W-L-R;
+    var x=function(i){return L+i*pw/lst},y=function(v){return T+(1-(v-lo)/(hi-lo))*(H-T-B)};
     var line=function(a){return a.map(function(v,i){return (i?"L":"M")+x(i).toFixed(1)+" "+y(v).toFixed(1)}).join(" ")};
-    var best=rev.indexOf(Math.max.apply(0,rev)),every=n>8?(sm?10:5):1;
-    var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".42"/><stop offset="1" stop-color="#a275e0" stop-opacity="0"/></linearGradient>'
-      +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".22"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient></defs>';
-    [0,step,step*2,max].forEach(function(v){g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v?"3 4":"")+'"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+k(v)+'</text>'});
-    S.x.forEach(function(dd,i){if(i%every&&i!==n-1)return;if(n>8&&i!==n-1&&n-1-i<every*.6)return;g+='<text x="'+x(i)+'" y="'+(H-5)+'" text-anchor="'+(n>8&&i===n-1?'end':'middle')+'">'+(sm&&!hour&&n<=8?dd.slice(4):dd)+'</text>'});
-    g+='<path class="acc-fade" d="'+line(rev)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-revG)"/>';
-    g+='<path class="acc-fade" d="'+line(sp)+' L'+x(n-1)+' '+y(0)+' L'+x(0)+' '+y(0)+'Z" fill="url(#acc-spG)"/>';
-    g+='<path class="acc-draw" d="'+line(sp)+'" fill="none" style="stroke:var(--acc-spend)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    g+='<path class="acc-draw" d="'+line(rev)+'" fill="none" style="stroke:var(--acc-sales)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>';
-    rev.forEach(function(v,i){if(n>8&&i!==best)return;g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="'+(i===best?4.5:3)+'" style="fill:'+(i===best?"var(--acc-sales)":"var(--acc-chart-dot)")+';stroke:var(--acc-sales)" stroke-width="2"/>'});
+    var area=function(a){return line(a)+" L"+x(n-1).toFixed(1)+" "+y(lo).toFixed(1)+" L"+x(0).toFixed(1)+" "+y(lo).toFixed(1)+"Z"};
+    var best=rev.indexOf(Math.max.apply(0,rev)),dense=n>8;
+    var g='<defs><linearGradient id="acc-revG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a275e0" stop-opacity=".5"/><stop offset=".6" stop-color="#7c3fc1" stop-opacity=".16"/><stop offset="1" stop-color="#550da6" stop-opacity="0"/></linearGradient>'
+      +'<linearGradient id="acc-spG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8c49a" stop-opacity=".34"/><stop offset="1" stop-color="#d8c49a" stop-opacity="0"/></linearGradient>'
+      +'<filter id="acc-blur" x="-5%" y="-40%" width="110%" height="180%"><feGaussianBlur stdDeviation="4"/></filter></defs>';
+    for(var v=lo;v<=hi+1e-6;v+=step)g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" style="stroke:var(--acc-line-hi)" stroke-dasharray="'+(v>lo?"3 5":"")+'"/><text x="'+(L-10)+'" y="'+(y(v)+4)+'" text-anchor="end">'+k(v)+'</text>';
+        var room=pw/lst,short=!hour&&!dense&&room<64,need=hour?36:short?32:64,every=[1,2,3,5,7,10,15].filter(function(e){return e*room>=need})[0]||15,
+      shown=[],mon=function(t){return (t.match(/^\D+(?=\s)/)||[''])[0]},pm='';
+    /* every Nth label (N from 1, 2, 3, 5, 7…); days also mark the last one, dropping the one before it when they'd touch */
+    S.x.forEach(function(dd,i){if(i%every===0||(i===n-1&&!hour))shown.push(i)});
+    if(!hour&&shown.length>1&&shown[shown.length-1]-shown[shown.length-2]<every*.6)shown.splice(shown.length-2,1);
+    /* narrow: day numbers only, the month once in the axis column (and again on a label where the month changes) */
+    if(short&&mon(S.x[0]))g+='<text x="'+(L-10)+'" y="'+(H-10)+'" text-anchor="end">'+mon(S.x[0])+'</text>',pm=mon(S.x[0]);
+    shown.forEach(function(i){var t=S.x[i],a=n>2&&!short?(i===0?'start':i===n-1?'end':'middle'):'middle';
+      if(short){var m=mon(t);if(m===pm)t=t.slice(m.length).trim();pm=m||pm}
+      g+='<text x="'+x(i).toFixed(1)+'" y="'+(H-10)+'" text-anchor="'+a+'">'+t+'</text>'});
+    g+='<path class="acc-fade" d="'+area(rev)+'" fill="url(#acc-revG)"/>';
+    g+='<path class="acc-fade" d="'+area(sp)+'" fill="url(#acc-spG)"/>';
+    [[sp,"--acc-spend",2.2],[rev,"--acc-sales",2.6]].forEach(function(s){
+      g+='<path class="acc-glowl" d="'+line(s[0])+'" fill="none" style="stroke:var('+s[1]+')" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" filter="url(#acc-blur)"/>';
+      g+='<path class="acc-draw" pathLength="1" d="'+line(s[0])+'" fill="none" style="stroke:var('+s[1]+')" stroke-width="'+s[2]+'" stroke-linecap="round" stroke-linejoin="round"/>'});
+    var dot=function(a,c,isRev){a.forEach(function(v,i){var b=isRev&&i===best,r=b?5.5:dense?2.6:4;
+      if(b)g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="11" style="fill:var(--acc-sales)" opacity=".18"/>';
+      g+='<circle class="acc-fade" cx="'+x(i)+'" cy="'+y(v)+'" r="'+r+'" style="fill:'+(b?'var(--acc-sales)':'var(--acc-chart-dot)')+';stroke:var('+c+')" stroke-width="'+(dense?1.6:2)+'"/>'})};
+    dot(sp,"--acc-spend",false);dot(rev,"--acc-sales",true);
     el.innerHTML=g;
   }
-  var P0=window.PER&&PER[PER.cur];
-  draw(P0?P0.s:DEF);
-  /* the wide layout stretches the chart's box to the receipt panel: redraw when its height really changes */
-  if('ResizeObserver' in window){var tm=0;new ResizeObserver(function(){clearTimeout(tm);tm=setTimeout(function(){var z=size();if(last&&(Math.abs(z[1]-lastH)>3||Math.abs(z[0]-lastW)>3))draw(last)},120)}).observe(box)}
-  /* the Estimated / Collected switch */
+  /* "− 58,300" → "− EGP 58,300", "20,300" → "EGP 20,300"; text already carrying EGP is left alone */
+  function money(root){[].slice.call(root.querySelectorAll('.acc-am')).forEach(function(e){var t=e.textContent.trim();
+    if(/EGP/.test(t))return;var m=t.match(/^([−–-])\s*(.+)$/);e.textContent=m?'− EGP '+m[2]:/^[\d,.]+$/.test(t)?'EGP '+t:t});
+    [].slice.call(root.querySelectorAll('.acc-swb b')).forEach(function(b){b.style.setProperty('--acc-len',b.textContent.trim().length)})}
   var acc=el.closest('.acc');
+  var P0=window.PER&&PER[PER.cur];
+  draw(P0?P0.s:DEF);money(acc);
+  /* redraw when the box really changes size (the chart is drawn in its pixels) */
+  if('ResizeObserver' in window){var tm=0;new ResizeObserver(function(){clearTimeout(tm);tm=setTimeout(function(){var z=size();if(last&&(Math.abs(z[1]-lastH)>3||Math.abs(z[0]-lastW)>3))draw(last)},120)}).observe(box)}
+  /* the Estimated / Collected switch (tabs; arrow keys, Home and End move between them) */
   function pick(v,focus){
     [].slice.call(acc.querySelectorAll('[data-acc-view]')).forEach(function(b){var on=b.getAttribute('data-acc-view')===v;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;if(on&&focus)b.focus()});
     [].slice.call(acc.querySelectorAll('.acc-view')).forEach(function(p){var on=p.id==='acc-v-'+v;p.classList.toggle('acc-off',!on);p.setAttribute('aria-hidden',String(!on))});
   }
   acc.addEventListener('click',function(e){var b=e.target.closest('[data-acc-view]');if(b)pick(b.getAttribute('data-acc-view'))});
-  acc.addEventListener('keydown',function(e){var b=e.target.closest('[data-acc-view]');if(!b||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;e.preventDefault();pick(b.getAttribute('data-acc-view')==='est'?'col':'est',true)});
+  acc.addEventListener('keydown',function(e){var b=e.target.closest('[data-acc-view]');if(!b)return;var c=b.getAttribute('data-acc-view'),to=null;
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight')to=c==='est'?'col':'est';else if(e.key==='Home')to='est';else if(e.key==='End')to='col';
+    if(!to)return;e.preventDefault();pick(to,true)});
   window.accSetPeriod=function(P){
     if(!P)return;var all=function(s){return [].slice.call(document.querySelectorAll('.acc '+s))};
     all('[data-acc-t]').forEach(function(e){var v=P.t[e.getAttribute('data-acc-t')];if(v!=null)e.textContent=v});
     all('[data-acc-w]').forEach(function(e){var v=P.w[e.getAttribute('data-acc-w')];if(v!=null)e.style.flex=String(v)});
     all('[data-acc-tone]').forEach(function(e){e.classList.toggle('acc-loss',(P.tone||{})[e.getAttribute('data-acc-tone')]==='w')});
-    draw(P.s);
+    money(acc);draw(P.s);
   };
 })();
 /*=== ACCOUNT v1 END === */
