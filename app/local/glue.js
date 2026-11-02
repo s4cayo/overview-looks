@@ -9,7 +9,7 @@
     orders: BASE + "pages/orders-shipping/orders-B.html",
     shipping: BASE + "pages/orders-shipping/shipping-B.html",
     products: BASE + "pages/inventory-products/products-A.html",
-    inventory: BASE + "pages/inventory-products/inventory-B.html",
+    inventory: BASE + "pages/inventory-products/inventory-A.html",
     assistant: BASE + "pages/assistant/G-gemini.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",

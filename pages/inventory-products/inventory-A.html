@@ -219,16 +219,17 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 /* ---- bottom dock ---- */
 .nv2-dock{display:none}
 @media (max-width:1023px){
-  html.nv2-docked body{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  html.nv2-docked body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
   .nv2-dock{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:row;overflow:visible;justify-content:center;align-items:center;gap:12px;pointer-events:none;
     transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
   .nv2-dock.nv2-hide{transform:translateY(calc(100% + 30px));opacity:0}
   .nv2-pill,.nv2-ai{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
   .nv2-pill{display:flex;align-items:center;gap:2px;padding:5px;border-radius:99px;background:var(--nv2-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-  .nv2-pill > *{width:56px;height:46px;border-radius:99px;display:grid;place-items:center;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > *{width:64px;height:52px;border-radius:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > * > span{font-size:12px;line-height:1;font-weight:500;letter-spacing:0;white-space:nowrap}
   .nv2-pill > *[aria-current="page"]{background:var(--nv2-fg);color:var(--nv2-bg)}
-  .nv2-pill .nv2-i{width:22px;height:22px}
-  .nv2-pill > *[aria-current="page"] .nv2-i{fill:currentColor;stroke:currentColor}
+  .nv2-pill .nv2-i{width:20px;height:20px}
+  .nv2-pill > *[aria-current="page"] .nv2-i{stroke-width:2.1}
   .nv2-ai{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6 60%,#3d0880);box-shadow:0 14px 30px -10px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)!important}
   .nv2-ai .nv2-i{width:24px;height:24px}
 }
@@ -263,6 +264,43 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-sug .nv2-i{color:var(--nv2-acc)}
 .nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
 @media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
+   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
+   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
+   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+.nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
+  background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
+.nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
+.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
+.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
+  -webkit-tap-highlight-color:transparent;transition:background .2s}
+.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
+.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
+@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
+.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
+.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
+.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
+.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
+.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
+.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
+.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
+.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
+.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
+.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
+.nv2-mh .nv2-i{width:16px;height:16px}
+.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
+.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+.nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nv2-mbtn .nv2-i{width:22px;height:22px}
+.nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.nv2-mask .nv2-i{width:20px;height:20px}
+html.nv2-lock,html.nv2-lock body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
 /* === PRODUCTS v2 START === */
 /* Products v2 — top products (Revenue / Profit / Margin / Returns, sizes, units per period, "why it ranks" sheet)
@@ -443,7 +481,6 @@ main{max-width:1240px}
 @media (max-width:600px){.content{padding:14px 16px 40px}main{gap:18px}}
 /* PRODUCTS v2 has a few 11px labels; Sam's rule is 12px minimum on these pages */
 .pv2-ptag,.pv2-left,.pv2-sz span{font-size:12px}
-.pv2-szc em{font-size:12px}
 .ip{display:flex;flex-direction:column;gap:22px}
 .ip .muted{color:var(--pv2-mut)}
 .ip-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -518,22 +555,33 @@ main{max-width:1240px}
 .ip-btn.ghost{color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important}
 .ip-btn.ghost:hover{border-color:var(--pv2-acc)!important}
 .ip-btn svg{transition:transform .2s}.ip-btn:hover svg{transform:translateX(3px)}
-/* returns by size bars */
-.ip-rets{display:flex;flex-direction:column;gap:9px}
-.ip-ret{display:grid;grid-template-columns:64px minmax(0,1fr) 112px;gap:12px;align-items:center;font-size:13.5px}
-.ip-ret > span:first-child{font-weight:600}
-.ip-ret .ip-rb{height:8px;border-radius:99px;background:var(--pv2-track);overflow:hidden}
-.ip-ret .ip-rb i{display:block;height:100%;border-radius:99px;width:var(--w);background:var(--c)}
-.ip-ret em{font-style:normal;text-align:right;color:var(--pv2-mut);white-space:nowrap}
-.ip-ret em b{color:var(--pv2-fg);font-weight:600}
-.ip-ret.hot > span:first-child,.ip-ret.hot em b{color:var(--pv2-bad)}
+/* the four numbers: equal tiles, label above, value on one baseline */
+.ip-four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ip-four > div{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.ip-four span{font-size:13px;color:var(--pv2-mut)}
+.ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
+/* by-size table: every column lines up */
+.ip-sz{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.ip-sz th,.ip-sz td{padding:10px 0;border-top:1px solid var(--pv2-line);text-align:right;vertical-align:top;white-space:nowrap}
+.ip-sz thead th{border-top:0;padding-top:0;font-size:12.5px;font-weight:500;color:var(--pv2-mut)}
+.ip-sz th:first-child{text-align:left;width:28%}
+.ip-sz td{width:20%;padding-left:12px;font-weight:600}
+.ip-sz td:last-child,.ip-sz thead th:last-child{width:32%}
+.ip-sz tbody th{font-weight:600}
+.ip-sz tbody th i{display:inline-block;font-style:normal;font-size:12px;font-weight:600;line-height:18px;padding:0 7px;margin-left:6px;border-radius:99px;color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent);vertical-align:1px}
+.ip-sz tr.top th{color:var(--pv2-acc)}
+.ip-sz td .pc{font-weight:500}
+.ip-sz td .m{color:var(--pv2-mut);font-weight:500}
+.ip-sz td.r{color:var(--pv2-bad)}
+.ip-sz td.w{color:var(--pv2-warn)}
+.ip-sz td.u{color:var(--pv2-mut);font-weight:500}
+.ip-note b.r{color:var(--pv2-bad)}
 .ip-note{font-size:13px;color:var(--pv2-mut);line-height:1.45}
 .ip-note b{color:var(--pv2-fg);font-weight:600}
 .ip-dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:14px}
 .ip-dl dt{color:var(--pv2-mut)}
 .ip-dl dd{font-weight:600;text-align:right}
-/* unknown stock cell in the size grid */
-.pv2-szc em.u{color:var(--pv2-mut);font-weight:600}
 
 /* toast (for things that live outside these two pages) */
 .ip-toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(440px,calc(100vw - 32px));
@@ -549,6 +597,27 @@ main{max-width:1240px}
 @media (max-width:600px){.ip .tabbar{margin:0 -16px;padding:0 16px}.ip .seg{width:100%}.ip .seg button{padding:9px 12px;font-size:13px}.ip .seg .n{display:none}}
 .ip .pane{scroll-margin-top:84px}
 @media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
+
+/* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
+.tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.tipb.on{visibility:visible;opacity:1;transform:none}
+
+/* swipe rows (filter chips) on the phone: a fade + arrow says "more this way"; both go once you reach the end */
+.ip-swipew{position:relative}
+.ip-more{display:none}
+@media (max-width:600px){
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
+  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
+  .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
+    color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
+  .ip-more .ip-i{width:15px;height:15px}
+  .ip-swipew.end::after,.ip-swipew.end .ip-more{opacity:0;pointer-events:none}
+  .ip-swipe{padding-right:44px!important}
+}
 
 /* ===== Inventory A — restock first, sticky tabs ===== */
 .ia-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
@@ -572,7 +641,7 @@ main{max-width:1240px}
 
 /* restock */
 .ia-plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px 28px;align-items:center;padding:16px 18px;border-radius:16px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);margin-bottom:6px}
-.ia-plan .pv2-ctl > span{min-width:110px;font-size:13px}
+.ia-plan .pv2-ctl > span{min-width:176px;font-size:13.5px}
 .ia-plan .pv2-seg button{height:32px;min-width:46px;font-size:13px}
 .ia-sum{font-size:16px;line-height:1.45}
 .ia-sum b{font-weight:700}.ia-sum .r{color:var(--pv2-bad)}
@@ -581,6 +650,7 @@ main{max-width:1240px}
 @media (max-width:800px){.ia-plan{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:600px){.ia-plan{padding:14px}.ia-plan .pv2-ctl > span{width:100%;min-width:0}.ia-sum{font-size:15px}}
 .ia-plan .pv2-fallback{grid-column:1/-1}
+.ia-plan .pv2-ctl > span{display:inline-flex;align-items:center}
 .ia-prods .pv2-prow{grid-template-columns:40px minmax(0,1fr) auto;padding:14px 0}
 .ia-prods .pv2-swc{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2));border:0}
 .ia-prods .pv2-swc svg{width:18px;height:27px}
@@ -632,17 +702,32 @@ main{max-width:1240px}
 
 /* lists for sold out / not selling / unknown */
 .ia-list{display:flex;flex-direction:column}
-.ia-li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:16px 0;border-top:1px solid var(--pv2-line)}
-.ia-li:first-child{border-top:0;padding-top:4px}
-.ia-li > .ip-th{grid-row:1 / span 2}
-.ia-li h4{font-size:15px;font-weight:600;line-height:1.3}
-.ia-li p{grid-column:2;font-size:13.5px;line-height:1.5;color:var(--pv2-mut)}
-.ia-li p b{color:var(--pv2-fg);font-weight:600}
-.ia-li p .r{color:var(--pv2-bad)}
-.ia-li .ia-act{grid-row:1 / span 2;grid-column:3;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.ia-szs{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.ia-li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center;padding:16px 0;border-top:1px solid var(--pv2-line)}
+.ia-li:first-child{border-top:0;padding-top:2px}
+.ia-name{display:flex;align-items:center;gap:14px;min-width:0;text-align:left;border-radius:12px;margin:-6px;padding:6px;transition:background .2s}
+.ia-name:hover{background:var(--pv2-bg2)}
+.ia-name > span:nth-child(2){display:flex;flex-direction:column;gap:3px;min-width:0}
+.ia-name b{font-size:15px;font-weight:600;line-height:1.3;color:var(--pv2-fg)}
+.ia-name small{font-size:13px;color:var(--pv2-mut);line-height:1.4}
+.ia-name small.r{color:var(--pv2-bad);font-weight:500}
+.ia-name b .ip-i{width:15px;height:15px;color:var(--pv2-mut);vertical-align:-2px;margin-left:4px;transition:transform .2s}
+.ia-name:hover b .ip-i{transform:translateX(3px);color:var(--pv2-acc)}
+.ia-li .ia-act{grid-column:2;grid-row:1;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.ia-body{grid-column:1 / -1;display:flex;flex-direction:column;gap:10px;padding-left:58px;min-width:0}
+.ia-body p{font-size:13.5px;line-height:1.5;color:var(--pv2-mut)}
+.ia-body p b{color:var(--pv2-fg);font-weight:600}
+.ia-body p .r{color:var(--pv2-bad)}
+.ia-szs{display:flex;flex-wrap:wrap;gap:6px}
+.ia-sz{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-width:52px;height:46px;padding:0 8px;border-radius:10px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);font-variant-numeric:tabular-nums}
+.ia-sz em{font-style:normal;font-size:12px;font-weight:500;color:var(--pv2-mut)}
+.ia-sz b{font-size:15px;font-weight:600;line-height:1.1}
+.ia-sz.o{background:color-mix(in srgb,var(--pv2-bad) 13%,transparent);border-color:color-mix(in srgb,var(--pv2-bad) 35%,transparent)}
+.ia-sz.o b,.ia-sz.o em{color:var(--pv2-bad)}
+.ia-sz.w b{color:var(--pv2-warn)}
+.ia-sz.u{background:repeating-linear-gradient(135deg,var(--pv2-bg2) 0 5px,transparent 5px 10px)}
+.ia-sz.u b{color:var(--pv2-mut)}
 .ia-big{font-size:20px;font-weight:600;color:var(--pv2-fg);letter-spacing:-.01em}
-@media (max-width:700px){.ia-li{grid-template-columns:44px minmax(0,1fr)}.ia-li .ia-act{grid-row:auto;grid-column:1 / -1;justify-content:flex-start}}
+@media (max-width:700px){.ia-li .ia-act{grid-column:1 / -1;grid-row:auto;order:2;justify-content:flex-start;padding-left:58px}.ia-sz{min-width:0;flex:1 1 0;padding:0 2px}}
 .ia-how{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);font-size:13.5px;line-height:1.55;color:var(--pv2-mut)}
 .ia-how b{color:var(--pv2-fg);font-weight:600}
 </style>
@@ -800,11 +885,11 @@ window.perSet=function(key){
 
         <section class="pane" id="p-restock" role="tabpanel" aria-labelledby="t-restock" tabindex="0">
           <div class="pv2-panel">
-            <p class="ia-intro">How many to order so every size lasts until the next delivery, and then for the days you want covered. Sales pace follows the date picker.</p>
+            <p class="ia-intro">How many pieces of each size to order from your supplier. Sales pace follows the date picker.</p>
             <div class="ia-plan">
               <div style="display:flex;flex-direction:column;gap:12px">
-                <div class="pv2-ctl"><span>Cover after delivery</span><div class="pv2-seg" data-k="cover"><button type="button" data-v="14" aria-pressed="false">14d</button><button type="button" data-v="30" aria-pressed="true">30d</button><button type="button" data-v="45" aria-pressed="false">45d</button><button type="button" data-v="60" aria-pressed="false">60d</button></div></div>
-                <div class="pv2-ctl"><span>Delivery takes</span><div class="pv2-seg" data-k="del"><button type="button" data-v="3" aria-pressed="false">3d</button><button type="button" data-v="7" aria-pressed="true">7d</button><button type="button" data-v="14" aria-pressed="false">14d</button></div></div>
+                <div class="pv2-ctl"><span>Stock should last <button type="button" class="tip" data-help="cover" data-tip="" aria-label="">i</button></span><div class="pv2-seg" data-k="cover"><button type="button" data-v="14" aria-pressed="false">14d</button><button type="button" data-v="30" aria-pressed="true">30d</button><button type="button" data-v="45" aria-pressed="false">45d</button><button type="button" data-v="60" aria-pressed="false">60d</button></div></div>
+                <div class="pv2-ctl"><span>Supplier delivers in <button type="button" class="tip" data-help="del" data-tip="" aria-label="">i</button></span><div class="pv2-seg" data-k="del"><button type="button" data-v="3" aria-pressed="false">3d</button><button type="button" data-v="7" aria-pressed="true">7d</button><button type="button" data-v="14" aria-pressed="false">14d</button></div></div>
               </div>
               <div><p class="ia-sum" id="ia-sum" aria-live="polite"></p>
                 <div class="ia-sumrow"><button type="button" class="pv2-copy" id="ia-copy"><svg class="pv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>Copy list for supplier</button><span class="pv2-copied" aria-live="polite"></span></div></div>
@@ -816,7 +901,7 @@ window.perSet=function(key){
 
         <section class="pane" id="p-all" role="tabpanel" aria-labelledby="t-all" tabindex="0" hidden>
           <div class="pv2-panel">
-            <div class="ia-legend"><span><i style="--c:color-mix(in srgb,var(--pv2-bad) 30%,transparent)"></i>Runs out before a delivery lands</span><span><i style="--c:color-mix(in srgb,var(--pv2-warn) 30%,transparent)"></i>Within a week after that</span><span><i style="--c:var(--pv2-bg2)"></i>Fine</span><span><i style="--c:repeating-linear-gradient(135deg,var(--pv2-line2) 0 3px,transparent 3px 6px)"></i>Not tracked</span></div>
+            <div class="ia-legend"><span><i style="--c:color-mix(in srgb,var(--pv2-bad) 30%,transparent)"></i>Runs out soon</span><span><i style="--c:color-mix(in srgb,var(--pv2-warn) 30%,transparent)"></i>Getting low</span><span><i style="--c:var(--pv2-bg2)"></i>Fine</span><span><i style="--c:repeating-linear-gradient(135deg,var(--pv2-line2) 0 3px,transparent 3px 6px)"></i>Not tracked</span></div>
             <div class="ia-grid" id="ia-grid"></div>
           </div>
         </section>
@@ -842,36 +927,40 @@ window.perSet=function(key){
 <!-- === NAV v2 START (dock + sheets) === -->
 <nav class="nv2-dock" aria-label="Quick navigation">
   <div class="nv2-pill">
-    <a href="#" data-nv2-go="overview" aria-label="Home"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></a>
-    <a href="#" data-nv2-go="adsmanager" aria-label="Ads Manager"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></a>
-    <a href="#" data-nv2-go="competitors" aria-label="Competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></a>
-    <button type="button" data-nv2-open="menu" aria-label="Menu (Inventory is open)" aria-current="page" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span></a>
+    <a href="#" aria-current="page" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span></a>
+    <button type="button" data-nv2-open="menu" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
   </div>
   <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
 </nav>
 <div class="nv2-scrim"></div>
-<section class="nv2-sheet" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="nv2-grab" aria-hidden="true"></div>
-  <div class="nv2-sh"><h2>Menu</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-  <button type="button" class="nv2-sw"><span class="nv2-mark">FN</span>Frill N Wear<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-  <div class="nv2-grp"><h6>Operate</h6>
-    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Overview</a>
-    <a href="#" data-nv2-go="brands"><svg class="nv2-i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>All brands</a>
-    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>Orders</a>
-    <a href="#" data-nv2-go="orders"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Shipping</a>
-    <a href="#" aria-current="page" data-nv2-go="inventory"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>Inventory</a>
-    <a href="#" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg>Products</a>
-  </div>
-  <div class="nv2-grp"><h6>Grow</h6>
-    <a href="#" data-nv2-go="ads"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></svg>Meta Ads</a>
-    <a href="#" data-nv2-go="adsmanager"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Ads Manager</a>
-    <a href="#" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Assistant</a>
-    <a href="#" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Competitors</a>
-  </div>
-  <div class="nv2-grp"><h6>Workspace</h6>
-    <a href="#" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg>Connections</a>
-    <a href="#" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>Workspace settings</a>
-    <a href="#" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Admin</a>
+<section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="nv2-ml" aria-label="Sections">
+    <a href="#" class="nv2-mr" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="true" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" data-nv2-go="products">Products</a><a href="#" aria-current="page" data-nv2-go="inventory">Inventory</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
+    </div>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Assistant</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
+    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
+  </nav>
+  <div class="nv2-mbar">
+    <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
+    <button type="button" class="nv2-mbtn" data-nv2-close aria-label="Close menu"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
 </section>
 <section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
@@ -889,7 +978,10 @@ window.perSet=function(key){
 /* === NAV v2 START === */
 /* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
    theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
-   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go). */
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go).
+   Round 8: the Menu is full screen (Shopify-like): its groups open in place (accordion), the page behind does not
+   scroll, and it closes on ✕, Esc, the browser's back (one history entry while open), a swipe down from the top of
+   the list, or a tap on an item. */
 (function(){
   var top=document.querySelector('.nv2-top');if(!top)return;
   var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
@@ -924,7 +1016,7 @@ window.perSet=function(key){
     fire('nv2:nav',{go:go})});
   /* ---- search (desktop) ---- */
   var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
-  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · Meta funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
+  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · ads funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
     ['Layla Tiered Ruffle Maxi Dress','products','Product'],['Nour Satin Slip Dress','products','Product'],['Jasmine Wrap Midi Dress','products','Product'],['Salma Puff-Sleeve Mini Dress','products','Product'],
     ['Satin Edit · Advantage+','ads','Campaign'],['Retarget · 30 days','ads','Campaign'],['Broad · Women 25–44','ads','Ad set'],['Ads Manager','adsmanager','Page'],['Competitors','competitors','Page'],['Connections','connections','Page']];
   var hits=[],hl=0;
@@ -939,10 +1031,22 @@ window.perSet=function(key){
     document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
     var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
   /* ---- sheets ---- */
-  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null;
-  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');if(scrim)scrim.classList.add('nv2-on');
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null,pushed=false,skipPop=false;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');
+    var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
+    if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
     var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
-  function closeSheet(){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+    document.documentElement.classList.remove('nv2-lock');
+    if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
+  /* menu: groups open in place; a swipe down from the top of the list closes it */
+  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
+    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
+    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
+    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
   document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
   if(scrim)scrim.addEventListener('click',closeSheet);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
@@ -969,7 +1073,7 @@ window.perSet=function(key){
      Dalia  — Shopify does not track its stock      → stock unknown (never "0 left")
      Rana   — XXL untracked                         → one size unknown
      Yasmin — every size sold out
-     Lina   — nothing sold in 30 days (dead stock); Mona sold 1
+     Lina   — nothing sold in 30 days; Mona sold 1, Reem 3, Sara 5 → the slow sellers (≤5 sales in 30 days)
      Nadia  — one-size product (no size letters)
    stock: null = Shopify does not track it. cost: number, null (none recorded) or per-size array. Today = Fri Oct 30. */
 var IP=(function(){
@@ -989,20 +1093,22 @@ var IP=(function(){
     {id:'yasmin',n:'Yasmin Ribbed Maxi Dress',main:'Yasmin Ribbed Maxi',col:'Black',type:'Dress',price:1200,cost:520,u7:6,sold:[0,1,2,2,1,0],ship:[0,1,2,2,1,0],ret:[0,0,0,0,0,0],stock:[0,0,0,0,0,0],c:['#55505e','#1d1b22'],sw:'#2a2730',dlv:[6,6],out:'Oct 27'},
     {id:'nadia',n:'Nadia Silk Scarf',main:'Nadia Silk Scarf',col:'Print',type:'Accessory',price:450,cost:140,u7:12,sold:[12],ship:[12],ret:[0],stock:[11],sizes:['One size'],c:['#c9a6e6','#6d3fa0'],sw:'#a77fd0',dlv:[12,12]},
     {id:'mona',n:'Mona Tulle Midi Skirt',main:'Mona Tulle Midi Skirt',col:'Blush',type:'Skirt',price:850,cost:[300,300,300,300,null,null],u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,0,1,0,0,0],stock:[6,8,9,8,6,4],c:['#f0c4cf','#b67a8a'],sw:'#e6b3bf',dlv:[0,0],lastSale:'Oct 9'},
-    {id:'lina',n:'Lina Embroidered Kaftan',main:'Lina Embroidered Kaftan',col:'Teal',type:'Dress',price:1450,cost:560,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],stock:[10,12,14,12,9,7],c:['#5fa3a3','#24585c'],sw:'#2f7a7c',dlv:[0,0],lastSale:'Aug 21'}
+    {id:'lina',n:'Lina Embroidered Kaftan',main:'Lina Embroidered Kaftan',col:'Teal',type:'Dress',price:1450,cost:560,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],stock:[10,12,14,12,9,7],c:['#5fa3a3','#24585c'],sw:'#2f7a7c',dlv:[0,0],lastSale:'Aug 21'},
+    {id:'reem',n:'Reem Velvet Blazer',main:'Reem Velvet Blazer',col:'Burgundy',type:'Jacket',price:1900,cost:820,u7:1,sold:[0,0,1,0,0,0],ship:[0,0,1,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,1,1,0,0],stock:[3,7,8,6,5,2],c:['#a8475e','#5a1a2c'],sw:'#7d2a3e',dlv:[1,1],lastSale:'Oct 26'},
+    {id:'sara',n:'Sara Lace Blouse',main:'Sara Lace Blouse',col:'White',type:'Top',price:750,cost:260,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,2,1,1,0],stock:[5,9,11,9,6,4],c:['#f2eee8','#b8b0a4'],sw:'#ece6dc',dlv:[0,0],lastSale:'Oct 21'}
   ];
   /* per-period units sold / returned / shipped, in PR order (first six = the Overview's pv2Periods) */
   var PER={
     today:    {label:'Today',range:'Oct 30',days:1,phrase:'today',pace:"today's pace",
-               u:[4,3,5,0,2,0, 2,1,1,0,2,0,0], r:[0,0,0,0,0,0, 0,0,0,0,0,0,0], s:[4,3,5,0,2,0, 2,1,1,0,2,0,0], pm:[1,1,1,1,1,1]},
+               u:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], r:[0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0], s:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], pm:[1,1,1,1,1,1]},
     yesterday:{label:'Yesterday',range:'Oct 29',days:1,phrase:'yesterday',pace:"yesterday's pace",
-               u:[3,5,4,3,0,2, 1,2,2,0,1,0,0], r:[0,1,0,1,0,0, 0,0,0,0,0,0,0], s:[3,6,4,4,0,2, 1,2,2,0,1,0,0], pm:[1,1,1,1,1,1]},
+               u:[3,5,4,3,0,2, 1,2,2,0,1,0,0,0,0], r:[0,1,0,1,0,0, 0,0,0,0,0,0,0,0,0], s:[3,6,4,4,0,2, 1,2,2,0,1,0,0,0,0], pm:[1,1,1,1,1,1]},
     '7d':     {label:'Last 7 days',range:'Oct 24–30',days:7,phrase:'last 7 days',pace:"the last 7 days' pace",
-               u:[27,30,24,23,15,12, 12,9,10,6,12,0,0], r:[3,6,2,5,1,1, 1,0,1,0,0,0,0], s:[32,36,25,27,17,14, 13,9,11,6,12,0,0], pm:[1,1,1,1,1,1]},
+               u:[27,30,24,23,15,12, 12,9,10,6,12,0,0,1,0], r:[3,6,2,5,1,1, 1,0,1,0,0,0,0,0,0], s:[32,36,25,27,17,14, 13,9,11,6,12,0,0,1,0], pm:[1,1,1,1,1,1]},
     '30d':    {label:'Last 30 days',range:'Oct 1–30',days:30,phrase:'last 30 days',pace:"the last 30 days' pace",
-               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0], pm:[1.01,.985,1,1.02,.99,1]},
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]},
     month:    {label:'This month',range:'Oct 1–30',days:30,phrase:'this month',pace:"this month's pace",
-               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0], pm:[1.01,.985,1,1.02,.99,1]}
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]}
   };
   PR.forEach(function(p){
     p.sizes=p.sizes||SZ;
@@ -1022,7 +1128,7 @@ var IP=(function(){
   function compute(key){
     var P=PER[key];
     PR.forEach(function(p,i){
-      var u=P.u[i],r=P.r[i],s=P.s[i],is7=key==='7d',base=p.sold30&&!p.u7?p.sold30:p.sold;
+      var u=P.u[i],r=P.r[i],s=P.s[i],is7=key==='7d',base=p.sold30&&(!p.u7||!is7)?p.sold30:p.sold;
       var sold=is7?p.sold.slice():spread(u,base),ret=is7?p.ret.slice():spread(r,p.ret.some(Boolean)?p.ret:p.ship),ship=is7?p.ship.slice():spread(s,p.ship.some(Boolean)?p.ship:base);
       for(var j=0;j<sold.length;j++)if(ret[j]>ship[j])ship[j]=ret[j];
       var over=sum(ship)-s;while(over>0){var best=-1,bv=0;for(var x=0;x<ship.length;x++){var room=ship[x]-ret[x];if(room>bv){bv=room;best=x}}if(best<0)break;ship[best]--;over--}
@@ -1054,12 +1160,15 @@ var IP=(function(){
   function worstSize(p){var best=-1,bv=-1,d=p.P;for(var j=0;j<d.ship.length;j++){if(d.ship[j]<MIN_SHIP||!d.ret[j])continue;var v=d.ret[j]/d.ship[j];if(v>bv||(v===bv&&d.ret[j]>d.ret[best])){bv=v;best=j}}return best}
   function topSize(p){var a=p.P.sold,m=Math.max.apply(0,a);return m?a.indexOf(m):-1}
   function rateColor(v){if(v<=0)return 'rgba(150,140,170,.28)';var t=Math.min(1,v/.4);return 'hsl('+(38-38*t)+','+(78+10*t)+'%,'+(62-8*t)+'%)'}
-  /* not selling = at most 1 sale in the last 30 days (fixed rule, independent of the date picker) */
-  var DEAD=PR.filter(function(p,i){return PER['30d'].u[i]<=1&&p.left>0});
+  /* not selling = the slowest products: at most 5 sales in the last 30 days with stock still on the shelf,
+     fewest sales first (fixed rule, independent of the date picker) */
+  var SLOW_MAX=5;
+  function n30(p){return PER['30d'].u[PR.indexOf(p)]}
+  var DEAD=PR.filter(function(p){return n30(p)<=SLOW_MAX&&p.left>0}).sort(function(a,b){return n30(a)-n30(b)});
   function tied(p){var k=0,unk=0;p.stock.forEach(function(st,j){if(st==null)return;var c=p.costAt(j);if(c==null)unk+=st;else k+=st*c});return {cash:k,unk:unk}}
   var LOW=4;
   function counts(){var low=0,out=0;PR.forEach(function(p){p.stock.forEach(function(x){if(x==null)return;if(x===0)out++;else if(x<=LOW)low++})});return {low:low,out:out}}
-  return {SZ:SZ,PR:PR,PER:PER,sum:sum,fmt:fmt,compute:compute,plan:plan,when:when,short:short,dateIn:dateIn,worstSize:worstSize,topSize:topSize,rateColor:rateColor,MIN_SHIP:MIN_SHIP,DEAD:DEAD,tied:tied,LOW:LOW,counts:counts,
+  return {SZ:SZ,PR:PR,PER:PER,sum:sum,fmt:fmt,compute:compute,plan:plan,when:when,short:short,dateIn:dateIn,worstSize:worstSize,topSize:topSize,rateColor:rateColor,MIN_SHIP:MIN_SHIP,DEAD:DEAD,SLOW_MAX:SLOW_MAX,n30:n30,tied:tied,LOW:LOW,counts:counts,
     byId:function(id){return PR.filter(function(p){return p.id===id})[0]}};
 })();
 
@@ -1152,39 +1261,77 @@ var IPU=(function(){
     opts=opts||{};var d=p.P,P=IP.PER[PERKEY()],t=IP.topSize(p),w=IP.worstSize(p),one=p.sizes.length===1;
     var chips=['rev','profit','margin','units'].map(function(k){var r=rankOf(k,p);return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-ip-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>'+(r?'#'+r:'—')+'</b></button>'}).join('')
       +'<button type="button" class="pv2-chip'+(v==='ret'?' pv2-cur':'')+'" data-ip-rank="ret" aria-pressed="'+(v==='ret')+'">Returns<b>'+(d.s?d.rate.toFixed(1)+'%':'—')+'</b></button>';
-    var cells=p.sizes.map(function(s,j){var st=p.stock[j],top=j===t&&d.u;
-      return '<div class="pv2-szc'+(top?' pv2-top':'')+'"><span>'+s+'</span><b>'+d.sold[j]+'</b><em class="'+stockCls(st)+'">'+stockWord(st)+'</em></div>'}).join('');
-    var rets=p.sizes.map(function(s,j){var sh=d.ship[j],rt=d.ret[j],few=sh<IP.MIN_SHIP,rate=sh?rt/sh:0;
-      return '<div class="ip-ret'+(j===w?' hot':'')+'"><span>'+s+'</span><span class="ip-rb"><i style="--w:'+(few?0:Math.max(rt?6:0,Math.min(100,rate/.5*100)))+'%;--c:'+IP.rateColor(rate)+'"></i></span>'
-        +'<em>'+(!sh?'none shipped':few?rt+' of '+sh+' · too few':'<b>'+rt+' of '+sh+'</b> · '+Math.round(rate*100)+'%')+'</em></div>'}).join('');
-    var acts=[];
+    /* one row per size: sold · in stock · returned — the same columns line up for every size */
+    var rows=p.sizes.map(function(s,j){var st=p.stock[j],top=j===t&&d.u,sh=d.ship[j],rt=d.ret[j],few=sh<IP.MIN_SHIP,hot=j===w;
+      var retTxt=!sh?'<span class="m">—</span>':!rt||few?'<span class="m">'+rt+' of '+sh+'</span>':rt+' of '+sh+' <span class="pc">· '+Math.round(rt/sh*100)+'%</span>';
+      return '<tr'+(top?' class="top"':'')+'><th scope="row">'+s+(top?' <i>Top</i>':'')+'</th>'
+        +'<td class="'+stockCls(st)+'">'+(st==null?'not tracked':st===0?'sold out':st)+'</td><td>'+d.sold[j]+'</td>'
+        +'<td'+(hot?' class="r"':'')+'>'+retTxt+'</td></tr>'}).join('');
+    var notes=[];
+    if(t>=0&&d.u&&!one)notes.push('<b>'+p.sizes[t]+'</b> sells most — '+Math.round(d.sold[t]/d.u*100)+'% of units.');
+    if(w>=0)notes.push('<b class="r">'+p.sizes[w]+'</b> comes back most'+(d.ret[w]/d.ship[w]>=.25?' — check the size chart.':'.'));
+        var acts=[];
     if(p.costMissing)acts.push('<div class="ip-unknown"><span><b>Profit unknown.</b> '+costNote(p)+', so profit and margin can’t be worked out'+(p.cost===null?'':' for the whole product')+'. It is not zero.</span><button type="button" class="ip-btn ghost" data-ip-shopify="cost" data-id="'+p.id+'">Add cost in Shopify '+EXT+'</button></div>');
     if(p.unknownSizes.length)acts.push('<div class="ip-unknown"><span><b>Stock unknown'+(p.unknownSizes.length===p.sizes.length?'':' for '+p.unknownSizes.join(', '))+'.</b> Shopify isn’t counting '+(p.unknownSizes.length===p.sizes.length?'this product’s':'that size’s')+' stock, so we can’t say when it runs out.</span><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+EXT+'</button></div>');
     var pl=IP.plan(p,30,7);
     if(!opts.noRestock&&pl.first&&pl.first.lasts<14)acts.push('<a class="pv2-act" href="'+pageUrl('inventory','p='+p.id)+'"><span>'+(pl.first.lasts===0?'<b>'+(p.left?pl.first.s+' is sold out':'Every size is sold out')+'</b>':'<b>'+pl.first.s+'</b> '+IP.when(pl.first.lasts))+'</span><b>Plan restock '+ARW+'</b></a>');
     var dead=IP.DEAD.indexOf(p)>=0;
-    if(dead){var tc=IP.tied(p);acts.push('<div class="ip-unknown"><span><b>Not selling.</b> '+(IP.PER['30d'].u[IP.PR.indexOf(p)]?'1 sale':'No sales')+' in 30 days (last on '+p.lastSale+') — '+p.left+' pieces hold '+(tc.unk?'at least ':'')+'<b style="color:inherit">EGP '+fmt(tc.cash)+'</b> of cost.</span>'+(opts.noRestock?'':'<a class="ip-btn ghost" href="'+pageUrl('inventory','tab=dead')+'">See slow stock '+ARW+'</a>')+'</div>')}
-    var dl=p.dlv[1]?'<b>'+p.dlv[0]+' of '+p.dlv[1]+'</b> orders delivered · '+Math.round(p.dlv[0]/p.dlv[1]*100)+'%':'No deliveries yet';
+    if(dead){var tc=IP.tied(p);acts.push('<div class="ip-unknown"><span><b>Not selling.</b> '+(function(n){return n?n+(n===1?' sale':' sales'):'No sales'})(IP.n30(p))+' in 30 days (last on '+p.lastSale+') — '+p.left+' pieces hold '+(tc.unk?'at least ':'')+'<b style="color:inherit">EGP '+fmt(tc.cash)+'</b> of cost.</span>'+(opts.noRestock?'':'<a class="ip-btn ghost" href="'+pageUrl('inventory','tab=dead')+'">See slow stock '+ARW+'</a>')+'</div>')}
+    var dl=p.dlv[1]?p.dlv[0]+' of '+p.dlv[1]+' orders · '+Math.round(p.dlv[0]/p.dlv[1]*100)+'%':'No orders shipped yet';
     return '<div class="pv2-grab" aria-hidden="true"></div>'
       +'<div class="pv2-sh">'+sw(p,'pv2-shsw')+'<div class="pv2-sht"><small>'+p.type+' · '+p.col+'</small><b id="ip-st">'+p.n+'</b><div class="ip-meta">EGP '+fmt(p.price)+(one?' · one size':' · '+p.sizes.length+' sizes')+(p.left||!p.unknownSizes.length?' · '+p.left+' in stock':'')+'</div></div>'
       +'<button type="button" class="pv2-close" data-ip-close>Close '+XI+'</button></div>'
       +'<div><p class="pv2-verdict">'+verdict(p,v)+'</p><div class="pv2-chips">'+chips+'</div></div>'
       +acts.filter(function(a){return a.indexOf('ip-unknown')>0}).join('')
-      +'<div class="pv2-four"><div><span>Sold</span><b>'+fmt(d.u)+'</b></div><div><span>Revenue</span><b><small>EGP</small>'+fmt(d.rev)+'</b></div>'
-      +'<div><span>Profit</span><b'+(d.profit==null?' class="ip-unk"':'')+'>'+(d.profit==null?'Unknown':'<small>EGP</small>'+fmt(d.profit))+'</b>'+(d.profit==null&&d.u?'<em>needs a unit cost</em>':'')+'</div>'
-      +'<div><span>Margin</span><b'+(d.margin==null?' class="ip-unk"':'')+'>'+(!d.u?'—':d.margin==null?'Unknown':d.margin.toFixed(1)+'%')+'</b></div></div>'
-      +'<div class="pv2-szb"><div class="pv2-szh">'+(one?'Sold · stock left':'Sold by size · stock left')+'</div><div class="pv2-szg"'+(one?' style="grid-template-columns:minmax(0,160px)"':'')+'>'+cells+'</div>'
-      +(t>=0&&d.u&&!one?'<p class="ip-note"><b>'+p.sizes[t]+' sells most</b> · '+Math.round(d.sold[t]/d.u*100)+'% of units</p>':'')+'</div>'
-      +'<div class="ip-sec"><div class="ip-sech">Returns by size<span>'+(d.s?d.r+' of '+d.s+' came back':'')+'</span></div>'
-      +(d.s?'<div class="ip-rets">'+rets+'</div><p class="ip-note">'+(w>=0?'<b>'+p.sizes[w]+'</b> comes back most — '+(d.ret[w]/d.ship[w]>=.25?'the fit may run small or large. Check the size chart.':'worth watching.'):'No size stands out.')+' Sizes with fewer than '+IP.MIN_SHIP+' shipped aren’t judged.</p>':'<p class="ip-note">Nothing shipped '+P.phrase+'.</p>')
-      +'<dl class="ip-dl"><dt>Delivery</dt><dd>'+dl+'</dd></dl></div>'
+      +'<div class="ip-four">'
+      +'<div><span>Sold</span><b>'+fmt(d.u)+'</b></div>'
+      +'<div><span>Revenue</span><b><small>EGP</small> '+fmt(d.rev)+'</b></div>'
+      +'<div><span>Profit</span>'+(d.profit==null?'<b class="ip-unk">Unknown</b>':'<b><small>EGP</small> '+fmt(d.profit)+'</b>')+'</div>'
+      +'<div><span>Margin'+tip('Of every EGP 100 sold, how much you keep after the cost of the item. Ads and shipping are not taken off here.')+'</span>'+(!d.u?'<b class="ip-unk">—</b>':d.margin==null?'<b class="ip-unk">Unknown</b>':'<b>'+d.margin.toFixed(1)+'%</b>')+'</div></div>'
+      +'<div class="ip-sec"><div class="ip-sech">'+(one?'Sold · stock · returns':'By size')+'<span>'+P.label+'</span></div>'
+      +'<table class="ip-sz"><thead><tr><th scope="col">Size</th><th scope="col">Stock left</th><th scope="col">Sold</th><th scope="col">Returned'+tip('Pieces that came back, out of the pieces shipped in that size. Grey means fewer than '+IP.MIN_SHIP+' shipped, too few to judge.')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +(notes.length?'<p class="ip-note">'+notes.join(' ')+'</p>':'')
+      +'<dl class="ip-dl"><dt>Delivered</dt><dd>'+dl+'</dd></dl></div>'
       +acts.filter(function(a){return a.indexOf('ip-unknown')<0}).join('');
   }
   document.addEventListener('click',function(e){var b=e.target.closest('[data-ip-shopify]');if(!b)return;e.preventDefault();
     var p=IP.byId(b.dataset.id);toast(b.dataset.ipShopify==='cost'?'In the app this opens '+p.main+' in Shopify admin, at the “Cost per item” field.':'In the app this opens '+p.main+' in Shopify admin, at “Track quantity”.')});
 
+  /* "i" tips: hover, focus or tap a small i to read what a hard term means. One shared bubble, placed by script so no panel clips it.
+     Copied from Shipping B (OS.tip) — the same icon and bubble on every page. */
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+  function tip(t){return '<button type="button" class="tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=document.createElement('div');b.className='tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b);
+    var cur=null,pin=false;
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;b.textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+  })();
+
+  /* swipe rows: wrap each .ip-swipe so a fade + arrow can show there is more to the right (phone only, via CSS) */
+  function swipeHints(){$$('.ip-swipe').forEach(function(row){if(row.parentNode.classList.contains('ip-swipew'))return;
+    var w=document.createElement('div');w.className='ip-swipew';row.parentNode.insertBefore(w,row);w.appendChild(row);
+    var b=document.createElement('button');b.type='button';b.className='ip-more';b.setAttribute('aria-label','Show more filters');
+    b.innerHTML='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';w.appendChild(b);
+    function upd(){var max=row.scrollWidth-row.clientWidth;w.classList.toggle('end',row.scrollLeft>=max-4);w.classList.toggle('start',row.scrollLeft>4)}
+    b.addEventListener('click',function(){row.scrollBy({left:row.clientWidth*.7,behavior:reduce?'auto':'smooth'})});
+    row.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
+    if('MutationObserver' in window)new MutationObserver(upd).observe(row,{childList:true});upd()})}
+
   bell();
-  return {$:$,$$:$$,reduce:reduce,toast:toast,go:go,pageUrl:pageUrl,params:params,open:open,close:close,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
+  return {tip:tip,swipeHints:swipeHints,$:$,$$:$$,reduce:reduce,toast:toast,go:go,pageUrl:pageUrl,params:params,open:open,close:close,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
     detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,perKey:PERKEY};
 })();
 
@@ -1250,24 +1397,34 @@ var IPU=(function(){
   }
 
   /* ---- sold out / not selling / unknown ---- */
+  var CHEV='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  /* every size with its pieces left, so a row says exactly what is on the shelf */
+  function sizeChips(p){return '<div class="ia-szs" aria-label="Pieces left by size">'+p.sizes.map(function(s,j){var st=p.stock[j],c=st==null?'u':st===0?'o':st<=IP.LOW?'w':'';
+      return '<span class="ia-sz '+c+'"><em>'+(p.sizes.length===1?'One size':s)+'</em><b>'+(st==null?'?':st===0?'out':st)+'</b></span>'}).join('')+'</div>'}
+  function nameBtn(p,sub,red){return '<button type="button" class="ia-name" data-open="'+p.id+'">'+U.sw(p)+'<span><b>'+p.main+CHEV+'</b><small'+(red?' class="r"':'')+'>'+sub+'</small></span></button>'}
   function lists(){
     var so=soldOut(),Pp=P();
-    $('#ia-out-intro').innerHTML='Every size with nothing left. The money figure is what that size was selling a day at '+Pp.pace+' — sales you are missing until it is back.';
+    $('#ia-out-intro').innerHTML='Sizes with nothing left. The money figure is what those sizes were selling a day at '+Pp.pace+' — sales you are missing until they are back.';
     $('#ia-out').innerHTML=so.map(function(x){var p=x.p,all=x.s.length===p.sizes.length,day=x.s.reduce(function(a,s){return a+p.P.perDay[p.sizes.indexOf(s)]},0);
-      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+(all?' · every size':' · '+x.s.join(', '))+'</h4>'
-        +'<p>'+(all?'Sold out since <b>'+p.out+'</b>. ':'')+(day?'Was selling <b>'+day.toFixed(1)+' a day</b> · about <span class="r"><b>EGP '+fmt(day*p.price)+'</b></span> a day not sold':'No sales '+Pp.phrase+' to estimate from')+'</p>'
-        +'<div class="ia-act"><button type="button" class="ip-btn" data-plan="'+p.id+'">Add to order '+U.ARW+'</button></div></div>'}).join('');
-    var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0);
-    $('#ia-dead-intro').innerHTML='Products with at most <b>1 sale in 30 days</b> while stock sits on the shelf — at least <b>EGP '+fmt(cash)+'</b> of cost. Don’t reorder them; try a bundle, a discount or a fresh photo.';
-    $('#ia-dead').innerHTML=IP.DEAD.map(function(p){var tc=IP.tied(p),n30=IP.PER['30d'].u[PR.indexOf(p)];
-      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+'</h4>'
-        +'<p><b>'+p.left+' pieces</b> · '+(n30?'1 sale':'no sales')+' in 30 days · last sale <b>'+p.lastSale+'</b><br><span class="ia-big">'+(tc.unk?'at least ':'')+'EGP '+fmt(tc.cash)+'</span> of stock at cost'+(tc.unk?' — '+tc.unk+' pieces have no cost in Shopify':'')+'</p>'
-        +'<div class="ia-act"><a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a></div></div>'}).join('');
+      return '<div class="ia-li">'+nameBtn(p,all?'Every size sold out since '+p.out:x.s.join(', ')+' sold out',true)
+        +'<div class="ia-act"><button type="button" class="ip-btn" data-plan="'+p.id+'">Add to order '+U.ARW+'</button></div>'
+        +'<div class="ia-body">'+sizeChips(p)
+        +'<p>'+(day?'Was selling <b>'+day.toFixed(1)+' a day</b> · about <span class="r"><b>EGP '+fmt(day*p.price)+'</b></span> a day not sold':'No sales '+Pp.phrase+' to estimate from')+'</p></div></div>'}).join('');
+    var cash=IP.DEAD.reduce(function(a,p){return a+IP.tied(p).cash},0),partial=IP.DEAD.some(function(p){return IP.tied(p).unk});
+    $('#ia-dead-intro').innerHTML='Your slowest products — <b>'+IP.SLOW_MAX+' or fewer sales in 30 days</b> — with stock still on the shelf. Together they hold '+(partial?'at least ':'')+'<b>EGP '+fmt(cash)+'</b> at cost. Don’t reorder them; try a bundle, a discount or a fresh photo.';
+    $('#ia-dead').innerHTML=IP.DEAD.map(function(p){var tc=IP.tied(p),n=IP.n30(p);
+      return '<div class="ia-li">'+nameBtn(p,(n?n+(n===1?' sale':' sales'):'No sales')+' in 30 days · last sale '+p.lastSale)
+        +'<div class="ia-act"><a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a></div>'
+        +'<div class="ia-body">'+sizeChips(p)
+        +'<p><span class="ia-big">'+(tc.unk?'at least ':'')+'EGP '+fmt(tc.cash)+'</span> at cost · <b>'+p.left+' pieces</b>'+(tc.unk?' — '+tc.unk+' have no cost in Shopify':'')+'</p></div></div>'}).join('');
     $('#ia-unk').innerHTML=unknowns().map(function(p){var all=p.unknownSizes.length===p.sizes.length;
-      return '<div class="ia-li">'+U.sw(p)+'<h4>'+p.main+(all?' · every size':' · '+p.unknownSizes.join(', '))+'</h4>'
-        +'<p>'+(all?'Still selling — <b>'+p.P.u+' sold '+P().phrase+'</b> — but we can’t tell how many are left.':'Other sizes are counted ('+p.left+' left). '+p.unknownSizes.join(', ')+' sold <b>'+p.unknownSizes.reduce(function(a,s){return a+p.P.sold[p.sizes.indexOf(s)]},0)+'</b> '+P().phrase+'.')+'</p>'
-        +'<div class="ia-act"><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+U.EXT+'</button></div></div>'}).join('');
+      return '<div class="ia-li">'+nameBtn(p,all?'Every size not tracked':p.unknownSizes.join(', ')+' not tracked')
+        +'<div class="ia-act"><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+U.EXT+'</button></div>'
+        +'<div class="ia-body">'+sizeChips(p)
+        +'<p>'+(all?'Still selling — <b>'+p.P.u+' sold '+P().phrase+'</b> — but we can’t tell how many are left.':'Other sizes are counted ('+p.left+' left). '+p.unknownSizes.join(', ')+' sold <b>'+p.unknownSizes.reduce(function(a,s){return a+p.P.sold[p.sizes.indexOf(s)]},0)+'</b> '+P().phrase+'.')+'</p></div></div>'}).join('');
   }
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-open]');if(!b)return;var p=IP.byId(b.dataset.open);
+    if(typeof openP==='function')openP(p,b);else U.open(U.detail(p,'units',{noRestock:true})+'<a class="ip-btn ghost" href="'+U.pageUrl('products','p='+p.id)+'">Open in Products '+U.ARW+'</a>',b)});
 
   /* ---- detail sheet for a product (All stock) ---- */
   function openP(p,from){var pl=IP.plan(p,st.cover,st.del);
@@ -1287,6 +1444,13 @@ var IPU=(function(){
   if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)}).observe(anchor);
   addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);
 
+  /* the "i" tips beside the two planner settings: plain words + a worked example from today's plan */
+  var HELP={
+    cover:function(){return 'How long the new pieces should last once they arrive. With '+st.cover+' days we order enough of every size to keep selling for '+st.cover+' days after the delivery lands. More days means a bigger order and more cash sitting in stock.'},
+    del:function(){return 'Days from placing the order until the pieces reach you. Sizes keep selling while you wait, so those '+st.del+' days of sales are added to the order. A size that runs out before the delivery lands is shown in red.'}};
+  function example(){var best=null;(st.list||[]).forEach(function(x){x[1].rows.forEach(function(r){if(r.ord&&r.st>0&&x[0].sizes.length>1&&(!best||r.ord>best.r.ord))best={p:x[0],r:r}})});if(!best)return '';
+    var r=best.r;return ' Example: '+best.p.main+' '+r.s+' sells '+r.rate.toFixed(1)+' a day. '+st.del+' days waiting + '+st.cover+' days lasting ≈ '+(r.ord+r.st)+' pieces; you have '+r.st+', so order '+r.ord+'.'}
+  function tips(){$$('.ia-plan .tip').forEach(function(b){var t=HELP[b.dataset.help]()+example();b.dataset.tip=t;b.setAttribute('aria-label',t)})}
   function openPlan(id){show('restock','force');st.open={};st.open[id]=true;restock();
     setTimeout(function(){var el=$('.pv2-prod[data-id="'+id+'"]');if(el)el.scrollIntoView({behavior:U.reduce?'auto':'smooth',block:'center'})},U.reduce?0:450)}
 
@@ -1300,7 +1464,7 @@ var IPU=(function(){
       var fb=function(){var ta=$('.ia-plan .pv2-fallback');if(!ta){ta=document.createElement('textarea');ta.className='pv2-fallback';ta.readOnly=true;$('.ia-plan').appendChild(ta)}ta.value=txt;ta.focus();ta.select();msg.textContent='Select all and copy'};
       try{navigator.clipboard.writeText(txt).then(function(){msg.textContent='Copied ✓';setTimeout(function(){msg.textContent=''},2200)},fb)}catch(err){fb()}}
   });
-  function all(){IP.compute(U.perKey());tiles();restock();grid();lists();place()}
+  function all(){IP.compute(U.perKey());tiles();restock();grid();lists();tips();place()}
   document.addEventListener('per:change',all);
   var units=PR.reduce(function(a,p){return a+p.left},0),sizes=PR.reduce(function(a,p){return a+p.sizes.length},0);
   $('#ia-count').textContent=fmt(units)+' pieces in stock · '+PR.length+' products · '+sizes+' sizes';
