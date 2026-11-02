@@ -732,6 +732,30 @@ main{gap:24px}
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
 @media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
 /* === GLOW v1 END === */
+/* === LIGHT v1 (brands / admin / sign-in) START === */
+/* Round 15 light-mode clean-up (STYLE-GUIDE "Round 15"): no dark shadows or glows carried over from dark mode — cool,
+   light shadows (rgba(40,20,80,.06–.22)), a fade goes to a clear version of its own colour, and no shadow is cut off
+   by a scroller. Light only. */
+:root[data-theme="light"] .tipb{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -12px rgba(40,20,80,.22)}
+:root[data-theme="light"] .toast{box-shadow:0 1px 2px rgba(40,20,80,.06),0 12px 28px -14px rgba(40,20,80,.24)}
+:root[data-theme="light"] .drawer{box-shadow:-1px 0 0 rgba(40,20,80,.04),-24px 0 48px -28px rgba(40,20,80,.22)}
+:root[data-theme="light"] .dlg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 24px 56px -24px rgba(40,20,80,.28)}
+:root[data-theme="light"] .ob.pri{box-shadow:0 1px 2px rgba(40,20,80,.08),0 8px 18px -10px rgba(85,13,166,.38)}
+/* All brands D: the card shadow was cut off flat by the strip's scroller (a grey band with a hard edge) */
+:root[data-theme="light"] .deck .face{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 16px -12px rgba(40,20,80,.18)}
+:root[data-theme="light"] .runner{box-shadow:0 1px 2px rgba(40,20,80,.08),0 6px 12px -6px rgba(85,13,166,.32)}
+/* product tiles: the white dress keeps its edge on the palest tile */
+:root[data-theme="light"] .pcard .ph svg{filter:drop-shadow(0 3px 8px rgba(40,20,80,.22))}
+/* coloured status dots and chips: no glow on a white page */
+:root[data-theme="light"] .todo a i,:root[data-theme="light"] .tl.on:before{box-shadow:none}
+/* All brands C: the ground line fades to a clear version of itself, not to grey */
+:root[data-theme="light"] .ground{background:linear-gradient(90deg,rgba(60,20,110,0),var(--line2) 10%,var(--line2) 90%,rgba(60,20,110,0))}
+/* Admin C seats, Admin D brand cards, sign-in B box */
+:root[data-theme="light"] .seat .ch{box-shadow:0 1px 2px rgba(40,20,80,.08),0 6px 14px -8px rgba(40,20,80,.25)}
+:root[data-theme="light"] .seat .ch.inv{box-shadow:none}
+:root[data-theme="light"] .bti:hover{box-shadow:0 1px 2px rgba(40,20,80,.06),0 14px 30px -18px rgba(85,13,166,.22)}
+:root[data-theme="light"] .box{box-shadow:0 1px 2px rgba(40,20,80,.06),0 24px 48px -28px rgba(40,20,80,.22)}
+/* === LIGHT v1 (brands / admin / sign-in) END === */
 </style>
 <script>
 /* === PERIODS v1 START === */
