@@ -98,7 +98,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .seg::-webkit-scrollbar{display:none}
 .tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
-  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+  box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
 .seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:15px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
@@ -106,7 +106,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
 .seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
 .seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
-:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line,rgba(40,20,70,.12));box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
 :root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
@@ -842,8 +842,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (prefers-reduced-motion:reduce){.nv2-sheet.nv2-menu,.nv2-sheet.nv2-menu .nv2-ml{transition:none!important;transform:none}}
 /* === ROUND 10b END === */
 
-/* selected tab pill: a shadow that fits inside the bar, so the scroll edge never cuts it into a hard line */
-.seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22)}
 
 /* === TYPE v1 START === */
 /* Type v1 (round 14): the app-wide scale from STYLE-GUIDE.md "Type and spacing scale". Same steps as the Overview's
@@ -901,12 +899,8 @@ html.nv2-lock{scrollbar-gutter:stable}
 
 /* === LIGHT v1 START === */
 /* Light v1 (round 15): light mode never reuses the dark-mode shadows. Cool, light shadows instead. */
-/* the light tokens TABS v1 reads (same values as the Overview's LIGHT v1) */
-:root[data-theme="light"]{--lt-line:rgba(60,20,110,.10);--lt-line2:rgba(60,20,110,.16);
-  --lt-sh1:0 1px 2px rgba(40,20,80,.06);--lt-sh2:0 1px 2px rgba(40,20,80,.05),0 8px 22px -14px rgba(40,20,80,.16)}
 :root[data-theme="light"] .tipb{box-shadow:0 12px 28px -12px rgba(40,20,80,.16),0 1px 2px rgba(40,20,80,.06)}
 :root[data-theme="light"] .ip-more{box-shadow:0 4px 12px -4px rgba(40,20,80,.14)}
-:root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
 /* === LIGHT v1 END === */
 
@@ -1104,6 +1098,8 @@ html.nv2-lock{scrollbar-gutter:stable}
   /* small pills on the card backs (Close, Ads Manager, …): a centred box of at least 44×44 */
   :root :is(.cv2-close,.cv2-lnk){position:relative}
   :root :is(.cv2-close,.cv2-lnk)::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+  /* shared top-bar popover rows (date options, Profile, Dark mode, Sign out, brand list) were 42px */
+  :root .nv2-mi{min-height:44px}
 }
 /* === TAP v1 END === */
 </style>
