@@ -901,6 +901,9 @@ html.nv2-lock{scrollbar-gutter:stable}
 
 /* === LIGHT v1 START === */
 /* Light v1 (round 15): light mode never reuses the dark-mode shadows. Cool, light shadows instead. */
+/* the light tokens TABS v1 reads (same values as the Overview's LIGHT v1) */
+:root[data-theme="light"]{--lt-line:rgba(60,20,110,.10);--lt-line2:rgba(60,20,110,.16);
+  --lt-sh1:0 1px 2px rgba(40,20,80,.06);--lt-sh2:0 1px 2px rgba(40,20,80,.05),0 8px 22px -14px rgba(40,20,80,.16)}
 :root[data-theme="light"] .tipb{box-shadow:0 12px 28px -12px rgba(40,20,80,.16),0 1px 2px rgba(40,20,80,.06)}
 :root[data-theme="light"] .ip-more{box-shadow:0 4px 12px -4px rgba(40,20,80,.14)}
 :root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
@@ -924,8 +927,8 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root[data-theme="light"] :is(.ia-c.w,.ip-tag.w,.ia-sz.w b,.ip .pv2-tbl td.w){color:#7a5208}
 :root[data-theme="light"] :is(.ia-c.r,.ip-tag.r,.ia-sz.o b,.ia-sz.o em,.ip .pv2-tbl td.r){color:#a32a37}
 :root:not([data-theme="light"]) .pa-badge{color:#170d22}
-:root[data-theme="light"] .ip .seg .n.r{color:#a32a37}
-:root:not([data-theme="light"]) .ip .seg .n.r{color:#ff9aa3}
+:root[data-theme="light"] .ip .seg button:not(.on) .n.r{color:#a32a37}
+:root:not([data-theme="light"]) .ip .seg button:not(.on) .n.r{color:#ff9aa3}
 /* sold-out sizes: struck through, still readable (not faded) */
 :root .ia-sz.o em{text-decoration:line-through;text-decoration-thickness:1.5px}
 /* #4 nothing under 12px */

@@ -793,8 +793,9 @@ main{gap:24px}
 :root .tip{position:relative}
 :root .tip::after{content:"";position:absolute;inset:-13px}
 /* inline links inside a sentence: a taller hit area, same look */
-:root .consent a,:root .mock button{position:relative}
-:root .consent a::after,:root .mock button::after{content:"";position:absolute;inset:-14px -4px}
+:root .consent a,:root .mock button,:root .lnk,:root .alt,:root .legal a{position:relative}
+:root .consent a::after,:root .mock button::after,:root .lnk::after,:root .legal a::after{content:"";position:absolute;inset:-14px -4px}
+:root .alt::after{content:"";position:absolute;inset:-8px 0}
 :root .pwt::after{content:"";position:absolute;inset:-6px -2px}
 /* brands D carousel dots: 24×8 look, 44×44 hit area */
 :root .dots button{position:relative}
@@ -806,8 +807,6 @@ main{gap:24px}
   :root .seg button{min-height:44px}
   :root .deck-h .nav .ob{width:44px;padding:0}
   :root .kp button{min-height:44px}
-  :root .lnk,:root .alt,:root .legal a{display:inline-flex;align-items:center;min-height:44px}
-  :root .legal a{min-width:44px;justify-content:center}
   :root .sel.cell{min-height:44px}
 }
 
