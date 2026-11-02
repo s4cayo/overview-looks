@@ -959,6 +959,65 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
 .jd-src{font-size:12.5px;color:var(--muted);margin-top:4px}
 @media (prefers-reduced-motion:reduce){.jw-st.pop .med{animation:none}}
 
+/* === TYPE v1 START === */
+/* Type v1 (round 14, Sam + a client: "the fonts need to be bigger on the things that are important").
+   Same scale as the Overview (.redesign/STYLE-GUIDE.md "Type and spacing scale"):
+     page title 28 · SECTION TITLE 20/650 (18 on phones) · row name 15 · body 14–15 · secondary 13 · min 12
+     key figure 32 (26 on phones) · row amount 16 · small stat 20
+   Spacing: title → content 16px · inside a panel 24px (20 on phones) · between panels 24px (16 on phones). */
+
+/* section titles */
+:root .ph h2,:root .ph h3,:root .sh h2,:root .sh h3,:root .ob-sh h3,:root .mg-way h3,:root .mb-sum h3,
+:root .rb-dh h2,:root .rb-jt h2,:root .os-dh h2,:root .md h2,:root .jc-h{
+  font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
+:root .ph,:root .sh,:root .ob-sh{margin-bottom:16px}
+
+/* key figures: spend, sales, return */
+:root .os-nums b,:root .ad-facts b,:root .rb-facts b,:root .cc-r b,:root .cc-tot > b{
+  font-size:32px;font-weight:650;letter-spacing:-.02em;line-height:1.1}
+:root .os-nums b small{font-size:15px}
+
+/* small stats */
+:root .cc-mn b,:root .jw-st .tx b,:root .mb-tt b{font-size:20px}
+:root .cc-mn small{font-size:13px}
+
+/* row names and amounts */
+:root .rl-r,:root .bk > div,:root .tb,:root .mb-n,:root .fn-s,:root .jd-split > div{font-size:15px}
+:root .rl-r .am,:root .tb td,:root .mg-num span,:root .jp-m b,:root .jw-ex b{font-size:16px}
+:root .rl-r.tot .am{font-size:20px}
+:root .cc-nm b,:root .mg-nm b,:root .cr .bd b,:root .win b{font-size:15px}
+:root .rl-r{min-height:64px}
+
+/* secondary lines and labels: 13, never under 12 */
+:root .rl-r .nm small,:root .rl-r .am small,:root .cc-nm small,:root .cc-tot small,:root .mg-nm small,
+:root .mg-num small,:root .mg-k > span,:root .mg-k small,:root .mg-bring small,:root .mg-tr small,:root .mg-adc small,
+:root .mg-drop small,:root .tb th,:root .tb td .nmc small,:root .cr .bd .ft small,:root .fn-s .nm small,:root .fn-k,
+:root .bk-h,:root .win .k,:root .fl small,:root .items small,:root .tl li span:last-child,:root .mb-tt small,
+:root .mb-n small,:root .jw-st .tx small,:root .jw-ex span,:root .jp-top small,:root .jd-why small,:root .jd-src,
+:root .ad-src,:root .cc-bar small,:root .jp-m > span{font-size:13px}
+:root .seg .n{font-size:12px;line-height:18px}
+
+/* spacing */
+:root .panel{padding:24px}
+:root main{gap:24px}
+:root .rb-list,:root .rb-detail,:root .mb-sum{padding:24px}
+:root .cc{padding:24px;gap:16px}
+:root .cc-grid{gap:24px}
+:root .ad-facts{gap:24px 32px}
+
+@media (max-width:600px){
+  :root .ph h2,:root .ph h3,:root .sh h2,:root .sh h3,:root .ob-sh h3,:root .mg-way h3,:root .mb-sum h3,
+  :root .rb-dh h2,:root .rb-jt h2,:root .os-dh h2,:root .md h2,:root .jc-h{font-size:18px}
+  :root .os-nums b,:root .ad-facts b,:root .rb-facts b,:root .cc-r b,:root .cc-tot > b{font-size:26px}
+  :root .cc-mn b,:root .jw-st .tx b,:root .mb-tt b{font-size:18px}
+  :root .panel,:root .rb-list,:root .rb-detail,:root .jy-crowd{padding:20px}
+  :root .cc{padding:20px;gap:14px}
+  :root main{gap:16px}
+  :root .cc-grid{gap:16px}
+  :root .ad-facts{gap:20px 16px}
+}
+/* === TYPE v1 END === */
+
 </style>
 </head>
 <body>

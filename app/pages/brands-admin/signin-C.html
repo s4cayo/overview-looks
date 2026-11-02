@@ -412,6 +412,51 @@ body button,body input{font-family:inherit}
 .by{font-size:12.5px;color:var(--st-mut);text-align:center}
 @media (max-width:600px){.stage{padding-top:36px;align-items:flex-start}.hd h1{font-size:32px}.col{gap:22px}.st-mark{width:60px}}
 @media (prefers-reduced-motion:reduce){.dia,.st-mark,.tile::after,.go::after{animation:none}}
+/* === TYPE v1 (brands / admin / sign-in) START === */
+/* Round 14 (Sam + a client: "the important text is too small"). Same scale as the Overview's TYPE v1 block:
+   section title 20/650 (18 on phones) · key figure 32 (26) · small stat 20 · row name 15 · amount 16 ·
+   secondary 13 · nothing under 12. Spacing: title → content 16 · inside a panel 24 (20) · between panels 24 (16)
+   · two-line rows ≥ 64px. Added last in every page's styles so it wins over the page's own sizes. */
+/* section titles: every panel, card and drawer heading */
+:root .sh h2,:root .sh h3,:root .dh h2,:root .dlg h2,:root .bti .bh b,:root .gf-h b,:root .bk-h h3,:root .tb-h b,
+:root .bc-h h3,:root .deck-h h2,:root .f-h b{font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
+:root .db h3{font-size:16px;font-weight:650;line-height:1.3}
+:root .sh{margin-bottom:16px}
+:root .sh p,:root .dh p{font-size:13px}
+/* panels and the gaps between them */
+:root .panel{padding:24px}
+:root main{gap:24px}
+/* key figure of a card */
+:root .tm b,:root .plan-h b,:root .mcard h2,:root .hero b,:root .dhero b,:root .hero strong,:root .gg .v{font-size:32px;line-height:1.1}
+/* small stats */
+:root .desk b,:root .mring span,:root .tr-h span,:root .pc .who strong{font-size:20px}
+/* row names */
+:root .pr-row .nm b,:root .tmx > *,:root .gl b,:root .mb-n b,:root .inv b,:root .it .who b,:root .pc .who b,:root .tops b,
+:root .row .nm b,:root .lane .nm,:root .ladder b,:root .keys .kt b,:root .role-b b,:root .win b,:root .pcard b,
+:root .plan .nm{font-size:15px}
+/* amounts */
+:root .rcpt b,:root .lane .val,:root .plan-h .r b,:root .mc-p,:root .bc-f b,:root .ladder .pr{font-size:16px}
+/* secondary lines and labels: 13px */
+:root .gf-h small,:root .sbar small,:root .gf h4,:root .tl,:root .roles p,:root .pr-row .nm small,:root .bc,:root .pr-sep,
+:root .bti .bh small,:root .tmx small,:root .gl small,:root .hint,:root .rcpt small,:root .mb-n small,:root .pg legend,
+:root .inv small,:root .ub p,:root .seats th,:root .plan .pn,:root .bl-foot,:root .mc-k,:root .meter p,:root .ladder small,
+:root .ladder em,:root .it .who small,:root .bk-h small,:root .ppl small,:root .tg th,:root .legend2,:root .keys .kt span,
+:root .tb-h small,:root .sortnote,:root .bc-h small,:root .figs .sub,:root .bc-f span,:root .cmp th,:root .cmp td small,
+:root .tops small,:root .rk-note,:root .row .meta,:root .row .val small,:root .wl,:root .belowlab,:root .mr-f,:root .leg,
+:root .pcard .ph .n,:root .pcard small,:root .f-h small,:root .spark .k,:root .facts dt,:root .legal,:root .foot,
+:root .by,:root .story .kick,:root .gl span,:root .wm small,:root .pc small{font-size:13px}
+:root .runner{font-size:12px}
+/* two-line rows */
+:root .pr-row,:root .gl > div,:root .rcpt > div{min-height:64px}
+@media (max-width:600px){
+  :root .sh h2,:root .sh h3,:root .dh h2,:root .dlg h2,:root .bti .bh b,:root .gf-h b,:root .bk-h h3,:root .tb-h b,
+  :root .bc-h h3,:root .deck-h h2,:root .f-h b{font-size:18px}
+  :root .tm b,:root .plan-h b,:root .mcard h2,:root .hero b,:root .dhero b,:root .hero strong,:root .gg .v{font-size:26px}
+  :root .desk b,:root .mring span,:root .tr-h span,:root .pc .who strong{font-size:18px}
+  :root .panel{padding:20px}
+  :root main{gap:16px}
+}
+/* === TYPE v1 (brands / admin / sign-in) END === */
 </style>
 </head>
 <body>

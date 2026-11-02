@@ -902,6 +902,29 @@ main{gap:24px}
   border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
 .tipb.on{visibility:visible;opacity:1;transform:none}
 
+/* === TYPE v1 (round 14) — the Overview's type + spacing scale (STYLE-GUIDE.md "Type and spacing scale"):
+   section title 20/650 (18 on phones) · key money figure 32 (26) · small stat 20 · row name 15 · row amount 16 ·
+   secondary 13 · min 12. Spacing: title → content 16 · inside a panel 24 (20) · between panels 24 (16). === */
+.ph h2,.ph h3,.ob-sh h3,.ob-gh h3{font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
+.ph{gap:12px;margin-bottom:16px}
+.ob-sh{margin-bottom:8px}
+.panel{padding:24px}
+.ob-stack{gap:24px}
+.os-nums b{font-size:32px}
+.seg button{font-size:15px}
+.ob-bars > div{font-size:15px;padding:12px 0}
+.ob-bars b{font-size:16px}
+.tl li span:last-child,.items small{font-size:13px}
+.os-dh p,.os-db h3{font-size:13px}
+@media (max-width:600px){
+  .ph h2,.ph h3,.ob-sh h3,.ob-gh h3{font-size:18px}
+  .panel{padding:20px}
+  main,.ob-stack{gap:16px} .tabs-anchor{margin-bottom:-16px}
+  .os-nums b{font-size:26px}
+  .seg button{font-size:14px}
+}
+/* === TYPE v1 END === */
+
 /* ===== page: orders-B ===== */
 /* hero: one number + the status mix (legend items filter the list) */
 .ob-hero{display:grid;grid-template-columns:minmax(200px,.8fr) minmax(0,2fr);gap:40px;align-items:center;padding:26px 28px}
@@ -1083,6 +1106,22 @@ main{gap:24px}
 
 /* the product sheet (shared with the Products page): the base layout's .top bar class must not reach its table row */
 .ip-sz tr.top{display:table-row}
+
+/* === TYPE v1 (round 14), see common.css. Hero figures already above 32 keep their size. === */
+.ob-hero,.ob-lost{padding:24px}
+.ob-leg small,.ob-asum .tx small,.ob-gh .ct small,.ob-lleg small,.ob-a .m small,.ob-c .m small,.ob-ah,.ob-szhead,.ob-o .m p,.ob-o .m b span{font-size:13px}
+.ob-asum .tx b{font-size:32px}
+.ob-asum .tx span{font-size:15px}
+.ob-dh h3{font-size:15px}
+.ob-o .m b,.ob-pr .nm b{font-size:15px}
+.ob-o .rt b,.ob-pr .rt b,.ob-a .v{font-size:16px}
+.ob-a,.ob-c{font-size:15px}
+.ob-o,.ob-a,.ob-c,.ob-pr{min-height:64px}
+.ob-pair{gap:24px}
+@media (max-width:900px){.ob-asum .tx b{font-size:26px}.ob-hero{padding:20px}}
+@media (max-width:760px){.ob-lost{padding:20px}}
+@media (max-width:600px){.ob-pair{gap:16px}}
+/* === TYPE v1 END === */
 
 </style>
 </head>
