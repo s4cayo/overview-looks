@@ -1,0 +1,1462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Products · List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- === ACCOUNT v1 START === --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"><!-- === ACCOUNT v1 END === -->
+<script>
+/* theme: remembered choice first, else the OS preference */
+(function(){var t=null;try{t=localStorage.getItem("n-theme")}catch(e){}
+  if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
+  document.documentElement.dataset.theme=t})();
+</script>
+<style>
+:root{
+  --bg:#060509; --panel:#0d0c12; --panel2:#14121b; --line:rgba(255,255,255,.065); --line2:rgba(255,255,255,.11);
+  --text:#eceaf3; --muted:#8d8a9b; --dim:#5f5c6c;
+  --p:#550da6; --pm:#7c3fc1; --pl:#a275e0; --tint:#f2eafb; --acc:#8a4fd1;
+  --good:#45d09a; --warn:#f2b64f; --bad:#f06571; --gold:#d8b46c;
+  --track:rgba(255,255,255,.06); --grid:rgba(255,255,255,.06); --grid2:rgba(255,255,255,.12);
+  --r:18px; --peek:68px;
+  --cw:min(500px, 78vw);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f4f2f8; --panel:#ffffff; --panel2:#f6f3fb; --line:rgba(20,10,40,.08); --line2:rgba(20,10,40,.14);
+  --text:#17141f; --muted:#666273; --dim:#9a96a6; --acc:#550da6; --pl:#7c3fc1;
+  --good:#14935f; --warn:#b07a12; --bad:#d0434f; --gold:#a8843c;
+  --track:rgba(20,10,40,.07); --grid:rgba(20,10,40,.07); --grid2:rgba(20,10,40,.16);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:Geist,system-ui,sans-serif;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.num,td,.tab{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:6px}
+svg.i{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100%}
+.side{position:sticky;top:0;align-self:flex-start;height:100vh;width:248px;flex:none;padding:18px 14px;display:flex;flex-direction:column;gap:18px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(124,63,193,.07),transparent 40%),var(--bg)}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-weight:700;font-size:11.5px;letter-spacing:.02em;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 6px 18px -6px rgba(124,63,193,.8)}
+.switch{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line2);border-radius:12px;background:var(--panel)}
+.switch .dot{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,#a275e0,#550da6,#a275e0)}
+.switch b{font-weight:500;flex:1;text-align:left}
+.switch .i{color:var(--muted);width:15px}
+nav{display:flex;flex-direction:column;gap:14px;overflow:auto}
+.grp h6{font-size:10.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding:0 10px 6px}
+.grp a{display:flex;align-items:center;gap:11px;padding:7.5px 10px;border-radius:10px;color:var(--muted);font-size:13.5px;transition:background .2s,color .2s}
+.grp a:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.grp a.on{color:#fff;background:linear-gradient(90deg,rgba(138,79,209,.28),rgba(138,79,209,.06));box-shadow:inset 2px 0 0 var(--acc)}
+:root[data-theme="light"] .grp a.on{color:var(--p);background:linear-gradient(90deg,rgba(124,63,193,.13),rgba(124,63,193,.03))}
+:root[data-theme="light"] .grp a:hover{background:rgba(20,10,40,.04)}
+
+.content{flex:1;min-width:0;padding:22px 34px 60px}
+main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;min-width:0;transition:border-color .25s,box-shadow .25s}
+.panel:hover{border-color:var(--line2);box-shadow:0 18px 40px -28px rgba(124,63,193,.55)}
+:root[data-theme="light"] .panel{box-shadow:0 1px 2px rgba(24,16,40,.04),0 10px 28px -20px rgba(40,20,80,.25)}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.ph h3{font-size:14px;font-weight:600;letter-spacing:-.005em}
+.ph .r{margin-left:auto;font-size:12px;color:var(--muted);text-align:right}
+.ph .lnk{margin-left:auto;font-size:12.5px;color:var(--pl);display:inline-flex;align-items:center;gap:4px}
+.k{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.cnt{font-size:11px;font-weight:600;padding:1px 8px;border-radius:99px;background:rgba(162,117,224,.16);color:var(--pl);line-height:18px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500;white-space:nowrap}
+.tag.g{color:var(--good);background:rgba(69,208,154,.1)}
+.tag.w{color:var(--warn);background:rgba(242,182,79,.1)}
+.tag.r{color:var(--bad);background:rgba(240,101,113,.1)}
+.tag.p{color:var(--pl);background:rgba(162,117,224,.12)}
+.tag.n{color:var(--muted);background:var(--track)}
+/* ================= 4 · STICKY TABS ================= */
+.tabs-anchor{height:0;margin-bottom:-22px}
+.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:min(100%,780px);padding:5px;border-radius:99px;
+  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
+.seg::-webkit-scrollbar{display:none}
+.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
+.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
+  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button:hover{color:var(--text)}
+.seg button.on{color:#fff}
+.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+.seg .n{font-size:10.5px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:17px;font-variant-numeric:tabular-nums}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+.seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
+.pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
+.pane[hidden]{display:none}
+.pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
+.pane:focus{outline:none}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* === NAV v2 START === */
+/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
+   and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
+   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
+   attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
+   Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
+   "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
+.nv2-top,.nv2-dock,.nv2-sheet,.nv2-scrim{--nv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --nv2-bg:#060509;--nv2-panel:#0f0d15;--nv2-panel2:#17141f;--nv2-line:rgba(255,255,255,.08);--nv2-line2:rgba(255,255,255,.14);--nv2-fg:#eceaf3;--nv2-mut:#9693a6;
+  --nv2-acc:#a275e0;--nv2-good:#45d09a;--nv2-bad:#f06571;--nv2-glass:rgba(22,19,30,.86);--nv2-shadow:0 18px 40px -14px rgba(0,0,0,.85);
+  font-family:var(--nv2-font);color:var(--nv2-fg)}
+[data-theme="light"] .nv2-top,[data-theme="light"] .nv2-dock,[data-theme="light"] .nv2-sheet,[data-theme="light"] .nv2-scrim{
+  --nv2-bg:#f4f2f8;--nv2-panel:#fff;--nv2-panel2:#f6f3fb;--nv2-line:rgba(20,10,40,.08);--nv2-line2:rgba(20,10,40,.14);--nv2-fg:#17141f;--nv2-mut:#5f5b6c;
+  --nv2-acc:#550da6;--nv2-good:#12855a;--nv2-bad:#d0434f;--nv2-glass:rgba(255,255,255,.9);--nv2-shadow:0 16px 36px -14px rgba(40,20,80,.35)}
+.nv2-top *,.nv2-dock *,.nv2-sheet *{box-sizing:border-box;margin:0;padding:0}
+:where(.nv2-top,.nv2-dock,.nv2-sheet) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:where(.nv2-top,.nv2-sheet,.nv2-dock) a{color:inherit;text-decoration:none}
+.nv2-top :focus-visible,.nv2-dock :focus-visible,.nv2-sheet :focus-visible{outline:2px solid var(--nv2-acc);outline-offset:2px;border-radius:10px}
+.nv2-i{width:19px;height:19px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- top bar ---- */
+.nv2-top{position:relative;z-index:40;display:flex;align-items:center;gap:10px;min-height:44px}
+.nv2-anc{position:relative}
+/* Profitable / Loss: a tiny dot after the brand name (aria-label + title carry the words) */
+.nv2-sdot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--nv2-good);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-good) 22%,transparent)}
+.nv2-sdot.nv2-loss{background:var(--nv2-bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-bad) 22%,transparent)}
+.nv2-search{position:relative;flex:1 1 340px;max-width:340px;min-width:150px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
+.nv2-search:focus-within{border-color:var(--nv2-acc)}
+.nv2-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-search input::placeholder{color:var(--nv2-mut)}
+.nv2-kbd{font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;border:1px solid var(--nv2-line2);color:var(--nv2-mut);white-space:nowrap}
+.nv2-res{position:absolute;left:0;right:0;top:calc(100% + 6px);padding:6px;border-radius:14px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);display:none}
+.nv2-res.nv2-on{display:block}
+.nv2-res button{display:flex;width:100%;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-res button small{margin-left:auto;font-size:12px;color:var(--nv2-mut)}
+.nv2-res button:hover,.nv2-res button.nv2-hl{background:var(--nv2-panel2)}
+.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+.nv2-date{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:99px;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s}
+.nv2-date:hover{border-color:var(--nv2-acc)!important}
+.nv2-date small{font-size:12.5px;color:var(--nv2-mut);font-weight:400}
+.nv2-ds{display:none}
+.nv2-date .nv2-i{width:16px;height:16px}
+.nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
+.nv2-ib:hover{border-color:var(--nv2-acc)!important}
+.nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
+.nv2-avw{flex:none}
+.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
+.nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
+.nv2-brandw{min-width:0;flex:none}
+.nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
+.nv2-brand:hover{background:var(--nv2-panel2)}
+.nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
+.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+/* popovers */
+.nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
+  opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.nv2-pop.nv2-on{opacity:1;transform:none;pointer-events:auto}
+.nv2-pop.nv2-l{right:auto;left:0;transform-origin:top left}
+.nv2-pop.nv2-c{right:auto;left:50%;transform:translate(-50%,-6px) scale(.98);transform-origin:top center}
+.nv2-pop.nv2-c.nv2-on{transform:translate(-50%,0)}
+.nv2-mi{display:flex;width:100%;align-items:center;gap:11px;min-height:42px;padding:8px 11px;border-radius:10px;font-size:14px;white-space:nowrap}
+.nv2-mi:hover{background:var(--nv2-panel2)}
+.nv2-mi small{margin-left:auto;font-size:12.5px;color:var(--nv2-mut)}
+.nv2-mi[aria-checked="true"]{color:var(--nv2-acc);font-weight:600}
+.nv2-mi[aria-checked="true"]::after{content:"✓";margin-left:10px;font-weight:700}
+.nv2-mi .nv2-i{width:17px;height:17px;color:var(--nv2-mut)}
+.nv2-hr{height:1px;background:var(--nv2-line);margin:5px 6px}
+.nv2-who{padding:10px 11px 8px}
+.nv2-who b{display:block;font-size:14px;font-weight:600}
+.nv2-who span{font-size:12.5px;color:var(--nv2-mut)}
+.nv2-tog{margin-left:auto;position:relative;width:42px;height:24px;border-radius:99px;background:var(--nv2-line2);flex:none;transition:background .25s}
+.nv2-tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s}
+[data-theme="dark"] .nv2-tog,:root:not([data-theme="light"]) .nv2-tog{background:linear-gradient(135deg,#7c3fc1,#550da6)}
+[data-theme="dark"] .nv2-tog::after,:root:not([data-theme="light"]) .nv2-tog::after{transform:translateX(18px)}
+/* bell: straight to the list — icon · one-line message · time · link (no heading) */
+.nv2-bellpop{width:min(344px,calc(100vw - 32px));padding:6px;display:flex;flex-direction:column;gap:2px}
+.nv2-note{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:12px;line-height:1.35;width:100%;text-align:left}
+.nv2-note:hover{background:var(--nv2-panel2)}
+.nv2-note + .nv2-note{box-shadow:0 -1px 0 var(--nv2-line)}
+.nv2-note:hover + .nv2-note,.nv2-note + .nv2-note:hover{box-shadow:none}
+.nv2-ni{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.nv2-ni svg.nv2-i{width:16px;height:16px}
+.nv2-nt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nv2-nt b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-nt small{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--nv2-mut)}
+.nv2-nl{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--nv2-acc,#a275e0);white-space:nowrap}
+.nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
+.nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
+
+/* ---- narrower desktops: the range moves into the menu ---- */
+@media (max-width:1279px){.nv2-dr{display:none}}
+/* ---- phone / tablet top: the same single row; search hidden, compact date ("7 days") ---- */
+@media (max-width:1023px){
+  .nv2-top{gap:8px}
+  .nv2-brandw{flex:0 1 auto}
+  .nv2-search{display:none}
+  .nv2-dl,.nv2-dr{display:none}
+  .nv2-ds{display:inline}
+}
+@media (max-width:480px){
+  .nv2-top{gap:6px}
+  .nv2-right{gap:6px}
+  .nv2-av,.nv2-ib{width:40px;height:40px}
+  .nv2-av b{width:38px;height:38px}
+  .nv2-dot{top:9px;right:10px}
+  .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
+  .nv2-date{height:40px;padding:0 12px;gap:6px}
+  .nv2-date .nv2-cal{display:none}
+}
+@media (max-width:400px){.nv2-bchev{display:none}}
+
+/* ---- bottom dock ---- */
+.nv2-dock{display:none}
+@media (max-width:1023px){
+  html.nv2-docked body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  .nv2-dock{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:row;overflow:visible;justify-content:center;align-items:center;gap:12px;pointer-events:none;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+  .nv2-dock.nv2-hide{transform:translateY(calc(100% + 30px));opacity:0}
+  .nv2-pill,.nv2-ai{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+  .nv2-pill{display:flex;align-items:center;gap:2px;padding:5px;border-radius:99px;background:var(--nv2-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .nv2-pill > *{width:64px;height:52px;border-radius:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > * > span{font-size:12px;line-height:1;font-weight:500;letter-spacing:0;white-space:nowrap}
+  .nv2-pill > *[aria-current="page"]{background:var(--nv2-fg);color:var(--nv2-bg)}
+  .nv2-pill .nv2-i{width:20px;height:20px}
+  .nv2-pill > *[aria-current="page"] .nv2-i{stroke-width:2.1}
+  .nv2-ai{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6 60%,#3d0880);box-shadow:0 14px 30px -10px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)!important}
+  .nv2-ai .nv2-i{width:24px;height:24px}
+}
+/* ---- sheets (menu, assistant) ---- */
+.nv2-scrim{position:fixed;inset:0;z-index:90;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.nv2-scrim.nv2-on{opacity:1;pointer-events:auto}
+.nv2-sheet{position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:86vh;overflow:auto;border-radius:24px 24px 0 0;background:var(--nv2-panel);border-top:1px solid var(--nv2-line2);
+  padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s .4s;box-shadow:0 -20px 50px -20px rgba(0,0,0,.6)}
+.nv2-sheet.nv2-on{transform:none;visibility:visible;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:1024px){.nv2-sheet{left:50%;right:auto;width:520px;margin-left:-260px}}
+.nv2-grab{width:40px;height:5px;border-radius:9px;background:var(--nv2-line2);margin:2px auto 14px}
+.nv2-sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nv2-sh h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.nv2-x{margin-left:auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel2)}
+.nv2-sw{display:flex;align-items:center;gap:11px;width:100%;padding:12px;border-radius:14px;background:var(--nv2-panel2);border:1px solid var(--nv2-line)!important;margin-bottom:16px;font-size:15px;font-weight:600}
+.nv2-sw .nv2-i{margin-left:auto;color:var(--nv2-mut)}
+.nv2-grp{margin-bottom:14px}
+.nv2-grp h6{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--nv2-mut);padding:0 12px 6px}
+.nv2-grp a{display:flex;align-items:center;gap:13px;min-height:46px;padding:0 12px;border-radius:12px;font-size:15px}
+.nv2-grp a:hover{background:var(--nv2-panel2)}
+.nv2-grp a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-acc) 16%,transparent);color:var(--nv2-acc);font-weight:600}
+.nv2-grp a .nv2-i{color:var(--nv2-mut)}
+.nv2-grp a[aria-current="page"] .nv2-i{color:var(--nv2-acc)}
+.nv2-ask{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--nv2-panel2);border:1px solid var(--nv2-line2);margin:6px 0 16px}
+.nv2-ask:focus-within{border-color:var(--nv2-acc)}
+.nv2-ask input:focus-visible,.nv2-search input:focus-visible{outline:none}
+.nv2-ask input{flex:1;min-width:0;height:44px;border:0;outline:0;background:none;font:inherit;font-size:15px;color:var(--nv2-fg)}
+.nv2-ask button{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6)}
+.nv2-sugh{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--nv2-mut);margin-bottom:8px}
+.nv2-sug{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--nv2-line)!important;margin-bottom:8px;font-size:14.5px;line-height:1.35}
+.nv2-sug:hover{border-color:var(--nv2-acc)!important}
+.nv2-sug .nv2-i{color:var(--nv2-acc)}
+.nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
+   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
+   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
+   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+.nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
+  background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
+.nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
+.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
+.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
+  -webkit-tap-highlight-color:transparent;transition:background .2s}
+.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
+.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
+@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
+.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
+.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
+.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
+.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
+.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
+.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
+.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
+.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
+.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
+.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
+.nv2-mh .nv2-i{width:16px;height:16px}
+.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
+.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+.nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nv2-mbtn .nv2-i{width:22px;height:22px}
+.nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.nv2-mask .nv2-i{width:20px;height:20px}
+html.nv2-lock,html.nv2-lock body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
+/* === NAV v2 END === */
+/* === PRODUCTS v2 START === */
+/* Products v2 — top products (Revenue / Profit / Margin / Returns, sizes, units per period, "why it ranks" sheet)
+   + Low stock grouped by product with a restock planner. Self-contained, pv2- prefix.
+   THEME: light when <html data-theme="light"> or .pv2[data-pv2-theme="light"].
+   Page hooks: pv2SetPeriod('today'|'yesterday'|'7d'|'30d'|'month'), pv2OpenStock(), and the bubbling
+   "pv2:action" event (detail.go) from action rows. Layout: cards + low stock side by side when the block is
+   ≥ 1000px wide, stacked below that. */
+.pv2{--pv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --pv2-bg:#0d0c12;--pv2-bg2:#15131c;--pv2-bg3:#1b1824;--pv2-line:rgba(255,255,255,.07);--pv2-line2:rgba(255,255,255,.13);--pv2-fg:#eceaf3;--pv2-mut:#9693a6;--pv2-dim:#6c6979;
+  --pv2-acc:#a275e0;--pv2-acc2:#550da6;--pv2-good:#45d09a;--pv2-warn:#f2b64f;--pv2-bad:#f06571;--pv2-track:rgba(255,255,255,.07);--pv2-shadow:0 30px 70px -20px rgba(0,0,0,.85);
+  position:relative;font-family:var(--pv2-font);color:var(--pv2-fg);font-variant-numeric:tabular-nums;min-width:0;grid-column:1 / -1}
+[data-theme="light"] .pv2,.pv2[data-pv2-theme="light"]{--pv2-bg:#fff;--pv2-bg2:#f7f4fc;--pv2-bg3:#efe9f8;--pv2-line:rgba(20,10,40,.08);--pv2-line2:rgba(20,10,40,.15);--pv2-fg:#17141f;--pv2-mut:#5f5b6c;--pv2-dim:#8e8a9b;
+  --pv2-acc:#550da6;--pv2-good:#12855a;--pv2-warn:#9a6a0e;--pv2-bad:#c73a47;--pv2-track:rgba(20,10,40,.08);--pv2-shadow:0 30px 60px -24px rgba(40,10,90,.45)}
+.pv2 *,.pv2 *::before,.pv2 *::after{box-sizing:border-box;margin:0;padding:0}
+:where(.pv2) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:where(.pv2) a{color:inherit;text-decoration:none}
+.pv2 :focus-visible{outline:2px solid var(--pv2-acc);outline-offset:2px;border-radius:8px}
+.pv2 svg.pv2-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pv2-wrap{container-type:inline-size}
+.pv2-grid{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);gap:16px;align-items:start;position:relative}
+@container (max-width:999px){.pv2-grid{grid-template-columns:minmax(0,1fr)}}
+.pv2-panel{background:var(--pv2-bg);border:1px solid var(--pv2-line);border-radius:18px;padding:20px 22px;min-width:0;position:relative}
+[data-theme="light"] .pv2 .pv2-panel,.pv2[data-pv2-theme="light"] .pv2-panel{box-shadow:0 1px 2px rgba(24,16,40,.04),0 10px 28px -20px rgba(40,20,80,.25)}
+.pv2-ph{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;margin-bottom:16px}
+.pv2-ph h3{font-size:15px;font-weight:600;letter-spacing:-.005em}
+.pv2-per{font-size:12.5px;color:var(--pv2-mut)}
+.pv2-sort{position:relative;margin-left:auto;display:inline-flex;padding:3px;border-radius:12px;background:var(--pv2-bg2);border:1px solid var(--pv2-line)}
+.pv2-sort button{position:relative;z-index:1;height:30px;padding:0 13px;font-size:13px;font-weight:500;color:var(--pv2-mut);border-radius:9px;transition:color .25s;white-space:nowrap}
+.pv2-sort button[aria-pressed="true"]{color:#fff}
+.pv2-sind{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:9px;background:linear-gradient(135deg,#7c3fc1,#550da6);box-shadow:0 0 18px -4px rgba(162,117,224,.8);transition:left .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.pv2-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@container (max-width:560px){.pv2-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pv2-panel{padding:16px}.pv2-sort{margin-left:0;width:100%}.pv2-sort button{flex:1;padding:0 6px;text-align:center}}
+.pv2-hint{font-size:12.5px;color:var(--pv2-mut);margin-top:12px}
+
+/* product card (front) */
+.pv2-card{position:relative;display:flex;flex-direction:column;border-radius:16px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);padding:12px;min-width:0;cursor:pointer;
+  transition:border-color .25s,box-shadow .25s,transform .25s;outline:none;width:100%}
+.pv2-card:hover{border-color:rgba(162,117,224,.45);box-shadow:0 14px 32px -18px rgba(124,63,193,.8)}
+.pv2-card:focus-visible{border-color:var(--pv2-acc)}
+.pv2-card.pv2-sel{border-color:var(--pv2-acc);box-shadow:0 0 0 1px var(--pv2-acc)}
+.pv2-sw{position:relative;height:92px;border-radius:11px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));flex:none}
+.pv2-sw::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.07) 0 2px,transparent 2px 7px)}
+.pv2-sw svg{width:42px;height:64px;position:relative;z-index:1;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.pv2-rank{position:absolute;top:7px;left:7px;z-index:2;min-width:24px;height:24px;padding:0 6px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:700;background:rgba(10,8,16,.62);color:#fff}
+.pv2-ptag{position:absolute;top:7px;right:7px;z-index:2;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;background:rgba(10,8,16,.62);white-space:nowrap}
+.pv2-ptag.g{color:#7ce3bc}.pv2-ptag.w{color:#f6d58c}.pv2-ptag.r{color:#ffa3a8}
+.pv2-left{position:absolute;left:7px;bottom:7px;z-index:2;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;color:#fff;background:rgba(10,8,16,.66);border:1px solid var(--ul);white-space:nowrap}
+.pv2-left i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ul);margin-right:5px}
+/* hierarchy: name → key number (the sort) → secondary line (units sold + the other figure) → size strip */
+.pv2-nm{font-size:14px;font-weight:600;line-height:1.3;margin-top:10px;min-height:36px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pv2-mk{font-size:12px;color:var(--pv2-mut);margin-top:8px;line-height:1.3}
+.pv2-mv{display:block;font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.pv2-mv small{font-size:12px;font-weight:500;color:var(--pv2-mut);margin-right:4px;letter-spacing:0}
+.pv2-mv.r{color:var(--pv2-bad)}
+.pv2-sub{font-size:12.5px;line-height:1.35;color:var(--pv2-mut);margin-top:3px;min-height:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv2-sub b{color:var(--pv2-fg);font-weight:600}
+@container (max-width:560px){.pv2-mv{font-size:18px}.pv2-nm{font-size:13.5px}}
+/* size strip */
+.pv2-strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin-top:12px;padding-top:10px;border-top:1px solid var(--pv2-line)}
+.pv2-sz{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.pv2-sz .pv2-t{position:relative;width:100%;height:30px;border-radius:5px;background:var(--pv2-track);overflow:hidden}
+.pv2-sz .pv2-t i{position:absolute;left:0;right:0;bottom:0;height:var(--v);border-radius:5px 5px 3px 3px;background:var(--pv2-c,rgba(162,117,224,.55));transition:height .6s cubic-bezier(.2,.8,.2,1),background .4s}
+.pv2-sz span{font-size:11px;font-weight:500;color:var(--pv2-mut);line-height:1}
+.pv2-sz.pv2-top span{color:var(--pv2-fg);font-weight:700}
+.pv2-sz.pv2-top .pv2-t{box-shadow:0 0 0 1.5px var(--pv2-hc,var(--pv2-acc)) inset}
+.pv2-cap{font-size:12px;margin-top:8px;line-height:1.3;color:var(--pv2-mut);min-height:16px}
+.pv2-cap b{color:var(--pv2-fg);font-weight:600}
+.pv2-cap.r b{color:var(--pv2-bad)}
+
+/* "why it ranks" sheet: popover anchored to the card on desktop, bottom sheet on phone */
+.pv2-scrim{position:fixed;inset:0;z-index:80;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.pv2-scrim.pv2-on{opacity:1;pointer-events:auto}
+.pv2-sheet{position:absolute;z-index:81;width:min(460px,100%);background:var(--pv2-bg);border:1px solid var(--pv2-line2);border-radius:20px;box-shadow:var(--pv2-shadow);
+  padding:22px 24px 24px;display:flex;flex-direction:column;gap:20px;transform-origin:var(--ox,50%) 0;visibility:hidden}
+.pv2-sheet.pv2-on{visibility:visible;animation:pv2in .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pv2in{from{opacity:0;transform:perspective(1200px) rotateY(-70deg) scale(.92)}}
+.pv2-sheet.pv2-phone{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;max-height:88vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 20px calc(24px + env(safe-area-inset-bottom,0px));transform-origin:50% 100%}
+.pv2-sheet.pv2-phone.pv2-on{animation:pv2up .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pv2up{from{transform:translateY(100%)}}
+.pv2-grab{display:none;width:40px;height:5px;border-radius:9px;background:var(--pv2-line2);margin:0 auto -6px}
+.pv2-phone .pv2-grab{display:block}
+.pv2-sh{display:flex;align-items:center;gap:12px}
+.pv2-shsw{width:46px;height:46px;border-radius:12px;background:linear-gradient(160deg,var(--c1),var(--c2));flex:none;display:grid;place-items:center}
+.pv2-shsw svg{width:20px;height:30px}
+.pv2-sht{min-width:0;flex:1}
+.pv2-sht small{display:block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--pv2-acc)}
+.pv2-sht b{display:block;font-size:17px;font-weight:600;line-height:1.25;margin-top:2px}
+.pv2-close{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:99px;font-size:13.5px;font-weight:600;background:var(--pv2-bg2);border:1px solid var(--pv2-line2)!important;flex:none}
+.pv2-close:hover{border-color:var(--pv2-acc)!important}
+.pv2-verdict{font-size:17px;line-height:1.45;font-weight:500}
+.pv2-verdict b{font-weight:700;color:var(--pv2-acc)}
+[data-theme="light"] .pv2 .pv2-verdict b{color:#550da6}
+.pv2-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pv2-chip{font-size:13px;font-weight:500;padding:5px 11px;border-radius:99px;background:var(--pv2-bg2);border:1px solid var(--pv2-line)!important;white-space:nowrap;color:var(--pv2-mut);transition:border-color .2s,color .2s}
+.pv2-chip:hover{border-color:var(--pv2-acc)!important;color:var(--pv2-fg)}
+.pv2-chip b{color:var(--pv2-fg);font-weight:700;margin-left:4px}
+.pv2-chip.pv2-cur{border-color:var(--pv2-acc);color:var(--pv2-fg);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent)}
+.pv2-four{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;padding-top:20px;border-top:1px solid var(--pv2-line)}
+.pv2-four > div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pv2-four span{font-size:13px;color:var(--pv2-mut)}
+.pv2-four b{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+.pv2-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);margin-right:4px;letter-spacing:0}
+.pv2-four em{font-style:normal;font-size:13px;color:var(--pv2-mut)}
+.pv2-szb{padding-top:20px;border-top:1px solid var(--pv2-line);display:flex;flex-direction:column;gap:12px}
+.pv2-szh{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pv2-mut)}
+.pv2-szg{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.pv2-szc{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px 8px;border-radius:12px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.pv2-szc span{font-size:12.5px;font-weight:600;color:var(--pv2-mut)}
+.pv2-szc b{font-size:18px;font-weight:600;line-height:1}
+.pv2-szc em{font-style:normal;font-size:11.5px;color:var(--pv2-mut);white-space:nowrap}
+.pv2-szc em.r{color:var(--pv2-bad);font-weight:600}
+.pv2-szc em.w{color:var(--pv2-warn);font-weight:600}
+.pv2-szc.pv2-top{border-color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,var(--pv2-bg2))}
+.pv2-szc.pv2-topr{border-color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,var(--pv2-bg2))}
+.pv2-szc.pv2-topr b{color:var(--pv2-bad)}
+.pv2-act{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line2);font-size:15px;line-height:1.4}
+.pv2-act > span{flex:1;min-width:0}
+.pv2-act > b{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;white-space:nowrap;padding:8px 14px;border-radius:99px;background:linear-gradient(135deg,#7c3fc1,#550da6);color:#fff;flex:none}
+.pv2-act:hover > b svg{transform:translateX(3px)}
+.pv2-act > b svg{transition:transform .2s}
+.pv2-act.pv2-ok{color:var(--pv2-good);font-weight:500;border-style:dashed}
+@container (max-width:560px){.pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pv2-sheet.pv2-phone .pv2-szg{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pv2-sheet.pv2-phone .pv2-act{flex-direction:column;align-items:flex-start}
+
+/* ---- low stock + restock planner ---- */
+.pv2-stock .pv2-ph{margin-bottom:12px}
+.pv2-badge{margin-left:auto;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 12%,transparent)}
+.pv2-plan{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line)}
+.pv2-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pv2-ctl > span{font-size:12.5px;color:var(--pv2-mut);min-width:96px}
+.pv2-seg{display:inline-flex;gap:3px;padding:3px;border-radius:10px;background:var(--pv2-bg);border:1px solid var(--pv2-line)}
+.pv2-seg button{height:28px;min-width:40px;padding:0 9px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--pv2-mut);transition:background .2s,color .2s}
+.pv2-seg button[aria-pressed="true"]{background:linear-gradient(135deg,#7c3fc1,#550da6);color:#fff}
+.pv2-sum{font-size:13.5px;line-height:1.45;margin:12px 0 4px}
+.pv2-sum b{font-weight:700}
+.pv2-sum .r{color:var(--pv2-bad)}
+.pv2-copy{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:10px;font-size:13px;font-weight:600;color:var(--pv2-acc);border:1px solid var(--pv2-line2)!important;margin-top:8px}
+.pv2-copy:hover{border-color:var(--pv2-acc)!important}
+.pv2-copied{font-size:12.5px;color:var(--pv2-good);margin-left:8px}
+.pv2-fallback{width:100%;margin-top:8px;min-height:90px;font:12.5px/1.4 ui-monospace,Consolas,monospace;background:var(--pv2-bg2);color:var(--pv2-fg);border:1px solid var(--pv2-line2);border-radius:10px;padding:8px}
+.pv2-prods{margin-top:10px}
+.pv2-prod{border-top:1px solid var(--pv2-line)}
+.pv2-prow{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:6px 12px;align-items:center;padding:13px 0;width:100%}
+.pv2-swc{width:34px;height:34px;border-radius:10px;border:1px solid var(--pv2-line2);grid-row:1 / span 2}
+.pv2-pn{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px;min-width:0}
+.pv2-pn svg.pv2-i{width:14px;height:14px;color:var(--pv2-mut);transition:transform .3s;flex:none}
+.pv2-open .pv2-pn svg.pv2-i{transform:rotate(180deg)}
+.pv2-pm{font-size:12.5px;color:var(--pv2-mut);grid-column:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv2-pm b{color:var(--pv2-fg);font-weight:600}
+.pv2-pm .r{color:var(--pv2-bad);font-weight:600}
+.pv2-ord{grid-row:1 / span 2;grid-column:3;font-size:12.5px;font-weight:700;padding:6px 11px;border-radius:99px;white-space:nowrap;color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.pv2-ord.ok{color:var(--pv2-good);background:color-mix(in srgb,var(--pv2-good) 12%,transparent)}
+.pv2-run{grid-column:2 / -1;height:5px;border-radius:99px;background:var(--pv2-track);overflow:hidden}
+.pv2-run i{display:block;height:100%;border-radius:99px;width:var(--w);background:var(--c);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.pv2-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.2,.8,.2,1)}
+.pv2-open .pv2-det{grid-template-rows:1fr}
+.pv2-det > div{overflow:hidden}
+.pv2-call{font-size:13px;font-weight:600;color:var(--pv2-bad);margin:0 0 8px 46px}
+.pv2-call.ok{color:var(--pv2-good)}
+.pv2-tbl{width:calc(100% - 46px);margin:0 0 14px 46px;border-collapse:collapse;font-size:13px}
+.pv2-tbl th{font-size:11.5px;font-weight:500;color:var(--pv2-mut);text-align:right;padding:0 0 6px;white-space:nowrap}
+.pv2-tbl th:first-child,.pv2-tbl td:first-child{text-align:left}
+.pv2-tbl td{text-align:right;padding:7px 0;border-top:1px solid var(--pv2-line);white-space:nowrap}
+.pv2-tbl td:first-child{font-weight:600}
+.pv2-tbl td.r{color:var(--pv2-bad);font-weight:700}
+.pv2-tbl td.w{color:var(--pv2-warn);font-weight:600}
+.pv2-tbl td b{font-weight:700}
+@container (max-width:560px){.pv2-call{margin-left:0}.pv2-tbl{width:100%;margin-left:0}.pv2-ctl > span{min-width:0;width:100%}}
+@media (prefers-reduced-motion:reduce){.pv2 *,.pv2-sheet{animation:none!important;transition:none!important}}
+/* === PRODUCTS v2 END === */
+/* ===== IP COMMON — page chrome shared by the Inventory + Products mockups (ip- prefix) ===== */
+.content{padding:22px 34px 60px}
+main{max-width:1240px}
+@media (max-width:1180px){.side{width:212px}.content{padding:20px 22px 50px}}
+@media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px}}
+@media (max-width:600px){.content{padding:14px 16px 40px}main{gap:18px}}
+/* PRODUCTS v2 has a few 11px labels; Sam's rule is 12px minimum on these pages */
+.pv2-ptag,.pv2-left,.pv2-sz span{font-size:12px}
+.ip{display:flex;flex-direction:column;gap:22px}
+.ip .muted{color:var(--pv2-mut)}
+
+/* page heading */
+.ip-head{display:flex;align-items:flex-end;gap:12px 20px;flex-wrap:wrap;margin-top:6px}
+.ip-head h1{font-size:30px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.ip-head p{font-size:14px;color:var(--pv2-mut);margin-top:6px;line-height:1.45}
+.ip-head .ip-hl{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.ip-link{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 14px;border-radius:99px;font-size:13.5px;font-weight:600;color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;white-space:nowrap;transition:border-color .2s}
+.ip-link:hover{border-color:var(--pv2-acc)!important}
+.ip-link svg{transition:transform .2s}.ip-link:hover svg{transform:translateX(3px)}
+@media (max-width:600px){.ip-head{flex-wrap:nowrap;align-items:flex-start}.ip-head h1{font-size:26px}.ip-head .ip-hl{margin-left:auto}}
+@media (max-width:600px){.ip-chips.ip-swipe{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-left:-16px;margin-right:-16px;padding:0 16px;scroll-padding:0 16px}.ip-chips.ip-swipe::-webkit-scrollbar{display:none}}
+.seg .n{font-size:12px}
+
+/* search + chips */
+.ip-search{position:relative;display:flex;align-items:center;gap:9px;height:42px;padding:0 14px;border-radius:12px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);color:var(--pv2-mut);min-width:0;transition:border-color .2s}
+.ip-search:focus-within{border-color:var(--pv2-acc)}
+.ip-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:14px;color:var(--pv2-fg)}
+.ip-search input::placeholder{color:var(--pv2-mut)}
+.ip-search input:focus-visible{outline:none}
+.ip-x{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:var(--pv2-mut)}
+.ip-x:hover{background:var(--pv2-bg3);color:var(--pv2-fg)}
+.ip-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ip-chip{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:99px;font-size:13px;font-weight:500;color:var(--pv2-mut);background:var(--pv2-bg2);border:1px solid var(--pv2-line)!important;white-space:nowrap;transition:border-color .2s,color .2s,background .2s}
+.ip-chip:hover{border-color:var(--pv2-acc)!important;color:var(--pv2-fg)}
+.ip-chip b{font-weight:700;font-size:12px;color:var(--pv2-fg);min-width:18px;height:20px;padding:0 6px;border-radius:99px;display:inline-grid;place-items:center;background:var(--pv2-bg3)}
+.ip-chip[aria-pressed="true"]{color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6);border-color:transparent!important}
+.ip-chip[aria-pressed="true"] b{background:rgba(255,255,255,.22);color:#fff}
+.ip-chip .ip-dot{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.ip-chip[aria-pressed="true"] .ip-dot{background:#fff}
+
+/* sort pills (PRODUCTS v2 look, five options) */
+.ip .pv2-sort{margin-left:0}
+@media (max-width:600px){.ip .pv2-sort{width:100%;display:flex}.ip .pv2-sort button{flex:1;padding:0 4px;text-align:center;font-size:12.5px}}
+
+/* empty / unknown */
+.ip-empty{padding:34px 16px;text-align:center;color:var(--pv2-mut);font-size:14px;line-height:1.5}
+.ip-empty button{color:var(--pv2-acc);font-weight:600;margin-left:6px}
+.ip-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap;line-height:18px}
+.ip-tag.r{color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent)}
+.ip-tag.w{color:var(--pv2-warn);background:color-mix(in srgb,var(--pv2-warn) 14%,transparent)}
+.ip-tag.g{color:var(--pv2-good);background:color-mix(in srgb,var(--pv2-good) 13%,transparent)}
+.ip-tag.n{color:var(--pv2-mut);background:var(--pv2-bg3)}
+.ip-tag.p{color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent)}
+
+/* swatch thumb */
+.ip-th{position:relative;width:40px;height:50px;border-radius:10px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.ip-th svg{width:18px;height:27px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card: a drawer on desktop, a bottom sheet on the phone. Byte-identical in
+   previews/N-final.html, inventory-products/products-A.html + inventory-A.html and orders-shipping/orders-B.html
+   (scratchpad/r11/psheet_check.py). Copied from Products A; change it in all four or nowhere. Its header, verdict,
+   chips and action row use the PRODUCTS v2 classes (.pv2 tokens, .pv2-sh/-shsw/-sht/-close/-grab/-verdict/-chip/-act). */
+.ip-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-unk{color:var(--pv2-mut)!important;font-weight:500!important}
+/* ---- product detail (drawer on desktop, bottom sheet on phone) ---- */
+.ip-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.ip-scrim.on{opacity:1;pointer-events:auto}
+.ip-sheet{position:fixed;top:0;right:0;bottom:0;z-index:86;width:min(500px,100vw);overflow:auto;overscroll-behavior:contain;background:var(--pv2-bg);border-left:1px solid var(--pv2-line2);box-shadow:var(--pv2-shadow);
+  padding:22px 26px 32px;display:flex;flex-direction:column;gap:22px;transform:translateX(105%);visibility:hidden;transition:transform .45s cubic-bezier(.2,.8,.2,1),visibility 0s .45s}
+.ip-sheet.on{transform:none;visibility:visible;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+@media (max-width:767px){
+  .ip-sheet{top:auto;left:0;width:auto;max-height:90vh;border-left:0;border-top:1px solid var(--pv2-line2);border-radius:22px 22px 0 0;padding:12px 18px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(105%)}
+}
+.ip-sheet .pv2-grab{display:none}
+@media (max-width:767px){.ip-sheet .pv2-grab{display:block;margin:0 auto 2px}}
+.ip-sheet .pv2-sh{align-items:flex-start}
+.ip-sheet .pv2-shsw{width:44px;height:55px;border-radius:11px}
+.ip-meta{font-size:13px;color:var(--pv2-mut);margin-top:3px}
+.ip-sec{display:flex;flex-direction:column;gap:12px;padding-top:20px;border-top:1px solid var(--pv2-line)}
+.ip-sech{display:flex;align-items:baseline;gap:10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pv2-mut)}
+.ip-sech span{margin-left:auto;letter-spacing:0;text-transform:none;font-weight:500;font-size:13px}
+.ip-unknown{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--pv2-warn) 9%,var(--pv2-bg2));border:1px solid color-mix(in srgb,var(--pv2-warn) 35%,transparent);font-size:14px;line-height:1.45}
+.ip-unknown b{color:var(--pv2-warn)}
+.ip-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 15px;border-radius:99px;font-size:13.5px;font-weight:600;white-space:nowrap;color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6);align-self:flex-start}
+.ip-btn.ghost{color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important}
+.ip-btn.ghost:hover{border-color:var(--pv2-acc)!important}
+.ip-btn svg{transition:transform .2s}.ip-btn:hover svg{transform:translateX(3px)}
+/* the four numbers: equal tiles, label above, value on one baseline */
+.ip-four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ip-four > div{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px 60px;min-height:76px;justify-content:center;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
+.ip-four span{font-size:13px;color:var(--pv2-mut)}
+.ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
+.ip-ni{position:absolute;left:14px;top:16px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 15%,transparent)}
+.ip-ni svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ip-four .ip-left{grid-column:1 / -1}
+.ip-lsz{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.ip-lsz i{display:inline-flex;align-items:baseline;gap:5px;font-style:normal;font-size:13px;font-weight:600;padding:3px 9px;border-radius:99px;background:var(--pv2-bg3)}
+.ip-lsz i em{font-style:normal;font-weight:500;color:var(--pv2-mut)}
+.ip-lsz i.r{color:var(--pv2-bad);background:color-mix(in srgb,var(--pv2-bad) 13%,transparent)}
+.ip-lsz i.w{color:var(--pv2-warn);background:color-mix(in srgb,var(--pv2-warn) 14%,transparent)}
+.ip-lsz i.u{color:var(--pv2-mut)}
+@media (max-width:420px){.ip-four > div{padding-left:14px;padding-top:56px;justify-content:flex-start}.ip-ni{top:14px}.ip-four .ip-left{padding-left:60px;padding-top:14px}}
+/* by-size table: every column lines up */
+.ip-sz{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.ip-sz th,.ip-sz td{padding:10px 0;border-top:1px solid var(--pv2-line);text-align:right;vertical-align:top;white-space:nowrap}
+.ip-sz thead th{border-top:0;padding-top:0;font-size:12.5px;font-weight:500;color:var(--pv2-mut)}
+.ip-sz th:first-child{text-align:left;width:28%}
+.ip-sz td{width:20%;padding-left:12px;font-weight:600}
+.ip-sz td:last-child,.ip-sz thead th:last-child{width:32%}
+.ip-sz tbody th{font-weight:600}
+.ip-sz tbody th i{display:inline-block;font-style:normal;font-size:12px;font-weight:600;line-height:18px;padding:0 7px;margin-left:6px;border-radius:99px;color:var(--pv2-acc);background:color-mix(in srgb,var(--pv2-acc) 14%,transparent);vertical-align:1px}
+.ip-sz tr.ip-ztop th{color:var(--pv2-acc)}
+.ip-sz td .pc{font-weight:500}
+.ip-sz td .m{color:var(--pv2-mut);font-weight:500}
+.ip-sz td.r{color:var(--pv2-bad)}
+.ip-sz td.w{color:var(--pv2-warn)}
+.ip-sz td.u{color:var(--pv2-mut);font-weight:500}
+.ip-note b.r{color:var(--pv2-bad)}
+.ip-note{font-size:13px;color:var(--pv2-mut);line-height:1.45}
+.ip-note b{color:var(--pv2-fg);font-weight:600}
+.ip-dl{display:grid;grid-template-columns:1fr auto;gap:10px 16px;font-size:14px}
+.ip-dl dt{color:var(--pv2-mut)}
+.ip-dl dd{font-weight:600;text-align:right}
+
+/* toast (for things that live outside these two pages) */
+.ip-toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(440px,calc(100vw - 32px));
+  padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.4;background:#17141f;color:#f2eefa;box-shadow:0 18px 40px -14px rgba(0,0,0,.7);transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1)}
+.ip-toast.on{opacity:1;transform:translate(-50%,0)}
+:root[data-theme="light"] .ip-toast{background:#17141f;color:#fff}
+@media (min-width:1024px){.ip-toast{bottom:32px}}
+/* the card's "i" — the same look as the pages' .tip (INFO-ICON.md), under its own class because the Overview's .tip is a chart tooltip */
+.ip-tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.ip-tip:hover,.ip-tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.ip-tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.ip-tipb.on{visibility:visible;opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ip-sheet,.ip-scrim,.ip-toast{transition:none!important}}
+/* === PSHEET v1 END === */
+
+/* sticky tabs: N's .seg, sized for these pages */
+.ip .tabbar{top:calc(env(safe-area-inset-top,0px) + 10px)}
+.ip .seg{width:auto;max-width:100%}
+.ip .seg button{padding:10px 18px}
+@media (max-width:600px){.ip .tabbar{margin:0 -16px;padding:0 16px}.ip .seg{width:100%}.ip .seg button{padding:9px 12px;font-size:13px}.ip .seg .n{display:none}}
+.ip .pane{scroll-margin-top:84px}
+
+/* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
+.tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.tipb.on{visibility:visible;opacity:1;transform:none}
+
+/* swipe rows (filter chips) on the phone: a fade + arrow says "more this way"; both go once you reach the end */
+.ip-swipew{position:relative}
+.ip-more{display:none}
+@media (max-width:600px){
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
+  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
+  .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
+    color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
+  .ip-more .ip-i{width:15px;height:15px}
+  .ip-swipew.end::after,.ip-swipew.end .ip-more{opacity:0;pointer-events:none}
+  .ip-swipe{padding-right:44px!important}
+}
+
+/* product picture inside a coloured ring: the ring IS the indicator (Products "Worth a look", Inventory tiles) */
+.pa-ring{position:relative;width:64px;height:64px;border-radius:50%;padding:4px;flex:none;background:conic-gradient(var(--c) calc(var(--pct,100) * 1%),var(--pv2-track) 0)}
+.pa-ring.dash{background:none;border:2.5px dashed var(--c);padding:3px}
+.pa-face{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 0 0 2px var(--pv2-bg)}
+.pa-face svg{width:20px;height:30px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.pa-badge{position:absolute;right:-6px;bottom:-2px;min-width:26px;height:22px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:600;color:#fff;background:var(--c);box-shadow:0 0 0 3px var(--pv2-bg)}
+.pa-stack{position:relative;display:flex;align-items:center;flex:none}
+.pa-stack .pa-ring{width:46px;height:46px;padding:4px}
+.pa-stack .pa-ring + .pa-ring{margin-left:-16px}
+.pa-stack .pa-face svg{width:14px;height:21px}
+.pa-stack .pa-badge{right:-8px}
+.ip-out .pa-face{filter:grayscale(1) brightness(.85)}
+
+/* round 11: bottom dock (round 12: no pill any more) — the current page is the accent colour and its icon glows a
+   little; nothing drawn behind it. Round 12 also stops the menu flicker: the page keeps its scrollbar space while the
+   menu is open (no sideways jump behind it), the full-screen menu turns solid at once, and only its rows ease in. */
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"] .nv2-i{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nv2-acc) 75%,transparent))}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600;text-shadow:0 0 10px color-mix(in srgb,var(--nv2-acc) 45%,transparent)}
+html.nv2-lock{scrollbar-gutter:stable}
+.nv2-sheet.nv2-menu{transform:none;transition:opacity .12s,visibility 0s .12s}
+.nv2-sheet.nv2-menu.nv2-on{transition:opacity .09s}
+.nv2-sheet.nv2-menu .nv2-ml{transform:translateY(10px);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.nv2-sheet.nv2-menu.nv2-on .nv2-ml{transform:none;opacity:1;transition-delay:.04s}
+@media (prefers-reduced-motion:reduce){.nv2-sheet.nv2-menu,.nv2-sheet.nv2-menu .nv2-ml{transition:none!important;transform:none}}
+/* === ROUND 10b END === */
+
+/* selected tab pill: a shadow that fits inside the bar, so the scroll edge never cuts it into a hard line */
+.seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22)}
+
+/* ===== Products B — ranked list + detail pane ===== */
+/* glance: four plain numbers that are also the filters */
+.pb-glance{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--pv2-line);border-bottom:1px solid var(--pv2-line)}
+.pb-g{display:flex;flex-direction:column;gap:4px;padding:16px 18px;text-align:left;position:relative;border-radius:0;transition:background .2s}
+.pb-g + .pb-g{border-left:1px solid var(--pv2-line)}
+.pb-g:hover{background:var(--pv2-bg2)}
+.pb-g span{font-size:13px;color:var(--pv2-mut);display:flex;align-items:center;gap:7px}
+.pb-g span i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.pb-g b{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.pb-g small{font-size:12.5px;color:var(--pv2-mut)}
+.pb-g[aria-pressed="true"]{background:color-mix(in srgb,var(--pv2-acc) 10%,transparent)}
+.pb-g[aria-pressed="true"]::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:3px;border-radius:3px;background:linear-gradient(90deg,#7c3fc1,#a275e0)}
+@media (max-width:760px){.pb-glance{grid-template-columns:repeat(2,minmax(0,1fr))}.pb-g:nth-child(3){border-left:0}.pb-g:nth-child(n+3){border-top:1px solid var(--pv2-line)}.pb-g{padding:14px 12px}.pb-g b{font-size:24px}}
+
+.pb-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:18px;align-items:start}
+@media (max-width:1179px){.pb-wrap{grid-template-columns:minmax(0,1fr)}.pb-pane{display:none!important}}
+.pb-list{container-type:inline-size}
+.pb-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.pb-tools .ip-search{flex:1 1 240px}
+.pb-filt{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--pv2-mut);margin:4px 0 6px;min-height:26px}
+.pb-filt b{color:var(--pv2-fg);font-weight:600}
+.pb-filt button{color:var(--pv2-acc);font-weight:600}
+.pb-rows{display:flex;flex-direction:column}
+.pb-row{display:grid;grid-template-columns:26px 44px minmax(0,1fr) 170px 150px;gap:14px;align-items:center;width:100%;padding:12px 10px;border-radius:14px;text-align:left;border-top:1px solid var(--pv2-line);transition:background .2s,box-shadow .2s}
+.pb-row:first-child{border-top-color:transparent}
+.pb-row:hover{background:var(--pv2-bg2)}
+.pb-row[aria-current="true"]{background:color-mix(in srgb,var(--pv2-acc) 11%,transparent);box-shadow:inset 3px 0 0 var(--pv2-acc);border-top-color:transparent}
+.pb-row[aria-current="true"] + .pb-row{border-top-color:transparent}
+.pb-rk{font-size:13px;font-weight:700;color:var(--pv2-mut);text-align:center}
+.pb-nm{display:flex;flex-direction:column;gap:4px;min-width:0}
+.pb-nm b{font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pb-nm small{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--pv2-mut)}
+.pb-mini{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:3px;align-items:end}
+.pb-mini > span{display:flex;flex-direction:column;align-items:center;gap:3px}
+.pb-mini i{display:block;width:100%;height:22px;border-radius:4px;background:var(--pv2-track);position:relative;overflow:hidden}
+.pb-mini i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--v);background:var(--c);border-radius:4px 4px 2px 2px}
+.pb-mini em{font-style:normal;font-size:12px;color:var(--pv2-mut);line-height:1}
+.pb-mini .t em{color:var(--pv2-fg);font-weight:700}
+.pb-v{display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-width:0}
+.pb-v b{font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.pb-v b small{font-size:12px;font-weight:500;color:var(--pv2-mut);margin-right:4px}
+.pb-v b.r{color:var(--pv2-bad)}.pb-v b.u{color:var(--pv2-mut)}
+.pb-v > small{font-size:12.5px;color:var(--pv2-mut);white-space:nowrap}
+@container (max-width:720px){.pb-row{grid-template-columns:22px 44px minmax(0,1fr) auto;gap:12px;padding:12px 6px}.pb-mini{display:none}}
+@container (max-width:420px){.pb-row{grid-template-columns:40px minmax(0,1fr) auto;gap:10px}.pb-rk{display:none}.pb-row .ip-th{width:40px;height:40px}.pb-v b{font-size:16px}.pb-nm b{font-size:14px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.3}}
+
+.pb-pane{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;overscroll-behavior:contain;padding:22px 24px;display:flex;flex-direction:column;gap:22px;scrollbar-width:thin}
+.pb-pane [data-ip-close],.pb-pane .pv2-grab{display:none}
+
+/* sizes: one quiet line per size */
+.pb-sztbl{width:100%;border-collapse:collapse;font-size:14px}
+.pb-sztbl th{font-size:12.5px;font-weight:500;color:var(--pv2-mut);text-align:right;padding:0 0 8px;white-space:nowrap}
+.pb-sztbl th:first-child,.pb-sztbl td:first-child{text-align:left}
+.pb-sztbl td{padding:10px 0;border-top:1px solid var(--pv2-line);text-align:right;white-space:nowrap}
+.pb-sztbl td:first-child{font-weight:600;width:60px}
+.pb-sztbl td.bar{width:42%;padding-left:16px;padding-right:16px}
+.pb-sztbl .pa-bar{display:block;height:8px;border-radius:99px;background:var(--pv2-track);overflow:hidden}
+.pb-sztbl .pa-bar i{display:block;height:100%;width:var(--w);border-radius:99px;background:linear-gradient(90deg,#550da6,#a275e0)}
+.pb-sztbl tr.top td:first-child{color:var(--pv2-acc)}
+.pb-sztbl td.r{color:var(--pv2-bad);font-weight:600}
+@media (max-width:600px){.pb-sztbl td.bar{width:30%;padding-left:10px;padding-right:10px}.pb-sztbl{font-size:13.5px}}
+</style>
+<script>
+/* === PERIODS v1 START === */
+/* Periods v1 (round 7) — ONE dataset for every date period (today = Fri, Oct 30, the last day of the sample) and ONE
+   place that re-renders the page when the date picker changes: NAV v2 calls perSet(key) on every pick.
+   perSet(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'. It calls, in order,
+     pv2SetPeriod(key)  PRODUCTS v2   (top products + low-stock planner)
+     cv2SetPeriod(P)    CARDS v2      (card fronts + backs)
+     puSetPeriod(P)     PULSE v1      (Store pulse, N/K/J)
+     accSetPeriod(P)    ACCOUNT v1    (Sales vs spend + Where the money went)
+   then fills the look's own markup through data attributes
+     data-per-t="key"             textContent = P.t[key] (a data-count on the same element is re-targeted)
+     data-per-cls="key:good:bad"  class `good` when P.tone[key] === 'g', else `bad`
+     data-per-flip="key"          attribute data-per-down while that figure went down (its arrow icon flips)
+     data-per-w="key"             style.flex = P.w[key]
+   and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
+   PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you keep EGP 7,597. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you keep EGP 6,748. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
+PER.cur='7d';
+window.perSet=function(key){
+  var P=PER[key];if(!P)return;PER.cur=key;
+  var call=function(f,a){if(typeof window[f]==='function'){try{window[f](a)}catch(e){console.warn(f,e)}}};
+  call('pv2SetPeriod',key);call('cv2SetPeriod',P);call('puSetPeriod',P);call('accSetPeriod',P);
+  var all=function(s){return [].slice.call(document.querySelectorAll(s))};
+  all('[data-per-t]').forEach(function(e){var v=P.t[e.getAttribute('data-per-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-per-cls]').forEach(function(e){var a=e.getAttribute('data-per-cls').split(':'),g=P.tone[a[0]]==='g';e.classList.toggle(a[1],g);e.classList.toggle(a[2],!g)});
+  all('[data-per-flip]').forEach(function(e){e.toggleAttribute('data-per-down',!!P.flip[e.getAttribute('data-per-flip')])});
+  all('[data-per-w]').forEach(function(e){var v=P.w[e.getAttribute('data-per-w')];if(v!=null)e.style.flex=String(v)});
+  document.dispatchEvent(new CustomEvent('per:change',{detail:{key:key,P:P}}));
+};
+/* === PERIODS v1 END === */
+</script>
+</head>
+<body data-page="products">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="landG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1670" stop-opacity=".55"/><stop offset="1" stop-color="#1a0b33" stop-opacity=".35"/></linearGradient>
+    <radialGradient id="dotG"><stop offset="0" stop-color="#f2eafb"/><stop offset=".35" stop-color="#a275e0"/><stop offset="1" stop-color="#7c3fc1" stop-opacity="0"/></radialGradient>
+    <linearGradient id="vanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b5ce0"/><stop offset=".5" stop-color="#550da6"/><stop offset="1" stop-color="#2c0661"/></linearGradient>
+    <linearGradient id="beamG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e7c0" stop-opacity=".55"/><stop offset="1" stop-color="#f6e7c0" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <symbol id="dress" viewBox="0 0 46 70"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-meta" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-cardi" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11V6a3 3 0 0 1 6 0v5M5 11h14l-1 10H6z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="3"/><path d="M5 9V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2M7 5V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-carousel" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="2"/><path d="M4 7v10M20 7v10"/></symbol>
+</svg>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="logo"><div class="mark">FN</div>Scale Trick</div>
+    <button class="switch"><span class="dot"></span><b>Frill N Wear</b><svg class="i"><use href="#i-chev"/></svg></button>
+    <nav>
+      <div class="grp"><h6>Operate</h6>
+        <a href="#" data-ip-go="overview"><svg class="i"><use href="#i-home"/></svg>Overview</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-grid"/></svg>All brands</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-bag"/></svg>Orders</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-truck"/></svg>Shipping</a>
+        <a href="#" data-ip-go="inventory"><svg class="i"><use href="#i-box"/></svg>Inventory</a>
+        <a class="on" href="#" aria-current="page" data-ip-go="products"><svg class="i"><use href="#i-tag"/></svg>Products</a>
+      </div>
+      <div class="grp"><h6>Grow</h6>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
+      </div>
+      <div class="grp"><h6>Workspace</h6>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-plug"/></svg>Connections</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-gear"/></svg>Workspace settings</a>
+        <a href="#" data-ip-go="elsewhere"><svg class="i"><use href="#i-shield"/></svg>Admin</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="content">
+  <main>
+    <!-- === NAV v2 START === -->
+    <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
+    <header class="nv2-top" data-nv2-store="n-theme">
+      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
+          <div class="nv2-pop" data-nv2-id="me" role="menu">
+            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
+            <button type="button" class="nv2-mi" role="menuitemcheckbox" data-nv2-theme aria-checked="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dark mode<span class="nv2-tog" aria-hidden="true"></span></button>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-refresh><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>Refresh data<small class="nv2-rt">synced 2 min ago</small></button>
+            <div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
+          </div></div>
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
+      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
+        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
+      <div class="nv2-right">
+        <div class="nv2-anc nv2-datew"><button type="button" class="nv2-date" data-nv2-pop="date" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i nv2-cal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><span class="nv2-ds">7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
+        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+          </div></div>
+      </div>
+    </header>
+    <!-- === NAV v2 END === -->
+    <div class="pv2 ip" id="ip">
+      <header class="ip-head">
+        <div><h1>Products</h1><p id="pb-count"></p></div>
+        <div class="ip-hl"><a class="ip-link" href="#" data-ip-go="inventory">Inventory <svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </header>
+
+      <div class="pb-glance" role="group" aria-label="Show products" id="pb-glance"></div>
+
+      <div class="pb-wrap">
+        <section class="pv2-panel pb-list" aria-labelledby="pb-h" id="pb-list">
+          <div class="pv2-ph"><h3 id="pb-h">Ranked by <span id="pb-by">revenue</span></h3></div>
+          <div class="pb-tools">
+            <label class="ip-search"><svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <span class="sr">Search products</span><input type="search" id="pb-q" placeholder="Search name, colour or type" autocomplete="off"></label>
+            <div class="pv2-sort" role="group" aria-label="Rank products by"><span class="pv2-sind" aria-hidden="true"></span>
+              <button type="button" data-s="rev" aria-pressed="true">Revenue</button><button type="button" data-s="profit" aria-pressed="false">Profit</button><button type="button" data-s="margin" aria-pressed="false">Margin</button><button type="button" data-s="units" aria-pressed="false">Units</button><button type="button" data-s="ret" aria-pressed="false">Returns</button>
+            </div>
+          </div>
+          <p class="pb-filt" id="pb-filt" aria-live="polite"></p>
+          <div class="pb-rows" id="pb-rows"></div>
+        </section>
+        <aside class="pv2-panel pb-pane" id="pb-pane" aria-label="Product details" aria-live="polite"></aside>
+      </div>
+
+      <section class="pv2-panel" aria-labelledby="pb-sz-h">
+        <div class="pv2-ph"><h3 id="pb-sz-h">Sizes across all products</h3><span class="pv2-per" id="pb-szsub"></span></div>
+        <table class="pb-sztbl"><thead><tr><th>Size</th><th>Sold</th><th class="bar"><span class="sr">Share</span></th><th>Came back</th></tr></thead><tbody id="pb-sz"></tbody></table>
+      </section>
+    </div>
+  </main>
+  </div>
+</div>
+<!-- === NAV v2 START (dock + sheets) === -->
+<nav class="nv2-dock" aria-label="Quick navigation">
+  <div class="nv2-pill">
+    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span></a>
+    <a href="#" aria-current="page" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span></a>
+    <button type="button" data-nv2-open="menu" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+  </div>
+  <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
+</nav>
+<div class="nv2-scrim"></div>
+<section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="nv2-ml" aria-label="Sections">
+    <a href="#" class="nv2-mr" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="true" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" aria-current="page" data-nv2-go="products">Products</a><a href="#" data-nv2-go="inventory">Inventory</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
+    </div>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
+    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
+  </nav>
+  <div class="nv2-mbar">
+    <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
+    <button type="button" class="nv2-mbtn" data-nv2-close aria-label="Close menu"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+</section>
+<section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
+  <div class="nv2-grab" aria-hidden="true"></div>
+  <div class="nv2-sh"><span class="nv2-mark" style="width:34px;height:34px;border-radius:10px"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><h2>Ask the assistant</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <p class="nv2-sugh">Try asking</p>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Why is profit ROAS below break-even?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Which campaign should I cut this week?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>What should I restock before the weekend?</button>
+  <p class="nv2-sent" aria-live="polite"></p>
+</section>
+<!-- === NAV v2 END (dock + sheets) === -->
+<script>
+/* === NAV v2 START === */
+/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
+   theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go).
+   Round 8: the Menu is full screen (Shopify-like): its groups open in place (accordion), the page behind does not
+   scroll, and it closes on ✕, Esc, the browser's back (one history entry while open), a swipe down from the top of
+   the list, or a tap on an item. */
+(function(){
+  var top=document.querySelector('.nv2-top');if(!top)return;
+  var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
+  var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
+  var period='7d';
+  /* ---- popovers ---- */
+  var openPop=null;
+  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');var t=top.querySelector('[data-nv2-pop="'+openPop.dataset.nv2Id+'"]');if(t)t.setAttribute('aria-expanded','false');openPop=null}
+  $$('[data-nv2-pop]',top).forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=top.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openPop===p;closePop();
+    if(!was){p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;var f=p.querySelector('button');if(f)f.focus({preventScroll:true})}})});
+  document.addEventListener('click',function(e){if(openPop&&!openPop.contains(e.target))closePop()});
+  /* ---- date menu ---- */
+  function paintDates(){
+    $$('[data-nv2-id^="date"]',top).forEach(function(m){m.innerHTML=PERIODS.map(function(p){return '<button type="button" class="nv2-mi" role="menuitemradio" data-nv2-period="'+p[0]+'" aria-checked="'+(p[0]===period)+'">'+p[1]+'<small>'+p[2]+'</small></button>'}).join('')});
+    var cur=PERIODS.filter(function(p){return p[0]===period})[0];
+    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-ds',top).forEach(function(s){s.textContent=cur[3]});$$('.nv2-date',top).forEach(function(b){b.setAttribute('aria-label','Date range: '+cur[1]+', '+cur[2])});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
+  }
+  paintDates();
+  top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
+    if(window.perSet)window.perSet(period);else if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
+  /* ---- theme ---- */
+  var key=top.dataset.nv2Store||'theme',html=document.documentElement;
+  function syncTheme(){var dark=html.dataset.theme!=='light';$$('[data-nv2-theme]').forEach(function(b){b.setAttribute('aria-checked',String(dark))})}
+  $$('[data-nv2-theme]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var t=html.dataset.theme==='light'?'dark':'light';html.dataset.theme=t;try{localStorage.setItem(key,t)}catch(err){}syncTheme();fire('nv2:theme',{theme:t})})});
+  syncTheme();
+  $$('[data-nv2-refresh]').forEach(function(b){b.addEventListener('click',function(){var i=b.querySelector('svg');if(i&&!reduce)i.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:700});var s=b.querySelector('.nv2-rt');if(s)s.textContent='synced just now';fire('nv2:refresh')})});
+  /* ---- navigation (top + dock + sheets) ---- */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet'))return;e.preventDefault();closePop();closeSheet();
+    var go=a.dataset.nv2Go;if(a.closest('.nv2-pill')){$$('.nv2-pill > *').forEach(function(x){x.removeAttribute('aria-current')});a.setAttribute('aria-current','page')}
+    fire('nv2:nav',{go:go})});
+  /* ---- search (desktop) ---- */
+  var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
+  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · ads funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
+    ['Layla Tiered Ruffle Maxi Dress','products','Product'],['Nour Satin Slip Dress','products','Product'],['Jasmine Wrap Midi Dress','products','Product'],['Salma Puff-Sleeve Mini Dress','products','Product'],
+    ['Satin Edit · Advantage+','ads','Campaign'],['Retarget · 30 days','ads','Campaign'],['Broad · Women 25–44','ads','Ad set'],['Ads Manager','adsmanager','Page'],['Competitors','competitors','Page'],['Connections','connections','Page']];
+  var hits=[],hl=0;
+  function search(){var q=sIn.value.trim().toLowerCase();hits=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0}).slice(0,7):[];hl=0;
+    sRes.innerHTML=hits.length?hits.map(function(h,i){return '<button type="button" role="option" class="'+(i?'':'nv2-hl')+'" data-i="'+i+'">'+h[0]+'<small>'+h[2]+'</small></button>'}).join(''):(q?'<button type="button" disabled>No matches<small></small></button>':'');
+    sRes.classList.toggle('nv2-on',!!q)}
+  function pick(i){var h=hits[i];if(!h)return;sIn.value='';search();sIn.blur();fire('nv2:nav',{go:h[1],q:h[0]})}
+  if(sIn){sIn.addEventListener('input',search);
+    sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();pick(hl)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();hl=(hl+(e.key==='ArrowDown'?1:-1)+hits.length)%Math.max(1,hits.length);$$('button',sRes).forEach(function(b,i){b.classList.toggle('nv2-hl',i===hl)})}else if(e.key==='Escape'){sIn.value='';search()}});
+    sRes.addEventListener('mousedown',function(e){var b=e.target.closest('[data-i]');if(b){e.preventDefault();pick(+b.dataset.i)}});
+    sIn.addEventListener('blur',function(){setTimeout(function(){sRes.classList.remove('nv2-on')},100)});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
+    var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
+  /* ---- sheets ---- */
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null,pushed=false,skipPop=false;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');
+    var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
+    if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
+    var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+    document.documentElement.classList.remove('nv2-lock');
+    if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
+  /* menu: groups open in place; a swipe down from the top of the list closes it */
+  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
+    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
+    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
+    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
+  document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
+  if(scrim)scrim.addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
+  window.nv2Open=openSheet;
+  /* assistant */
+  var ai=document.querySelector('[data-nv2-sheet="ai"]');
+  if(ai){var inp=ai.querySelector('input'),sent=ai.querySelector('.nv2-sent');
+    $$('.nv2-sug',ai).forEach(function(b){b.addEventListener('click',function(){inp.value=b.textContent.trim();inp.focus()})});
+    ai.querySelector('form').addEventListener('submit',function(e){e.preventDefault();var q=inp.value.trim();if(!q)return;sent.textContent='Sent to the assistant: “'+q+'”';inp.value='';fire('nv2:ask',{q:q})})}
+  /* ---- dock: hide on scroll down, show on scroll up ---- */
+  var dock=document.querySelector('.nv2-dock');
+  if(dock){document.documentElement.classList.add('nv2-docked');var ly=window.scrollY,acc=0;
+    window.addEventListener('scroll',function(){var y=window.scrollY,d=y-ly;ly=y;acc=(d>0)===(acc>0)?acc+d:d;
+      if(y<80||acc<-24)dock.classList.remove('nv2-hide');else if(acc>40&&!sheetOpen)dock.classList.add('nv2-hide')},{passive:true})}
+})();
+/* === NAV v2 END === */
+</script>
+<script>
+/* === PSHEET v1 START === */
+/* PSHEET v1 (round 11) — the ONE product card, byte-identical in previews/N-final.html, inventory-products/products-A.html
+   + inventory-A.html and orders-shipping/orders-B.html (scratchpad/r11/psheet_check.py). Copied from Products A.
+   IP      the product catalogue + period maths. Call IP.compute(PSHEET.perKey()) before building a card.
+   PSHEET  .open(html, returnFocusEl) · .close() · .isOpen() · .sheetEl() · .detail(p, view, opts) the card's HTML
+           · .refresh(html) re-renders an open card in place (keeps its scroll) · .perKey() the date period (PER.cur, else 7d)
+           · events: document "ip:sheet" {open}. Links in the card are real hrefs: window.PSHEET_BASE is the folder of
+           products-A.html relative to the page ('' beside it, '../pages/inventory-products/' from previews/). */
+/* ===== IP DATA — one catalogue for the Products + Inventory mockups =====
+   The first six products are the Overview's PRODUCTS v2 data, unchanged (same 7-day sold/shipped/returned per size,
+   same stock, same per-period units). Seven more complete the catalogue and carry the real edge cases the app handles:
+     Hana   — no unit cost in Shopify on any size  → profit unknown (never 0)
+     Mona   — no cost on XL / XXL                   → profit unknown, cash tied up "at least"
+     Dalia  — Shopify does not track its stock      → stock unknown (never "0 left")
+     Rana   — XXL untracked                         → one size unknown
+     Yasmin — every size sold out
+     Lina   — nothing sold in 30 days; Mona sold 1, Reem 3, Sara 5 → the slow sellers (≤5 sales in 30 days)
+     Nadia  — one-size product (no size letters)
+   stock: null = Shopify does not track it. cost: number, null (none recorded) or per-size array. Today = Fri Oct 30. */
+var IP=(function(){
+  var SZ=['XS','S','M','L','XL','XXL'];
+  var sum=function(a){return a.reduce(function(x,y){return x+(y||0)},0)};
+  var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
+  var PR=[
+    {id:'layla',n:'Layla Tiered Ruffle Maxi Dress',main:'Layla Tiered Ruffle Maxi',col:'Dusty Rose',type:'Dress',rev7:39794,profit7:25223,u7:27,sold:[2,9,7,5,3,1],ship:[3,6,9,7,4,3],ret:[1,0,0,1,0,1],stock:[2,1,9,7,6,5],c:['#d8a1ad','#9c5a6c'],sw:'#c99a9a',dlv:[29,32]},
+    {id:'nour',n:'Nour Satin Slip Dress',main:'Nour Satin Slip',col:'Champagne',type:'Dress',rev7:38231,profit7:22736,u7:30,sold:[2,5,10,8,3,2],ship:[5,7,10,8,3,3],ret:[2,1,1,1,0,1],stock:[3,8,12,10,7,6],c:['#e6cfa6','#a98a5c'],sw:'#e2cfa6',dlv:[30,36]},
+    {id:'jasmine',n:'Jasmine Wrap Midi Dress',main:'Jasmine Wrap Midi',col:'Sage',type:'Dress',rev7:33447,profit7:21871,u7:24,sold:[1,3,6,8,4,2],ship:[1,4,7,7,3,3],ret:[0,0,1,0,0,1],stock:[6,0,2,2,8,5],c:['#b4c6aa','#6c8462'],sw:'#9aae94',dlv:[23,25]},
+    {id:'salma',n:'Salma Puff-Sleeve Mini Dress',main:'Salma Puff-Sleeve Mini',col:'Ivory',type:'Dress',rev7:22377,profit7:13549,u7:23,sold:[3,8,6,4,1,1],ship:[6,5,7,5,2,2],ret:[3,0,0,0,1,1],stock:[7,6,3,9,5,5],c:['#efe7d6','#b9ab8e'],sw:'#efe7d6',dlv:[22,27]},
+    {id:'farida',n:'Farida Linen Shirt Dress',main:'Farida Linen Shirt',col:'Sand',type:'Dress',rev7:18181,profit7:11271,u7:15,sold:[1,3,6,3,1,1],ship:[1,3,6,5,1,1],ret:[0,0,1,0,0,0],stock:[6,9,12,10,8,6],c:['#d4c3a8','#8f7c60'],sw:'#d4c3a8',dlv:[16,17]},
+    {id:'mariam',n:'Mariam Pleated Chiffon Dress',main:'Mariam Pleated Chiffon',col:'Navy',type:'Dress',rev7:19868,profit7:11231,u7:12,sold:[1,2,3,4,1,1],ship:[1,2,4,3,2,2],ret:[0,0,0,0,0,1],stock:[5,6,4,4,7,5],c:['#4b5a8f','#232b4d'],sw:'#283a63',dlv:[13,14]},
+    {id:'hana',n:'Hana Smocked Midi Dress',main:'Hana Smocked Midi',col:'Terracotta',type:'Dress',price:1350,cost:null,u7:12,sold:[1,2,4,3,1,1],ship:[1,2,5,3,1,1],ret:[0,0,1,0,0,0],stock:[4,6,8,5,3,2],c:['#d99a7a','#9a4e33'],sw:'#c27a5a',dlv:[12,13]},
+    {id:'dalia',n:'Dalia Linen Wide-Leg Set',main:'Dalia Linen Wide-Leg Set',col:'Olive',type:'Set',price:1650,cost:750,u7:9,sold:[0,2,3,2,1,1],ship:[0,2,3,2,1,1],ret:[0,0,0,0,0,0],stock:[null,null,null,null,null,null],c:['#a6ad80','#5e6740'],sw:'#7d8656',dlv:[9,9]},
+    {id:'rana',n:'Rana Knit Cardigan',main:'Rana Knit Cardigan',col:'Oatmeal',type:'Knitwear',price:900,cost:738,u7:10,sold:[1,2,3,2,1,1],ship:[1,2,3,3,1,1],ret:[0,0,0,1,0,0],stock:[5,9,11,10,6,null],c:['#e3d8c4','#a8987c'],sw:'#d9ccb4',dlv:[10,11]},
+    {id:'yasmin',n:'Yasmin Ribbed Maxi Dress',main:'Yasmin Ribbed Maxi',col:'Black',type:'Dress',price:1200,cost:520,u7:6,sold:[0,1,2,2,1,0],ship:[0,1,2,2,1,0],ret:[0,0,0,0,0,0],stock:[0,0,0,0,0,0],c:['#55505e','#1d1b22'],sw:'#2a2730',dlv:[6,6],out:'Oct 27'},
+    {id:'nadia',n:'Nadia Silk Scarf',main:'Nadia Silk Scarf',col:'Print',type:'Accessory',price:450,cost:140,u7:12,sold:[12],ship:[12],ret:[0],stock:[11],sizes:['One size'],c:['#c9a6e6','#6d3fa0'],sw:'#a77fd0',dlv:[12,12]},
+    {id:'mona',n:'Mona Tulle Midi Skirt',main:'Mona Tulle Midi Skirt',col:'Blush',type:'Skirt',price:850,cost:[300,300,300,300,null,null],u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,0,1,0,0,0],stock:[6,8,9,8,6,4],c:['#f0c4cf','#b67a8a'],sw:'#e6b3bf',dlv:[0,0],lastSale:'Oct 9'},
+    {id:'lina',n:'Lina Embroidered Kaftan',main:'Lina Embroidered Kaftan',col:'Teal',type:'Dress',price:1450,cost:560,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],stock:[10,12,14,12,9,7],c:['#5fa3a3','#24585c'],sw:'#2f7a7c',dlv:[0,0],lastSale:'Aug 21'},
+    {id:'reem',n:'Reem Velvet Blazer',main:'Reem Velvet Blazer',col:'Burgundy',type:'Jacket',price:1900,cost:820,u7:1,sold:[0,0,1,0,0,0],ship:[0,0,1,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,1,1,0,0],stock:[3,7,8,6,5,2],c:['#a8475e','#5a1a2c'],sw:'#7d2a3e',dlv:[1,1],lastSale:'Oct 26'},
+    {id:'sara',n:'Sara Lace Blouse',main:'Sara Lace Blouse',col:'White',type:'Top',price:750,cost:260,u7:0,sold:[0,0,0,0,0,0],ship:[0,0,0,0,0,0],ret:[0,0,0,0,0,0],sold30:[0,1,2,1,1,0],stock:[5,9,11,9,6,4],c:['#f2eee8','#b8b0a4'],sw:'#ece6dc',dlv:[0,0],lastSale:'Oct 21'}
+  ];
+  /* per-period units sold / returned / shipped, in PR order (first six = the Overview's pv2Periods) */
+  var PER={
+    today:    {label:'Today',range:'Oct 30',days:1,phrase:'today',pace:"today's pace",
+               u:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], r:[0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0], s:[4,3,5,0,2,0, 2,1,1,0,2,0,0,0,0], pm:[1,1,1,1,1,1]},
+    yesterday:{label:'Yesterday',range:'Oct 29',days:1,phrase:'yesterday',pace:"yesterday's pace",
+               u:[3,5,4,3,0,2, 1,2,2,0,1,0,0,0,0], r:[0,1,0,1,0,0, 0,0,0,0,0,0,0,0,0], s:[3,6,4,4,0,2, 1,2,2,0,1,0,0,0,0], pm:[1,1,1,1,1,1]},
+    '7d':     {label:'Last 7 days',range:'Oct 24–30',days:7,phrase:'last 7 days',pace:"the last 7 days' pace",
+               u:[27,30,24,23,15,12, 12,9,10,6,12,0,0,1,0], r:[3,6,2,5,1,1, 1,0,1,0,0,0,0,0,0], s:[32,36,25,27,17,14, 13,9,11,6,12,0,0,1,0], pm:[1,1,1,1,1,1]},
+    '30d':    {label:'Last 30 days',range:'Oct 1–30',days:30,phrase:'last 30 days',pace:"the last 30 days' pace",
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]},
+    month:    {label:'This month',range:'Oct 1–30',days:30,phrase:'this month',pace:"this month's pace",
+               u:[116,118,101,92,66,46, 49,37,41,38,47,1,0,3,5], r:[13,23,8,20,4,4, 4,2,3,2,0,0,0,0,0], s:[138,140,105,108,75,53, 52,39,44,40,47,1,0,3,5], pm:[1.01,.985,1,1.02,.99,1]}
+  };
+  PR.forEach(function(p){
+    p.sizes=p.sizes||SZ;
+    if(p.rev7==null)p.rev7=p.price*p.u7;
+    if(p.price==null)p.price=Math.round(p.rev7/p.u7);
+    if(p.cost===undefined)p.cost=Math.round((p.rev7-p.profit7)/p.u7);
+    p.costAt=function(j){return Array.isArray(this.cost)?this.cost[j]:this.cost};
+    p.costMissing=p.sizes.filter(function(s,j){return p.costAt(j)==null}).length;   /* sizes with no recorded cost */
+    p.stockKnown=p.stock.filter(function(x){return x!=null});
+    p.unknownSizes=p.sizes.filter(function(s,j){return p.stock[j]==null});
+    p.left=sum(p.stockKnown);
+  });
+  /* largest-remainder split of total over the weights; always adds up exactly */
+  function spread(total,w){var W=sum(w),raw=w.map(function(x){return W?x/W*total:0}),out=raw.map(Math.floor),left=total-sum(out);
+    if(!W){out[Math.floor(w.length/2)]+=total;return out}
+    raw.map(function(x,i){return [x-Math.floor(x),i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,left).forEach(function(q){out[q[1]]++});return out}
+  function compute(key){
+    var P=PER[key];
+    PR.forEach(function(p,i){
+      var u=P.u[i],r=P.r[i],s=P.s[i],is7=key==='7d',base=p.sold30&&(!p.u7||!is7)?p.sold30:p.sold;
+      var sold=is7?p.sold.slice():spread(u,base),ret=is7?p.ret.slice():spread(r,p.ret.some(Boolean)?p.ret:p.ship),ship=is7?p.ship.slice():spread(s,p.ship.some(Boolean)?p.ship:base);
+      for(var j=0;j<sold.length;j++)if(ret[j]>ship[j])ship[j]=ret[j];
+      var over=sum(ship)-s;while(over>0){var best=-1,bv=0;for(var x=0;x<ship.length;x++){var room=ship[x]-ret[x];if(room>bv){bv=room;best=x}}if(best<0)break;ship[best]--;over--}
+      var rev,profit;
+      if(i<6){var k=u/p.u7;rev=p.rev7*k;profit=p.profit7*k*P.pm[i]}
+      else{rev=u*p.price;profit=p.costMissing?null:sold.reduce(function(a,n,j){return a+n*(p.price-p.costAt(j))},0)}
+      /* profit is UNKNOWN (null) when any size that sold has no cost, or the product has no cost at all */
+      if(p.costMissing&&(p.cost===null||sold.some(function(n,j){return n&&p.costAt(j)==null})||!u))profit=null;
+      var d={u:u,rev:rev,profit:profit,sold:sold,ret:ret,ship:ship,r:r,s:s};
+      d.margin=profit==null||!rev?null:profit/rev*100;d.rate=s?r/s*100:0;
+      d.perDay=sold.map(function(n){return n/P.days});
+      p.P=d;
+    });
+  }
+  /* stock maths (Cayo Perico): lasts = stock / units per day; order = per-day × (cover + delivery) − stock */
+  function plan(p,cover,del){
+    var rows=p.sizes.map(function(s,j){var rate=p.P.perDay[j],st=p.stock[j],unk=st==null,lasts=unk?null:rate>0?st/rate:(st?Infinity:0);
+      return {s:s,j:j,rate:rate,st:st,unk:unk,lasts:lasts,ord:!unk&&rate>0?Math.max(0,Math.ceil(rate*(cover+del)-st)):0}});
+    var known=rows.filter(function(r){return !r.unk});
+    var first=known.slice().sort(function(a,b){return a.lasts-b.lasts})[0]||null;
+    return {rows:rows,first:first,ord:sum(rows.map(function(r){return r.ord})),late:!!first&&first.lasts<del,unk:rows.length-known.length};
+  }
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function dateIn(days){var d=new Date(2026,9,30);d.setDate(d.getDate()+Math.floor(days));return MON[d.getMonth()]+' '+d.getDate()}
+  function when(d){if(d==null)return 'stock unknown';if(d===0)return 'sold out';if(!isFinite(d))return 'not selling';if(d<1)return 'runs out today';if(d<2)return 'runs out tomorrow';return 'runs out ~'+dateIn(d)}
+  function short(d){if(d==null)return '?';if(d===0)return 'out';if(!isFinite(d))return '—';if(d<1)return '<1 day';var n=Math.floor(d);return n+(n===1?' day':' days')}
+  /* a size's returns are only judged when at least 3 were shipped — fewer is noise (test_returns_insights) */
+  var MIN_SHIP=3;
+  function worstSize(p){var best=-1,bv=-1,d=p.P;for(var j=0;j<d.ship.length;j++){if(d.ship[j]<MIN_SHIP||!d.ret[j])continue;var v=d.ret[j]/d.ship[j];if(v>bv||(v===bv&&d.ret[j]>d.ret[best])){bv=v;best=j}}return best}
+  function topSize(p){var a=p.P.sold,m=Math.max.apply(0,a);return m?a.indexOf(m):-1}
+  function rateColor(v){if(v<=0)return 'rgba(150,140,170,.28)';var t=Math.min(1,v/.4);return 'hsl('+(38-38*t)+','+(78+10*t)+'%,'+(62-8*t)+'%)'}
+  /* not selling = the slowest products: at most 5 sales in the last 30 days with stock still on the shelf,
+     fewest sales first (fixed rule, independent of the date picker) */
+  var SLOW_MAX=5;
+  function n30(p){return PER['30d'].u[PR.indexOf(p)]}
+  var DEAD=PR.filter(function(p){return n30(p)<=SLOW_MAX&&p.left>0}).sort(function(a,b){return n30(a)-n30(b)});
+  function tied(p){var k=0,unk=0;p.stock.forEach(function(st,j){if(st==null)return;var c=p.costAt(j);if(c==null)unk+=st;else k+=st*c});return {cash:k,unk:unk}}
+  var LOW=4;
+  function counts(){var low=0,out=0;PR.forEach(function(p){p.stock.forEach(function(x){if(x==null)return;if(x===0)out++;else if(x<=LOW)low++})});return {low:low,out:out}}
+  return {SZ:SZ,PR:PR,PER:PER,sum:sum,fmt:fmt,compute:compute,plan:plan,when:when,short:short,dateIn:dateIn,worstSize:worstSize,topSize:topSize,rateColor:rateColor,MIN_SHIP:MIN_SHIP,DEAD:DEAD,SLOW_MAX:SLOW_MAX,n30:n30,tied:tied,LOW:LOW,counts:counts,
+    byId:function(id){return PR.filter(function(p){return p.id===id})[0]}};
+})();
+
+var PSHEET=(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt=IP.fmt;
+  var ARW='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+  var EXT='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  var XI='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
+  var LETTER=(location.pathname.match(/-(A|B)\.html/)||[])[1]||'A';
+
+  /* ---- toast ---- */
+  var toastEl=null,toastT=null;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='ip-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},3200)}
+
+  /* ---- links (Products ⇄ Inventory) ---- */
+  function pageUrl(page,q){return (window.PSHEET_BASE||'')+page+'-'+LETTER+'.html'+(q?'?'+q:'')}
+
+  /* ---- sheet ---- */
+  var sheet,scrim,back=null;
+  function ensure(){if(sheet)return;scrim=document.createElement('div');scrim.className='ip-scrim';
+    sheet=document.createElement('section');sheet.className='pv2 ip-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-labelledby','ip-st');
+    document.body.appendChild(scrim);document.body.appendChild(sheet);scrim.addEventListener('click',close);
+    sheet.addEventListener('click',function(e){if(e.target.closest('[data-ip-close]'))close()});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()})}
+  function open(html,from){ensure();back=from||document.activeElement;sheet.innerHTML=html;sheet.scrollTop=0;sheet.classList.add('on');scrim.classList.add('on');
+    var c=sheet.querySelector('[data-ip-close]');if(c)setTimeout(function(){c.focus({preventScroll:true})},reduce?0:60);
+    document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:true}}))}
+  function close(){if(!sheet||!sheet.classList.contains('on'))return;sheet.classList.remove('on');scrim.classList.remove('on');if(back&&back.focus)back.focus({preventScroll:true});
+    document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:false}}))}
+  function refresh(html){if(!sheet)return;var y=sheet.scrollTop;sheet.innerHTML=html;sheet.scrollTop=y}
+
+  /* ---- product helpers ---- */
+  var VIEW={rev:'Revenue',profit:'Profit',margin:'Margin',units:'Units sold',ret:'Returns'};
+  function val(p,v){var d=p.P;return v==='rev'?d.rev:v==='profit'?d.profit:v==='margin'?d.margin:v==='units'?d.u:d.rate}
+  /* unknown profit / margin always sorts LAST, never as zero */
+  function sorted(list,v){return list.slice().sort(function(a,b){var x=val(a,v),y=val(b,v);
+    if(v==='ret'){if(!a.P.s!==!b.P.s)return a.P.s?-1:1;return (y-x)||(b.P.r-a.P.r)||(b.P.u-a.P.u)}
+    if(x==null&&y==null)return b.P.u-a.P.u;if(x==null)return 1;if(y==null)return -1;
+    if((v==='margin')&&(!a.P.u||!b.P.u)&&a.P.u!==b.P.u)return a.P.u?-1:1;
+    return (y-x)||(b.P.u-a.P.u)})}
+  function rankOf(v,p){var l=sorted(IP.PR,v),i=l.indexOf(p);var x=val(p,v);return (x==null||(v!=='units'&&!p.P.u&&v!=='ret'))?null:i+1}
+  function sw(p,cls){return '<span class="'+(cls||'ip-th')+'" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span>'}
+  function money(n){return n==null?'Unknown':'EGP '+fmt(n)}
+  function pct(n){return n==null?'Unknown':n.toFixed(1)+'%'}
+  function stockWord(st){return st==null?'not tracked':st===0?'sold out':st+' left'}
+  function stockCls(st){return st==null?'u':st<=2?'r':st<=IP.LOW?'w':''}
+  function costNote(p){return p.cost===null?'No unit cost in Shopify on any size':p.costMissing?'No unit cost on '+p.sizes.filter(function(s,j){return p.costAt(j)==null}).join(' and '):''}
+
+  function verdict(p,v){
+    var d=p.P,r=rankOf(v,p),P=IP.PER[PERKEY()];
+    if(!d.u&&v!=='ret')return 'No sales '+P.phrase+(p.lastSale?' — the last one was on <b>'+p.lastSale+'</b>.':'.');
+    if(v==='ret'){var w=IP.worstSize(p);if(!d.s)return 'Nothing shipped '+P.phrase+'.';
+      return d.r?'<b>'+d.rate.toFixed(1)+'%</b> came back ('+d.r+' of '+d.s+')'+(w>=0?' — mostly size <b>'+p.sizes[w]+'</b> ('+d.ret[w]+' of '+d.ship[w]+').':' — no single size stands out yet.'):'<b>Nothing came back</b> — '+d.s+' shipped.'}
+    if((v==='profit'||v==='margin')&&d.profit==null)return 'Profit is <b>unknown</b>: '+costNote(p).toLowerCase()+'. It sits last on '+VIEW[v].toLowerCase()+' until a cost is added — not because it earns nothing.';
+    var why=[],ur=rankOf('units',p),mr=rankOf('margin',p);
+    if(ur===1)why.push('sells the most ('+d.u+')');else if(ur<=3)why.push('is a top seller ('+d.u+' sold)');
+    if(mr&&mr<=3)why.push('keeps '+Math.round(d.margin)+'% margin');
+    if(d.margin!=null&&d.margin<30)why.push('keeps only '+Math.round(d.margin)+'% after cost');
+    if(!why.length)why.push('sells '+d.u+(d.margin!=null?' at '+Math.round(d.margin)+'% margin':''));
+    var weak=d.rate>=15?' — but <b>'+d.rate.toFixed(1)+'%</b> come back':'';
+    return '<b>#'+r+'</b> on '+VIEW[v].toLowerCase()+' because it '+why.join(' <b>and</b> ')+weak+'.';
+  }
+  var PERKEY=function(){return (window.PER&&PER.cur)||'7d'};
+
+  /* the full product detail: verdict · four numbers · sizes · returns by size · what to do */
+  /* icons for the number tiles in the product detail */
+  var NI=(function(){var g=function(d){return '<i class="ip-ni" aria-hidden="true"><svg viewBox="0 0 24 24">'+d+'</svg></i>'};return {
+    stock:g('<path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/>'),
+    sold:g('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>'),
+    rev:g('<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/>'),
+    profit:g('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>'),
+    margin:g('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>')}})();
+  function detail(p,v,opts){
+    opts=opts||{};var d=p.P,P=IP.PER[PERKEY()],t=IP.topSize(p),w=IP.worstSize(p),one=p.sizes.length===1;
+    var chips=['rev','profit','margin','units'].map(function(k){var r=rankOf(k,p);return '<button type="button" class="pv2-chip'+(k===v?' pv2-cur':'')+'" data-ip-rank="'+k+'" aria-pressed="'+(k===v)+'">'+VIEW[k]+'<b>'+(r?'#'+r:'—')+'</b></button>'}).join('')
+      +'<button type="button" class="pv2-chip'+(v==='ret'?' pv2-cur':'')+'" data-ip-rank="ret" aria-pressed="'+(v==='ret')+'">Returns<b>'+(d.s?d.rate.toFixed(1)+'%':'—')+'</b></button>';
+    /* one row per size: sold · in stock · returned — the same columns line up for every size */
+    var rows=p.sizes.map(function(s,j){var st=p.stock[j],top=j===t&&d.u,sh=d.ship[j],rt=d.ret[j],few=sh<IP.MIN_SHIP,hot=j===w;
+      var retTxt=!sh?'<span class="m">—</span>':!rt||few?'<span class="m">'+rt+' of '+sh+'</span>':rt+' of '+sh+' <span class="pc">· '+Math.round(rt/sh*100)+'%</span>';
+      return '<tr'+(top?' class="ip-ztop"':'')+'><th scope="row">'+s+(top?' <i>Top</i>':'')+'</th>'
+        +'<td class="'+stockCls(st)+'">'+(st==null?'not tracked':st===0?'sold out':st)+'</td><td>'+d.sold[j]+'</td>'
+        +'<td'+(hot?' class="r"':'')+'>'+retTxt+'</td></tr>'}).join('');
+    var notes=[];
+    if(t>=0&&d.u&&!one)notes.push('<b>'+p.sizes[t]+'</b> sells most — '+Math.round(d.sold[t]/d.u*100)+'% of units.');
+    if(w>=0)notes.push('<b class="r">'+p.sizes[w]+'</b> comes back most'+(d.ret[w]/d.ship[w]>=.25?' — check the size chart.':'.'));
+        var acts=[];
+    if(p.costMissing)acts.push('<div class="ip-unknown"><span><b>Profit unknown.</b> '+costNote(p)+', so profit and margin can’t be worked out'+(p.cost===null?'':' for the whole product')+'. It is not zero.</span><button type="button" class="ip-btn ghost" data-ip-shopify="cost" data-id="'+p.id+'">Add cost in Shopify '+EXT+'</button></div>');
+    if(p.unknownSizes.length)acts.push('<div class="ip-unknown"><span><b>Stock unknown'+(p.unknownSizes.length===p.sizes.length?'':' for '+p.unknownSizes.join(', '))+'.</b> Shopify isn’t counting '+(p.unknownSizes.length===p.sizes.length?'this product’s':'that size’s')+' stock, so we can’t say when it runs out.</span><button type="button" class="ip-btn ghost" data-ip-shopify="track" data-id="'+p.id+'">Turn on stock tracking '+EXT+'</button></div>');
+    var pl=IP.plan(p,30,7);
+    if(!opts.noRestock&&pl.first&&pl.first.lasts<14)acts.push('<a class="pv2-act" href="'+pageUrl('inventory','p='+p.id)+'"><span>'+(pl.first.lasts===0?'<b>'+(p.left?pl.first.s+' is sold out':'Every size is sold out')+'</b>':'<b>'+pl.first.s+'</b> '+IP.when(pl.first.lasts))+'</span><b>Plan restock '+ARW+'</b></a>');
+    var dead=IP.DEAD.indexOf(p)>=0;
+    if(dead){var tc=IP.tied(p);acts.push('<div class="ip-unknown"><span><b>Not selling.</b> '+(function(n){return n?n+(n===1?' sale':' sales'):'No sales'})(IP.n30(p))+' in 30 days (last on '+p.lastSale+') — '+p.left+' pieces hold '+(tc.unk?'at least ':'')+'<b style="color:inherit">EGP '+fmt(tc.cash)+'</b> of cost.</span>'+(opts.noRestock?'':'<a class="ip-btn ghost" href="'+pageUrl('inventory','tab=dead')+'">See slow stock '+ARW+'</a>')+'</div>')}
+    var dl=p.dlv[1]?p.dlv[0]+' of '+p.dlv[1]+' orders · '+Math.round(p.dlv[0]/p.dlv[1]*100)+'%':'No orders shipped yet';
+    return '<div class="pv2-grab" aria-hidden="true"></div>'
+      +'<div class="pv2-sh">'+sw(p,'pv2-shsw')+'<div class="pv2-sht"><small>'+p.type+' · '+p.col+'</small><b id="ip-st">'+p.n+'</b><div class="ip-meta">EGP '+fmt(p.price)+(one?' · one size':' · '+p.sizes.length+' sizes')+(p.left||!p.unknownSizes.length?' · '+p.left+' in stock':'')+'</div></div>'
+      +'<button type="button" class="pv2-close" data-ip-close>Close '+XI+'</button></div>'
+      +'<div><p class="pv2-verdict">'+verdict(p,v)+'</p><div class="pv2-chips">'+chips+'</div></div>'
+      +acts.filter(function(a){return a.indexOf('ip-unknown')>0}).join('')
+      +'<div class="ip-four">'
+      +'<div class="ip-left" style="--k:var(--pv2-acc)">'+NI.stock+'<span>Pieces left</span><b>'+(p.unknownSizes.length===p.sizes.length?'<span class="ip-unk">Not tracked</span>':fmt(p.left)+(p.unknownSizes.length?'<small> + '+p.unknownSizes.join(', ')+' not tracked</small>':''))+'</b>'
+        +(one?'':'<div class="ip-lsz">'+p.sizes.map(function(s,j){var x=p.stock[j];return '<i class="'+stockCls(x)+'"><em>'+s+'</em>'+(x==null?'?':x===0?'out':x)+'</i>'}).join('')+'</div>')+'</div>'
+      +'<div style="--k:#4f8ff0">'+NI.sold+'<span>Sold</span><b>'+fmt(d.u)+'</b></div>'
+      +'<div style="--k:var(--pv2-good)">'+NI.rev+'<span>Revenue</span><b><small>EGP</small> '+fmt(d.rev)+'</b></div>'
+      +'<div style="--k:#d99a3a">'+NI.profit+'<span>Profit</span>'+(d.profit==null?'<b class="ip-unk">Unknown</b>':'<b><small>EGP</small> '+fmt(d.profit)+'</b>')+'</div>'
+      +'<div style="--k:#c45fd0">'+NI.margin+'<span>Margin'+tip('Of every EGP 100 sold, how much you keep after the cost of the item. Ads and shipping are not taken off here.')+'</span>'+(!d.u?'<b class="ip-unk">—</b>':d.margin==null?'<b class="ip-unk">Unknown</b>':'<b>'+d.margin.toFixed(1)+'%</b>')+'</div></div>'
+      +'<div class="ip-sec"><div class="ip-sech">'+(one?'Sold · stock · returns':'By size')+'<span>'+P.label+'</span></div>'
+      +'<table class="ip-sz"><thead><tr><th scope="col">Size</th><th scope="col">Stock left</th><th scope="col">Sold</th><th scope="col">Returned'+tip('Pieces that came back, out of the pieces shipped in that size. Grey means fewer than '+IP.MIN_SHIP+' shipped, too few to judge.')+'</th></tr></thead><tbody>'+rows+'</tbody></table>'
+      +(notes.length?'<p class="ip-note">'+notes.join(' ')+'</p>':'')
+      +'<dl class="ip-dl"><dt>Delivered</dt><dd>'+dl+'</dd></dl></div>'
+      +acts.filter(function(a){return a.indexOf('ip-unknown')<0}).join('');
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-ip-shopify]');if(!b)return;e.preventDefault();
+    var p=IP.byId(b.dataset.id);toast(b.dataset.ipShopify==='cost'?'In the app this opens '+p.main+' in Shopify admin, at the “Cost per item” field.':'In the app this opens '+p.main+' in Shopify admin, at “Track quantity”.')});
+
+  /* the card's "i": hover, focus or tap it to read what a term means. One bubble, placed by script so no panel clips it
+     (the pages' .tip / Shipping B OS.tip behaviour, under .ip-tip). */
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+  function tip(t){return '<button type="button" class="ip-tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=null,cur=null,pin=false;
+    function bub(){if(!b){b=document.createElement('div');b.className='ip-tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b)}return b}
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;bub().textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;if(b)b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.ip-tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.ip-tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.ip-tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.ip-tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+    document.addEventListener('ip:sheet',function(e){if(!e.detail.open)close()});
+  })();
+
+  return {$:$,$$:$$,reduce:reduce,toast:toast,pageUrl:pageUrl,open:open,close:close,refresh:refresh,isOpen:function(){return !!sheet&&sheet.classList.contains('on')},sheetEl:function(){return sheet},
+    detail:detail,verdict:verdict,sorted:sorted,rankOf:rankOf,val:val,VIEW:VIEW,sw:sw,money:money,pct:pct,stockWord:stockWord,stockCls:stockCls,costNote:costNote,ARW:ARW,EXT:EXT,DRESS:DRESS,tip:tip,perKey:PERKEY};
+})();
+/* === PSHEET v1 END === */
+
+/* ===== IP COMMON — page glue around PSHEET v1 (the shared product card, in data.js): Products ⇄ Inventory
+   navigation, the bell, the page's own "i" tips (.tip), swipe rows and the ring helpers. IPU = PSHEET + these,
+   so page code keeps calling IPU / U. Navigation: products-X.html ⇄ inventory-X.html (X = A or B); everything
+   else in the app answers with a toast so no click is dead. ===== */
+var IPU=(function(){
+  var S=PSHEET,$=S.$,$$=S.$$,reduce=S.reduce,toast=S.toast,pageUrl=S.pageUrl,DRESS=S.DRESS;
+  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'your profile',signout:'Sign out',elsewhere:'that page'};
+
+  /* ---- navigation ---- */
+  function go(where,q){
+    if(where==='products'||where==='inventory'){
+      if(document.body.dataset.page===where){window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
+      location.href=pageUrl(where,q);return}
+    toast('This mockup covers Inventory and Products. In the app this opens '+(NAMES[where]||'that page')+'.');
+  }
+  document.addEventListener('nv2:nav',function(e){var g=e.detail.go;
+    if(/Dress|Set|Cardigan|Scarf|Skirt|Kaftan/.test(e.detail.q||'')){var p=IP.PR.filter(function(x){return e.detail.q.indexOf(x.main.split(' ')[0])===0})[0];if(p){go('products','p='+p.id);return}}
+    go(g)});
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-ip-go]');if(!a)return;e.preventDefault();go(a.dataset.ipGo,a.dataset.ipQ||'')});
+  /* the bell's stock note follows this catalogue */
+  function bell(){var c=IP.counts(),n=$('.nv2-note[data-nv2-go="products"] b');if(n)n.textContent=c.low+' sizes running low · '+c.out+' sold out';
+    var nn=$('.nv2-note[data-nv2-go="products"]');if(nn)nn.dataset.nv2Go='inventory';
+    var l=$('.nv2-note[data-nv2-go="inventory"] .nv2-nl');if(l)l.firstChild.textContent='Open inventory '}
+  var params=new URLSearchParams(location.search);
+
+  /* product picture in a coloured ring (pct fills the ring, dash = dashed ring), and an overlapping stack of them */
+  function face(p){return '<span class="pa-face" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+DRESS+'</span>'}
+  function ring(p,pct,badge,dash){return '<span class="pa-ring'+(dash?' dash':'')+'"'+(pct!=null?' style="--pct:'+pct+'"':'')+'>'+face(p)+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
+  function stack(list,dash,badge){return '<span class="pa-stack">'+list.slice(0,3).map(function(p){return ring(p,null,null,dash)}).join('')+(badge?'<span class="pa-badge">'+badge+'</span>':'')+'</span>'}
+
+  /* "i" tips: hover, focus or tap a small i to read what a hard term means. One shared bubble, placed by script so no panel clips it.
+     Copied from Shipping B (OS.tip) — the same icon and bubble on every page. */
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+  function tip(t){return '<button type="button" class="tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=document.createElement('div');b.className='tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b);
+    var cur=null,pin=false;
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;b.textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+  })();
+
+  /* swipe rows: wrap each .ip-swipe so a fade + arrow can show there is more to the right (phone only, via CSS) */
+  function swipeHints(){$$('.ip-swipe').forEach(function(row){if(row.parentNode.classList.contains('ip-swipew'))return;
+    var w=document.createElement('div');w.className='ip-swipew';row.parentNode.insertBefore(w,row);w.appendChild(row);
+    var b=document.createElement('button');b.type='button';b.className='ip-more';b.setAttribute('aria-label','Show more filters');
+    b.innerHTML='<svg class="ip-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';w.appendChild(b);
+    function upd(){var max=row.scrollWidth-row.clientWidth;w.classList.toggle('end',row.scrollLeft>=max-4);w.classList.toggle('start',row.scrollLeft>4)}
+    b.addEventListener('click',function(){row.scrollBy({left:row.clientWidth*.7,behavior:reduce?'auto':'smooth'})});
+    row.addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);
+    if('MutationObserver' in window)new MutationObserver(upd).observe(row,{childList:true});upd()})}
+
+  bell();
+  var U={};for(var k in S)U[k]=S[k];
+  U.go=go;U.params=params;U.swipeHints=swipeHints;U.tip=tip;U.face=face;U.ring=ring;U.stack=stack;
+  return U;
+})();
+
+/* ===== Products B behaviour ===== */
+(function(){
+  var U=IPU,$=U.$,$$=U.$$,fmt=IP.fmt,PR=IP.PR;
+  var st={view:'rev',f:'all',q:'',sel:null};
+  var wide=matchMedia('(min-width:1180px)');
+  var G=[
+    {k:'all',l:'Products',c:'var(--pv2-acc)',n:function(){return PR.length},s:function(){return PR.reduce(function(a,p){return a+p.sizes.length},0)+' sizes in Shopify'},t:function(){return true}},
+    {k:'nocost',l:'Profit unknown',c:'var(--pv2-warn)',n:null,s:function(){return 'No unit cost in Shopify'},t:function(p){return !!p.costMissing}},
+    {k:'ret',l:'High returns',c:'var(--pv2-bad)',n:null,s:function(){return '15% or more came back'},t:function(p){return p.P.s>=IP.MIN_SHIP&&p.P.rate>=15}},
+    {k:'dead',l:'Not selling',c:'var(--pv2-mut)',n:null,s:function(){return '5 or fewer sales in 30 days'},t:function(p){return IP.DEAD.indexOf(p)>=0}}
+  ];
+  function gl(k){return G.filter(function(g){return g.k===k})[0]}
+  function glance(){$('#pb-glance').innerHTML=G.map(function(g){var n=g.n?g.n():PR.filter(g.t).length;
+    return '<button type="button" class="pb-g" data-g="'+g.k+'" aria-pressed="'+(st.f===g.k)+'" style="--c:'+g.c+'"><span><i></i>'+g.l+'</span><b>'+n+'</b><small>'+g.s()+'</small></button>'}).join('')}
+  function matches(p){var q=st.q.trim().toLowerCase();return gl(st.f).t(p)&&(!q||(p.n+' '+p.col+' '+p.type).toLowerCase().indexOf(q)>=0)}
+
+  function flags(p){
+    var d=p.P,out=[],w=IP.worstSize(p);
+    if(p.costMissing)out.push('<span class="ip-tag w">No cost</span>');
+    if(IP.DEAD.indexOf(p)>=0)out.push('<span class="ip-tag n">Not selling</span>');
+    else if(p.left===0&&!p.unknownSizes.length)out.push('<span class="ip-tag r">Sold out</span>');
+    else{var k=p.stock.map(function(x,j){return [x,j]}).filter(function(a){return a[0]!=null}).sort(function(a,b){return a[0]-b[0]})[0];
+      if(k&&k[0]<=2)out.push('<span class="ip-tag '+(k[0]?'w':'r')+'">'+(k[0]?k[0]+' left · '+p.sizes[k[1]]:p.sizes[k[1]]+' sold out')+'</span>')}
+    if(p.unknownSizes.length===p.sizes.length)out.push('<span class="ip-tag n">Stock not tracked</span>');
+    if(w>=0&&d.ret[w]/d.ship[w]>=.25)out.push('<span class="ip-tag r">'+p.sizes[w]+' returns '+Math.round(d.ret[w]/d.ship[w]*100)+'%</span>');
+    if(!out.length)out.push(p.col+' · '+p.type);
+    return out.join('');
+  }
+  function mini(p){var d=p.P,v=st.view,t=IP.topSize(p),w=IP.worstSize(p),mx=Math.max.apply(0,d.sold);
+    return '<span class="pb-mini" aria-hidden="true" style="--n:'+p.sizes.length+'">'+p.sizes.map(function(s,j){var h,c,top;
+      if(v==='ret'){var sh=d.ship[j],few=sh<IP.MIN_SHIP,r=sh?d.ret[j]/sh:0;h=!sh?0:few?8:Math.max(8,Math.min(100,r/.5*100));c=few?'rgba(150,140,170,.3)':IP.rateColor(r);top=j===w}
+      else{h=mx?d.sold[j]/mx*100:0;top=j===t&&d.u;c=top?'linear-gradient(180deg,#b88cf0,#6a1fc4)':'rgba(162,117,224,.42)'}
+      return '<span class="'+(top?'t':'')+'"><i style="--v:'+h+'%;--c:'+c+'"></i><em>'+(p.sizes.length===1?'One size':s)+'</em></span>'}).join('')+'</span>'}
+  function value(p){var v=st.view,d=p.P,x=U.val(p,v),unk=(v==='profit'||v==='margin')&&d.profit==null&&d.u;
+    if(unk)return '<b class="u">Unknown</b><small>'+d.u+' sold · needs a cost</small>';
+    if(v==='ret')return d.s?'<b class="'+(d.rate>=15&&d.s>=IP.MIN_SHIP?'r':'')+'">'+d.rate.toFixed(1)+'%</b><small>'+d.r+' of '+d.s+' came back</small>':'<b class="u">—</b><small>nothing shipped</small>';
+    if(!d.u)return '<b class="u">'+(v==='rev'?'<small>EGP</small>0':v==='units'?'0':'—')+'</b><small>'+(p.lastSale?'last sale '+p.lastSale:'no sales')+'</small>';
+    if(v==='units')return '<b>'+fmt(d.u)+' sold</b><small>EGP '+fmt(d.rev)+'</small>';
+    if(v==='margin')return '<b>'+d.margin.toFixed(1)+'%</b><small>'+(d.profit==null?'profit unknown':'EGP '+fmt(d.profit)+' profit')+'</small>';
+    return '<b><small>EGP</small>'+fmt(x)+'</b><small>'+fmt(d.u)+' sold · '+(d.margin==null?'profit unknown':d.margin.toFixed(1)+'%')+'</small>'}
+  function rows(){
+    var list=U.sorted(PR,st.view).filter(matches);
+    $('#pb-rows').innerHTML=list.length?list.map(function(p){var r=U.rankOf(st.view,p);
+      return '<button type="button" class="pb-row" data-id="'+p.id+'"'+(st.sel===p&&wide.matches?' aria-current="true"':'')+'><span class="pb-rk">'+(r||'–')+'</span>'+U.sw(p)+'<span class="pb-nm"><b>'+p.n+'</b><small>'+flags(p)+'</small></span>'+mini(p)+'<span class="pb-v">'+value(p)+'</span></button>'}).join('')
+      :'<p class="ip-empty">No products match'+(st.q?' “'+st.q.replace(/</g,'')+'”':'')+'.<button type="button" data-clear>Show all products</button></p>';
+    var g=gl(st.f);
+    $('#pb-filt').innerHTML=st.f==='all'&&!st.q?list.length+' products':'<span>Showing <b>'+list.length+'</b>'+(st.f!=='all'?' · '+g.l.toLowerCase():'')+(st.q?' · “'+st.q.replace(/</g,'')+'”':'')+'</span><button type="button" data-clear>Clear</button>';
+    $('#pb-by').textContent=U.VIEW[st.view].toLowerCase()+(st.view==='ret'?' (share that came back)':'');
+    if(wide.matches&&(!st.sel||list.indexOf(st.sel)<0)&&list.length){st.sel=list[0];pane();rows()}
+  }
+  function pane(){if(!st.sel)return;var el=$('#pb-pane'),y=el.scrollTop;el.innerHTML=U.detail(st.sel,st.view);el.scrollTop=y}
+  function sizes(){
+    var sold=[0,0,0,0,0,0],ship=[0,0,0,0,0,0],ret=[0,0,0,0,0,0];
+    PR.forEach(function(p){if(p.sizes.length!==6)return;for(var j=0;j<6;j++){sold[j]+=p.P.sold[j];ship[j]+=p.P.ship[j];ret[j]+=p.P.ret[j]}});
+    var mx=Math.max.apply(0,sold),top=mx?sold.indexOf(mx):-1,tot=IP.sum(sold),hot=-1,hv=0;
+    for(var j=0;j<6;j++)if(ship[j]>=IP.MIN_SHIP&&ret[j]/ship[j]>hv){hv=ret[j]/ship[j];hot=j}
+    $('#pb-szsub').textContent=top>=0?IP.SZ[top]+' sells most'+(hot>=0&&hv?' · '+IP.SZ[hot]+' comes back most':''):'';
+    $('#pb-sz').innerHTML=IP.SZ.map(function(s,j){var r=ship[j]?ret[j]/ship[j]:0;
+      return '<tr class="'+(j===top?'top':'')+'"><td>'+s+'</td><td>'+fmt(sold[j])+' <span class="muted">· '+(tot?Math.round(sold[j]/tot*100):0)+'%</span></td><td class="bar"><span class="pa-bar"><i style="--w:'+(mx?sold[j]/mx*100:0)+'%"></i></span></td><td class="'+(j===hot&&hv?'r':'')+'">'+(ship[j]<IP.MIN_SHIP?'<span class="muted">too few</span>':ret[j]+' of '+ship[j]+' · '+Math.round(r*100)+'%')+'</td></tr>'}).join('');
+  }
+
+  var sort=$('.pb-tools .pv2-sort'),sind=$('.pv2-sind',sort);
+  function moveInd(){var b=$('[aria-pressed="true"]',sort);if(!b||!b.offsetWidth)return;sind.style.left=b.offsetLeft+'px';sind.style.width=b.offsetWidth+'px'}
+  function setView(v){st.view=v;$$('button',sort).forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.s===v))});moveInd();rows();pane()}
+  sort.addEventListener('click',function(e){var b=e.target.closest('button');if(b&&b.dataset.s!==st.view)setView(b.dataset.s)});
+  function select(p,from){st.sel=p;
+    if(wide.matches){pane();$$('.pb-row').forEach(function(r){r.toggleAttribute('aria-current',r.dataset.id===p.id);if(r.dataset.id===p.id)r.setAttribute('aria-current','true')});$('#pb-pane').scrollTop=0}
+    else U.open(U.detail(p,st.view),from)}
+  document.addEventListener('click',function(e){
+    var r=e.target.closest('.pb-row');if(r){select(IP.byId(r.dataset.id),r);return}
+    var g=e.target.closest('[data-g]');if(g){st.f=st.f===g.dataset.g?'all':g.dataset.g;glance();rows();return}
+    if(e.target.closest('[data-clear]')){st.f='all';st.q='';$('#pb-q').value='';glance();rows();return}
+    var c=e.target.closest('[data-ip-rank]');if(c){var k=c.dataset.ipRank;setView(k);
+      if(U.isOpen()&&st.sel){var sh=U.sheetEl(),y=sh.scrollTop;sh.innerHTML=U.detail(st.sel,k);sh.scrollTop=y}
+      var nb=(U.isOpen()?U.sheetEl():$('#pb-pane')).querySelector('[data-ip-rank="'+k+'"]');if(nb)nb.focus({preventScroll:true})}
+  });
+  var qt;$('#pb-q').addEventListener('input',function(e){clearTimeout(qt);qt=setTimeout(function(){st.q=e.target.value;rows()},120)});
+  wide.addEventListener('change',function(){if(wide.matches)U.close();rows();pane()});
+
+  function render(){IP.compute(U.perKey());glance();rows();pane();sizes();
+    if(U.isOpen()&&st.sel){var sh=U.sheetEl(),y=sh.scrollTop;sh.innerHTML=U.detail(st.sel,st.view);sh.scrollTop=y}}
+  document.addEventListener('per:change',render);
+  $('#pb-count').textContent='Every product in your Shopify store, ranked';
+  var pid=U.params.get('p');if(pid&&IP.byId(pid))st.sel=IP.byId(pid);
+  render();moveInd();addEventListener('resize',moveInd);if(document.fonts)document.fonts.ready.then(moveInd);
+  if(pid&&st.sel&&!wide.matches)setTimeout(function(){select(st.sel)},200);
+})();
+</script>
+<script src="/overview-looks/app/local/glue.js"></script></body>
+</html>

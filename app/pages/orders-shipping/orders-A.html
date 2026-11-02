@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orders · List</title>
+<meta name="description" content="Frill N Wear dashboard redesign mockup: Orders · List.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+/* theme: remembered choice first, else the OS preference (same key as the Overview) */
+(function(){var t=null;try{t=localStorage.getItem("n-theme")}catch(e){}
+  if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
+  document.documentElement.dataset.theme=t})();
+</script>
+<style>
+:root{
+  --bg:#060509; --panel:#0d0c12; --panel2:#14121b; --line:rgba(255,255,255,.065); --line2:rgba(255,255,255,.11);
+  --text:#eceaf3; --muted:#8d8a9b; --dim:#5f5c6c;
+  --p:#550da6; --pm:#7c3fc1; --pl:#a275e0; --tint:#f2eafb; --acc:#8a4fd1;
+  --good:#45d09a; --warn:#f2b64f; --bad:#f06571; --gold:#d8b46c;
+  --track:rgba(255,255,255,.06); --grid:rgba(255,255,255,.06); --grid2:rgba(255,255,255,.12);
+  --r:18px; --peek:68px;
+  --cw:min(500px, 78vw);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f4f2f8; --panel:#ffffff; --panel2:#f6f3fb; --line:rgba(20,10,40,.08); --line2:rgba(20,10,40,.14);
+  --text:#17141f; --muted:#666273; --dim:#9a96a6; --acc:#550da6; --pl:#7c3fc1;
+  --good:#14935f; --warn:#b07a12; --bad:#d0434f; --gold:#a8843c;
+  --track:rgba(20,10,40,.07); --grid:rgba(20,10,40,.07); --grid2:rgba(20,10,40,.16);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:Geist,system-ui,sans-serif;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.num,td,.tab{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:6px}
+svg.i{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100%}
+.side{position:sticky;top:0;align-self:flex-start;height:100vh;width:248px;flex:none;padding:18px 14px;display:flex;flex-direction:column;gap:18px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(124,63,193,.07),transparent 40%),var(--bg)}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-weight:700;font-size:11.5px;letter-spacing:.02em;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 6px 18px -6px rgba(124,63,193,.8)}
+.switch{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line2);border-radius:12px;background:var(--panel)}
+.switch .dot{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,#a275e0,#550da6,#a275e0)}
+.switch b{font-weight:500;flex:1;text-align:left}
+.switch .i{color:var(--muted);width:15px}
+nav{display:flex;flex-direction:column;gap:14px;overflow:auto}
+.grp h6{font-size:10.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding:0 10px 6px}
+.grp a{display:flex;align-items:center;gap:11px;padding:7.5px 10px;border-radius:10px;color:var(--muted);font-size:13.5px;transition:background .2s,color .2s}
+.grp a:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.grp a.on{color:#fff;background:linear-gradient(90deg,rgba(138,79,209,.28),rgba(138,79,209,.06));box-shadow:inset 2px 0 0 var(--acc)}
+:root[data-theme="light"] .grp a.on{color:var(--p);background:linear-gradient(90deg,rgba(124,63,193,.13),rgba(124,63,193,.03))}
+:root[data-theme="light"] .grp a:hover{background:rgba(20,10,40,.04)}
+
+.content{flex:1;min-width:0;padding:22px 34px 60px}
+main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+
+/* ---------- top bar ---------- */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:500;color:var(--good);background:rgba(69,208,154,.1);border:1px solid rgba(69,208,154,.22)}
+.pill:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.ctrls{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 13px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13px;transition:border-color .2s,background .2s}
+.btn:hover{border-color:rgba(162,117,224,.5)}
+.btn small{color:var(--muted);font-size:12px}
+.btn.sq{width:36px;padding:0;justify-content:center}
+#theme .sun{display:none} :root[data-theme="light"] #theme .sun{display:block} :root[data-theme="light"] #theme .moon{display:none}
+.user{display:flex;align-items:center;gap:9px;padding-left:6px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;background:linear-gradient(140deg,#2a2833,#17151d);color:#eceaf3;border:1px solid var(--line2)}
+.user span{font-size:12.5px;color:var(--muted)}
+.burger{display:none}
+
+/* === NAV v2 START === */
+/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
+   and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
+   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
+   attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
+   Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
+   "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
+.nv2-top,.nv2-dock,.nv2-sheet,.nv2-scrim{--nv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --nv2-bg:#060509;--nv2-panel:#0f0d15;--nv2-panel2:#17141f;--nv2-line:rgba(255,255,255,.08);--nv2-line2:rgba(255,255,255,.14);--nv2-fg:#eceaf3;--nv2-mut:#9693a6;
+  --nv2-acc:#a275e0;--nv2-good:#45d09a;--nv2-bad:#f06571;--nv2-glass:rgba(22,19,30,.86);--nv2-shadow:0 18px 40px -14px rgba(0,0,0,.85);
+  font-family:var(--nv2-font);color:var(--nv2-fg)}
+[data-theme="light"] .nv2-top,[data-theme="light"] .nv2-dock,[data-theme="light"] .nv2-sheet,[data-theme="light"] .nv2-scrim{
+  --nv2-bg:#f4f2f8;--nv2-panel:#fff;--nv2-panel2:#f6f3fb;--nv2-line:rgba(20,10,40,.08);--nv2-line2:rgba(20,10,40,.14);--nv2-fg:#17141f;--nv2-mut:#5f5b6c;
+  --nv2-acc:#550da6;--nv2-good:#12855a;--nv2-bad:#d0434f;--nv2-glass:rgba(255,255,255,.9);--nv2-shadow:0 16px 36px -14px rgba(40,20,80,.35)}
+.nv2-top *,.nv2-dock *,.nv2-sheet *{box-sizing:border-box;margin:0;padding:0}
+:where(.nv2-top,.nv2-dock,.nv2-sheet) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:where(.nv2-top,.nv2-sheet,.nv2-dock) a{color:inherit;text-decoration:none}
+.nv2-top :focus-visible,.nv2-dock :focus-visible,.nv2-sheet :focus-visible{outline:2px solid var(--nv2-acc);outline-offset:2px;border-radius:10px}
+.nv2-i{width:19px;height:19px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- top bar ---- */
+.nv2-top{position:relative;z-index:40;display:flex;align-items:center;gap:10px;min-height:44px}
+.nv2-anc{position:relative}
+/* Profitable / Loss: a tiny dot after the brand name (aria-label + title carry the words) */
+.nv2-sdot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--nv2-good);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-good) 22%,transparent)}
+.nv2-sdot.nv2-loss{background:var(--nv2-bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-bad) 22%,transparent)}
+.nv2-search{position:relative;flex:1 1 340px;max-width:340px;min-width:150px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
+.nv2-search:focus-within{border-color:var(--nv2-acc)}
+.nv2-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-search input::placeholder{color:var(--nv2-mut)}
+.nv2-kbd{font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;border:1px solid var(--nv2-line2);color:var(--nv2-mut);white-space:nowrap}
+.nv2-res{position:absolute;left:0;right:0;top:calc(100% + 6px);padding:6px;border-radius:14px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);display:none}
+.nv2-res.nv2-on{display:block}
+.nv2-res button{display:flex;width:100%;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-res button small{margin-left:auto;font-size:12px;color:var(--nv2-mut)}
+.nv2-res button:hover,.nv2-res button.nv2-hl{background:var(--nv2-panel2)}
+.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+.nv2-date{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:99px;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s}
+.nv2-date:hover{border-color:var(--nv2-acc)!important}
+.nv2-date small{font-size:12.5px;color:var(--nv2-mut);font-weight:400}
+.nv2-ds{display:none}
+.nv2-date .nv2-i{width:16px;height:16px}
+.nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
+.nv2-ib:hover{border-color:var(--nv2-acc)!important}
+.nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
+.nv2-avw{flex:none}
+.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
+.nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
+.nv2-brandw{min-width:0;flex:none}
+.nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
+.nv2-brand:hover{background:var(--nv2-panel2)}
+.nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
+.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+/* popovers */
+.nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
+  opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.nv2-pop.nv2-on{opacity:1;transform:none;pointer-events:auto}
+.nv2-pop.nv2-l{right:auto;left:0;transform-origin:top left}
+.nv2-pop.nv2-c{right:auto;left:50%;transform:translate(-50%,-6px) scale(.98);transform-origin:top center}
+.nv2-pop.nv2-c.nv2-on{transform:translate(-50%,0)}
+.nv2-mi{display:flex;width:100%;align-items:center;gap:11px;min-height:42px;padding:8px 11px;border-radius:10px;font-size:14px;white-space:nowrap}
+.nv2-mi:hover{background:var(--nv2-panel2)}
+.nv2-mi small{margin-left:auto;font-size:12.5px;color:var(--nv2-mut)}
+.nv2-mi[aria-checked="true"]{color:var(--nv2-acc);font-weight:600}
+.nv2-mi[aria-checked="true"]::after{content:"✓";margin-left:10px;font-weight:700}
+.nv2-mi .nv2-i{width:17px;height:17px;color:var(--nv2-mut)}
+.nv2-hr{height:1px;background:var(--nv2-line);margin:5px 6px}
+.nv2-who{padding:10px 11px 8px}
+.nv2-who b{display:block;font-size:14px;font-weight:600}
+.nv2-who span{font-size:12.5px;color:var(--nv2-mut)}
+.nv2-tog{margin-left:auto;position:relative;width:42px;height:24px;border-radius:99px;background:var(--nv2-line2);flex:none;transition:background .25s}
+.nv2-tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s}
+[data-theme="dark"] .nv2-tog,:root:not([data-theme="light"]) .nv2-tog{background:linear-gradient(135deg,#7c3fc1,#550da6)}
+[data-theme="dark"] .nv2-tog::after,:root:not([data-theme="light"]) .nv2-tog::after{transform:translateX(18px)}
+/* bell: straight to the list — icon · one-line message · time · link (no heading) */
+.nv2-bellpop{width:min(344px,calc(100vw - 32px));padding:6px;display:flex;flex-direction:column;gap:2px}
+.nv2-note{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:12px;line-height:1.35;width:100%;text-align:left}
+.nv2-note:hover{background:var(--nv2-panel2)}
+.nv2-note + .nv2-note{box-shadow:0 -1px 0 var(--nv2-line)}
+.nv2-note:hover + .nv2-note,.nv2-note + .nv2-note:hover{box-shadow:none}
+.nv2-ni{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.nv2-ni svg.nv2-i{width:16px;height:16px}
+.nv2-nt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nv2-nt b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-nt small{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--nv2-mut)}
+.nv2-nl{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--nv2-acc,#a275e0);white-space:nowrap}
+.nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
+.nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
+
+/* ---- narrower desktops: the range moves into the menu ---- */
+@media (max-width:1279px){.nv2-dr{display:none}}
+/* ---- phone / tablet top: the same single row; search hidden, compact date ("7 days") ---- */
+@media (max-width:1023px){
+  .nv2-top{gap:8px}
+  .nv2-brandw{flex:0 1 auto}
+  .nv2-search{display:none}
+  .nv2-dl,.nv2-dr{display:none}
+  .nv2-ds{display:inline}
+}
+@media (max-width:480px){
+  .nv2-top{gap:6px}
+  .nv2-right{gap:6px}
+  .nv2-av,.nv2-ib{width:40px;height:40px}
+  .nv2-av b{width:38px;height:38px}
+  .nv2-dot{top:9px;right:10px}
+  .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
+  .nv2-date{height:40px;padding:0 12px;gap:6px}
+  .nv2-date .nv2-cal{display:none}
+}
+@media (max-width:400px){.nv2-bchev{display:none}}
+
+/* ---- bottom dock ---- */
+.nv2-dock{display:none}
+@media (max-width:1023px){
+  html.nv2-docked body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  .nv2-dock{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:row;overflow:visible;justify-content:center;align-items:center;gap:12px;pointer-events:none;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+  .nv2-dock.nv2-hide{transform:translateY(calc(100% + 30px));opacity:0}
+  .nv2-pill,.nv2-ai{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+  .nv2-pill{display:flex;align-items:center;gap:2px;padding:5px;border-radius:99px;background:var(--nv2-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .nv2-pill > *{width:64px;height:52px;border-radius:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > * > span{font-size:12px;line-height:1;font-weight:500;letter-spacing:0;white-space:nowrap}
+  .nv2-pill > *[aria-current="page"]{background:var(--nv2-fg);color:var(--nv2-bg)}
+  .nv2-pill .nv2-i{width:20px;height:20px}
+  .nv2-pill > *[aria-current="page"] .nv2-i{stroke-width:2.1}
+  .nv2-ai{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6 60%,#3d0880);box-shadow:0 14px 30px -10px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)!important}
+  .nv2-ai .nv2-i{width:24px;height:24px}
+}
+/* ---- sheets (menu, assistant) ---- */
+.nv2-scrim{position:fixed;inset:0;z-index:90;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.nv2-scrim.nv2-on{opacity:1;pointer-events:auto}
+.nv2-sheet{position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:86vh;overflow:auto;border-radius:24px 24px 0 0;background:var(--nv2-panel);border-top:1px solid var(--nv2-line2);
+  padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s .4s;box-shadow:0 -20px 50px -20px rgba(0,0,0,.6)}
+.nv2-sheet.nv2-on{transform:none;visibility:visible;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:1024px){.nv2-sheet{left:50%;right:auto;width:520px;margin-left:-260px}}
+.nv2-grab{width:40px;height:5px;border-radius:9px;background:var(--nv2-line2);margin:2px auto 14px}
+.nv2-sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nv2-sh h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.nv2-x{margin-left:auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel2)}
+.nv2-sw{display:flex;align-items:center;gap:11px;width:100%;padding:12px;border-radius:14px;background:var(--nv2-panel2);border:1px solid var(--nv2-line)!important;margin-bottom:16px;font-size:15px;font-weight:600}
+.nv2-sw .nv2-i{margin-left:auto;color:var(--nv2-mut)}
+.nv2-grp{margin-bottom:14px}
+.nv2-grp h6{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--nv2-mut);padding:0 12px 6px}
+.nv2-grp a{display:flex;align-items:center;gap:13px;min-height:46px;padding:0 12px;border-radius:12px;font-size:15px}
+.nv2-grp a:hover{background:var(--nv2-panel2)}
+.nv2-grp a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-acc) 16%,transparent);color:var(--nv2-acc);font-weight:600}
+.nv2-grp a .nv2-i{color:var(--nv2-mut)}
+.nv2-grp a[aria-current="page"] .nv2-i{color:var(--nv2-acc)}
+.nv2-ask{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--nv2-panel2);border:1px solid var(--nv2-line2);margin:6px 0 16px}
+.nv2-ask:focus-within{border-color:var(--nv2-acc)}
+.nv2-ask input:focus-visible,.nv2-search input:focus-visible{outline:none}
+.nv2-ask input{flex:1;min-width:0;height:44px;border:0;outline:0;background:none;font:inherit;font-size:15px;color:var(--nv2-fg)}
+.nv2-ask button{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6)}
+.nv2-sugh{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--nv2-mut);margin-bottom:8px}
+.nv2-sug{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--nv2-line)!important;margin-bottom:8px;font-size:14.5px;line-height:1.35}
+.nv2-sug:hover{border-color:var(--nv2-acc)!important}
+.nv2-sug .nv2-i{color:var(--nv2-acc)}
+.nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
+   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
+   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
+   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+.nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
+  background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
+.nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
+.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
+.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
+  -webkit-tap-highlight-color:transparent;transition:background .2s}
+.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
+.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
+@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
+.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
+.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
+.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
+.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
+.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
+.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
+.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
+.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
+.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
+.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
+.nv2-mh .nv2-i{width:16px;height:16px}
+.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
+.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+.nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nv2-mbtn .nv2-i{width:22px;height:22px}
+.nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.nv2-mask .nv2-i{width:20px;height:20px}
+html.nv2-lock,html.nv2-lock body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
+/* === NAV v2 END === */
+/* round 11: bottom dock (round 12: no pill any more) — the current page is the accent colour and its icon glows a
+   little; nothing drawn behind it. Round 12 also stops the menu flicker: the page keeps its scrollbar space while the
+   menu is open (no sideways jump behind it), the full-screen menu turns solid at once, and only its rows ease in. */
+.nv2-dock .nv2-pill > *[aria-current="page"]{background:none;color:var(--nv2-acc)}
+.nv2-dock .nv2-pill > *[aria-current="page"] .nv2-i{filter:drop-shadow(0 0 6px color-mix(in srgb,var(--nv2-acc) 75%,transparent))}
+.nv2-dock .nv2-pill > *[aria-current="page"] > span{font-weight:600;text-shadow:0 0 10px color-mix(in srgb,var(--nv2-acc) 45%,transparent)}
+html.nv2-lock{scrollbar-gutter:stable}
+.nv2-sheet.nv2-menu{transform:none;transition:opacity .12s,visibility 0s .12s}
+.nv2-sheet.nv2-menu.nv2-on{transition:opacity .09s}
+.nv2-sheet.nv2-menu .nv2-ml{transform:translateY(10px);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s}
+.nv2-sheet.nv2-menu.nv2-on .nv2-ml{transform:none;opacity:1;transition-delay:.04s}
+@media (prefers-reduced-motion:reduce){.nv2-sheet.nv2-menu,.nv2-sheet.nv2-menu .nv2-ml{transition:none!important;transform:none}}
+
+/* === PERIODS v1 START === */
+/* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
+[data-per-down] > span:first-child svg{transform:scaleY(-1)}
+/* === PERIODS v1 END === */
+/* ===== shared by the Orders + Shipping mockups (os- prefix). Base tokens come from the Overview (ref-base.css). ===== */
+@media (max-width:1180px){.side{width:212px}}
+@media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px}}
+@media (max-width:600px){.content{padding-left:16px;padding-right:16px;padding-top:14px}}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;min-width:0}
+.ph{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.ph h2,.ph h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ph .r{margin-left:auto;font-size:13px;color:var(--muted);text-align:right}
+.lnk{font-size:13px;color:var(--pl);font-weight:500;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.lnk:hover{text-decoration:underline;text-underline-offset:3px}
+.lnk svg.i{width:15px;height:15px}
+.ph .lnk{margin-left:auto}
+.mut{color:var(--muted)}
+.g{color:var(--good)} .w{color:var(--warn)} .bd{color:var(--bad)}
+.rise{opacity:0;transform:translateY(12px);animation:rise .65s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
+
+/* page title row */
+.os-head{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.os-head h1{font-size:28px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.os-head p{font-size:14px;color:var(--muted);margin-top:6px}
+.os-head .acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:600px){.os-head h1{font-size:24px}.os-head .acts{margin-left:0;width:100%}}
+
+/* buttons */
+.ob{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s,background .2s,transform .15s}
+.ob:hover{border-color:rgba(162,117,224,.55)}
+.ob:active{transform:scale(.97)}
+.ob svg.i{width:16px;height:16px}
+.ob.pri{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;border-color:transparent;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
+.ob.sm{height:32px;padding:0 11px;font-size:13px;border-radius:9px}
+.ob.ic{width:38px;padding:0}
+.ob.sm.ic{width:32px}
+
+/* plain number-over-label stats, no boxes */
+.os-nums{display:grid;gap:24px}
+.os-nums > div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.os-nums .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.os-nums .k i{width:8px;height:8px;border-radius:50%;background:var(--dc,var(--pl));box-shadow:0 0 8px var(--dc,var(--pl));flex:none}
+.os-nums b{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.os-nums b small{font-size:14px;font-weight:500;color:var(--muted);margin-right:5px;letter-spacing:0}
+.os-nums .s{font-size:13px;color:var(--muted)}
+.os-nums .s.w{color:var(--warn);font-weight:500}
+@media (max-width:600px){.os-nums b{font-size:22px}.os-nums{gap:18px 14px}}
+
+/* status chips */
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:99px;font-size:12px;font-weight:500;white-space:nowrap;
+  color:var(--cc);background:color-mix(in srgb,var(--cc) 12%,transparent)}
+.chip:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.chip.paid{--cc:var(--good)} .chip.pending{--cc:var(--warn)} .chip.cancelled{--cc:var(--muted)} .chip.returned{--cc:var(--bad)}
+.chip.transit{--cc:var(--pl)} .chip.stuck{--cc:var(--warn)}
+
+/* search + segmented filter + selects */
+.os-search{position:relative;display:flex;align-items:center;flex:1 1 260px;min-width:0;max-width:420px}
+.os-search svg.i{position:absolute;left:12px;color:var(--muted);pointer-events:none}
+.os-search input{width:100%;height:40px;padding:0 36px 0 38px;border-radius:12px;border:1px solid var(--line2);background:var(--panel);color:var(--text);font:inherit;font-size:14px}
+.os-search input::placeholder{color:var(--muted)}
+.os-search input:focus{outline:none;border-color:var(--pl);box-shadow:0 0 0 3px rgba(162,117,224,.2)}
+.os-search .x{position:absolute;right:6px;width:28px;height:28px;border-radius:8px;display:none;place-items:center;color:var(--muted)}
+.os-search.has .x{display:grid}
+.os-filt{display:flex;gap:6px;flex-wrap:wrap}
+.os-filt button{height:34px;padding:0 12px;border-radius:99px;border:1px solid var(--line2);font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:7px;transition:.2s;white-space:nowrap}
+.os-filt button b{font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+.os-filt button:hover{border-color:rgba(162,117,224,.5);color:var(--text)}
+.os-filt button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.os-filt button[aria-pressed="true"] b{color:var(--bg)}
+.os-sel{height:38px;border-radius:11px;border:1px solid var(--line2);background:var(--panel);color:var(--text);font:inherit;font-size:13.5px;padding:0 30px 0 12px;appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M8 10l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:16px}
+.os-sel:focus{outline:none;border-color:var(--pl)}
+
+/* checkbox */
+.cb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:5px;border:1.5px solid var(--line2);background:var(--panel);display:inline-grid;place-items:center;cursor:pointer;flex:none;margin:0;transition:.15s}
+.cb:hover{border-color:var(--pl)}
+.cb:checked,.cb:indeterminate{background:var(--acc);border-color:var(--acc)}
+.cb:checked:after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+.cb:indeterminate:after{content:"";width:8px;height:2px;background:#fff;border-radius:2px}
+
+/* pager */
+.os-pager{display:flex;align-items:center;gap:10px;justify-content:space-between;padding-top:16px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.os-pager .pg{display:flex;gap:6px;align-items:center}
+
+/* bulk bar */
+.os-bulk{position:fixed;left:50%;bottom:24px;z-index:60;transform:translate(-50%,140%);display:flex;align-items:center;gap:10px;padding:8px 8px 8px 18px;border-radius:16px;
+  background:var(--text);color:var(--bg);box-shadow:0 20px 50px -14px rgba(0,0,0,.6);transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;visibility:hidden;max-width:calc(100vw - 32px);font-size:14px}
+.os-bulk.on{transform:translate(-50%,0);visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.os-bulk b{font-weight:600;white-space:nowrap}
+.os-bulk .ob{background:transparent;color:inherit;border-color:color-mix(in srgb,var(--bg) 30%,transparent)}
+.os-bulk .ob.pri{background:var(--acc);color:#fff;border-color:transparent}
+:root[data-theme="light"] .os-bulk .ob.pri{background:#a275e0;color:#17141f}
+@media (max-width:1023px){.os-bulk{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:480px){.os-bulk{gap:6px;padding:7px 7px 7px 14px;font-size:13px}.os-bulk .hide-s{display:none}}
+
+/* toast */
+.os-toast{position:fixed;left:50%;top:18px;z-index:90;transform:translate(-50%,-160%);padding:11px 16px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--text);font-size:13.5px;
+  box-shadow:0 16px 40px -16px rgba(0,0,0,.6);transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;visibility:hidden;max-width:calc(100vw - 32px);display:flex;gap:9px;align-items:center}
+.os-toast.on{transform:translate(-50%,0);visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.os-toast svg.i{color:var(--good)}
+
+/* drawer (right on desktop, bottom sheet on phone) */
+.os-scrim{position:fixed;inset:0;z-index:70;background:rgba(4,3,8,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.os-scrim.on{opacity:1;pointer-events:auto}
+.os-drawer{position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(460px,100vw);background:var(--panel);border-left:1px solid var(--line2);display:flex;flex-direction:column;
+  transform:translateX(105%);transition:transform .38s cubic-bezier(.2,.8,.2,1);box-shadow:-30px 0 60px -30px rgba(0,0,0,.6)}
+.os-drawer:not(.on){visibility:hidden;transition:transform .38s cubic-bezier(.2,.8,.2,1),visibility 0s .38s}
+.os-drawer.on{transform:none}
+.os-dh{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 16px;border-bottom:1px solid var(--line)}
+.os-dh h2{font-size:20px;font-weight:600;letter-spacing:-.015em}
+.os-dh p{font-size:13px;color:var(--muted);margin-top:4px}
+.os-dh .ob{margin-left:auto;flex:none}
+.os-db{flex:1;overflow:auto;padding:4px 22px 24px;overscroll-behavior:contain}
+.os-db section{padding:18px 0;border-top:1px solid var(--line)}
+.os-db section:first-child{border-top:0}
+.os-db h3{font-size:13px;font-weight:500;color:var(--muted);margin-bottom:12px}
+.os-df{display:flex;gap:8px;flex-wrap:wrap;padding:14px 22px;border-top:1px solid var(--line)}
+.os-df .ob{flex:1 1 auto}
+@media (max-width:600px){
+  .os-drawer{top:auto;left:0;width:100%;max-height:88vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;transform:translateY(105%)}
+  .os-drawer.on{transform:none}
+  .os-dh,.os-db,.os-df{padding-left:16px;padding-right:16px}
+  .os-df{padding-bottom:calc(14px + env(safe-area-inset-bottom,0px))}
+}
+.tl{list-style:none;display:flex;flex-direction:column}
+.tl li{position:relative;display:grid;grid-template-columns:18px 1fr auto;gap:10px;padding-bottom:14px;font-size:14px}
+.tl li:last-child{padding-bottom:0}
+.tl li:before{content:"";position:absolute;left:8px;top:16px;bottom:-2px;width:1.5px;background:var(--line2)}
+.tl li:last-child:before{display:none}
+.tl li i{width:12px;height:12px;margin:3px 0 0 3px;border-radius:50%;border:2px solid var(--line2);background:var(--panel)}
+.tl li.done i{background:var(--good);border-color:var(--good)}
+.tl li.now i{background:var(--pl);border-color:var(--pl);box-shadow:0 0 0 4px rgba(162,117,224,.2)}
+.tl li.bad i{background:var(--bad);border-color:var(--bad)}
+.tl li.todo{color:var(--muted)}
+.tl li span:last-child{font-size:12.5px;color:var(--muted);text-align:right}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px 0;font-size:14px}
+.kv dt{padding-right:16px}
+.kv dt{color:var(--muted)} .kv dd{text-align:right;font-variant-numeric:tabular-nums}
+.kv .tot{font-weight:600;font-size:16px;padding-top:9px;border-top:1px solid var(--line)}
+.items .it{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:6px 0}
+.sw{width:40px;height:48px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.sw svg{width:20px;height:30px}
+.items b{font-weight:500;display:block}
+.items small{font-size:12.5px;color:var(--muted)}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-size:13px}
+.copy{display:inline-flex;align-items:center;gap:6px;color:var(--pl);font-weight:500}
+.copy svg.i{width:15px;height:15px}
+
+/* Bosta lane (from the Overview Orders tab; van drives once, then parks) */
+.lane{position:relative;height:178px;border-radius:16px;overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(90% 120% at 50% 130%,rgba(85,13,166,.42),transparent 62%),repeating-radial-gradient(circle at 92% 118%,rgba(255,255,255,.04) 0 .5px,transparent 1px 6px),linear-gradient(180deg,#0b0a10,#120f1b)}
+:root[data-theme="light"] .lane{background:radial-gradient(90% 120% at 50% 130%,rgba(124,63,193,.5),transparent 62%),repeating-radial-gradient(circle at 92% 118%,rgba(255,255,255,.05) 0 .5px,transparent 1px 6px),linear-gradient(180deg,#1a1030,#2a1650);border-color:transparent}
+.road{position:absolute;left:5%;right:5%;top:96px;height:16px;margin-top:-8px;border-radius:99px;background:#07060b;box-shadow:0 0 0 1px rgba(162,117,224,.28),0 0 26px -4px rgba(124,63,193,.6)}
+.road:before{content:"";position:absolute;left:10px;right:10px;top:50%;height:1.5px;margin-top:-.75px;background:repeating-linear-gradient(90deg,rgba(242,234,251,.42) 0 7px,transparent 7px 14px)}
+.road i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,rgba(216,180,108,.35),rgba(162,117,224,.45),rgba(69,208,154,.4));width:100%;opacity:.35}
+.stop{position:absolute;top:96px;width:0;height:0;cursor:pointer;z-index:3}
+.stop .dt{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#0b0814;border:2.5px solid var(--dc);box-shadow:0 0 12px var(--dc);transition:transform .2s}
+.stop:hover .dt{transform:scale(1.25)}
+.stop:focus-visible{outline:none}
+.stop:focus-visible .dt{box-shadow:0 0 0 3px var(--pl),0 0 12px var(--dc)}
+.stop .lb{position:absolute;top:22px;transform:translateX(-50%);white-space:nowrap;text-align:center;font-size:12px;color:#c4bcd6}
+.stop .lb b{display:block;font-size:16px;font-weight:600;color:#f2eefa;font-variant-numeric:tabular-nums}
+.stop.first .lb{transform:none;left:-8px;text-align:left} .stop.last .lb{transform:translateX(-100%);left:8px;text-align:right}
+.stop.on .dt{transform:scale(1.3)}
+.retb{position:absolute;top:18px;left:34%;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:#f6d58c}
+.retb svg{width:58px;height:44px;overflow:visible}
+.van{position:absolute;top:96px;left:5%;width:66px;margin-left:-33px;margin-top:-42px;z-index:2}
+.van svg{display:block;width:100%;overflow:visible}
+.van.go{transition:left 1.5s cubic-bezier(.16,.84,.3,1)}
+.van .wh{transform-box:fill-box;transform-origin:center}
+.van.go .wh{animation:spin .55s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (max-width:600px){
+  .lane{height:196px}
+  .road,.stop,.van{top:104px}
+  .stop .lb{font-size:12px}
+  .stop .lb b{font-size:14px}
+  .stop.s2 .lb,.stop.s3 .lb{top:-88px}
+  .retb{top:auto;bottom:10px;left:auto;right:12px;font-size:12px}
+  .retb svg{display:none}
+  .van{width:52px;margin-left:-26px;margin-top:-34px}
+}
+.grp h6{font-size:12px;letter-spacing:.07em}
+/* sticky section tabs (copied from the Overview, J's style) */
+.tabs-anchor{height:0;margin-bottom:-22px}
+.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:100%;padding:5px;border-radius:99px;
+  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
+.seg::-webkit-scrollbar{display:none}
+.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
+.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(0,0,0,.18),inset 0 0 0 1px rgba(162,117,224,.35);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button:hover{color:var(--text)}
+.seg button.on{color:#fff}
+.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+.seg .n{font-size:10.5px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:17px;font-variant-numeric:tabular-nums}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+.seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
+.pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
+.pane[hidden]{display:none}
+.pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
+.pane:focus{outline:none}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+main{gap:24px}
+.tabs-anchor{margin-bottom:-24px}
+@media (max-width:600px){
+  .panel{padding:18px} main{gap:20px} .tabs-anchor{margin-bottom:-20px}
+  .tabbar{margin:0 -16px;padding:0 16px}
+  .seg{width:100%}
+  .seg button{padding:9px 13px;font-size:13px}
+}
+.seg .n{font-size:12px;line-height:18px}
+
+/* light mode: status text colours darkened to reach 4.5:1 on white */
+:root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
+
+/* shared section pieces (Orders B + Shipping B) */
+.ob-stack{display:flex;flex-direction:column;gap:20px}
+/* section header: title + one-line explanation on the left, the count on the right */
+.ob-sh{display:flex;align-items:flex-start;gap:16px;padding-bottom:16px;margin-bottom:4px;border-bottom:1px solid var(--line)}
+.ob-sh h3{font-size:16px;font-weight:600;letter-spacing:-.01em}
+.ob-sh p{font-size:13px;color:var(--muted);margin-top:4px}
+.ob-sh .r{margin-left:auto;font-size:13px;color:var(--muted);white-space:nowrap;padding-top:2px}
+@media (max-width:600px){.ob-sh{flex-wrap:wrap;gap:6px}.ob-sh .r{margin-left:0}}
+
+.ob-bars > div{display:grid;grid-template-columns:minmax(0,1fr) minmax(60px,.7fr) 30px 104px;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14px}
+.ob-bars > div:first-child{border-top:0}
+.ob-bars .t{height:6px;border-radius:9px;background:var(--track);overflow:hidden}
+.ob-bars .t i{display:block;height:100%;border-radius:9px;background:var(--dc,var(--pl))}
+.ob-bars b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ob-bars small{text-align:right;font-size:13px;color:var(--muted);white-space:nowrap}
+.ob-bars .few{color:var(--muted)}
+@media (max-width:480px){.ob-bars > div{grid-template-columns:minmax(0,1fr) 30px 100px}.ob-bars .t{grid-column:1 / -1;grid-row:2}}
+
+/* "i" tips */
+.tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.tipb.on{visibility:visible;opacity:1;transform:none}
+
+/* ===== page: orders-A ===== */
+/* status strip: five filters in one calm panel, one hero number each */
+.oa-st{display:grid;grid-template-columns:1.35fr repeat(4,minmax(0,1fr));background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.oa-st button{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:18px 20px 18px;text-align:left;border-left:1px solid var(--line);transition:background .2s;min-width:0}
+.oa-st button:first-child{border-left:0}
+.oa-st button:hover{background:color-mix(in srgb,var(--pl) 6%,transparent)}
+.oa-st button:after{content:"";position:absolute;left:20px;right:20px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--acc);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.oa-st button[aria-pressed="true"]{background:color-mix(in srgb,var(--pl) 9%,transparent)}
+.oa-st button[aria-pressed="true"]:after{transform:none}
+.oa-st .k{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.oa-st .k i{width:8px;height:8px;border-radius:50%;background:var(--dc)}
+.oa-st b{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.oa-st small{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.oa-st small.w{color:var(--warn)}
+@media (max-width:860px){
+  .oa-st{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .oa-st button{border-left:0;border-top:1px solid var(--line);padding:14px 16px}
+  .oa-st button:nth-child(2n+1){border-left:1px solid var(--line)}
+  .oa-st button:first-child{grid-column:1 / -1;border-top:0;border-left:0;flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .oa-st button:first-child small{margin-left:auto}
+  .oa-st button:after{left:16px;right:16px}
+  .oa-st b{font-size:24px}
+}
+
+/* toolbar */
+.oa-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.oa-tools .os-search{max-width:none}
+.oa-sort{display:none}
+@media (max-width:860px){.oa-sort{display:block}}
+@media (max-width:600px){.oa-tools .os-search{flex-basis:100%}.oa-sort{flex:1}}
+
+/* table: grid rows */
+.oa-hd,.oa-r{display:grid;grid-template-columns:22px 132px minmax(130px,1fr) minmax(0,1.25fr) 128px 92px 100px;gap:14px;align-items:center}
+.oa-hd{padding:12px 6px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.oa-hd button{display:inline-flex;align-items:center;gap:4px;color:var(--muted);font-size:12.5px;font-weight:500}
+.oa-hd button:hover,.oa-hd button.on{color:var(--text)}
+.oa-hd button svg.i{width:14px;height:14px}
+.oa-hd .ra{text-align:right;justify-self:end}
+.oa-r{padding:13px 6px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px;transition:background .15s;border-radius:10px}
+.oa-r:hover{background:color-mix(in srgb,var(--pl) 6%,transparent)}
+.oa-r.sel{background:color-mix(in srgb,var(--pl) 10%,transparent)}
+.oa-r .id b{display:block;font-weight:500;font-family:'Geist Mono',monospace;font-size:13px}
+.oa-r .id small,.oa-r .who small,.oa-r .dl small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.oa-r .who{min-width:0}
+.oa-r .who b{font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.oa-r .its{min-width:0;color:var(--muted);font-size:13.5px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.oa-r .dl{font-size:13.5px;min-width:0}
+.oa-r .tot{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.oa-r .src{display:inline-block;font-size:12px;font-weight:500;color:var(--muted);margin-left:6px;font-family:Geist,sans-serif;padding:0 6px;border-radius:6px;background:var(--track)}
+.oa-empty{padding:40px 10px;text-align:center;color:var(--muted)}
+.oa-empty .ob{margin-top:12px}
+@media (max-width:1180px){.oa-hd,.oa-r{grid-template-columns:22px 124px minmax(120px,1fr) minmax(0,1.1fr) 92px 100px}.oa-hd > :nth-child(5),.oa-r .dl{display:none}}
+@media (max-width:860px){
+  .oa-hd{grid-template-columns:22px 1fr;padding-left:2px}
+  .oa-hd > :nth-child(n+2){display:none}
+  .oa-hd:after{content:"Select all on this page";font-size:13px;color:var(--muted)}
+  .oa-r{grid-template-columns:22px minmax(0,1fr) auto;grid-template-areas:"cb who tot" "cb its st" "cb id id";row-gap:5px;column-gap:12px;align-items:start;padding:14px 2px}
+  .oa-r > :first-child{grid-area:cb;padding-top:2px} .oa-r .who{grid-area:who} .oa-r .tot{grid-area:tot} .oa-r .its{grid-area:its;-webkit-line-clamp:1}
+  .oa-r .st{grid-area:st;justify-self:end} .oa-r .id{grid-area:id;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+  .oa-r .id small{margin:0}
+  .oa-r .who small{display:inline;margin-left:6px}
+}
+.show-s{display:none}
+@media (max-width:480px){.show-s{display:inline}}
+
+/* cancelled & returned */
+.oa-flow{display:flex;flex-wrap:wrap;gap:14px 40px;align-items:flex-end;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.oa-flow > div{display:flex;flex-direction:column;gap:5px}
+.oa-flow .k{font-size:13px;color:var(--muted)}
+.oa-flow b{font-size:26px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.oa-flow b small{font-size:13px;color:var(--muted);font-weight:500;margin-right:5px}
+.oa-flow .neg b{color:var(--bad)}
+.oa-flow .net b{color:var(--good)}
+.oa-flow .bar{flex-basis:100%;display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px;background:var(--track);width:100%;min-width:0}
+.oa-flow .bar i{display:block;height:100%}
+.oa-flow .note{flex-basis:100%;font-size:13px;color:var(--muted)}
+@media (max-width:860px){.oa-flow{gap:16px 20px}.oa-flow > div{width:calc(50% - 10px)}.oa-flow b{font-size:22px}}
+.oa-two{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding-top:24px}
+@media (max-width:860px){.oa-two{grid-template-columns:1fr;gap:28px}}
+.oa-h3{font-size:14px;font-weight:600;margin-bottom:14px}
+.oa-bars{display:flex;flex-direction:column;gap:12px}
+.oa-bars > div{display:grid;grid-template-columns:minmax(0,1fr) 34px;gap:6px 12px;align-items:center;font-size:14px}
+.oa-bars .t{display:block;height:6px;border-radius:9px;background:var(--track);grid-column:1 / -1;overflow:hidden}
+.oa-bars .t i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--p),var(--pl))}
+.oa-bars b{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.oa-rows > div{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.oa-rows > div:first-child{border-top:0;padding-top:0}
+.oa-rows b{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.oa-rows em{font-style:normal;font-size:12.5px;color:var(--muted);grid-column:1}
+.oa-sz{font-size:13px;color:var(--muted);margin-top:12px}
+.oa-sz b{color:var(--text);font-weight:600}
+
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="landG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1670" stop-opacity=".55"/><stop offset="1" stop-color="#1a0b33" stop-opacity=".35"/></linearGradient>
+    <radialGradient id="dotG"><stop offset="0" stop-color="#f2eafb"/><stop offset=".35" stop-color="#a275e0"/><stop offset="1" stop-color="#7c3fc1" stop-opacity="0"/></radialGradient>
+    <linearGradient id="vanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b5ce0"/><stop offset=".5" stop-color="#550da6"/><stop offset="1" stop-color="#2c0661"/></linearGradient>
+    <linearGradient id="beamG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e7c0" stop-opacity=".55"/><stop offset="1" stop-color="#f6e7c0" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <symbol id="dress" viewBox="0 0 46 70"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-meta" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-cardi" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11V6a3 3 0 0 1 6 0v5M5 11h14l-1 10H6z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="3"/><path d="M5 9V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2M7 5V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-carousel" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="2"/><path d="M4 7v10M20 7v10"/></symbol>
+</svg>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="logo"><div class="mark">FN</div>Scale Trick</div>
+    <button class="switch"><span class="dot"></span><b>Frill N Wear</b><svg class="i"><use href="#i-chev"/></svg></button>
+    <nav>
+      <div class="grp"><h6>Operate</h6>
+        <a href="#" data-go="overview"><svg class="i"><use href="#i-home"/></svg>Overview</a>
+        <a href="#" data-go="brands"><svg class="i"><use href="#i-grid"/></svg>All brands</a>
+        <a class="on" aria-current="page" href="#" data-go="sales"><svg class="i"><use href="#i-bag"/></svg>Orders</a>
+        <a href="#" data-go="orders"><svg class="i"><use href="#i-truck"/></svg>Shipping</a>
+        <a href="#" data-go="inventory"><svg class="i"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#" data-go="products"><svg class="i"><use href="#i-tag"/></svg>Products</a>
+      </div>
+      <div class="grp"><h6>Grow</h6>
+        <a href="#" data-go="ads"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
+        <a href="#" data-go="adsmanager"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
+        <a href="#" data-go="assistant"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
+        <a href="#" data-go="competitors"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
+      </div>
+      <div class="grp"><h6>Workspace</h6>
+        <a href="#" data-go="connections"><svg class="i"><use href="#i-plug"/></svg>Connections</a>
+        <a href="#" data-go="settings"><svg class="i"><use href="#i-gear"/></svg>Workspace settings</a>
+        <a href="#" data-go="admin"><svg class="i"><use href="#i-shield"/></svg>Admin</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="content">
+  <main>
+    <!-- === NAV v2 START === -->
+    <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
+    <header class="nv2-top" data-nv2-store="n-theme">
+      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
+          <div class="nv2-pop" data-nv2-id="me" role="menu">
+            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
+            <button type="button" class="nv2-mi" role="menuitemcheckbox" data-nv2-theme aria-checked="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dark mode<span class="nv2-tog" aria-hidden="true"></span></button>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-refresh><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>Refresh data<small class="nv2-rt">synced 2 min ago</small></button>
+            <div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
+          </div></div>
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
+      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
+        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
+      <div class="nv2-right">
+        <div class="nv2-anc nv2-datew"><button type="button" class="nv2-date" data-nv2-pop="date" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i nv2-cal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><span class="nv2-ds">7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
+        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></small></span></button>
+          </div></div>
+      </div>
+    </header>
+    <!-- === NAV v2 END === -->
+    <header class="os-head rise" style="--d:.02s">
+      <div><h1>Orders</h1><p>Every order, its payment and where it is with Bosta.</p></div>
+      <div class="acts"><button type="button" class="ob" id="oaShip" data-go="orders">Open shipping</button></div>
+    </header>
+
+    <!-- status filters double as the period's numbers: each figure appears once -->
+    <section class="oa-st rise" style="--d:.06s" aria-label="Filter by status" id="oaSt"></section>
+
+    <section class="panel oa-list rise" style="--d:.1s" aria-label="Order list">
+      <div class="oa-tools">
+        <label class="os-search" id="oaSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input type="search" id="oaQ" placeholder="Search name, order, phone, city, dress" aria-label="Search orders" autocomplete="off">
+          <button type="button" class="x" id="oaQx" aria-label="Clear search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></label>
+        <select class="os-sel oa-sort" id="oaSort" aria-label="Sort orders">
+          <option value="new">Newest first</option><option value="old">Oldest first</option><option value="hi">Highest total</option><option value="lo">Lowest total</option><option value="az">Customer A–Z</option>
+        </select>
+        <button type="button" class="ob" id="oaCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span id="oaCsvT">Export CSV</span></button>
+      </div>
+      <div class="oa-tbl" role="table" aria-label="Orders">
+        <div class="oa-hd" role="row">
+          <span role="columnheader"><input type="checkbox" class="cb" id="oaAll" aria-label="Select all orders in this view"></span>
+          <span role="columnheader"><button type="button" data-sort="new">Order</button></span>
+          <span role="columnheader"><button type="button" data-sort="az">Customer</button></span>
+          <span role="columnheader">Items</span>
+          <span role="columnheader">Delivery</span>
+          <span role="columnheader" class="ra"><button type="button" data-sort="hi">Total</button></span>
+          <span role="columnheader">Status</span>
+        </div>
+        <div id="oaRows"></div>
+      </div>
+      <div class="os-pager"><span id="oaRange"></span><div class="pg">
+        <button type="button" class="ob sm ic" id="oaPrev" aria-label="Previous page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button type="button" class="ob sm ic" id="oaNext" aria-label="Next page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
+    </section>
+
+    <section class="panel oa-lost rise" style="--d:.14s" aria-labelledby="oaLostH">
+      <div class="ph"><h2 id="oaLostH">Cancelled &amp; returned</h2><span class="r" id="oaLostR"></span></div>
+      <div class="oa-flow" id="oaFlow"></div>
+      <div class="oa-two">
+        <div>
+          <h3 class="oa-h3">Why orders were cancelled</h3>
+          <div class="oa-bars" id="oaWhy"></div>
+          <button type="button" class="lnk" data-filter="cancelled" style="margin-top:14px">See the cancelled orders <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+        <div>
+          <h3 class="oa-h3">Most returned dresses <span class="mut" style="font-weight:400">· units back of units shipped</span></h3>
+          <div class="oa-rows" id="oaRet"></div>
+          <p class="oa-sz" id="oaSz"></p>
+        </div>
+      </div>
+    </section>
+
+    <div class="os-bulk" id="oaBulk" role="region" aria-label="Selected orders">
+      <b id="oaBulkN">0 selected</b>
+      <button type="button" class="ob sm pri" id="oaBulkCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Export CSV</button>
+      <button type="button" class="ob sm" id="oaBulkCopy"><span class="hide-s">Copy order numbers</span><span class="show-s">Copy</span></button>
+      <button type="button" class="ob sm ic" id="oaBulkX" aria-label="Clear selection"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+
+  </main>
+  </div>
+</div>
+<!-- === NAV v2 START (dock + sheets) === -->
+<nav class="nv2-dock" aria-label="Quick navigation">
+  <div class="nv2-pill">
+    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#" aria-current="page" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span></a>
+    <a href="#" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span></a>
+    <button type="button" data-nv2-open="menu" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+  </div>
+  <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
+</nav>
+<div class="nv2-scrim"></div>
+<section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="nv2-ml" aria-label="Sections">
+    <a href="#" class="nv2-mr" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="true" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" aria-current="page" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" data-nv2-go="products">Products</a><a href="#" data-nv2-go="inventory">Inventory</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
+    </div>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
+    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
+  </nav>
+  <div class="nv2-mbar">
+    <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
+    <button type="button" class="nv2-mbtn" data-nv2-close aria-label="Close menu"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+</section>
+<section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
+  <div class="nv2-grab" aria-hidden="true"></div>
+  <div class="nv2-sh"><span class="nv2-mark" style="width:34px;height:34px;border-radius:10px"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><h2>Ask the assistant</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <p class="nv2-sugh">Try asking</p>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Why is profit ROAS below break-even?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Which campaign should I cut this week?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>What should I restock before the weekend?</button>
+  <p class="nv2-sent" aria-live="polite"></p>
+</section>
+<!-- === NAV v2 END (dock + sheets) === -->
+<script>
+/* === PERIODS v1 START === */
+/* Periods v1 (round 7) — ONE dataset for every date period (today = Fri, Oct 30, the last day of the sample) and ONE
+   place that re-renders the page when the date picker changes: NAV v2 calls perSet(key) on every pick.
+   perSet(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'. It calls, in order,
+     pv2SetPeriod(key)  PRODUCTS v2   (top products + low-stock planner)
+     cv2SetPeriod(P)    CARDS v2      (card fronts + backs)
+     puSetPeriod(P)     PULSE v1      (Store pulse, N/K/J)
+     accSetPeriod(P)    ACCOUNT v1    (Sales vs spend + Where the money went)
+   then fills the look's own markup through data attributes
+     data-per-t="key"             textContent = P.t[key] (a data-count on the same element is re-targeted)
+     data-per-cls="key:good:bad"  class `good` when P.tone[key] === 'g', else `bad`
+     data-per-flip="key"          attribute data-per-down while that figure went down (its arrow icon flips)
+     data-per-w="key"             style.flex = P.w[key]
+   and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
+   PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md), extended in round 8 by
+   scratchpad/edits8/profit.py with estimated vs collected profit (profit-model.md), and in round 9 by
+   scratchpad/edits9/profit9.py (Still-with-Bosta split, Ads figures, campaigns, the explain popovers' text: P.xp). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you collected EGP −7,449, plus EGP 15,046 expected. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 40,739","est_grossn":"27 orders, before discounts","est_disc":"− 1,172","est_canc":"− 2,800","est_cancn":"7.4% of 27 orders","est_ret":"− 1,450","est_retn":"delivered, then sent back","est_net":"EGP 35,317","est_profit":"EGP 7,597","est_tab":"EGP 7,597","col_net":"EGP 35,317","col_held":"− 24,000","col_cash":"EGP 11,317","col_cogs":"− 3,174","col_ads":"− 14,109","col_comm":"− 792","col_fees":"− 691","col_feesn":"19 delivered parcels","col_profit":"EGP −7,449","col_tab":"EGP −7,449","way":"EGP 15,046","way_line":"EGP 15,046 still on the way","s_col":"−7,449","s_way":"15,046","s_failk":"EGP 4,250","s_col_tone":"w","est_cancc":"(2)","est_retc":"(1)","b_dl":"10,200","b_nd":"13,800","b_dln":"next payout Mon, Nov 2","b_ndn":"14 parcels · none stuck","h_cpc":"EGP 6","h_roas":"2.92x","h_gap":"−0.42x","h_purch":"28","h_cpp":"EGP 504","h_cppn":"504","h_spendn":"14,109","av_kick":"Ads · today","av_spend":"EGP 14,109","av_sales":"EGP 35,317","av_roas":"2.50x","av_od":"28","av_cpo":"EGP 504","av_share":"40%","av_aov":"EGP 1,472","av_oth":"− 13,611","av_sp":"− 14,109","av_profit":"EGP 7,597","av_be":"1.63x","f_daily":"EGP 14,109","n_spend":"▼ 16.0%","cp0_roas":"3.59x","cp1_roas":"2.22x","cp2_roas":"1.27x","cp_all":"2.50x"},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w","col":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"c_cogs":3174,"c_ads":14109,"c_comm":792,"c_fees":691,"c_profit":0,"av_ad":14109,"av_oth":13611,"av_pr":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"},"xp":{"x_disc":["Discounts","Money taken off by discount codes and sale prices on this period's orders.","EGP 1,172 off EGP 40,739 ordered = 2.9%"],"x_canc":["Cancelled orders","Orders cancelled before they shipped this period: 2 of 27 orders (7.4%), worth EGP 2,800 in total. You never receive this money, so it comes off the top.","2 orders × EGP 1,400 = EGP 2,800"],"x_ret":["Returned orders","Orders delivered and sent back this period: 1 order, EGP 1,450. Their money is refunded, so it comes off too.","1 order × EGP 1,450 = EGP 1,450"],"x_est":["Estimated profit","What lands in your pocket once every order on the way is delivered. Parcels still on the way are counted as if they'll be delivered.","EGP 35,317 − costs EGP 27,720 = EGP 7,597"],"x_cogs":["Product cost (COGS)","What the pieces cost you to make or buy, for the 24 kept orders.","EGP 9,902 = 28% of net revenue"],"c_cogs":["Product cost (COGS)","What the pieces cost you to make or buy — only for the orders Bosta has already paid you for.","EGP 9,902 × 11,317 ÷ 35,317 = EGP 3,174"],"x_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 14,109 · about EGP 14,109 a day"],"c_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 14,109 · about EGP 14,109 a day"],"x_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% of net revenue.","7% × EGP 35,317 = EGP 2,472"],"c_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% — here only on the cash you have collected.","7% × EGP 11,317 = EGP 792"],"x_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee, also for parcels that come back.","34 parcels · about EGP 36 each = EGP 1,237"],"c_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee. Here only for the parcels delivered so far.","only the 19 delivered so far = EGP 691"],"c_held":["Still with Bosta","Money from your orders that Bosta holds or hasn't collected yet. Delivered orders are paid out on Bosta's payout days; parcels still on the road are paid only once the buyer pays at the door.","EGP 10,200 delivered + EGP 13,800 not delivered = EGP 24,000"],"c_cash":["Cash collected","The money Bosta has already paid you for delivered orders.","EGP 35,317 − EGP 24,000 still with Bosta = EGP 11,317"],"c_way":["Still on the way","Profit you will collect as Bosta pays out the orders it still holds: their money minus their product cost, commission and Bosta fees.","EGP 7,597 estimated − EGP −7,449 collected = EGP 15,046"],"a_share":["Ads cost you 40% of sales","Out of every EGP 100 your ads brought in, EGP 40 went back into ads. Lower is better; above ~50% eats your profit.","EGP 14,109 ÷ EGP 35,317 = 39.9%"],"h_ctr":["CTR (click rate)","How many people who saw your ad clicked it. Higher means the ad catches attention; under 1% usually means the picture or offer isn't working.","2,352 clicks this period · 1.84% of views"],"h_cpc":["CPC (cost per click)","What you pay for each click. Lower means cheaper visitors; it rises when the ad tires or the audience is too small.","EGP 14,109 ÷ 2,352 clicks = EGP 6.00"],"h_cpp":["Cost per purchase","What the ads cost for each order they brought. Keep it well under your average order (EGP 1,472).","EGP 14,109 ÷ 28 purchases = EGP 504"],"h_roas":["Ads ROAS","Sales for every EGP 1 of ads, as the ad platforms count them. Above your break-even (1.63x) the ads pay for themselves.","28 purchases counted by the ads → 2.92x"],"h_gap":["Ads report vs your store","Ads counted 28 purchases; your store recorded 24. Ad platforms also count people who saw an ad and bought later, so their number is usually higher. Trust the store number for money.","store 2.50x − ads 2.92x = −0.42x"],"h_purch":["Purchases","Orders the ad platforms say came from your ads. They count more than your store does — use it to compare ads, not to count money.","28 by the ads · 24 in your store"],"h_spend":["Spend","Everything you paid for ads this period, on every platform.","EGP 14,109 · about EGP 14,109 a day"],"h_left":["Left at checkout","People who started checkout but didn't finish. A reminder message or free-shipping offer often brings some back.",""],"camp0":["Satin Edit · Advantage+","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 6,221</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 22,340</b></div><div class=\"xp-r\"><span>Orders</span><b>18</b></div><div class=\"xp-r\"><span>ROAS</span><b>3.59x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 346</b></div><div class=\"xp-r\"><span>Running since</span><b>Oct 12</b></div><div class=\"xp-r\"><span>Status</span><b>Active · winning</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Satin Edit · Video 3</b></span><em>4.40x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#e6cfa6;--c2:#a98a5c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Nour Satin Slip Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">M</span><span><small>Winner size</small><b>M · 38% of its orders</b></span></div>",""],"camp1":["Broad · Women 25–44","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 3,133</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 6,949</b></div><div class=\"xp-r\"><span>Orders</span><b>5</b></div><div class=\"xp-r\"><span>ROAS</span><b>2.22x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 627</b></div><div class=\"xp-r\"><span>Running since</span><b>Sep 28</b></div><div class=\"xp-r\"><span>Status</span><b>Active · audience tired</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Broad · Reel 1</b></span><em>2.60x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#d8a1ad;--c2:#9c5a6c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Layla Tiered Ruffle Maxi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">S</span><span><small>Winner size</small><b>S · 41% of its orders</b></span></div>",""],"camp2":["Retarget · 30 days","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 4,755</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 6,028</b></div><div class=\"xp-r\"><span>Orders</span><b>5</b></div><div class=\"xp-r\"><span>ROAS</span><b>1.27x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 951</b></div><div class=\"xp-r\"><span>Running since</span><b>Aug 30</b></div><div class=\"xp-r\"><span>Status</span><b>Active · losing money</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Retarget · Story 1</b></span><em>1.45x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#b4c6aa;--c2:#6c8462\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Jasmine Wrap Midi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">L</span><span><small>Winner size</small><b>L · 33% of its orders</b></span></div>",""]}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you collected EGP −3,774, plus EGP 10,522 expected. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 45,164","est_grossn":"32 orders, before discounts","est_disc":"− 1,314","est_canc":"− 2,800","est_cancn":"6.2% of 32 orders","est_ret":"− 1,450","est_retn":"delivered, then sent back","est_net":"EGP 39,600","est_profit":"EGP 6,748","est_tab":"EGP 6,748","col_net":"EGP 39,600","col_held":"− 17,500","col_cash":"EGP 22,100","col_cogs":"− 6,580","col_ads":"− 16,796","col_comm":"− 1,547","col_fees":"− 951","col_feesn":"21 delivered parcels","col_profit":"EGP −3,774","col_tab":"EGP −3,774","way":"EGP 10,522","way_line":"EGP 10,522 still on the way","s_col":"−3,774","s_way":"10,522","s_failk":"EGP 4,250","s_col_tone":"w","est_cancc":"(2)","est_retc":"(1)","b_dl":"6,500","b_nd":"11,000","b_dln":"next payout Mon, Nov 2","b_ndn":"11 parcels · none stuck","h_cpc":"EGP 6","h_roas":"2.68x","h_gap":"−0.33x","h_purch":"33","h_cpp":"EGP 509","h_cppn":"509","h_spendn":"16,796","av_kick":"Ads · yesterday","av_spend":"EGP 16,796","av_sales":"EGP 39,600","av_roas":"2.36x","av_od":"33","av_cpo":"EGP 509","av_share":"42%","av_aov":"EGP 1,366","av_oth":"− 16,056","av_sp":"− 16,796","av_profit":"EGP 6,748","av_be":"1.68x","f_daily":"EGP 16,796","n_spend":"▲ 9.2%","cp0_roas":"3.38x","cp1_roas":"2.09x","cp2_roas":"1.19x","cp_all":"2.36x"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"c_cogs":6580,"c_ads":16796,"c_comm":1547,"c_fees":951,"c_profit":0,"av_ad":16796,"av_oth":16056,"av_pr":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"},"xp":{"x_disc":["Discounts","Money taken off by discount codes and sale prices on this period's orders.","EGP 1,314 off EGP 45,164 ordered = 2.9%"],"x_canc":["Cancelled orders","Orders cancelled before they shipped this period: 2 of 32 orders (6.2%), worth EGP 2,800 in total. You never receive this money, so it comes off the top.","2 orders × EGP 1,400 = EGP 2,800"],"x_ret":["Returned orders","Orders delivered and sent back this period: 1 order, EGP 1,450. Their money is refunded, so it comes off too.","1 order × EGP 1,450 = EGP 1,450"],"x_est":["Estimated profit","What lands in your pocket once every order on the way is delivered. Parcels still on the way are counted as if they'll be delivered.","EGP 39,600 − costs EGP 32,852 = EGP 6,748"],"x_cogs":["Product cost (COGS)","What the pieces cost you to make or buy, for the 29 kept orders.","EGP 11,789 = 30% of net revenue"],"c_cogs":["Product cost (COGS)","What the pieces cost you to make or buy — only for the orders Bosta has already paid you for.","EGP 11,789 × 22,100 ÷ 39,600 = EGP 6,580"],"x_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 16,796 · about EGP 16,796 a day"],"c_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 16,796 · about EGP 16,796 a day"],"x_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% of net revenue.","7% × EGP 39,600 = EGP 2,772"],"c_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% — here only on the cash you have collected.","7% × EGP 22,100 = EGP 1,547"],"x_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee, also for parcels that come back.","33 parcels · about EGP 45 each = EGP 1,495"],"c_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee. Here only for the parcels delivered so far.","only the 21 delivered so far = EGP 951"],"c_held":["Still with Bosta","Money from your orders that Bosta holds or hasn't collected yet. Delivered orders are paid out on Bosta's payout days; parcels still on the road are paid only once the buyer pays at the door.","EGP 6,500 delivered + EGP 11,000 not delivered = EGP 17,500"],"c_cash":["Cash collected","The money Bosta has already paid you for delivered orders.","EGP 39,600 − EGP 17,500 still with Bosta = EGP 22,100"],"c_way":["Still on the way","Profit you will collect as Bosta pays out the orders it still holds: their money minus their product cost, commission and Bosta fees.","EGP 6,748 estimated − EGP −3,774 collected = EGP 10,522"],"a_share":["Ads cost you 42% of sales","Out of every EGP 100 your ads brought in, EGP 42 went back into ads. Lower is better; above ~50% eats your profit.","EGP 16,796 ÷ EGP 39,600 = 42.4%"],"h_ctr":["CTR (click rate)","How many people who saw your ad clicked it. Higher means the ad catches attention; under 1% usually means the picture or offer isn't working.","2,799 clicks this period · 1.84% of views"],"h_cpc":["CPC (cost per click)","What you pay for each click. Lower means cheaper visitors; it rises when the ad tires or the audience is too small.","EGP 16,796 ÷ 2,799 clicks = EGP 6.00"],"h_cpp":["Cost per purchase","What the ads cost for each order they brought. Keep it well under your average order (EGP 1,366).","EGP 16,796 ÷ 33 purchases = EGP 509"],"h_roas":["Ads ROAS","Sales for every EGP 1 of ads, as the ad platforms count them. Above your break-even (1.68x) the ads pay for themselves.","33 purchases counted by the ads → 2.68x"],"h_gap":["Ads report vs your store","Ads counted 33 purchases; your store recorded 29. Ad platforms also count people who saw an ad and bought later, so their number is usually higher. Trust the store number for money.","store 2.36x − ads 2.68x = −0.33x"],"h_purch":["Purchases","Orders the ad platforms say came from your ads. They count more than your store does — use it to compare ads, not to count money.","33 by the ads · 29 in your store"],"h_spend":["Spend","Everything you paid for ads this period, on every platform.","EGP 16,796 · about EGP 16,796 a day"],"h_left":["Left at checkout","People who started checkout but didn't finish. A reminder message or free-shipping offer often brings some back.",""],"camp0":["Satin Edit · Advantage+","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 7,405</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 25,049</b></div><div class=\"xp-r\"><span>Orders</span><b>21</b></div><div class=\"xp-r\"><span>ROAS</span><b>3.38x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 353</b></div><div class=\"xp-r\"><span>Running since</span><b>Oct 12</b></div><div class=\"xp-r\"><span>Status</span><b>Active · winning</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Satin Edit · Video 3</b></span><em>4.25x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#e6cfa6;--c2:#a98a5c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Nour Satin Slip Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">M</span><span><small>Winner size</small><b>M · 38% of its orders</b></span></div>",""],"camp1":["Broad · Women 25–44","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 3,730</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 7,792</b></div><div class=\"xp-r\"><span>Orders</span><b>6</b></div><div class=\"xp-r\"><span>ROAS</span><b>2.09x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 622</b></div><div class=\"xp-r\"><span>Running since</span><b>Sep 28</b></div><div class=\"xp-r\"><span>Status</span><b>Active · audience tired</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Broad · Reel 1</b></span><em>2.60x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#d8a1ad;--c2:#9c5a6c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Layla Tiered Ruffle Maxi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">S</span><span><small>Winner size</small><b>S · 41% of its orders</b></span></div>",""],"camp2":["Retarget · 30 days","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 5,661</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 6,759</b></div><div class=\"xp-r\"><span>Orders</span><b>6</b></div><div class=\"xp-r\"><span>ROAS</span><b>1.19x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 944</b></div><div class=\"xp-r\"><span>Running since</span><b>Aug 30</b></div><div class=\"xp-r\"><span>Status</span><b>Active · losing money</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Retarget · Story 1</b></span><em>1.45x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#b4c6aa;--c2:#6c8462\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Jasmine Wrap Midi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">L</span><span><small>Winner size</small><b>L · 33% of its orders</b></span></div>",""]}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you collected EGP 11,687, plus EGP 34,984 expected. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 291,263","est_grossn":"196 orders, before discounts","est_disc":"− 8,400","est_canc":"− 19,600","est_cancn":"7.1% of 196 orders","est_ret":"− 10,150","est_retn":"delivered, then sent back","est_net":"EGP 253,113","est_profit":"EGP 46,671","est_tab":"EGP 46,671","col_net":"EGP 253,113","col_held":"− 58,300","col_cash":"EGP 194,813","col_cogs":"− 56,107","col_ads":"− 106,807","col_comm":"− 13,637","col_fees":"− 6,575","col_feesn":"121 delivered parcels","col_profit":"EGP 11,687","col_tab":"EGP 11,687","way":"EGP 34,984","way_line":"EGP 34,984 still on the way","s_col":"11,687","s_way":"34,984","s_failk":"EGP 29.8k","s_col_tone":"g","est_cancc":"(14)","est_retc":"(7)","b_dl":"20,300","b_nd":"38,000","b_dln":"next payout Mon, Nov 2","b_ndn":"38 parcels · 9 stuck 7+ days","h_cpc":"EGP 6","h_roas":"2.75x","h_gap":"−0.38x","h_purch":"203","h_cpp":"EGP 526","h_cppn":"526","h_spendn":"106,807","av_kick":"Ads · last 7 days","av_spend":"EGP 106,807","av_sales":"EGP 253,113","av_roas":"2.37x","av_od":"203","av_cpo":"EGP 526","av_share":"42%","av_aov":"EGP 1,446","av_oth":"− 99,635","av_sp":"− 106,807","av_profit":"EGP 46,671","av_be":"1.65x","f_daily":"EGP 15,258","n_spend":"▲ 6.3%","cp0_roas":"3.40x","cp1_roas":"2.10x","cp2_roas":"1.20x","cp_all":"2.37x"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"c_cogs":56107,"c_ads":106807,"c_comm":13637,"c_fees":6575,"c_profit":11687,"av_ad":106807,"av_oth":99635,"av_pr":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"},"xp":{"x_disc":["Discounts","Money taken off by discount codes and sale prices on this period's orders.","EGP 8,400 off EGP 291,263 ordered = 2.9%"],"x_canc":["Cancelled orders","Orders cancelled before they shipped this period: 14 of 196 orders (7.1%), worth EGP 19,600 in total. You never receive this money, so it comes off the top.","14 orders × EGP 1,400 = EGP 19,600"],"x_ret":["Returned orders","Orders delivered and sent back this period: 7 orders, EGP 10,150. Their money is refunded, so it comes off too.","7 orders × EGP 1,450 = EGP 10,150"],"x_est":["Estimated profit","What lands in your pocket once every order on the way is delivered. Parcels still on the way are counted as if they'll be delivered.","EGP 253,113 − costs EGP 206,442 = EGP 46,671"],"x_cogs":["Product cost (COGS)","What the pieces cost you to make or buy, for the 175 kept orders.","EGP 72,897 = 29% of net revenue"],"c_cogs":["Product cost (COGS)","What the pieces cost you to make or buy — only for the orders Bosta has already paid you for.","EGP 72,897 × 194,813 ÷ 253,113 = EGP 56,107"],"x_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 106,807 · about EGP 15,258 a day"],"c_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 106,807 · about EGP 15,258 a day"],"x_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% of net revenue.","7% × EGP 253,113 = EGP 17,718"],"c_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% — here only on the cash you have collected.","7% × EGP 194,813 = EGP 13,637"],"x_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee, also for parcels that come back.","166 parcels · about EGP 54 each = EGP 9,020"],"c_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee. Here only for the parcels delivered so far.","only the 121 delivered so far = EGP 6,575"],"c_held":["Still with Bosta","Money from your orders that Bosta holds or hasn't collected yet. Delivered orders are paid out on Bosta's payout days; parcels still on the road are paid only once the buyer pays at the door.","EGP 20,300 delivered + EGP 38,000 not delivered = EGP 58,300"],"c_cash":["Cash collected","The money Bosta has already paid you for delivered orders.","EGP 253,113 − EGP 58,300 still with Bosta = EGP 194,813"],"c_way":["Still on the way","Profit you will collect as Bosta pays out the orders it still holds: their money minus their product cost, commission and Bosta fees.","EGP 46,671 estimated − EGP 11,687 collected = EGP 34,984"],"a_share":["Ads cost you 42% of sales","Out of every EGP 100 your ads brought in, EGP 42 went back into ads. Lower is better; above ~50% eats your profit.","EGP 106,807 ÷ EGP 253,113 = 42.2%"],"h_ctr":["CTR (click rate)","How many people who saw your ad clicked it. Higher means the ad catches attention; under 1% usually means the picture or offer isn't working.","17,800 clicks this period · 1.84% of views"],"h_cpc":["CPC (cost per click)","What you pay for each click. Lower means cheaper visitors; it rises when the ad tires or the audience is too small.","EGP 106,807 ÷ 17,800 clicks = EGP 6.00"],"h_cpp":["Cost per purchase","What the ads cost for each order they brought. Keep it well under your average order (EGP 1,446).","EGP 106,807 ÷ 203 purchases = EGP 526"],"h_roas":["Ads ROAS","Sales for every EGP 1 of ads, as the ad platforms count them. Above your break-even (1.65x) the ads pay for themselves.","203 purchases counted by the ads → 2.75x"],"h_gap":["Ads report vs your store","Ads counted 203 purchases; your store recorded 175. Ad platforms also count people who saw an ad and bought later, so their number is usually higher. Trust the store number for money.","store 2.37x − ads 2.75x = −0.38x"],"h_purch":["Purchases","Orders the ad platforms say came from your ads. They count more than your store does — use it to compare ads, not to count money.","203 by the ads · 175 in your store"],"h_spend":["Spend","Everything you paid for ads this period, on every platform.","EGP 106,807 · about EGP 15,258 a day"],"h_left":["Left at checkout","People who started checkout but didn't finish. A reminder message or free-shipping offer often brings some back.",""],"camp0":["Satin Edit · Advantage+","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 47,091</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 160,109</b></div><div class=\"xp-r\"><span>Orders</span><b>128</b></div><div class=\"xp-r\"><span>ROAS</span><b>3.40x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 368</b></div><div class=\"xp-r\"><span>Running since</span><b>Oct 12</b></div><div class=\"xp-r\"><span>Status</span><b>Active · winning</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Satin Edit · Video 3</b></span><em>4.10x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#e6cfa6;--c2:#a98a5c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Nour Satin Slip Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">M</span><span><small>Winner size</small><b>M · 38% of its orders</b></span></div>",""],"camp1":["Broad · Women 25–44","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 23,716</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 49,804</b></div><div class=\"xp-r\"><span>Orders</span><b>40</b></div><div class=\"xp-r\"><span>ROAS</span><b>2.10x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 593</b></div><div class=\"xp-r\"><span>Running since</span><b>Sep 28</b></div><div class=\"xp-r\"><span>Status</span><b>Active · audience tired</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Broad · Reel 1</b></span><em>2.60x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#d8a1ad;--c2:#9c5a6c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Layla Tiered Ruffle Maxi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">S</span><span><small>Winner size</small><b>S · 41% of its orders</b></span></div>",""],"camp2":["Retarget · 30 days","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 36,000</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 43,200</b></div><div class=\"xp-r\"><span>Orders</span><b>35</b></div><div class=\"xp-r\"><span>ROAS</span><b>1.20x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 1,029</b></div><div class=\"xp-r\"><span>Running since</span><b>Aug 30</b></div><div class=\"xp-r\"><span>Status</span><b>Active · losing money</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Retarget · Story 1</b></span><em>1.45x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#b4c6aa;--c2:#6c8462\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Jasmine Wrap Midi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">L</span><span><small>Winner size</small><b>L · 33% of its orders</b></span></div>",""]}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you collected EGP 165,991, plus EGP 33,393 expected. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 1,191,285","est_grossn":"802 orders, before discounts","est_disc":"− 34,435","est_canc":"− 74,200","est_cancn":"6.6% of 802 orders","est_ret":"− 44,950","est_retn":"delivered, then sent back","est_net":"EGP 1,037,700","est_profit":"EGP 199,384","est_tab":"EGP 199,384","col_net":"EGP 1,037,700","col_held":"− 58,300","col_cash":"EGP 979,400","col_cogs":"− 274,274","col_ads":"− 438,100","col_comm":"− 68,558","col_fees":"− 32,477","col_feesn":"498 delivered parcels","col_profit":"EGP 165,991","col_tab":"EGP 165,991","way":"EGP 33,393","way_line":"EGP 33,393 still on the way","s_col":"165,991","s_way":"33,393","s_failk":"EGP 119.2k","s_col_tone":"g","est_cancc":"(53)","est_retc":"(31)","b_dl":"20,300","b_nd":"38,000","b_dln":"next payout Mon, Nov 2","b_ndn":"38 parcels · 9 stuck 7+ days","h_cpc":"EGP 6","h_roas":"2.74x","h_gap":"−0.38x","h_purch":"832","h_cpp":"EGP 527","h_cppn":"527","h_spendn":"438,100","av_kick":"Ads · last 30 days","av_spend":"EGP 438,100","av_sales":"EGP 1,037,700","av_roas":"2.37x","av_od":"832","av_cpo":"EGP 527","av_share":"42%","av_aov":"EGP 1,445","av_oth":"− 400,216","av_sp":"− 438,100","av_profit":"EGP 199,384","av_be":"1.63x","f_daily":"EGP 14,603","n_spend":"▲ 6.2%","cp0_roas":"3.40x","cp1_roas":"2.10x","cp2_roas":"1.20x","cp_all":"2.37x"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"c_cogs":274274,"c_ads":438100,"c_comm":68558,"c_fees":32477,"c_profit":165991,"av_ad":438100,"av_oth":400216,"av_pr":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"},"xp":{"x_disc":["Discounts","Money taken off by discount codes and sale prices on this period's orders.","EGP 34,435 off EGP 1,191,285 ordered = 2.9%"],"x_canc":["Cancelled orders","Orders cancelled before they shipped this period: 53 of 802 orders (6.6%), worth EGP 74,200 in total. You never receive this money, so it comes off the top.","53 orders × EGP 1,400 = EGP 74,200"],"x_ret":["Returned orders","Orders delivered and sent back this period: 31 orders, EGP 44,950. Their money is refunded, so it comes off too.","31 orders × EGP 1,450 = EGP 44,950"],"x_est":["Estimated profit","What lands in your pocket once every order on the way is delivered. Parcels still on the way are counted as if they'll be delivered.","EGP 1,037,700 − costs EGP 838,316 = EGP 199,384"],"x_cogs":["Product cost (COGS)","What the pieces cost you to make or buy, for the 718 kept orders.","EGP 290,600 = 28% of net revenue"],"c_cogs":["Product cost (COGS)","What the pieces cost you to make or buy — only for the orders Bosta has already paid you for.","EGP 290,600 × 979,400 ÷ 1,037,700 = EGP 274,274"],"x_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 438,100 · about EGP 14,603 a day"],"c_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 438,100 · about EGP 14,603 a day"],"x_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% of net revenue.","7% × EGP 1,037,700 = EGP 72,639"],"c_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% — here only on the cash you have collected.","7% × EGP 979,400 = EGP 68,558"],"x_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee, also for parcels that come back.","567 parcels · about EGP 65 each = EGP 36,977"],"c_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee. Here only for the parcels delivered so far.","only the 498 delivered so far = EGP 32,477"],"c_held":["Still with Bosta","Money from your orders that Bosta holds or hasn't collected yet. Delivered orders are paid out on Bosta's payout days; parcels still on the road are paid only once the buyer pays at the door.","EGP 20,300 delivered + EGP 38,000 not delivered = EGP 58,300"],"c_cash":["Cash collected","The money Bosta has already paid you for delivered orders.","EGP 1,037,700 − EGP 58,300 still with Bosta = EGP 979,400"],"c_way":["Still on the way","Profit you will collect as Bosta pays out the orders it still holds: their money minus their product cost, commission and Bosta fees.","EGP 199,384 estimated − EGP 165,991 collected = EGP 33,393"],"a_share":["Ads cost you 42% of sales","Out of every EGP 100 your ads brought in, EGP 42 went back into ads. Lower is better; above ~50% eats your profit.","EGP 438,100 ÷ EGP 1,037,700 = 42.2%"],"h_ctr":["CTR (click rate)","How many people who saw your ad clicked it. Higher means the ad catches attention; under 1% usually means the picture or offer isn't working.","73,000 clicks this period · 1.84% of views"],"h_cpc":["CPC (cost per click)","What you pay for each click. Lower means cheaper visitors; it rises when the ad tires or the audience is too small.","EGP 438,100 ÷ 73,000 clicks = EGP 6.00"],"h_cpp":["Cost per purchase","What the ads cost for each order they brought. Keep it well under your average order (EGP 1,445).","EGP 438,100 ÷ 832 purchases = EGP 527"],"h_roas":["Ads ROAS","Sales for every EGP 1 of ads, as the ad platforms count them. Above your break-even (1.63x) the ads pay for themselves.","832 purchases counted by the ads → 2.74x"],"h_gap":["Ads report vs your store","Ads counted 832 purchases; your store recorded 718. Ad platforms also count people who saw an ad and bought later, so their number is usually higher. Trust the store number for money.","store 2.37x − ads 2.74x = −0.38x"],"h_purch":["Purchases","Orders the ad platforms say came from your ads. They count more than your store does — use it to compare ads, not to count money.","832 by the ads · 718 in your store"],"h_spend":["Spend","Everything you paid for ads this period, on every platform.","EGP 438,100 · about EGP 14,603 a day"],"h_left":["Left at checkout","People who started checkout but didn't finish. A reminder message or free-shipping offer often brings some back.",""],"camp0":["Satin Edit · Advantage+","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 193,157</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 656,407</b></div><div class=\"xp-r\"><span>Orders</span><b>525</b></div><div class=\"xp-r\"><span>ROAS</span><b>3.40x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 368</b></div><div class=\"xp-r\"><span>Running since</span><b>Oct 12</b></div><div class=\"xp-r\"><span>Status</span><b>Active · winning</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Satin Edit · Video 3</b></span><em>3.85x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#e6cfa6;--c2:#a98a5c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Nour Satin Slip Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">M</span><span><small>Winner size</small><b>M · 38% of its orders</b></span></div>",""],"camp1":["Broad · Women 25–44","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 97,278</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 204,184</b></div><div class=\"xp-r\"><span>Orders</span><b>164</b></div><div class=\"xp-r\"><span>ROAS</span><b>2.10x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 593</b></div><div class=\"xp-r\"><span>Running since</span><b>Sep 28</b></div><div class=\"xp-r\"><span>Status</span><b>Active · audience tired</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Broad · Reel 1</b></span><em>2.60x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#d8a1ad;--c2:#9c5a6c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Layla Tiered Ruffle Maxi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">S</span><span><small>Winner size</small><b>S · 41% of its orders</b></span></div>",""],"camp2":["Retarget · 30 days","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 147,665</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 177,109</b></div><div class=\"xp-r\"><span>Orders</span><b>143</b></div><div class=\"xp-r\"><span>ROAS</span><b>1.20x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 1,033</b></div><div class=\"xp-r\"><span>Running since</span><b>Aug 30</b></div><div class=\"xp-r\"><span>Status</span><b>Active · losing money</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Retarget · Story 1</b></span><em>1.45x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#b4c6aa;--c2:#6c8462\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Jasmine Wrap Midi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">L</span><span><small>Winner size</small><b>L · 33% of its orders</b></span></div>",""]}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you collected EGP 165,991, plus EGP 33,393 expected. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details.","est_gross":"EGP 1,191,285","est_grossn":"802 orders, before discounts","est_disc":"− 34,435","est_canc":"− 74,200","est_cancn":"6.6% of 802 orders","est_ret":"− 44,950","est_retn":"delivered, then sent back","est_net":"EGP 1,037,700","est_profit":"EGP 199,384","est_tab":"EGP 199,384","col_net":"EGP 1,037,700","col_held":"− 58,300","col_cash":"EGP 979,400","col_cogs":"− 274,274","col_ads":"− 438,100","col_comm":"− 68,558","col_fees":"− 32,477","col_feesn":"498 delivered parcels","col_profit":"EGP 165,991","col_tab":"EGP 165,991","way":"EGP 33,393","way_line":"EGP 33,393 still on the way","s_col":"165,991","s_way":"33,393","s_failk":"EGP 119.2k","s_col_tone":"g","est_cancc":"(53)","est_retc":"(31)","b_dl":"20,300","b_nd":"38,000","b_dln":"next payout Mon, Nov 2","b_ndn":"38 parcels · 9 stuck 7+ days","h_cpc":"EGP 6","h_roas":"2.74x","h_gap":"−0.38x","h_purch":"832","h_cpp":"EGP 527","h_cppn":"527","h_spendn":"438,100","av_kick":"Ads · this month","av_spend":"EGP 438,100","av_sales":"EGP 1,037,700","av_roas":"2.37x","av_od":"832","av_cpo":"EGP 527","av_share":"42%","av_aov":"EGP 1,445","av_oth":"− 400,216","av_sp":"− 438,100","av_profit":"EGP 199,384","av_be":"1.63x","f_daily":"EGP 14,603","n_spend":"▲ 6.2%","cp0_roas":"3.40x","cp1_roas":"2.10x","cp2_roas":"1.20x","cp_all":"2.37x"},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w","col":"g"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"c_cogs":274274,"c_ads":438100,"c_comm":68558,"c_fees":32477,"c_profit":165991,"av_ad":438100,"av_oth":400216,"av_pr":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"},"xp":{"x_disc":["Discounts","Money taken off by discount codes and sale prices on this period's orders.","EGP 34,435 off EGP 1,191,285 ordered = 2.9%"],"x_canc":["Cancelled orders","Orders cancelled before they shipped this period: 53 of 802 orders (6.6%), worth EGP 74,200 in total. You never receive this money, so it comes off the top.","53 orders × EGP 1,400 = EGP 74,200"],"x_ret":["Returned orders","Orders delivered and sent back this period: 31 orders, EGP 44,950. Their money is refunded, so it comes off too.","31 orders × EGP 1,450 = EGP 44,950"],"x_est":["Estimated profit","What lands in your pocket once every order on the way is delivered. Parcels still on the way are counted as if they'll be delivered.","EGP 1,037,700 − costs EGP 838,316 = EGP 199,384"],"x_cogs":["Product cost (COGS)","What the pieces cost you to make or buy, for the 718 kept orders.","EGP 290,600 = 28% of net revenue"],"c_cogs":["Product cost (COGS)","What the pieces cost you to make or buy — only for the orders Bosta has already paid you for.","EGP 290,600 × 979,400 ÷ 1,037,700 = EGP 274,274"],"x_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 438,100 · about EGP 14,603 a day"],"c_ads":["Ad spend","What you paid for ads on every platform this period. Ads are paid upfront, before the orders they bring are delivered, so all of it counts here.","EGP 438,100 · about EGP 14,603 a day"],"x_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% of net revenue.","7% × EGP 1,037,700 = EGP 72,639"],"c_comm":["Commission 7%","The payment and platform commission, fixed by contract at 7% — here only on the cash you have collected.","7% × EGP 979,400 = EGP 68,558"],"x_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee, also for parcels that come back.","567 parcels · about EGP 65 each = EGP 36,977"],"c_fees":["Bosta fees","What Bosta charges per parcel: shipping plus the cash-on-delivery fee. Here only for the parcels delivered so far.","only the 498 delivered so far = EGP 32,477"],"c_held":["Still with Bosta","Money from your orders that Bosta holds or hasn't collected yet. Delivered orders are paid out on Bosta's payout days; parcels still on the road are paid only once the buyer pays at the door.","EGP 20,300 delivered + EGP 38,000 not delivered = EGP 58,300"],"c_cash":["Cash collected","The money Bosta has already paid you for delivered orders.","EGP 1,037,700 − EGP 58,300 still with Bosta = EGP 979,400"],"c_way":["Still on the way","Profit you will collect as Bosta pays out the orders it still holds: their money minus their product cost, commission and Bosta fees.","EGP 199,384 estimated − EGP 165,991 collected = EGP 33,393"],"a_share":["Ads cost you 42% of sales","Out of every EGP 100 your ads brought in, EGP 42 went back into ads. Lower is better; above ~50% eats your profit.","EGP 438,100 ÷ EGP 1,037,700 = 42.2%"],"h_ctr":["CTR (click rate)","How many people who saw your ad clicked it. Higher means the ad catches attention; under 1% usually means the picture or offer isn't working.","73,000 clicks this period · 1.84% of views"],"h_cpc":["CPC (cost per click)","What you pay for each click. Lower means cheaper visitors; it rises when the ad tires or the audience is too small.","EGP 438,100 ÷ 73,000 clicks = EGP 6.00"],"h_cpp":["Cost per purchase","What the ads cost for each order they brought. Keep it well under your average order (EGP 1,445).","EGP 438,100 ÷ 832 purchases = EGP 527"],"h_roas":["Ads ROAS","Sales for every EGP 1 of ads, as the ad platforms count them. Above your break-even (1.63x) the ads pay for themselves.","832 purchases counted by the ads → 2.74x"],"h_gap":["Ads report vs your store","Ads counted 832 purchases; your store recorded 718. Ad platforms also count people who saw an ad and bought later, so their number is usually higher. Trust the store number for money.","store 2.37x − ads 2.74x = −0.38x"],"h_purch":["Purchases","Orders the ad platforms say came from your ads. They count more than your store does — use it to compare ads, not to count money.","832 by the ads · 718 in your store"],"h_spend":["Spend","Everything you paid for ads this period, on every platform.","EGP 438,100 · about EGP 14,603 a day"],"h_left":["Left at checkout","People who started checkout but didn't finish. A reminder message or free-shipping offer often brings some back.",""],"camp0":["Satin Edit · Advantage+","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 193,157</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 656,407</b></div><div class=\"xp-r\"><span>Orders</span><b>525</b></div><div class=\"xp-r\"><span>ROAS</span><b>3.40x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 368</b></div><div class=\"xp-r\"><span>Running since</span><b>Oct 12</b></div><div class=\"xp-r\"><span>Status</span><b>Active · winning</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Satin Edit · Video 3</b></span><em>3.85x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#e6cfa6;--c2:#a98a5c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Nour Satin Slip Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">M</span><span><small>Winner size</small><b>M · 38% of its orders</b></span></div>",""],"camp1":["Broad · Women 25–44","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 97,278</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 204,184</b></div><div class=\"xp-r\"><span>Orders</span><b>164</b></div><div class=\"xp-r\"><span>ROAS</span><b>2.10x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 593</b></div><div class=\"xp-r\"><span>Running since</span><b>Sep 28</b></div><div class=\"xp-r\"><span>Status</span><b>Active · audience tired</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Broad · Reel 1</b></span><em>2.60x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#d8a1ad;--c2:#9c5a6c\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Layla Tiered Ruffle Maxi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">S</span><span><small>Winner size</small><b>S · 41% of its orders</b></span></div>",""],"camp2":["Retarget · 30 days","<div class=\"xp-rows\"><div class=\"xp-r\"><span>Spend</span><b>EGP 147,665</b></div><div class=\"xp-r\"><span>Sales</span><b>EGP 177,109</b></div><div class=\"xp-r\"><span>Orders</span><b>143</b></div><div class=\"xp-r\"><span>ROAS</span><b>1.20x</b></div><div class=\"xp-r\"><span>Cost per order</span><b>EGP 1,033</b></div><div class=\"xp-r\"><span>Running since</span><b>Aug 30</b></div><div class=\"xp-r\"><span>Status</span><b>Active · losing money</b></div></div><div class=\"xp-win\"><span class=\"xp-th xp-th-ad\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M8 5v14l11-7z\"/></svg></span><span><small>Best ad</small><b>Retarget · Story 1</b></span><em>1.45x</em></div><div class=\"xp-win\"><span class=\"xp-th\" style=\"--c1:#b4c6aa;--c2:#6c8462\" aria-hidden=\"true\"><svg viewBox=\"0 0 46 70\" aria-hidden=\"true\"><path d=\"M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z\" fill=\"rgba(255,255,255,.88)\"/></svg></span><span><small>Winner product</small><b>Jasmine Wrap Midi Dress</b></span></div><div class=\"xp-win\"><span class=\"xp-th xp-th-sz\" aria-hidden=\"true\">L</span><span><small>Winner size</small><b>L · 33% of its orders</b></span></div>",""]}}};
+PER.cur='7d';
+window.perSet=function(key){
+  var P=PER[key];if(!P)return;PER.cur=key;
+  var call=function(f,a){if(typeof window[f]==='function'){try{window[f](a)}catch(e){console.warn(f,e)}}};
+  call('pv2SetPeriod',key);call('cv2SetPeriod',P);call('puSetPeriod',P);call('accSetPeriod',P);
+  var all=function(s){return [].slice.call(document.querySelectorAll(s))};
+  all('[data-per-t]').forEach(function(e){var v=P.t[e.getAttribute('data-per-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-per-cls]').forEach(function(e){var a=e.getAttribute('data-per-cls').split(':'),g=P.tone[a[0]]==='g';e.classList.toggle(a[1],g);e.classList.toggle(a[2],!g)});
+  all('[data-per-flip]').forEach(function(e){e.toggleAttribute('data-per-down',!!P.flip[e.getAttribute('data-per-flip')])});
+  all('[data-per-w]').forEach(function(e){var v=P.w[e.getAttribute('data-per-w')];if(v!=null)e.style.flex=String(v)});
+  document.dispatchEvent(new CustomEvent('per:change',{detail:{key:key,P:P}}));
+};
+/* === PERIODS v1 END === */
+</script>
+<script>
+/* === NAV v2 START === */
+/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
+   theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go).
+   Round 8: the Menu is full screen (Shopify-like): its groups open in place (accordion), the page behind does not
+   scroll, and it closes on ✕, Esc, the browser's back (one history entry while open), a swipe down from the top of
+   the list, or a tap on an item. */
+(function(){
+  var top=document.querySelector('.nv2-top');if(!top)return;
+  var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
+  var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
+  var period='7d';
+  /* ---- popovers ---- */
+  var openPop=null;
+  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');var t=top.querySelector('[data-nv2-pop="'+openPop.dataset.nv2Id+'"]');if(t)t.setAttribute('aria-expanded','false');openPop=null}
+  $$('[data-nv2-pop]',top).forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=top.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openPop===p;closePop();
+    if(!was){p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;var f=p.querySelector('button');if(f)f.focus({preventScroll:true})}})});
+  document.addEventListener('click',function(e){if(openPop&&!openPop.contains(e.target))closePop()});
+  /* ---- date menu ---- */
+  function paintDates(){
+    $$('[data-nv2-id^="date"]',top).forEach(function(m){m.innerHTML=PERIODS.map(function(p){return '<button type="button" class="nv2-mi" role="menuitemradio" data-nv2-period="'+p[0]+'" aria-checked="'+(p[0]===period)+'">'+p[1]+'<small>'+p[2]+'</small></button>'}).join('')});
+    var cur=PERIODS.filter(function(p){return p[0]===period})[0];
+    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-ds',top).forEach(function(s){s.textContent=cur[3]});$$('.nv2-date',top).forEach(function(b){b.setAttribute('aria-label','Date range: '+cur[1]+', '+cur[2])});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
+  }
+  paintDates();
+  top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
+    if(window.perSet)window.perSet(period);else if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
+  /* ---- theme ---- */
+  var key=top.dataset.nv2Store||'theme',html=document.documentElement;
+  function syncTheme(){var dark=html.dataset.theme!=='light';$$('[data-nv2-theme]').forEach(function(b){b.setAttribute('aria-checked',String(dark))})}
+  $$('[data-nv2-theme]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var t=html.dataset.theme==='light'?'dark':'light';html.dataset.theme=t;try{localStorage.setItem(key,t)}catch(err){}syncTheme();fire('nv2:theme',{theme:t})})});
+  syncTheme();
+  $$('[data-nv2-refresh]').forEach(function(b){b.addEventListener('click',function(){var i=b.querySelector('svg');if(i&&!reduce)i.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:700});var s=b.querySelector('.nv2-rt');if(s)s.textContent='synced just now';fire('nv2:refresh')})});
+  /* ---- navigation (top + dock + sheets) ---- */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet'))return;e.preventDefault();closePop();closeSheet();
+    var go=a.dataset.nv2Go;if(a.closest('.nv2-pill')){$$('.nv2-pill > *').forEach(function(x){x.removeAttribute('aria-current')});a.setAttribute('aria-current','page')}
+    fire('nv2:nav',{go:go})});
+  /* ---- search (desktop) ---- */
+  var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
+  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · ads funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
+    ['Layla Tiered Ruffle Maxi Dress','products','Product'],['Nour Satin Slip Dress','products','Product'],['Jasmine Wrap Midi Dress','products','Product'],['Salma Puff-Sleeve Mini Dress','products','Product'],
+    ['Satin Edit · Advantage+','ads','Campaign'],['Retarget · 30 days','ads','Campaign'],['Broad · Women 25–44','ads','Ad set'],['Ads Manager','adsmanager','Page'],['Competitors','competitors','Page'],['Connections','connections','Page']];
+  var hits=[],hl=0;
+  function search(){var q=sIn.value.trim().toLowerCase();hits=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0}).slice(0,7):[];hl=0;
+    sRes.innerHTML=hits.length?hits.map(function(h,i){return '<button type="button" role="option" class="'+(i?'':'nv2-hl')+'" data-i="'+i+'">'+h[0]+'<small>'+h[2]+'</small></button>'}).join(''):(q?'<button type="button" disabled>No matches<small></small></button>':'');
+    sRes.classList.toggle('nv2-on',!!q)}
+  function pick(i){var h=hits[i];if(!h)return;sIn.value='';search();sIn.blur();fire('nv2:nav',{go:h[1],q:h[0]})}
+  if(sIn){sIn.addEventListener('input',search);
+    sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();pick(hl)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();hl=(hl+(e.key==='ArrowDown'?1:-1)+hits.length)%Math.max(1,hits.length);$$('button',sRes).forEach(function(b,i){b.classList.toggle('nv2-hl',i===hl)})}else if(e.key==='Escape'){sIn.value='';search()}});
+    sRes.addEventListener('mousedown',function(e){var b=e.target.closest('[data-i]');if(b){e.preventDefault();pick(+b.dataset.i)}});
+    sIn.addEventListener('blur',function(){setTimeout(function(){sRes.classList.remove('nv2-on')},100)});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
+    var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
+  /* ---- sheets ---- */
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null,pushed=false,skipPop=false;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');
+    var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
+    if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
+    var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+    document.documentElement.classList.remove('nv2-lock');
+    if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
+  /* menu: groups open in place; a swipe down from the top of the list closes it */
+  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
+    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
+    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
+    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
+  document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
+  if(scrim)scrim.addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
+  window.nv2Open=openSheet;
+  /* assistant */
+  var ai=document.querySelector('[data-nv2-sheet="ai"]');
+  if(ai){var inp=ai.querySelector('input'),sent=ai.querySelector('.nv2-sent');
+    $$('.nv2-sug',ai).forEach(function(b){b.addEventListener('click',function(){inp.value=b.textContent.trim();inp.focus()})});
+    ai.querySelector('form').addEventListener('submit',function(e){e.preventDefault();var q=inp.value.trim();if(!q)return;sent.textContent='Sent to the assistant: “'+q+'”';inp.value='';fire('nv2:ask',{q:q})})}
+  /* ---- dock: hide on scroll down, show on scroll up ---- */
+  var dock=document.querySelector('.nv2-dock');
+  if(dock){document.documentElement.classList.add('nv2-docked');var ly=window.scrollY,acc=0;
+    window.addEventListener('scroll',function(){var y=window.scrollY,d=y-ly;ly=y;acc=(d>0)===(acc>0)?acc+d:d;
+      if(y<80||acc<-24)dock.classList.remove('nv2-hide');else if(acc>40&&!sheetOpen)dock.classList.add('nv2-hide')},{passive:true})}
+})();
+/* === NAV v2 END === */
+</script>
+<script>
+
+</script>
+<script>
+/* ===== shared by the Orders + Shipping mockups: sample orders, period helpers, toast, drawer, nav ===== */
+(function(){
+  var OS=window.OS={};
+  var $=OS.$=function(s,r){return (r||document).querySelector(s)};
+  var $$=OS.$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  OS.reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  OS.fmt=function(v){return Math.round(v).toLocaleString('en-US')};
+  OS.esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  var I=OS.icon=function(p){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>'};
+  OS.IC={
+    phone:I('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'),
+    wa:I('<path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.5-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2z"/>'),
+    copy:I('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>'),
+    check:I('<path d="M20 6L9 17l-5-5"/>'),
+    x:I('<path d="M6 6l12 12M18 6L6 18"/>'),
+    arrow:I('<path d="M9 6l6 6-6 6"/>'),
+    dl:I('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'),
+    ext:I('<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>'),
+    search:I('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'),
+    left:I('<path d="M15 6l-6 6 6 6"/>'), right:I('<path d="M9 6l6 6-6 6"/>'),
+    up:I('<path d="M7 14l5-5 5 5"/>'), down:I('<path d="M7 10l5 5 5-5"/>'), sort:I('<path d="M8 9l4-4 4 4M8 15l4 4 4-4"/>'),
+    spark:I('<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>'),
+    truck:I('<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>'),
+    bag:I('<path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>')
+  };
+  OS.DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/></svg>';
+
+  /* ---------- products (same six as the Overview's PRODUCTS v2) ---------- */
+  var PR=OS.PR=[
+    {n:'Layla Tiered Ruffle Maxi Dress',s:'Layla Tiered Ruffle',col:'Dusty Rose',p:1490,c:['#d8a1ad','#9c5a6c'],w:27},
+    {n:'Nour Satin Slip Dress',s:'Nour Satin Slip',col:'Champagne',p:1290,c:['#e6cfa6','#a98a5c'],w:30},
+    {n:'Jasmine Wrap Midi Dress',s:'Jasmine Wrap Midi',col:'Sage',p:1390,c:['#b4c6aa','#6c8462'],w:24},
+    {n:'Salma Puff-Sleeve Mini Dress',s:'Salma Puff-Sleeve',col:'Ivory',p:990,c:['#efe7d6','#b9ab8e'],w:23},
+    {n:'Farida Linen Shirt Dress',s:'Farida Linen Shirt',col:'Sand',p:1190,c:['#d4c3a8','#8f7c60'],w:15},
+    {n:'Mariam Pleated Chiffon Dress',s:'Mariam Pleated Chiffon',col:'Navy',p:1650,c:['#4b5a8f','#232b4d'],w:12}
+  ];
+  var SIZES=['XS','S','M','L','XL','XXL'],SW=[8,22,28,22,12,8];
+  var FIRST=['Nour','Salma','Malak','Jana','Esraa','Nourhan','Mariam','Habiba','Farida','Yasmin','Hana','Rana','Aya','Mai','Dina','Laila','Reem','Sara','Menna','Shahd','Rawan','Hoda','Nada','Amira','Heba','Ola','Yara','Basma','Rahma','Zeina'];
+  var LAST=['Hany','Wael','Gamal','Adel','Mostafa','Samir','Fathy','Kamal','Hassan','Ibrahim','Nabil','Saad','Tarek','Ashraf','Magdy','Sherif','Fouad','Ramy','Khaled','Youssef'];
+  var CITIES=OS.CITIES=[['Cairo','Cairo',34],['Giza','Giza',18],['Alexandria','Alexandria',14],['New Cairo','Cairo',9],['6th of October','Giza',6],['Mansoura','Dakahlia',5],['Tanta','Gharbia',4],['Zagazig','Sharqia',3],['Hurghada','Red Sea',2],['Assiut','Assiut',2],['Port Said','Port Said',2],['Ismailia','Ismailia',1]];
+  var CANCEL=['Customer changed their mind','Customer changed their mind','Customer changed their mind','Out of stock','Staff made an error','Not given','Customer changed their mind','Out of stock','Not given','Cancelled for another reason','Customer changed their mind','Staff made an error','Out of stock','Customer changed their mind'];
+  var RETURN=['Size too small',"Customer didn't answer",'Size too big','Not as pictured','Size too small',"Customer didn't answer",'Fabric issue'];
+  /* seeded random: every load shows the same orders */
+  var seed=20261030;function rnd(){seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296}
+  function pickW(arr,wi){var t=0,i;for(i=0;i<arr.length;i++)t+=wi(arr[i]);var r=rnd()*t;for(i=0;i<arr.length;i++){r-=wi(arr[i]);if(r<=0)return arr[i]}return arr[arr.length-1]}
+  function pickIdx(w){var t=w.reduce(function(a,b){return a+b},0),r=rnd()*t;for(var i=0;i<w.length;i++){r-=w[i];if(r<=0)return i}return w.length-1}
+
+  /* valid orders per day Oct 1–30 = Periods v1 (30-day series); cancelled + returned per day add up to its totals */
+  var OD=window.PER['30d'].s.od;
+  var CD=[1,2,2,1,2,2,1,2,2,1,2,2,1,2,2,2,1,2,2,2,1,2,2, 2,2,2,2,2,2,2];   /* 53, last 7 = 14 */
+  var RD=[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1];   /* 31, last 7 = 7 */
+  var MON=['Oct'];
+  var ORD=OS.ORD=[],num=54980,ci=0,ri=0;
+  for(var d=1;d<=30;d++){
+    var list=[],k;
+    for(k=0;k<OD[d-1];k++)list.push('v');for(k=0;k<CD[d-1];k++)list.push('c');for(k=0;k<RD[d-1];k++)list.push('r');
+    list.forEach(function(kind){
+      var h=Math.floor(rnd()*rnd()*24);h=(h+9)%24;var m=Math.floor(rnd()*60);
+      var items=[],n=rnd()<.82?1:2;
+      for(var j=0;j<n;j++){var pi=pickIdx(PR.map(function(p){return p.w})),p=PR[pi];items.push({p:pi,t:p.s,size:SIZES[pickIdx(SW)],col:p.col,q:rnd()<.93?1:2,price:p.p})}
+      var city=pickW(CITIES,function(c){return c[2]});
+      var fn=FIRST[Math.floor(rnd()*FIRST.length)],ln=LAST[Math.floor(rnd()*LAST.length)];
+      var phone='01'+['0','1','2','5'][Math.floor(rnd()*4)]+' '+String(1000+Math.floor(rnd()*9000))+' '+String(1000+Math.floor(rnd()*9000));
+      var sub=items.reduce(function(a,b){return a+b.price*b.q},0),ship=city[1]==='Cairo'||city[1]==='Giza'?60:85;
+      var o={id:'FNW-'+(++num),day:d,h:h,m:m,ts:d*1440+h*60+m,name:fn+' '+ln,phone:phone,city:city[0],region:city[1],items:items,sub:sub,ship:ship,total:sub+ship,
+        web:rnd()>.08,card:false,kind:kind,track:String(Math.floor(10000000+rnd()*89999999))};
+      if(rnd()<.06)o.phone='';
+      if(kind==='c'){o.reason=CANCEL[ci++%CANCEL.length]}
+      if(kind==='r'){o.reason=RETURN[ri++%RETURN.length];o.attempts=1+Math.floor(rnd()*3);o.pday=Math.max(1,d-4)}  /* listed on the day it came back */
+      ORD.push(o);
+    });
+  }
+  ORD.sort(function(a,b){return b.ts-a.ts});
+  /* status: the newest 38 valid orders are still with Bosta (cash on delivery, not paid yet); the rest were delivered */
+  var pend=0;ORD.forEach(function(o){
+    if(o.kind==='c')o.st='cancelled';else if(o.kind==='r')o.st='returned';
+    else if(pend<38){o.st='pending';pend++;o.stage=o.day>=30?'Waiting for pickup':(o.h<12?'Out for delivery':'In transit')}
+    else{o.st='paid';rnd();o.card=false}  /* cash on delivery only: no online payments in Egypt */
+  });
+  OS.ST={paid:'Paid',pending:'Pending',cancelled:'Cancelled',returned:'Returned'};
+  OS.SOURCE=function(o){return o.web?'Web':'Admin'};
+  OS.when=function(o){var hh=o.h%12||12;return 'Oct '+(o.pday||o.day)+', '+hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  OS.whenShort=function(o){var hh=o.h%12||12;return hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  OS.itemsTxt=function(o){return o.items.map(function(i){return i.t+' · '+i.size+(i.q>1?' × '+i.q:'')}).join(', ')};
+
+  /* ---------- periods (driven by NAV v2 → PERIODS v1 perSet → "per:change") ---------- */
+  OS.RANGE={today:[30,30],yesterday:[29,29],'7d':[24,30],'30d':[1,30],month:[1,30]};
+  OS.inPeriod=function(key){var r=OS.RANGE[key];return ORD.filter(function(o){return o.day>=r[0]&&o.day<=r[1]})};
+  /* money lost to cancelled + returned orders (matches the Overview's "Cancelled & returned" tile per period) */
+  OS.LEAK={today:[2,2800,1,1450],yesterday:[2,2800,1,1450],'7d':[14,19600,7,10150],'30d':[53,74200,31,44950],month:[53,74200,31,44950]};
+  OS.key=function(){return (window.PER&&PER.cur)||'7d'};
+
+  /* ---------- toast ---------- */
+  var toastEl,toastT;
+  OS.toast=function(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='os-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.innerHTML=OS.IC.check+'<span>'+OS.esc(msg)+'</span>';toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},2600)};
+  OS.copy=function(text,msg){try{navigator.clipboard.writeText(text).catch(function(){})}catch(e){}OS.toast(msg||('Copied '+text))};
+
+  /* ---------- drawer ---------- */
+  var scrim,drawer,lastF;
+  OS.openDrawer=function(html,label){
+    if(!drawer){scrim=document.createElement('div');scrim.className='os-scrim';drawer=document.createElement('aside');drawer.className='os-drawer';drawer.setAttribute('role','dialog');drawer.setAttribute('aria-modal','true');
+      document.body.appendChild(scrim);document.body.appendChild(drawer);scrim.addEventListener('click',OS.closeDrawer);
+      drawer.addEventListener('click',function(e){if(e.target.closest('[data-close]'))OS.closeDrawer()})}
+    lastF=document.activeElement;drawer.innerHTML=html;drawer.setAttribute('aria-label',label||'Details');
+    requestAnimationFrame(function(){scrim.classList.add('on');drawer.classList.add('on');var f=drawer.querySelector('[data-close]');f&&f.focus({preventScroll:true})});
+    document.documentElement.style.overflow='hidden'};
+  OS.closeDrawer=function(){if(!drawer||!drawer.classList.contains('on'))return;drawer.classList.remove('on');scrim.classList.remove('on');document.documentElement.style.overflow='';lastF&&lastF.focus&&lastF.focus({preventScroll:true})};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')OS.closeDrawer()});
+
+  /* ---------- order detail (shared by both Orders looks and the Shipping call list) ---------- */
+  OS.orderHtml=function(o){
+    var steps=[['Placed',OS.when(o)]],cls=[];
+    if(o.st==='cancelled'){steps.push(['Cancelled · '+o.reason,'Oct '+o.day]);cls=['done','bad']}
+    else{
+      var pu='Oct '+Math.min(30,o.day+1),dl='Oct '+Math.min(30,o.day+3);
+      steps.push(['Picked up by Bosta',o.st==='pending'&&o.stage==='Waiting for pickup'?'tomorrow':pu]);
+      if(o.st==='pending'){steps.push(['In transit',o.stage==='In transit'?'now':o.stage==='Out for delivery'?'Oct '+(o.day+1):'next']);steps.push(['Out for delivery',o.stage==='Out for delivery'?'now':'next']);steps.push(['Delivered · cash collected','—']);
+        var at={'Waiting for pickup':1,'In transit':2,'Out for delivery':3}[o.stage];cls=steps.map(function(s,i){return i<at?'done':i===at?'now':'todo'})}
+      else if(o.st==='returned'){steps[1][1]='Oct '+(o.pday+1);steps.push(['Delivery tried · '+o.attempts+' attempt'+(o.attempts>1?'s':''),'Oct '+(o.day-1)]);steps.push(['Back at your warehouse · '+o.reason,'Oct '+o.day]);cls=['done','done','done','bad']}
+      else{steps.push(['Delivered',dl]);steps.push([o.card?'Paid by card':'Cash collected by Bosta',o.card?OS.when(o):dl]);cls=['done','done','done','done']}
+    }
+    var pay=o.st==='paid'?(o.card?'Paid by card':'Cash on delivery · collected'):o.st==='pending'?'Cash on delivery · to collect':o.st==='returned'?'Cash on delivery · not collected':'Not charged';
+    var ph=o.phone?'<a class="ob sm" href="tel:'+o.phone.replace(/ /g,'')+'" data-call="'+o.phone+'">'+OS.IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+o.phone+'">'+OS.IC.wa+'WhatsApp</button>':'<span class="mut" style="font-size:13px">No phone on file</span>';
+    return '<div class="os-dh"><div><h2>#'+o.id+'</h2><p>'+OS.when(o)+' · '+OS.SOURCE(o)+' order</p><div style="margin-top:10px"><span class="chip '+o.st+'">'+OS.ST[o.st]+'</span></div></div>'+
+      '<button type="button" class="ob ic" data-close aria-label="Close">'+OS.IC.x+'</button></div>'+
+      '<div class="os-db">'+
+      '<section><h3>Customer</h3><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:150px"><b style="font-weight:600;font-size:15px">'+OS.esc(o.name)+'</b><div class="mut" style="font-size:13px;margin-top:3px">'+o.city+', '+o.region+(o.phone?' · '+o.phone:'')+'</div></div><div style="display:flex;gap:6px">'+ph+'</div></div></section>'+
+      '<section><h3>Items</h3><div class="items">'+o.items.map(function(i){var p=PR[i.p];return '<div class="it"><span class="sw" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'">'+OS.DRESS+'</span><span><b>'+p.n+'</b><small>'+i.size+' · '+i.col+' · qty '+i.q+'</small></span><span class="mono">'+OS.fmt(i.price*i.q)+'</span></div>'}).join('')+'</div>'+
+      '<dl class="kv" style="margin-top:12px"><dt>Items</dt><dd>EGP '+OS.fmt(o.sub)+'</dd><dt>Shipping</dt><dd>EGP '+o.ship+'</dd><dt class="tot">Total</dt><dd class="tot">EGP '+OS.fmt(o.total)+'</dd><dt>Payment</dt><dd>'+pay+'</dd></dl></section>'+
+      '<section><h3>Delivery with Bosta</h3><ol class="tl">'+steps.map(function(s,i){return '<li class="'+(cls[i]||'')+'"><i></i><span>'+s[0]+'</span><span>'+s[1]+'</span></li>'}).join('')+'</ol>'+
+      (o.st!=='cancelled'?'<p style="margin-top:14px;font-size:13px" class="mut">Tracking <button type="button" class="copy mono" data-copy="'+o.track+'">'+o.track+' '+OS.IC.copy+'</button></p>':'')+'</section>'+
+      '</div><div class="os-df"><button type="button" class="ob" data-shopify="'+o.id+'">'+OS.IC.ext+'Open in Shopify</button><button type="button" class="ob" data-ask="'+o.id+'">'+OS.IC.spark+'Ask about this order</button></div>';
+  };
+  OS.openOrder=function(o){OS.openDrawer(OS.orderHtml(o),'Order '+o.id)};
+  document.addEventListener('click',function(e){
+    var t;
+    if((t=e.target.closest('[data-copy]'))){e.preventDefault();OS.copy(t.dataset.copy,'Tracking number '+t.dataset.copy+' copied')}
+    else if((t=e.target.closest('[data-call]'))){try{navigator.clipboard.writeText(t.dataset.call).catch(function(){})}catch(err){}OS.toast('Number '+t.dataset.call+' copied · your phone app may also open')}
+    else if((t=e.target.closest('[data-wa]'))){e.preventDefault();OS.toast('In the app this opens a WhatsApp chat with '+t.dataset.wa)}
+    else if((t=e.target.closest('[data-shopify]'))){e.preventDefault();OS.toast('Opens order #'+t.dataset.shopify+' in Shopify admin')}
+    else if((t=e.target.closest('[data-ask]'))){e.preventDefault();OS.closeDrawer();if(window.nv2Open){window.nv2Open('ai');var inp=$('[data-nv2-sheet="ai"] input');if(inp)inp.value='What happened with order #'+t.dataset.ask+'?'}}
+  });
+
+  /* ---------- navigation: this mockup is one page; other pages say where they would go ---------- */
+  var NAMES={overview:'Overview',brands:'All brands',sales:'Orders',orders:'Shipping',inventory:'Inventory',products:'Products',ads:'Meta Ads',adsmanager:'Ads Manager',competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',profile:'Profile',signout:'Sign out',account:'Overview · Account'};
+  OS.page='';
+  OS.go=function(go){if(go==='assistant'&&window.nv2Open){window.nv2Open('ai');return}var name=NAMES[go]||go;if(name===OS.page){window.scrollTo({top:0,behavior:OS.reduce?'auto':'smooth'});return}OS.toast('In the app this opens '+name)};
+  document.addEventListener('nv2:nav',function(e){OS.go(e.detail.go)});
+  document.addEventListener('nv2:refresh',function(){OS.toast('Data refreshed')});
+  document.addEventListener('click',function(e){var a=e.target.closest('.side a');if(!a)return;e.preventDefault();OS.go(a.dataset.go)});
+
+  /* CSV of any set of orders (same columns as the real export) */
+  OS.csv=function(rows,file){
+    var q=function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+    var lines=[['Order','Ordered','Customer','Phone','Products','Total','Destination','Payment','Status'].join(',')].concat(rows.map(function(o){
+      return [o.id,'2026-10-'+(o.day<10?'0':'')+o.day,o.name,o.phone,o.items.map(function(i){return i.t+' · '+i.size+' · '+i.col+' × '+i.q}).join(' | '),o.total,o.city+', '+o.region,o.card?'Card':'Cash on delivery',OS.ST[o.st]].map(q).join(',')}));
+    try{var b=new Blob([lines.join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=file;document.body.appendChild(a);a.click();a.remove()}catch(err){}
+    OS.toast(rows.length+' order'+(rows.length===1?'':'s')+' saved as '+file+' (in this preview the download may be blocked)')};
+})();
+/* sticky section tabs (behaviour ported from the Overview): OS.tabs(onShow) → show(name, scroll) */
+OS.tabs=function(onShow){
+  var $=OS.$,$$=OS.$$,seg=$('#seg'),ind=$('#ind'),bar=$('#tabbar'),anchor=$('#tabsAnchor'),tabs=$$('[role=tab]',seg);
+  function place(){var bt=$('[role=tab].on',seg);if(!bt)return;ind.style.width=bt.offsetWidth+'px';ind.style.transform='translateX('+bt.offsetLeft+'px)'}
+  function scrollToBar(){var top=parseFloat(getComputedStyle(bar).top)||0,y=anchor.getBoundingClientRect().top+scrollY+24-top;if(scrollY>y+2||scrollY<y-2)window.scrollTo({top:y,behavior:OS.reduce?'auto':'smooth'})}
+  function show(name,scroll,focus){
+    tabs.forEach(function(t){var on=t.dataset.tab===name;t.classList.toggle('on',on);t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;if(on&&focus)t.focus({preventScroll:true})});
+    $$('.pane').forEach(function(p){p.hidden=p.id!=='p-'+name});
+    place();var bt=$('[role=tab].on',seg);seg.scrollTo({left:bt.offsetLeft-(seg.clientWidth-bt.offsetWidth)/2,behavior:OS.reduce?'auto':'smooth'});
+    if(scroll)scrollToBar();if(onShow)onShow(name)}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){show(t.dataset.tab,true)});
+    t.addEventListener('keydown',function(e){var j=null;if(e.key==='ArrowRight')j=(i+1)%tabs.length;else if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')j=0;else if(e.key==='End')j=tabs.length-1;
+      if(j!==null){e.preventDefault();show(tabs[j].dataset.tab,false,true)}})});
+  if('IntersectionObserver' in window)new IntersectionObserver(function(en){en=en[0];bar.classList.toggle('stuck',!en.isIntersecting&&en.boundingClientRect.top<0)},{threshold:0}).observe(anchor);
+  document.documentElement.style.setProperty('--pane-min',(innerHeight-96)+'px');
+  addEventListener('resize',place);if(document.fonts)document.fonts.ready.then(place);setTimeout(place,400);place();
+  return show};
+/* ---------- Bosta: stuck 7+ days (point in time: 9 parcels, EGP 38,000 — same as the Overview's courier card) ---------- */
+OS.STUCK=[
+  {id:'FNW-54871',name:'Nourhan Adel',city:'Hurghada',region:'Red Sea',phone:'010 1182 7735',cod:6140,days:15,tries:3,why:'Customer not answering',items:'Jasmine Wrap Midi · XL, Layla Tiered Ruffle · L, Nour Satin Slip · M',track:'71840352'},
+  {id:'FNW-54902',name:'Mariam Samir',city:'Assiut',region:'Assiut',phone:'012 5530 9181',cod:5480,days:13,tries:2,why:'Postponed by customer',items:'Mariam Pleated Chiffon · M × 2, Salma Puff-Sleeve · S',track:'71852210'},
+  {id:'FNW-54915',name:'Laila Kamal',city:'Mansoura',region:'Dakahlia',phone:'011 3307 4420',cod:4970,days:12,tries:3,why:'Wrong address',items:'Layla Tiered Ruffle · M × 2, Farida Linen Shirt · S',track:'71857793'},
+  {id:'FNW-54933',name:'Heba Fathy',city:'Alexandria',region:'Alexandria',phone:'010 6618 2207',cod:4450,days:11,tries:1,why:'Waiting for your reply',items:'Nour Satin Slip · L × 2, Jasmine Wrap Midi · L',track:'71861045'},
+  {id:'FNW-54950',name:'Reem Ibrahim',city:'Cairo',region:'Cairo',phone:'015 2294 8812',cod:4120,days:10,tries:2,why:'Customer asked for a later day',items:'Mariam Pleated Chiffon · S, Layla Tiered Ruffle · S',track:'71866631'},
+  {id:'FNW-54968',name:'Dina Mostafa',city:'Giza',region:'Giza',phone:'012 7741 0036',cod:3860,days:9,tries:2,why:'Customer not answering',items:'Jasmine Wrap Midi · M, Nour Satin Slip · M',track:'71870958'},
+  {id:'FNW-54981',name:'Aya Tarek',city:'Tanta',region:'Gharbia',phone:'011 9036 5574',cod:3390,days:9,tries:1,why:'On hold at the Tanta hub',items:'Layla Tiered Ruffle · XL, Salma Puff-Sleeve · L',track:'71874402'},
+  {id:'FNW-54996',name:'Yasmin Nabil',city:'Port Said',region:'Port Said',phone:'010 4450 1193',cod:3050,days:8,tries:2,why:'Phone switched off',items:'Nour Satin Slip · S, Salma Puff-Sleeve · S',track:'71879116'},
+  {id:'FNW-55008',name:'Shahd Wael',city:'Zagazig',region:'Sharqia',phone:'012 3389 7720',cod:2540,days:7,tries:1,why:'Address not found',items:'Layla Tiered Ruffle · M, Salma Puff-Sleeve · XS',track:'71883387'}];
+OS.called={};
+OS.parcelHtml=function(p){var IC=OS.IC,c=OS.called[p.id];
+  return '<div class="os-dh"><div><h2>#'+p.id+'</h2><p>With Bosta for '+p.days+' days · '+p.tries+' delivery tr'+(p.tries>1?'ies':'y')+'</p><div style="margin-top:10px"><span class="chip stuck">Stuck '+p.days+' days</span></div></div>'+
+    '<button type="button" class="ob ic" data-close aria-label="Close">'+IC.x+'</button></div><div class="os-db">'+
+    '<section><h3>Customer</h3><b style="font-weight:600;font-size:15px">'+p.name+'</b><div class="mut" style="font-size:13px;margin-top:3px">'+p.city+', '+p.region+' · '+p.phone+'</div>'+
+    '<div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap"><a class="ob sm" href="tel:'+p.phone.replace(/ /g,'')+'" data-call="'+p.phone+'">'+IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+p.phone+'">'+IC.wa+'WhatsApp</button></div></section>'+
+    '<section><h3>Why it is stuck</h3><p style="font-size:15px">'+p.why+'</p><p class="mut" style="font-size:13px;margin-top:6px">Ask the customer for a good time and the right address, then tell Bosta from their app or ask the assistant to draft the message.</p></section>'+
+    '<section><h3>In the parcel</h3><p style="font-size:14px">'+p.items+'</p><dl class="kv" style="margin-top:12px"><dt class="tot">Cash to collect</dt><dd class="tot">EGP '+OS.fmt(p.cod)+'</dd></dl>'+
+    '<p style="margin-top:14px;font-size:13px" class="mut">Tracking <button type="button" class="copy mono" data-copy="'+p.track+'">'+p.track+' '+IC.copy+'</button></p></section></div>'+
+    '<div class="os-df"><button type="button" class="ob'+(c?'':' pri')+'" data-markcalled="'+p.id+'">'+IC.check+(c?'Called · undo':'Mark as called')+'</button><button type="button" class="ob" data-ask="'+p.id+'">'+IC.spark+'Ask the assistant</button></div>'};
+OS.openParcel=function(id){var p=OS.STUCK.filter(function(x){return x.id===id})[0];if(p)OS.openDrawer(OS.parcelHtml(p),'Order '+p.id)};
+/* call-list state shared by the page: data-markcalled toggles, then "os:called" lets the page repaint */
+document.addEventListener('click',function(e){var b=e.target.closest('[data-markcalled]');if(!b)return;var id=b.dataset.markcalled;
+  if(OS.called[id])delete OS.called[id];else OS.called[id]=1;
+  if(b.closest('.os-drawer'))OS.openParcel(id);
+  OS.toast(OS.called[id]?'Marked as called':'Moved back to the call list');document.dispatchEvent(new CustomEvent('os:called'))});
+/* delivery by city (Bosta, per period): average days to deliver */
+OS.CITYDAYS={Cairo:1.8,'New Cairo':1.9,Giza:2.0,'6th of October':2.2,Alexandria:2.6,Tanta:2.9,Zagazig:3.0,Mansoura:3.1,Ismailia:3.0,'Port Said':3.2,Assiut:3.9,Hurghada:4.2};
+OS.cityStats=function(key){var r=OS.RANGE[key],m={};OS.CITIES.forEach(function(c){m[c[0]]={city:c[0],del:0,ret:0,w:c[2]}});OS.ORD.forEach(function(o){if(o.day<r[0]||o.day>r[1]||o.st==='cancelled'||o.st==='pending')return;
+  var c=m[o.city]||(m[o.city]={city:o.city,del:0,ret:0});if(o.st==='returned')c.ret++;else c.del++});
+  /* delivered per city adds up exactly to the period's Bosta deliveries (largest remainder) */
+  var L=Object.keys(m).map(function(k){return m[k]}),tot=+PER[key].t.c_deliv.replace(/,/g,''),W=L.reduce(function(a,c){return a+c.del},0),useW=W<tot/3;  /* too few delivered orders in the window (e.g. today): spread by usual city mix */
+  if(useW)W=L.reduce(function(a,c){return a+c.w},0);
+  var raw=L.map(function(c){return (useW?c.w:c.del)/W*tot});L.forEach(function(c,i){c.del=Math.floor(raw[i])});
+  var left=tot-L.reduce(function(a,c){return a+c.del},0);raw.map(function(x,i){return [x-Math.floor(x),i]}).sort(function(a,b){return b[0]-a[0]}).slice(0,left).forEach(function(q){L[q[1]].del++});
+  return L.map(function(c){c.n=c.del+c.ret;c.rate=c.n?c.ret/c.n*100:0;c.days=OS.CITYDAYS[c.city]||2.5;return c}).filter(function(c){return c.n>0})};
+/* "i" tips: hover, focus or tap a small i to read what a hard term means. One shared bubble, placed by script so no panel clips it. */
+OS.tip=function(t){return '<button type="button" class="tip" data-tip="'+OS.esc(t)+'" aria-label="'+OS.esc(t)+'">i</button>'};
+(function(){
+  var b=document.createElement('div');b.className='tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b);
+  var cur=null,pin=false;
+  function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+    var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+    var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+  function open(el){cur=el;b.textContent=el.dataset.tip;b.classList.add('on');place(el)}
+  function close(){cur=null;pin=false;b.classList.remove('on')}
+  document.addEventListener('mouseover',function(e){var t=e.target.closest('.tip');if(t&&!pin)open(t)});
+  document.addEventListener('mouseout',function(e){var t=e.target.closest('.tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+  document.addEventListener('focusin',function(e){var t=e.target.closest('.tip');if(t)open(t)});
+  document.addEventListener('focusout',function(e){if(e.target.closest('.tip')&&!pin)close()});
+  document.addEventListener('click',function(e){var t=e.target.closest('.tip');
+    if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+    if(pin)close()},true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+  addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+})();
+
+OS.page='Orders';
+</script>
+<script>
+/* Orders · A — status strip (filters) + searchable, sortable list with bulk select + CSV + detail drawer, then Cancelled & returned */
+(function(){
+  var $=OS.$,$$=OS.$$,fmt=OS.fmt,esc=OS.esc;
+  var S={st:'all',q:'',sort:'new',page:0,sel:{}},PAGE=10;
+  var DOT={all:'var(--pl)',paid:'var(--good)',pending:'var(--warn)',cancelled:'var(--muted)',returned:'var(--bad)'};
+  /* units back of units shipped per dress, per period (PRODUCTS v2 data in the Overview) */
+  var RET={today:{r:[0,0,0,0,0,0],s:[4,3,5,0,2,0]},yesterday:{r:[0,1,0,1,0,0],s:[3,6,4,4,0,2]},'7d':{r:[3,6,2,5,1,1],s:[32,36,25,27,17,14]},'30d':{r:[13,23,8,20,4,4],s:[138,140,105,108,75,53]}};
+  RET.month=RET['30d'];
+
+  function base(){return OS.inPeriod(OS.key())}
+  function rows(){
+    var q=S.q.toLowerCase(),r=base().filter(function(o){return S.st==='all'||o.st===S.st});
+    if(q)r=r.filter(function(o){return (o.id+' '+o.name+' '+o.phone.replace(/ /g,'')+' '+o.phone+' '+o.city+' '+o.region+' '+OS.itemsTxt(o)).toLowerCase().indexOf(q)>=0});
+    var f={new:function(a,b){return b.ts-a.ts},old:function(a,b){return a.ts-b.ts},hi:function(a,b){return b.total-a.total},lo:function(a,b){return a.total-b.total},az:function(a,b){return a.name.localeCompare(b.name)}}[S.sort];
+    return r.slice().sort(f);
+  }
+
+  function paintStrip(){
+    var b=base(),k=OS.key(),L=OS.LEAK[k],P=PER[k],c={all:b.length,paid:0,pending:0,cancelled:0,returned:0};
+    b.forEach(function(o){c[o.st]++});
+    var sub={all:(c.paid+c.pending)+' valid · '+P.t.s_dorders+' '+P.t.vs,paid:'money in',pending:'cash still with Bosta',cancelled:'EGP '+fmt(L[1])+' lost',returned:'EGP '+fmt(L[3])+' lost'};
+    var lab={all:'All orders',paid:'Paid',pending:'Pending',cancelled:'Cancelled',returned:'Returned'};
+    $('#oaSt').innerHTML=['all','paid','pending','cancelled','returned'].map(function(s){
+      return '<button type="button" data-st="'+s+'" aria-pressed="'+(S.st===s)+'"><span class="k"><i style="--dc:'+DOT[s]+'"></i>'+lab[s]+'</span><b>'+c[s]+'</b><small class="'+(s==='cancelled'||s==='returned'?'w':'')+'">'+sub[s]+'</small></button>'}).join('');
+  }
+
+  function dl(o){
+    if(o.st==='cancelled')return '<span class="mut">Not shipped</span>';
+    if(o.st==='returned')return 'Back with you<small>'+o.attempts+' attempt'+(o.attempts>1?'s':'')+'</small>';
+    if(o.st==='pending')return o.stage+'<small>with Bosta</small>';
+    return 'Delivered<small>'+(o.card?'Paid by card':'Cash collected')+'</small>';
+  }
+  function paintRows(){
+    var r=rows(),n=r.length,pages=Math.max(1,Math.ceil(n/PAGE));if(S.page>=pages)S.page=pages-1;
+    var view=r.slice(S.page*PAGE,S.page*PAGE+PAGE);
+    $('#oaRows').innerHTML=n?view.map(function(o){
+      return '<div class="oa-r'+(S.sel[o.id]?' sel':'')+'" role="row" data-id="'+o.id+'" tabindex="0" aria-label="Order '+o.id+', '+esc(o.name)+', EGP '+fmt(o.total)+', '+OS.ST[o.st]+'">'+
+        '<span role="cell"><input type="checkbox" class="cb" data-pick="'+o.id+'" aria-label="Select order '+o.id+'"'+(S.sel[o.id]?' checked':'')+'></span>'+
+        '<span role="cell" class="id"><b>#'+o.id+(o.web?'':'<span class="src">Admin</span>')+'</b><small>'+OS.when(o)+'</small></span>'+
+        '<span role="cell" class="who"><b>'+esc(o.name)+'</b><small>'+o.city+'</small></span>'+
+        '<span role="cell" class="its">'+esc(OS.itemsTxt(o))+'</span>'+
+        '<span role="cell" class="dl">'+dl(o)+'</span>'+
+        '<span role="cell" class="tot">'+fmt(o.total)+'</span>'+
+        '<span role="cell" class="st"><span class="chip '+o.st+'">'+OS.ST[o.st]+'</span></span></div>'}).join('')
+      :'<div class="oa-empty">No orders match '+(S.q?'“'+esc(S.q)+'”':'this filter')+'.<br><button type="button" class="ob sm" id="oaReset">Clear search and filter</button></div>';
+    $('#oaRange').textContent=n?(S.page*PAGE+1)+'–'+(S.page*PAGE+view.length)+' of '+n+' orders':'0 orders';
+    $('#oaPrev').disabled=S.page===0;$('#oaNext').disabled=S.page>=pages-1;
+    $('#oaPrev').style.opacity=S.page===0?.4:1;$('#oaNext').style.opacity=S.page>=pages-1?.4:1;
+    var ids=r.map(function(o){return o.id}),selIn=ids.filter(function(id){return S.sel[id]}).length,all=$('#oaAll');
+    all.checked=n>0&&selIn===n;all.indeterminate=selIn>0&&selIn<n;all.setAttribute('aria-label',selIn===n&&n?'Clear selection':'Select all '+n+' orders in this view');
+    $('#oaCsvT').textContent='Export '+(S.st==='all'&&!S.q?'all ':'')+n;
+    $$('.oa-hd [data-sort]').forEach(function(b){var on=b.dataset.sort===S.sort||(b.dataset.sort==='new'&&S.sort==='old')||(b.dataset.sort==='hi'&&S.sort==='lo');b.classList.toggle('on',on);
+      b.innerHTML=b.textContent+(on?(S.sort==='old'||S.sort==='lo'?OS.IC.up:OS.IC.down):'')});
+    $('#oaSort').value=S.sort;paintBulk();
+  }
+  function selected(){return OS.ORD.filter(function(o){return S.sel[o.id]})}
+  function paintBulk(){var n=selected().length;$('#oaBulk').classList.toggle('on',n>0);$('#oaBulkN').textContent=n+' selected'}
+
+  function paintLost(){
+    var k=OS.key(),P=PER[k],L=OS.LEAK[k],net=+P.t.n_rev.replace(/,/g,''),gross=net+L[1]+L[3],pc=(L[1]+L[3])/gross*100;
+    $('#oaLostR').textContent=(L[0]+L[2])+' orders · '+pc.toFixed(1)+'% of sales placed';
+    $('#oaFlow').innerHTML='<div><span class="k">Sales placed</span><b><small>EGP</small>'+fmt(gross)+'</b></div>'+
+      '<div class="neg"><span class="k">Cancelled · '+L[0]+'</span><b>− '+fmt(L[1])+'</b></div>'+
+      '<div class="neg"><span class="k">Returned · '+L[2]+'</span><b>− '+fmt(L[3])+'</b></div>'+
+      '<div class="net"><span class="k">Net sales you keep</span><b><small>EGP</small>'+P.t.n_rev+'</b></div>'+
+      '<div class="bar" role="img" aria-label="'+pc.toFixed(1)+'% of sales placed was lost to cancelled and returned orders"><i style="flex:'+net+';background:var(--good);opacity:.75"></i><i style="flex:'+L[1]+';background:var(--muted)"></i><i style="flex:'+L[3]+';background:var(--bad)"></i></div>';
+    /* cancel reasons from the period's cancelled orders */
+    var why={};base().forEach(function(o){if(o.st==='cancelled')why[o.reason]=(why[o.reason]||0)+1});
+    var w=Object.keys(why).map(function(r){return [r,why[r]]}).sort(function(a,b){return b[1]-a[1]}),mx=w.length?w[0][1]:1;
+    $('#oaWhy').innerHTML=w.length?w.map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b><span class="t"><i style="width:'+(x[1]/mx*100)+'%"></i></span></div>'}).join(''):'<p class="mut">No cancelled orders in this period.</p>';
+    /* returned units by dress */
+    var R=RET[k],list=OS.PR.map(function(p,i){return {n:p.s,r:R.r[i],s:R.s[i]}}).filter(function(x){return x.r>0}).sort(function(a,b){return b.r/b.s-a.r/a.s});
+    $('#oaRet').innerHTML=list.length?list.slice(0,4).map(function(x){var pc=x.r/x.s*100;return '<div><span>'+x.n+'</span><b class="'+(pc>=15?'bd':'')+'">'+(pc%1?pc.toFixed(1):pc)+'%</b><em>'+x.r+' of '+x.s+' units</em></div>'}).join(''):'<p class="mut">No dresses came back in this period.</p>';
+    $('#oaSz').innerHTML=k==='7d'||k==='30d'||k==='month'?'Most returned sizes <b>XS 16.7%</b> · <b>XXL 10.6%</b> · <b>XL 7.4%</b>':'';
+  }
+
+  function all(){paintStrip();paintRows();paintLost()}
+  /* events */
+  $('#oaSt').addEventListener('click',function(e){var b=e.target.closest('[data-st]');if(!b)return;S.st=b.dataset.st;S.page=0;paintStrip();paintRows()});
+  var qi=$('#oaQ');qi.addEventListener('input',function(){S.q=qi.value.trim();S.page=0;$('#oaSearchW').classList.toggle('has',!!qi.value);paintRows()});
+  $('#oaQx').addEventListener('click',function(){qi.value='';S.q='';$('#oaSearchW').classList.remove('has');paintRows();qi.focus()});
+  $('#oaSort').addEventListener('change',function(){S.sort=this.value;S.page=0;paintRows()});
+  $$('.oa-hd [data-sort]').forEach(function(b){b.addEventListener('click',function(){var s=b.dataset.sort;S.sort=s==='new'?(S.sort==='new'?'old':'new'):s==='hi'?(S.sort==='hi'?'lo':'hi'):'az';S.page=0;paintRows()})});
+  $('#oaPrev').addEventListener('click',function(){if(S.page>0){S.page--;paintRows()}});
+  $('#oaNext').addEventListener('click',function(){S.page++;paintRows()});
+  $('#oaAll').addEventListener('change',function(){var r=rows(),on=this.checked;r.forEach(function(o){if(on)S.sel[o.id]=1;else delete S.sel[o.id]});paintRows()});
+  $('#oaRows').addEventListener('click',function(e){
+    if(e.target.id==='oaReset'){S.st='all';S.q='';qi.value='';$('#oaSearchW').classList.remove('has');paintStrip();paintRows();return}
+    var c=e.target.closest('[data-pick]');if(c){if(c.checked)S.sel[c.dataset.pick]=1;else delete S.sel[c.dataset.pick];paintRows();return}
+    if(e.target.closest('[role=cell]:first-child'))return;
+    var r=e.target.closest('.oa-r');if(r)OS.openOrder(OS.ORD.filter(function(o){return o.id===r.dataset.id})[0])});
+  $('#oaRows').addEventListener('keydown',function(e){var r=e.target.closest('.oa-r');if(r&&e.target===r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();OS.openOrder(OS.ORD.filter(function(o){return o.id===r.dataset.id})[0])}});
+  $('#oaCsv').addEventListener('click',function(){OS.csv(rows(),'frill-n-wear-orders.csv')});
+  $('#oaBulkCsv').addEventListener('click',function(){OS.csv(selected(),'frill-n-wear-selected-orders.csv')});
+  $('#oaBulkCopy').addEventListener('click',function(){var s=selected();OS.copy(s.map(function(o){return '#'+o.id}).join(', '),s.length+' order numbers copied')});
+  $('#oaBulkX').addEventListener('click',function(){S.sel={};paintRows()});
+  $('#oaShip').addEventListener('click',function(){OS.go('orders')});
+  document.addEventListener('click',function(e){var f=e.target.closest('[data-filter]');if(!f)return;S.st=f.dataset.filter;S.page=0;S.q='';qi.value='';paintStrip();paintRows();
+    $('.oa-list').scrollIntoView({behavior:OS.reduce?'auto':'smooth',block:'start'})});
+  document.addEventListener('per:change',function(){S.sel={};S.page=0;all()});
+  all();
+})();
+
+</script>
+<script src="/overview-looks/app/local/glue.js"></script></body>
+</html>

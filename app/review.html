@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redesign Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f4fb;--card:#fff;--text:#1a1426;--muted:#5f5872;--line:#e6e1f0;--pl:#550da6;--chip:#efe7fb;--ok:#1f8a5b;--okb:#e3f5ec;--wa:#9a6a12;--wab:#fbf0d9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0a0f;--card:#15131c;--text:#f2eff8;--muted:#a8a1b8;--line:#2a2635;--pl:#a275e0;--chip:#231a33;--ok:#5fd3a8;--okb:#12261f;--wa:#f2c46d;--wab:#2a2212}}
+:root[data-theme="dark"]{--bg:#0b0a0f;--card:#15131c;--text:#f2eff8;--muted:#a8a1b8;--line:#2a2635;--pl:#a275e0;--chip:#231a33;--ok:#5fd3a8;--okb:#12261f;--wa:#f2c46d;--wab:#2a2212}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 "Inter Tight",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.01em}
+p.sub{color:var(--muted);margin:0 0 16px;font-size:15px}
+.open{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:12px;background:var(--pl);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+h2{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:40px 0 12px}
+h2 .b{letter-spacing:0;text-transform:none;font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
+.b.ok{background:var(--okb);color:var(--ok)}.b.wa{background:var(--wab);color:var(--wa)}.b.n{background:var(--chip);color:var(--pl)}
+.grp{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px 18px;margin-bottom:12px}
+.grp h3{font-size:16px;margin:14px 0 2px}
+.grp > p{margin:0 0 6px;color:var(--muted);font-size:13px}
+.row{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.grp h3 + p + .row,.grp h3 + .row{border-top:0}
+.row:hover .t b,.row:focus-visible .t b{color:var(--pl)}
+.row:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:8px}
+.t{flex:1;min-width:0}
+.t b{display:block;font-size:15px;font-weight:600}
+.t small{display:block;color:var(--muted);font-size:13px}
+.row svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<main>
+  <h1>Everything so far</h1>
+  <p class="sub">Every redesigned page from every session, in one place. Sample numbers only. Each page has its own light/dark switch. The sidebar inside a page always goes to the picked version.</p>
+  <a class="open" href="previews/N-final.html">Open the full app</a>
+
+  <h2>In the app <span class="b ok">Picked</span></h2>
+  <div class="grp">
+    <a class="row" href="previews/N-final.html"><span class="t"><b>Overview</b><small>Card Carousel</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/orders-shipping/orders-B.html"><span class="t"><b>Orders</b><small>Version B</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/orders-shipping/shipping-B.html"><span class="t"><b>Shipping</b><small>Version B</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/inventory-products/products-A.html"><span class="t"><b>Products</b><small>Version A</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/inventory-products/inventory-A.html"><span class="t"><b>Inventory</b><small>Version A</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/G-gemini.html"><span class="t"><b>Tricky</b><small>Your AI assistant</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/competitors/competitors-A.html"><span class="t"><b>Competitors</b><small>Version A</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/settings/connections-B.html"><span class="t"><b>Connections</b><small>Version B</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/admin-D.html"><span class="t"><b>Admin</b><small>Version D · brands, people, billing</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <h2>Waiting for your pick <span class="b wa">Not in the app yet</span></h2>
+  <div class="grp">
+    <h3>Ads report</h3><p>Pick A or B.</p>
+    <a class="row" href="pages/ads/ads-A.html"><span class="t"><b>Ads report · A</b><small>Tabs</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/ads/ads-B.html"><span class="t"><b>Ads report · B</b><small>Sections on one page</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/ads/journey.html"><span class="t"><b>Shop journey</b><small>Parked for later</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="grp">
+    <h3>Ads Manager</h3><p>Pick A or B.</p>
+    <a class="row" href="pages/ads/manager-A.html"><span class="t"><b>Ads Manager · A</b><small>Campaigns and History only</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/ads/manager-B.html"><span class="t"><b>Ads Manager · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="grp">
+    <h3>Settings and account</h3><p>Say yes to each.</p>
+    <a class="row" href="pages/settings/workspace-settings.html"><span class="t"><b>Workspace settings</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/settings/billing.html"><span class="t"><b>Billing</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/settings/support-visits.html"><span class="t"><b>Support visits</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/settings/delete-account.html"><span class="t"><b>Delete account</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="grp">
+    <h3>All brands</h3><p>Pick one.</p>
+    <a class="row" href="pages/brands-admin/brands-A.html"><span class="t"><b>All brands · A</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/brands-B.html"><span class="t"><b>All brands · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/brands-C.html"><span class="t"><b>All brands · C</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/brands-D.html"><span class="t"><b>All brands · D</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="grp">
+    <h3>Sign-in</h3><p>Pick one.</p>
+    <a class="row" href="pages/brands-admin/signin-A.html"><span class="t"><b>Sign-in · A</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/signin-B.html"><span class="t"><b>Sign-in · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/signin-C.html"><span class="t"><b>Sign-in · C</b><small>Scale Trick, newest</small></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <h2>Other versions <span class="b n">Not picked</span></h2>
+  <div class="grp">
+    <a class="row" href="pages/orders-shipping/orders-A.html"><span class="t"><b>Orders · A</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/orders-shipping/shipping-A.html"><span class="t"><b>Shipping · A</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/inventory-products/products-B.html"><span class="t"><b>Products · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/inventory-products/inventory-B.html"><span class="t"><b>Inventory · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/competitors/competitors-B.html"><span class="t"><b>Competitors · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/admin-A.html"><span class="t"><b>Admin · A</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/admin-B.html"><span class="t"><b>Admin · B</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/brands-admin/admin-C.html"><span class="t"><b>Admin · C</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+  <div class="grp">
+    <h3>Tricky, earlier looks</h3>
+    <a class="row" href="pages/assistant/A-workspace.html"><span class="t"><b>A · Workspace</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/B-focus.html"><span class="t"><b>B · Focus</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/C-changes.html"><span class="t"><b>C · Changes</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/G1-halo.html"><span class="t"><b>G1 · Halo</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/G2-aurora.html"><span class="t"><b>G2 · Aurora</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/G3-horizon.html"><span class="t"><b>G3 · Horizon</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+    <a class="row" href="pages/assistant/G4-orb.html"><span class="t"><b>G4 · Orb</b></span><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a>
+  </div>
+</main>
+</body>
+</html>

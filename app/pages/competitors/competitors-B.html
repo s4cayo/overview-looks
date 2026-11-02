@@ -1,0 +1,1251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Competitors · One feed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- === ACCOUNT v1 START === --><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"><!-- === ACCOUNT v1 END === -->
+<script>
+/* theme: remembered choice first, else the OS preference */
+(function(){var t=null;try{t=localStorage.getItem("n-theme")}catch(e){}
+  if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
+  document.documentElement.dataset.theme=t})();
+</script>
+<style>
+:root{
+  --bg:#060509; --panel:#0d0c12; --panel2:#14121b; --line:rgba(255,255,255,.065); --line2:rgba(255,255,255,.11);
+  --text:#eceaf3; --muted:#8d8a9b; --dim:#5f5c6c;
+  --p:#550da6; --pm:#7c3fc1; --pl:#a275e0; --tint:#f2eafb; --acc:#8a4fd1;
+  --good:#45d09a; --warn:#f2b64f; --bad:#f06571; --gold:#d8b46c;
+  --track:rgba(255,255,255,.06); --grid:rgba(255,255,255,.06); --grid2:rgba(255,255,255,.12);
+  --r:18px; --peek:68px;
+  --cw:min(500px, 78vw);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#f4f2f8; --panel:#ffffff; --panel2:#f6f3fb; --line:rgba(20,10,40,.08); --line2:rgba(20,10,40,.14);
+  --text:#17141f; --muted:#666273; --dim:#9a96a6; --acc:#550da6; --pl:#7c3fc1;
+  --good:#14935f; --warn:#b07a12; --bad:#d0434f; --gold:#a8843c;
+  --track:rgba(20,10,40,.07); --grid:rgba(20,10,40,.07); --grid2:rgba(20,10,40,.16);
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:Geist,system-ui,sans-serif;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.num,td,.tab{font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--pl);outline-offset:2px;border-radius:6px}
+svg.i{width:17px;height:17px;flex:none;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- layout ---------- */
+.app{display:flex;min-height:100%}
+.side{position:sticky;top:0;align-self:flex-start;height:100vh;width:248px;flex:none;padding:18px 14px;display:flex;flex-direction:column;gap:18px;border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(124,63,193,.07),transparent 40%),var(--bg)}
+.logo{display:flex;align-items:center;gap:10px;padding:4px 8px;font-weight:600;font-size:15px;letter-spacing:-.01em}
+.mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-weight:700;font-size:11.5px;letter-spacing:.02em;box-shadow:0 0 0 1px rgba(255,255,255,.12) inset,0 6px 18px -6px rgba(124,63,193,.8)}
+.switch{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line2);border-radius:12px;background:var(--panel)}
+.switch .dot{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,#a275e0,#550da6,#a275e0)}
+.switch b{font-weight:500;flex:1;text-align:left}
+.switch .i{color:var(--muted);width:15px}
+nav{display:flex;flex-direction:column;gap:14px;overflow:auto}
+.grp h6{font-size:10.5px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding:0 10px 6px}
+.grp a{display:flex;align-items:center;gap:11px;padding:7.5px 10px;border-radius:10px;color:var(--muted);font-size:13.5px;transition:background .2s,color .2s}
+.grp a:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.grp a.on{color:#fff;background:linear-gradient(90deg,rgba(138,79,209,.28),rgba(138,79,209,.06));box-shadow:inset 2px 0 0 var(--acc)}
+:root[data-theme="light"] .grp a.on{color:var(--p);background:linear-gradient(90deg,rgba(124,63,193,.13),rgba(124,63,193,.03))}
+:root[data-theme="light"] .grp a:hover{background:rgba(20,10,40,.04)}
+
+.content{flex:1;min-width:0;padding:22px 34px 60px}
+main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+/* ================= 4 · STICKY TABS ================= */
+.tabs-anchor{height:0;margin-bottom:-22px}
+.tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
+.seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:min(100%,780px);padding:5px;border-radius:99px;
+  background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
+.seg::-webkit-scrollbar{display:none}
+.tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
+.seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
+  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button:hover{color:var(--text)}
+.seg button.on{color:#fff}
+.seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
+.seg .n{font-size:10.5px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:17px;font-variant-numeric:tabular-nums}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+.seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
+.seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
+.pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
+.pane[hidden]{display:none}
+.pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
+.pane:focus{outline:none}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* === NAV v2 START === */
+/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
+   and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
+   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
+   attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
+   Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
+   "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
+.nv2-top,.nv2-dock,.nv2-sheet,.nv2-scrim{--nv2-font:Geist,"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  --nv2-bg:#060509;--nv2-panel:#0f0d15;--nv2-panel2:#17141f;--nv2-line:rgba(255,255,255,.08);--nv2-line2:rgba(255,255,255,.14);--nv2-fg:#eceaf3;--nv2-mut:#9693a6;
+  --nv2-acc:#a275e0;--nv2-good:#45d09a;--nv2-bad:#f06571;--nv2-glass:rgba(22,19,30,.86);--nv2-shadow:0 18px 40px -14px rgba(0,0,0,.85);
+  font-family:var(--nv2-font);color:var(--nv2-fg)}
+[data-theme="light"] .nv2-top,[data-theme="light"] .nv2-dock,[data-theme="light"] .nv2-sheet,[data-theme="light"] .nv2-scrim{
+  --nv2-bg:#f4f2f8;--nv2-panel:#fff;--nv2-panel2:#f6f3fb;--nv2-line:rgba(20,10,40,.08);--nv2-line2:rgba(20,10,40,.14);--nv2-fg:#17141f;--nv2-mut:#5f5b6c;
+  --nv2-acc:#550da6;--nv2-good:#12855a;--nv2-bad:#d0434f;--nv2-glass:rgba(255,255,255,.9);--nv2-shadow:0 16px 36px -14px rgba(40,20,80,.35)}
+.nv2-top *,.nv2-dock *,.nv2-sheet *{box-sizing:border-box;margin:0;padding:0}
+:where(.nv2-top,.nv2-dock,.nv2-sheet) button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
+:where(.nv2-top,.nv2-sheet,.nv2-dock) a{color:inherit;text-decoration:none}
+.nv2-top :focus-visible,.nv2-dock :focus-visible,.nv2-sheet :focus-visible{outline:2px solid var(--nv2-acc);outline-offset:2px;border-radius:10px}
+.nv2-i{width:19px;height:19px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---- top bar ---- */
+.nv2-top{position:relative;z-index:40;display:flex;align-items:center;gap:10px;min-height:44px}
+.nv2-anc{position:relative}
+/* Profitable / Loss: a tiny dot after the brand name (aria-label + title carry the words) */
+.nv2-sdot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--nv2-good);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-good) 22%,transparent)}
+.nv2-sdot.nv2-loss{background:var(--nv2-bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--nv2-bad) 22%,transparent)}
+.nv2-search{position:relative;flex:1 1 340px;max-width:340px;min-width:150px;display:flex;align-items:center;gap:9px;height:40px;padding:0 12px;border-radius:12px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);color:var(--nv2-mut);transition:border-color .2s}
+.nv2-search:focus-within{border-color:var(--nv2-acc)}
+.nv2-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font:inherit;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-search input::placeholder{color:var(--nv2-mut)}
+.nv2-kbd{font-size:11px;font-weight:600;padding:2px 6px;border-radius:6px;border:1px solid var(--nv2-line2);color:var(--nv2-mut);white-space:nowrap}
+.nv2-res{position:absolute;left:0;right:0;top:calc(100% + 6px);padding:6px;border-radius:14px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);display:none}
+.nv2-res.nv2-on{display:block}
+.nv2-res button{display:flex;width:100%;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:var(--nv2-fg)}
+.nv2-res button small{margin-left:auto;font-size:12px;color:var(--nv2-mut)}
+.nv2-res button:hover,.nv2-res button.nv2-hl{background:var(--nv2-panel2)}
+.nv2-right{margin-left:auto;display:flex;align-items:center;gap:8px;flex:none}
+.nv2-date{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:99px;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;font-size:13.5px;font-weight:500;white-space:nowrap;transition:border-color .2s}
+.nv2-date:hover{border-color:var(--nv2-acc)!important}
+.nv2-date small{font-size:12.5px;color:var(--nv2-mut);font-weight:400}
+.nv2-ds{display:none}
+.nv2-date .nv2-i{width:16px;height:16px}
+.nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
+.nv2-ib:hover{border-color:var(--nv2-acc)!important}
+.nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
+.nv2-avw{flex:none}
+.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
+.nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
+.nv2-brandw{min-width:0;flex:none}
+.nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
+.nv2-brand:hover{background:var(--nv2-panel2)}
+.nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
+.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+/* popovers */
+.nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
+  opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
+.nv2-pop.nv2-on{opacity:1;transform:none;pointer-events:auto}
+.nv2-pop.nv2-l{right:auto;left:0;transform-origin:top left}
+.nv2-pop.nv2-c{right:auto;left:50%;transform:translate(-50%,-6px) scale(.98);transform-origin:top center}
+.nv2-pop.nv2-c.nv2-on{transform:translate(-50%,0)}
+.nv2-mi{display:flex;width:100%;align-items:center;gap:11px;min-height:42px;padding:8px 11px;border-radius:10px;font-size:14px;white-space:nowrap}
+.nv2-mi:hover{background:var(--nv2-panel2)}
+.nv2-mi small{margin-left:auto;font-size:12.5px;color:var(--nv2-mut)}
+.nv2-mi[aria-checked="true"]{color:var(--nv2-acc);font-weight:600}
+.nv2-mi[aria-checked="true"]::after{content:"✓";margin-left:10px;font-weight:700}
+.nv2-mi .nv2-i{width:17px;height:17px;color:var(--nv2-mut)}
+.nv2-hr{height:1px;background:var(--nv2-line);margin:5px 6px}
+.nv2-who{padding:10px 11px 8px}
+.nv2-who b{display:block;font-size:14px;font-weight:600}
+.nv2-who span{font-size:12.5px;color:var(--nv2-mut)}
+.nv2-tog{margin-left:auto;position:relative;width:42px;height:24px;border-radius:99px;background:var(--nv2-line2);flex:none;transition:background .25s}
+.nv2-tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s}
+[data-theme="dark"] .nv2-tog,:root:not([data-theme="light"]) .nv2-tog{background:linear-gradient(135deg,#7c3fc1,#550da6)}
+[data-theme="dark"] .nv2-tog::after,:root:not([data-theme="light"]) .nv2-tog::after{transform:translateX(18px)}
+/* bell: straight to the list — icon · one-line message · time · link (no heading) */
+.nv2-bellpop{width:min(344px,calc(100vw - 32px));padding:6px;display:flex;flex-direction:column;gap:2px}
+.nv2-note{display:flex;align-items:flex-start;gap:12px;padding:11px 12px;border-radius:12px;line-height:1.35;width:100%;text-align:left}
+.nv2-note:hover{background:var(--nv2-panel2)}
+.nv2-note + .nv2-note{box-shadow:0 -1px 0 var(--nv2-line)}
+.nv2-note:hover + .nv2-note,.nv2-note + .nv2-note:hover{box-shadow:none}
+.nv2-ni{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.nv2-ni svg.nv2-i{width:16px;height:16px}
+.nv2-nt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.nv2-nt b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-nt small{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;color:var(--nv2-mut)}
+.nv2-nl{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--nv2-acc,#a275e0);white-space:nowrap}
+.nv2-nl svg.nv2-i{width:13px;height:13px;transition:transform .2s}
+.nv2-note:hover .nv2-nl svg.nv2-i{transform:translateX(3px)}
+
+/* ---- narrower desktops: the range moves into the menu ---- */
+@media (max-width:1279px){.nv2-dr{display:none}}
+/* ---- phone / tablet top: the same single row; search hidden, compact date ("7 days") ---- */
+@media (max-width:1023px){
+  .nv2-top{gap:8px}
+  .nv2-brandw{flex:0 1 auto}
+  .nv2-search{display:none}
+  .nv2-dl,.nv2-dr{display:none}
+  .nv2-ds{display:inline}
+}
+@media (max-width:480px){
+  .nv2-top{gap:6px}
+  .nv2-right{gap:6px}
+  .nv2-av,.nv2-ib{width:40px;height:40px}
+  .nv2-av b{width:38px;height:38px}
+  .nv2-dot{top:9px;right:10px}
+  .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
+  .nv2-date{height:40px;padding:0 12px;gap:6px}
+  .nv2-date .nv2-cal{display:none}
+}
+@media (max-width:400px){.nv2-bchev{display:none}}
+
+/* ---- bottom dock ---- */
+.nv2-dock{display:none}
+@media (max-width:1023px){
+  html.nv2-docked body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  .nv2-dock{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:70;display:flex;flex-direction:row;overflow:visible;justify-content:center;align-items:center;gap:12px;pointer-events:none;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s}
+  .nv2-dock.nv2-hide{transform:translateY(calc(100% + 30px));opacity:0}
+  .nv2-pill,.nv2-ai{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+  .nv2-pill{display:flex;align-items:center;gap:2px;padding:5px;border-radius:99px;background:var(--nv2-glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .nv2-pill > *{width:64px;height:52px;border-radius:99px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--nv2-mut);transition:background .25s,color .25s}
+  .nv2-pill > * > span{font-size:12px;line-height:1;font-weight:500;letter-spacing:0;white-space:nowrap}
+  .nv2-pill > *[aria-current="page"]{background:var(--nv2-fg);color:var(--nv2-bg)}
+  .nv2-pill .nv2-i{width:20px;height:20px}
+  .nv2-pill > *[aria-current="page"] .nv2-i{stroke-width:2.1}
+  .nv2-ai{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6 60%,#3d0880);box-shadow:0 14px 30px -10px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.25)!important}
+  .nv2-ai .nv2-i{width:24px;height:24px}
+}
+/* ---- sheets (menu, assistant) ---- */
+.nv2-scrim{position:fixed;inset:0;z-index:90;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.nv2-scrim.nv2-on{opacity:1;pointer-events:auto}
+.nv2-sheet{position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:86vh;overflow:auto;border-radius:24px 24px 0 0;background:var(--nv2-panel);border-top:1px solid var(--nv2-line2);
+  padding:10px 20px calc(24px + env(safe-area-inset-bottom,0px));transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),visibility 0s .4s;box-shadow:0 -20px 50px -20px rgba(0,0,0,.6)}
+.nv2-sheet.nv2-on{transform:none;visibility:visible;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+@media (min-width:1024px){.nv2-sheet{left:50%;right:auto;width:520px;margin-left:-260px}}
+.nv2-grab{width:40px;height:5px;border-radius:9px;background:var(--nv2-line2);margin:2px auto 14px}
+.nv2-sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.nv2-sh h2{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.nv2-x{margin-left:auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel2)}
+.nv2-sw{display:flex;align-items:center;gap:11px;width:100%;padding:12px;border-radius:14px;background:var(--nv2-panel2);border:1px solid var(--nv2-line)!important;margin-bottom:16px;font-size:15px;font-weight:600}
+.nv2-sw .nv2-i{margin-left:auto;color:var(--nv2-mut)}
+.nv2-grp{margin-bottom:14px}
+.nv2-grp h6{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--nv2-mut);padding:0 12px 6px}
+.nv2-grp a{display:flex;align-items:center;gap:13px;min-height:46px;padding:0 12px;border-radius:12px;font-size:15px}
+.nv2-grp a:hover{background:var(--nv2-panel2)}
+.nv2-grp a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-acc) 16%,transparent);color:var(--nv2-acc);font-weight:600}
+.nv2-grp a .nv2-i{color:var(--nv2-mut)}
+.nv2-grp a[aria-current="page"] .nv2-i{color:var(--nv2-acc)}
+.nv2-ask{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--nv2-panel2);border:1px solid var(--nv2-line2);margin:6px 0 16px}
+.nv2-ask:focus-within{border-color:var(--nv2-acc)}
+.nv2-ask input:focus-visible,.nv2-search input:focus-visible{outline:none}
+.nv2-ask input{flex:1;min-width:0;height:44px;border:0;outline:0;background:none;font:inherit;font-size:15px;color:var(--nv2-fg)}
+.nv2-ask button{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:#fff;background:linear-gradient(140deg,#8a4fd1,#550da6)}
+.nv2-sugh{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--nv2-mut);margin-bottom:8px}
+.nv2-sug{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:14px;border:1px solid var(--nv2-line)!important;margin-bottom:8px;font-size:14.5px;line-height:1.35}
+.nv2-sug:hover{border-color:var(--nv2-acc)!important}
+.nv2-sug .nv2-i{color:var(--nv2-acc)}
+.nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
+/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
+   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
+   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
+   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+.nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
+  background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
+  transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
+.nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
+.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
+.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
+  -webkit-tap-highlight-color:transparent;transition:background .2s}
+.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
+.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
+@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
+.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
+.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
+.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
+.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
+.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
+.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
+.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
+.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
+.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
+.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
+.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
+.nv2-mh .nv2-i{width:16px;height:16px}
+.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
+.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+.nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nv2-mbtn .nv2-i{width:22px;height:22px}
+.nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#7c3fc1,#550da6)}
+.nv2-mask .nv2-i{width:20px;height:20px}
+html.nv2-lock,html.nv2-lock body{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
+/* === NAV v2 END === */
+/* ===== CP COMMON — page chrome shared by Competitors A + B (cp- prefix) ===== */
+.content{padding:22px 34px 60px}
+main{max-width:1240px}
+@media (max-width:1180px){.side{width:212px}.content{padding:20px 22px 50px}}
+@media (max-width:1023px){.side{display:none!important}.content{padding-left:22px;padding-right:22px;padding-bottom:120px}}
+@media (max-width:600px){.content{padding:14px 16px 120px}main{gap:18px}}
+.grp h6{font-size:12px}
+:root[data-theme="light"]{--good:#0e774b;--warn:#8a5c05;--bad:#c0343f}
+.seg .n{font-size:12px}
+.cp{display:flex;flex-direction:column;gap:22px;min-width:0}
+.cp-i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cp .muted{color:var(--muted)}
+
+/* page heading */
+.cp-head{display:flex;align-items:flex-end;gap:14px 20px;flex-wrap:wrap;margin-top:6px}
+.cp-head h1{font-size:30px;font-weight:600;letter-spacing:-.025em;line-height:1.1}
+.cp-head p{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.45}
+.cp-hl{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:600px){.cp-head h1{font-size:26px}.cp-hl{margin-left:0;width:100%}.cp-hl .cp-btn{flex:1;justify-content:center}}
+
+/* buttons */
+.cp-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:99px;font-size:13.5px;font-weight:600;white-space:nowrap;color:var(--text);background:var(--panel);border:1px solid var(--line2);transition:border-color .2s,background .2s,opacity .2s}
+.cp-btn:hover{border-color:var(--pl)}
+.cp-btn.pri{color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6);border-color:transparent;box-shadow:0 10px 24px -12px rgba(85,13,166,.9)}
+.cp-btn.pri:hover{filter:brightness(1.08)}
+.cp-btn[disabled]{opacity:.55;cursor:default}
+.cp-btn.sm{height:34px;padding:0 13px;font-size:13px}
+.cp-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--pl);white-space:nowrap}
+.cp-link svg{transition:transform .2s}.cp-link:hover svg{transform:translateX(3px)}
+.cp-spin{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:cpspin .8s linear infinite;flex:none}
+@keyframes cpspin{to{transform:rotate(360deg)}}
+
+/* panels */
+.cp-panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;min-width:0}
+:root[data-theme="light"] .cp-panel{box-shadow:0 1px 2px rgba(24,16,40,.04),0 10px 28px -20px rgba(40,20,80,.25)}
+.cp-ph{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-bottom:14px}
+.cp-ph h3{font-size:15px;font-weight:600;letter-spacing:-.005em;display:inline-flex;align-items:center}
+.cp-ph .r{margin-left:auto}
+@media (max-width:600px){.cp-panel{padding:16px}}
+
+/* tags + status */
+.cp-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;white-space:nowrap;line-height:18px}
+.cp-tag.g{color:var(--good);background:color-mix(in srgb,var(--good) 13%,transparent)}
+.cp-tag.r{color:var(--bad);background:color-mix(in srgb,var(--bad) 13%,transparent)}
+.cp-tag.w{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.cp-tag.p{color:var(--pl);background:color-mix(in srgb,var(--pl) 14%,transparent)}
+.cp-tag.n{color:var(--muted);background:var(--track)}
+.cp-dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 20%,transparent)}
+.cp-dot.bad{background:var(--bad);box-shadow:0 0 0 3px color-mix(in srgb,var(--bad) 20%,transparent)}
+.cp-dot.wait{background:var(--muted);box-shadow:0 0 0 3px var(--track);animation:cppulse 1.2s ease-in-out infinite}
+@keyframes cppulse{50%{opacity:.4}}
+.cp-mark{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff;background:linear-gradient(150deg,var(--m1),var(--m2))}
+
+/* product thumbnail: gradient tile with a dress, or the first letter when the store gives no photo */
+.cp-th{position:relative;width:52px;height:52px;border-radius:12px;flex:none;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.cp-th svg{width:24px;height:36px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}
+.cp-th.ini{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);font-weight:600;font-size:18px}
+.cp-th.big{width:100%;height:auto;aspect-ratio:4/3.3;border-radius:14px}
+.cp-th.big svg{width:44px;height:66px}
+.cp-th.big.ini{font-size:30px}
+
+/* money */
+.cp-pr{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cp-was{color:var(--muted);text-decoration:line-through;font-weight:400;margin-left:6px;white-space:nowrap}
+.cp-vs{display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-size:13px;color:var(--muted);line-height:1.4}
+.cp-vs b{color:var(--text);font-weight:600}
+
+/* notes */
+.cp-note{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;font-size:13.5px;line-height:1.5;background:color-mix(in srgb,var(--warn) 10%,transparent);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent)}
+.cp-note svg{color:var(--warn);margin-top:2px}
+.cp-note.bad{background:color-mix(in srgb,var(--bad) 9%,transparent);border-color:color-mix(in srgb,var(--bad) 28%,transparent)}
+.cp-note.bad svg{color:var(--bad)}
+.cp-empty{padding:30px 16px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5}
+
+/* chips (filters) */
+.cp-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cp-chip{position:relative;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:99px;font-size:13px;font-weight:500;color:var(--muted);background:var(--panel2);border:1px solid var(--line);white-space:nowrap;transition:border-color .2s,color .2s,background .2s}
+.cp-chip:hover{border-color:var(--pl);color:var(--text)}
+.cp-chip b{font-weight:700;font-size:12px;color:var(--text);min-width:18px;height:20px;padding:0 6px;border-radius:99px;display:inline-grid;place-items:center;background:var(--track)}
+.cp-chip[aria-pressed="true"]{color:#fff;background:linear-gradient(135deg,#7c3fc1,#550da6);border-color:transparent}
+.cp-chip[aria-pressed="true"] b{background:rgba(255,255,255,.22);color:#fff}
+@media (max-width:600px){.cp-chips.swipe{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px}.cp-chips.swipe::-webkit-scrollbar{display:none}}
+
+/* "Worth a look" rows (Products A pattern) */
+.cp-att{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+.cp-arow{display:flex;align-items:center;gap:12px;padding:13px 4px;border-top:1px solid var(--line);width:100%;text-align:left;border-radius:10px;transition:background .2s;min-width:0}
+.cp-arow:hover{background:var(--panel2)}
+.cp-att > .cp-arow:nth-child(-n+2){border-top:0}
+.cp-arow > span:nth-child(2){flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.cp-arow b{font-size:14px;font-weight:600;line-height:1.4}
+.cp-arow small{font-size:13px;color:var(--muted);line-height:1.4}
+.cp-arow .cp-th{width:44px;height:44px}
+.cp-arow .cp-th svg{width:20px;height:30px}
+@media (max-width:760px){.cp-att{grid-template-columns:minmax(0,1fr)}.cp-att > .cp-arow:nth-child(2){border-top:1px solid var(--line)}}
+
+/* edit form */
+.cp-form{display:flex;flex-direction:column;gap:14px}
+.cp-fs{border:1px solid var(--line);border-radius:16px;padding:14px 16px 12px;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:10px 14px;min-width:0}
+.cp-fs.on{border-color:var(--line2)}
+.cp-fs legend{padding:0 6px;font-size:13px;font-weight:600;margin-left:-6px}
+.cp-opt{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px}
+.cp-f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.cp-f label{font-size:13px;font-weight:500;color:var(--muted)}
+.cp-in{height:42px;width:100%;min-width:0;padding:0 12px;border-radius:12px;border:1px solid var(--line2);background:var(--panel2);color:var(--text);font:inherit;font-size:14px;outline:0;transition:border-color .2s}
+.cp-in:focus{border-color:var(--pl)}
+.cp-in::placeholder{color:var(--dim)}
+:root[data-theme="light"] .cp-in::placeholder{color:#8a8696}
+.cp-url{display:flex;gap:8px;min-width:0}
+.cp-url .cp-in{flex:1}
+.cp-url .cp-btn{height:42px}
+.cp-url .cp-btn.hide{visibility:hidden}
+.cp-res{grid-column:1/-1;font-size:13px;line-height:1.45;min-height:0}
+.cp-res:empty{display:none}
+.cp-res.ok{color:var(--good)}.cp-res.bad{color:var(--bad)}.cp-res.wait{color:var(--muted)}
+.cp-hint{grid-column:1/-1;font-size:12.5px;color:var(--muted);line-height:1.45}
+.cp-save{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cp-stat{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+.cp-stat.ok{color:var(--good)}.cp-stat.bad{color:var(--bad)}
+.cp-warn{font-size:13px;color:var(--muted);line-height:1.5}
+.cp-warn b{color:var(--text);font-weight:600}
+@media (max-width:600px){.cp-fs{grid-template-columns:minmax(0,1fr);padding:12px 12px 10px}.cp-url{flex-wrap:wrap}.cp-url .cp-in{flex:1 1 100%}.cp-url .cp-btn{flex:1;justify-content:center}.cp-url .cp-btn.hide{display:none}}
+
+/* drawer (desktop) / bottom sheet (phone) */
+.cp-scrim{position:fixed;inset:0;z-index:85;background:rgba(6,4,12,.55);opacity:0;pointer-events:none;transition:opacity .3s}
+.cp-scrim.on{opacity:1;pointer-events:auto}
+.cp-sheet{position:fixed;top:0;right:0;bottom:0;z-index:86;width:min(560px,100vw);overflow:auto;overscroll-behavior:contain;background:var(--panel);border-left:1px solid var(--line2);box-shadow:0 30px 70px -20px rgba(0,0,0,.85);
+  padding:22px 24px 30px;transform:translateX(105%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s}
+.cp-sheet.on{transform:none;visibility:visible;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.cp-sh{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
+.cp-sh h2{font-size:20px;font-weight:600;letter-spacing:-.015em}
+.cp-sh p{font-size:13.5px;color:var(--muted);margin-top:4px;line-height:1.45}
+.cp-x{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--muted);margin-left:auto;flex:none;border:1px solid var(--line2)}
+.cp-x:hover{color:var(--text);border-color:var(--pl)}
+.cp-grab{display:none;width:40px;height:4px;border-radius:99px;background:var(--line2);margin:0 auto 12px}
+@media (max-width:767px){.cp-sheet{top:auto;left:0;width:auto;max-height:90vh;border-left:0;border-top:1px solid var(--line2);border-radius:22px 22px 0 0;padding:12px 16px calc(28px + env(safe-area-inset-bottom,0px));transform:translateY(105%)}.cp-grab{display:block}}
+
+/* toast */
+.cp-toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,20px);opacity:0;pointer-events:none;max-width:min(440px,calc(100vw - 32px));
+  padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.45;background:#f4f1fa;color:#17141f;box-shadow:0 18px 40px -16px rgba(0,0,0,.7);transition:opacity .25s,transform .25s}
+.cp-toast.on{opacity:1;transform:translate(-50%,0)}
+:root[data-theme="light"] .cp-toast{background:#17141f;color:#fff}
+@media (min-width:1024px){.cp-toast{bottom:32px}}
+@media (prefers-reduced-motion:reduce){.cp-sheet,.cp-scrim,.cp-toast{transition:none!important}.cp-spin,.cp-dot.wait{animation:none}}
+
+/* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
+.tip{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;margin-left:6px;vertical-align:1px;flex:none;
+  font:italic 600 12px/1 Georgia,"Times New Roman",serif;color:var(--muted);border:1px solid var(--line2);background:transparent;cursor:help;transition:color .2s,border-color .2s,background .2s}
+.tip:hover,.tip:focus-visible{color:var(--text);border-color:var(--pl);background:color-mix(in srgb,var(--pl) 12%,transparent);outline:none}
+.tipb{position:fixed;z-index:200;left:0;top:0;padding:10px 12px;border-radius:12px;font-size:13px;line-height:1.45;color:var(--text);background:var(--panel2);
+  border:1px solid var(--line2);box-shadow:0 14px 34px -12px rgba(0,0,0,.6);visibility:hidden;opacity:0;transform:translateY(-3px);transition:opacity .15s,transform .15s,visibility .15s;pointer-events:none;text-wrap:pretty}
+.tipb.on{visibility:visible;opacity:1;transform:none}
+
+/* product sheet */
+.cp-pd-top{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.cp-pd-top .cp-th.big{aspect-ratio:16/10}
+.cp-pd-ph{font-size:12.5px;color:var(--muted)}
+.cp-pd-id{display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-bottom:6px}
+.cp-pd-id h2{font-size:21px;font-weight:600;letter-spacing:-.015em;line-height:1.25;text-wrap:balance}
+.cp-pd-id p{font-size:13.5px;color:var(--muted)}
+.cp-pd-pr{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:18px;margin:4px 0 8px}
+.cp-pd-s{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.cp-pd-s h3{font-size:14px;font-weight:600;margin-bottom:10px}
+.cp-pd-sz{display:flex;flex-direction:column}
+.cp-pd-row{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.cp-pd-row:first-child{border-top:0}
+.cp-pd-row b{font-weight:600}
+.cp-pd-row.out .cp-pr{color:var(--muted)}
+.cp-pd-our{display:flex;align-items:center;gap:8px 12px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);flex-wrap:wrap;transition:border-color .2s}
+.cp-pd-our:hover{border-color:var(--pl)}
+.cp-pd-our > span:first-child{flex:1;min-width:150px;display:flex;flex-direction:column;gap:3px}
+.cp-pd-our b{font-size:14px;font-weight:600}
+.cp-pd-our small{font-size:13px;color:var(--muted)}
+.cp-pd-k{font-size:13px;color:var(--muted);margin:14px 0 6px}
+.cp-pd-outs{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.cp-pd-outs li{font-size:13px;color:var(--muted);padding:6px 11px;border-radius:99px;border:1px solid var(--line2)}
+.cp-pd-outs li b{color:var(--text);font-weight:600}
+.cp-pd-hist{list-style:none;display:flex;flex-direction:column}
+.cp-pd-hist li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:13.5px}
+.cp-pd-hist li:first-child{border-top:0}
+.cp-pd-hist time{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.cp-pd-d{font-size:14px;line-height:1.55;max-width:60ch}
+@media (max-width:420px){.cp-pd-hist li{grid-template-columns:auto minmax(0,1fr)}.cp-pd-hist li > span:nth-child(2){grid-column:1 / -1;grid-row:2}.cp-pd-hist time{justify-self:end}}
+
+/* ===== Competitors B — one feed across every store ===== */
+.cb-msg{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:8px;margin-top:-8px}
+.cb-msg.ok{color:var(--good)}.cb-msg.bad{color:var(--bad)}
+.cb-msg:empty{display:none}
+@media (max-width:600px){.tabbar .seg{grid-auto-columns:max-content}.tabbar .seg button{padding:9px 14px;font-size:13px}}
+.cb-tools{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;margin-bottom:16px}
+.cb-tools .cp-chip .cp-dot{width:7px;height:7px;box-shadow:none}
+.cb-tools .cp-chip[aria-pressed="true"] .cp-dot{background:#fff}
+.cb-sum{font-size:13px;color:var(--muted);margin-left:auto}
+@media (max-width:600px){.cb-sum{margin-left:0;width:100%}}
+.cb-pane .cp-note{margin-bottom:16px}
+
+/* rows: one product per row, store under its name, your product on the right */
+.cb-rows{container-type:inline-size}
+.cb-row{display:grid;grid-template-columns:52px minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1.3fr);gap:6px 16px;align-items:center;padding:13px 6px;border-top:1px solid var(--line);border-radius:12px;text-align:left;width:100%;transition:background .2s}
+.cb-row:hover{background:var(--panel2)}
+.cb-rows > .cb-row:first-child,.cb-day + .cb-row{border-top:0}
+.cb-nm{display:flex;flex-direction:column;gap:3px;min-width:0}
+.cb-nm b{font-size:14px;font-weight:600;line-height:1.35}
+.cb-nm small{font-size:13px;color:var(--muted);line-height:1.4;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cb-pz{display:flex;flex-direction:column;gap:4px;align-items:flex-start;font-size:14px;min-width:0}
+.cb-row .cp-vs{min-width:0}
+.cb-row .cb-none{font-size:13px;color:var(--muted)}
+.cb-hd{display:grid;grid-template-columns:52px minmax(0,1.5fr) minmax(0,.8fr) minmax(0,1.3fr);gap:16px;padding:0 6px 8px;font-size:12.5px;color:var(--muted);font-weight:500}
+.cb-hd span:first-child{grid-column:1 / span 2}
+@container (max-width:700px){
+  .cb-hd{display:none}
+  .cb-row{grid-template-columns:52px minmax(0,1fr);row-gap:8px}
+  .cb-row .cp-th{grid-row:1 / span 2;align-self:start}
+  .cb-pz{grid-column:2;flex-direction:row;align-items:center;gap:8px;flex-wrap:wrap}
+  .cb-row .cp-vs,.cb-row .cb-none{grid-column:1/-1;padding-top:8px;border-top:1px dashed var(--line)}
+}
+
+/* changes feed */
+.cb-day{font-size:13px;font-weight:600;color:var(--muted);padding:16px 6px 6px}
+.cb-day:first-child{padding-top:0}
+.cb-ch{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:12px 6px;border-top:1px solid var(--line);border-radius:12px;width:100%;text-align:left;transition:background .2s}
+.cb-ch:hover{background:var(--panel2)}
+.cb-ch .cp-th{width:44px;height:44px}.cb-ch .cp-th svg{width:20px;height:30px}
+.cb-ch-r{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.cb-ch-r time{font-size:12.5px;color:var(--muted)}
+.cb-ch .cp-vs{grid-column:2 / -1;flex-direction:row;align-items:center;flex-wrap:wrap}
+.cb-arrow{color:var(--muted);margin:0 4px}
+@media (max-width:600px){.cb-ch{grid-template-columns:44px minmax(0,1fr)}.cb-ch-r{grid-column:2;flex-direction:row;align-items:center;justify-content:space-between}.cb-ch .cp-vs{grid-column:1/-1;flex-direction:column;align-items:flex-start}}
+.cb-more{display:flex;justify-content:center;margin-top:12px}
+.cb-foot{font-size:13px;color:var(--muted);margin-top:14px;display:flex;align-items:center}
+
+/* stores tab */
+.cb-st{display:flex;align-items:center;gap:14px;padding:14px 4px;border-top:1px solid var(--line);flex-wrap:wrap}
+.cb-st:first-child{border-top:0;padding-top:2px}
+.cb-st-m{flex:1;min-width:200px;display:flex;flex-direction:column;gap:4px}
+.cb-st-m b{font-size:15px;font-weight:600}
+.cb-st-m small{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.cb-st-m a{color:var(--pl);font-weight:500;display:inline-flex;align-items:center;gap:4px}
+.cb-st-m a .cp-i{width:14px;height:14px}
+.cb-st-n{display:flex;gap:18px;font-size:13px;color:var(--muted)}
+.cb-st-n b{display:block;font-size:18px;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums}
+@media (max-width:600px){.cb-st-n{width:100%;padding-left:54px;justify-content:space-between}}
+.cb-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:22px;align-items:start}
+@media (max-width:1180px){.cb-split{grid-template-columns:minmax(0,1fr)}}
+</style>
+<script>
+/* === PERIODS v1 START === */
+/* Periods v1 (round 7) — ONE dataset for every date period (today = Fri, Oct 30, the last day of the sample) and ONE
+   place that re-renders the page when the date picker changes: NAV v2 calls perSet(key) on every pick.
+   perSet(key)  key = 'today' | 'yesterday' | '7d' | '30d' | 'month'. It calls, in order,
+     pv2SetPeriod(key)  PRODUCTS v2   (top products + low-stock planner)
+     cv2SetPeriod(P)    CARDS v2      (card fronts + backs)
+     puSetPeriod(P)     PULSE v1      (Store pulse, N/K/J)
+     accSetPeriod(P)    ACCOUNT v1    (Sales vs spend + Where the money went)
+   then fills the look's own markup through data attributes
+     data-per-t="key"             textContent = P.t[key] (a data-count on the same element is re-targeted)
+     data-per-cls="key:good:bad"  class `good` when P.tone[key] === 'g', else `bad`
+     data-per-flip="key"          attribute data-per-down while that figure went down (its arrow icon flips)
+     data-per-w="key"             style.flex = P.w[key]
+   and fires document "per:change" {key, P} for anything the look draws itself (V's sparklines).
+   PER[key] = {t:{display strings}, tone:{g|w}, flip:{bool}, w:{numbers}, s:{x, rev, sp, od, roas, unit}}
+   — generated by scratchpad/edits7/periods.py (dataset + reconciliation in periods.md). */
+window.PER={"today":{"key":"today","t":{"label":"Today","range":"Oct 30","vs":"vs yesterday","cmp":"Oct 29","s_profit":"7,597","s_margin":"21.5%","s_orders":"24","s_aov":"1,472","s_title":"Today vs yesterday","s_sub":"Oct 30 compared with Oct 29","s_dprofit":"▲ 12.6%","s_dorders":"▼ 17.2%","s_drev":"▼ 10.8%","s_bestlab":"Busiest hours","s_besta":"9 pm–12 am","s_bestb":"EGP 10,595","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"4 sold","s_new":"18","s_ret":"6","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"35,317","n_cogs":"−9,902","n_sp":"−14,109","n_comm":"−2,472","n_fees":"−1,237","n_profit":"7,597","f_view":"2,017","f_cart":"107","f_chk":"45","f_note":"28 purchases","ab_retof":"Return rate · 1 of 58","ab_retp":"1.7%","s_be":"1.63","s_now":"1.54","a_spend":"14,109","a_roas":"2.50x","a_droas":"▲ 6.2%","a_cpp":"504","a_title":"Today on ads","a_sub":"Oct 30 · spent EGP 14,109","a_purch":"28","a_reach":"71,300","a_clicks":"2,352","a_reachk":"71.3k","a_clicksk":"2.4k","a_best":"4.40","a_worst":"0.80","c_deliv":"19","c_ret":"1","c_ok":"95.0%","c_okof":"19 of 20","c_days":"2.2","c_sub":"Deliveries today","p_rev":"35,317","p_drev":"▼ 10.8%","p_roas":"2.50","p_droas":"▲ 6.2%","p_orders":"24","p_split":"22 web · 2 admin","at_rev":"Revenue fell 10.8%","at_revsub":"EGP 35,317 vs yesterday","at_roas":"Revenue ROAS improved 6.2%","at_roassub":"Now 2.50x","at_roassub2":"Now 2.50x on Meta spend","at_spend":"Meta spend down 16.0%","at_spendsub":"EGP 14,109 today","acc_spend":"EGP 14,109","acc_c1":"Busiest hours · 9 pm–12 am","acc_v1":"10,595","acc_c2":"Revenue that day","acc_v2":"35,317","acc_c3":"Ad spend that day","acc_v3":"14,109","acc_rev":"EGP 35,317","acc_cogs":"− 9,902","acc_sp":"− 14,109","acc_comm":"− 2,472","acc_fees":"− 1,237","acc_profit":"EGP 7,597","s_aria":"Sales card. Profit you keep EGP 7,597. 3 orders cancelled or returned (EGP 4,250), 24 orders, average order EGP 1,472. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 14,109. ROAS 2.50x, up 6.2%. Cost per purchase EGP 504. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 19 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"w","rev":"w","roas":"g","spend":"g","now":"w"},"flip":{"rev":true,"roas":false,"spend":true},"w":{"ok":95.0,"f_cogs":9902,"f_sp":14109,"f_comm":2472,"f_fees":1237,"f_profit":7597,"web":22,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1060,353,706,2825,4945,6004,8829,10595],"sp":[847,564,705,1552,2116,2399,2963,2963],"od":[1,0,0,2,3,4,6,8],"roas":[1.251,0.626,1.001,1.82,2.337,2.503,2.98,3.576],"unit":"hour"}},"yesterday":{"key":"yesterday","t":{"label":"Yesterday","range":"Oct 29","vs":"vs the day before","cmp":"Oct 28","s_profit":"6,748","s_margin":"17.0%","s_orders":"29","s_aov":"1,366","s_title":"Yesterday vs the day before","s_sub":"Oct 29 compared with Oct 28","s_dprofit":"▲ 9.4%","s_dorders":"▲ 20.8%","s_drev":"▲ 11.4%","s_bestlab":"Busiest hours","s_besta":"6–9 pm","s_bestb":"EGP 11,484","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"6 sold","s_new":"21","s_ret":"8","s_fail":"3","s_failv":"EGP 4,250","s_canc":"2","n_rev":"39,600","n_cogs":"−11,789","n_sp":"−16,796","n_comm":"−2,772","n_fees":"−1,495","n_profit":"6,748","f_view":"2,377","f_cart":"127","f_chk":"53","f_note":"33 purchases","ab_retof":"Return rate · 1 of 60","ab_retp":"1.7%","s_be":"1.68","s_now":"1.40","a_spend":"16,796","a_roas":"2.36x","a_droas":"▲ 2.0%","a_cpp":"509","a_title":"Yesterday on ads","a_sub":"Oct 29 · spent EGP 16,796","a_purch":"33","a_reach":"79,800","a_clicks":"2,799","a_reachk":"79.8k","a_clicksk":"2.8k","a_best":"4.25","a_worst":"0.95","c_deliv":"21","c_ret":"1","c_ok":"95.5%","c_okof":"21 of 22","c_days":"2.5","c_sub":"Deliveries yesterday","p_rev":"39,600","p_drev":"▲ 11.4%","p_roas":"2.36","p_droas":"▲ 2.0%","p_orders":"29","p_split":"27 web · 2 admin","at_rev":"Revenue grew 11.4%","at_revsub":"EGP 39,600 vs the day before","at_roas":"Revenue ROAS improved 2.0%","at_roassub":"Now 2.36x","at_roassub2":"Now 2.36x on Meta spend","at_spend":"Meta spend up 9.2%","at_spendsub":"EGP 16,796 yesterday","acc_spend":"EGP 16,796","acc_c1":"Busiest hours · 6–9 pm","acc_v1":"11,484","acc_c2":"Revenue that day","acc_v2":"39,600","acc_c3":"Ad spend that day","acc_v3":"16,796","acc_rev":"EGP 39,600","acc_cogs":"− 11,789","acc_sp":"− 16,796","acc_comm":"− 2,772","acc_fees":"− 1,495","acc_profit":"EGP 6,748","s_aria":"Sales card. Profit you keep EGP 6,748. 3 orders cancelled or returned (EGP 4,250), 29 orders, average order EGP 1,366. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 16,796. ROAS 2.36x, up 2.0%. Cost per purchase EGP 509. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 21 delivered, 1 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":95.5,"f_cogs":11789,"f_sp":16796,"f_comm":2772,"f_fees":1495,"f_profit":6748,"web":27,"admin":2},"s":{"x":["12a","3a","6a","9a","12p","3p","6p","9p"],"rev":[1188,396,792,3564,5940,7128,11484,9108],"sp":[1008,672,840,1848,2519,2855,3527,3527],"od":[1,0,1,3,4,5,9,6],"roas":[1.179,0.589,0.943,1.929,2.358,2.497,3.256,2.582],"unit":"hour"}},"7d":{"key":"7d","t":{"label":"Last 7 days","range":"Oct 24–30","vs":"vs previous 7 days","cmp":"Oct 17–23","s_profit":"46,671","s_margin":"18.4%","s_orders":"175","s_aov":"1,446","s_title":"This week vs last week","s_sub":"Oct 24–30 compared with Oct 17–23","s_dprofit":"▲ 8.1%","s_dorders":"▲ 9.4%","s_drev":"▲ 12.4%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"27 sold","s_new":"128","s_ret":"47","s_fail":"21","s_failv":"EGP 29,750","s_canc":"14","n_rev":"253,113","n_cogs":"−72,897","n_sp":"−106,807","n_comm":"−17,718","n_fees":"−9,020","n_profit":"46,671","f_view":"14,620","f_cart":"779","f_chk":"327","f_note":"203 purchases","ab_retof":"Return rate · 7 of 166","ab_retp":"4.2%","s_be":"1.65","s_now":"1.44","a_spend":"106,807","a_roas":"2.37x","a_droas":"▲ 5.7%","a_cpp":"526","a_title":"This week on ads","a_sub":"Oct 24–30 · spent EGP 106,807","a_purch":"203","a_reach":"420,500","a_clicks":"17,800","a_reachk":"420.5k","a_clicksk":"17.8k","a_best":"4.10","a_worst":"0.90","c_deliv":"121","c_ret":"7","c_ok":"94.5%","c_okof":"121 of 128","c_days":"2.4","c_sub":"Deliveries Oct 24–30","p_rev":"253,113","p_drev":"▲ 12.4%","p_roas":"2.37","p_droas":"▲ 5.7%","p_orders":"175","p_split":"161 web · 14 admin","at_rev":"Revenue grew 12.4%","at_revsub":"EGP 253,113 vs the previous 7 days","at_roas":"Revenue ROAS improved 5.7%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.3%","at_spendsub":"EGP 106,807 this week","acc_spend":"EGP 106,807","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"36,159","acc_c3":"Avg. spend / day","acc_v3":"15,258","acc_rev":"EGP 253,113","acc_cogs":"− 72,897","acc_sp":"− 106,807","acc_comm":"− 17,718","acc_fees":"− 9,020","acc_profit":"EGP 46,671","s_aria":"Sales card. Profit you keep EGP 46,671. 21 orders cancelled or returned (EGP 29,750), 175 orders, average order EGP 1,446. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 106,807. ROAS 2.37x, up 5.7%. Cost per purchase EGP 526. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 121 delivered, 7 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.5,"f_cogs":72897,"f_sp":106807,"f_comm":17718,"f_fees":9020,"f_profit":46671,"web":161,"admin":14},"s":{"x":["Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[32640,34915,36702,38388,35551,39600,35317],"sp":[14186,14912,15327,16093,15384,16796,14109],"od":[22,24,25,27,24,29,24],"roas":[2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"30d":{"key":"30d","t":{"label":"Last 30 days","range":"Oct 1–30","vs":"vs previous 30 days","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"Last 30 days vs the previous 30","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"Last 30 days on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs the previous 30 days","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 in the last 30 days","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}},"month":{"key":"month","t":{"label":"This month","range":"Oct 1–30","vs":"vs last month","cmp":"Sep 1–30","s_profit":"199,384","s_margin":"19.2%","s_orders":"718","s_aov":"1,445","s_title":"This month vs last month","s_sub":"Oct 1–30 compared with Sep 1–30","s_dprofit":"▲ 19.3%","s_dorders":"▲ 7.5%","s_drev":"▲ 9.7%","s_bestlab":"Best day","s_besta":"Thu, Oct 29","s_bestb":"EGP 39,600","s_seller":"Layla Tiered Ruffle Maxi","s_sold":"109 sold","s_new":"525","s_ret":"193","s_fail":"84","s_failv":"EGP 119,150","s_canc":"53","n_rev":"1,037,700","n_cogs":"−290,600","n_sp":"−438,100","n_comm":"−72,639","n_fees":"−36,977","n_profit":"199,384","f_view":"59,920","f_cart":"3,193","f_chk":"1,340","f_note":"832 purchases","ab_retof":"Return rate · 31 of 567","ab_retp":"5.5%","s_be":"1.63","s_now":"1.46","a_spend":"438,100","a_roas":"2.37x","a_droas":"▲ 3.3%","a_cpp":"527","a_title":"This month on ads","a_sub":"Oct 1–30 · spent EGP 438,100","a_purch":"832","a_reach":"1,186,000","a_clicks":"73,000","a_reachk":"1186k","a_clicksk":"73k","a_best":"3.85","a_worst":"1.05","c_deliv":"498","c_ret":"31","c_ok":"94.1%","c_okof":"498 of 529","c_days":"2.5","c_sub":"Deliveries Oct 1–30","p_rev":"1,037,700","p_drev":"▲ 9.7%","p_roas":"2.37","p_droas":"▲ 3.3%","p_orders":"718","p_split":"660 web · 58 admin","at_rev":"Revenue grew 9.7%","at_revsub":"EGP 1,037,700 vs last month","at_roas":"Revenue ROAS improved 3.3%","at_roassub":"Now 2.37x","at_roassub2":"Now 2.37x on Meta spend","at_spend":"Meta spend up 6.2%","at_spendsub":"EGP 438,100 this month","acc_spend":"EGP 438,100","acc_c1":"Best day · Thu, Oct 29","acc_v1":"39,600","acc_c2":"Avg. revenue / day","acc_v2":"34,590","acc_c3":"Avg. spend / day","acc_v3":"14,603","acc_rev":"EGP 1,037,700","acc_cogs":"− 290,600","acc_sp":"− 438,100","acc_comm":"− 72,639","acc_fees":"− 36,977","acc_profit":"EGP 199,384","s_aria":"Sales card. Profit you keep EGP 199,384. 84 orders cancelled or returned (EGP 119,150), 718 orders, average order EGP 1,445. Press Enter for details.","a_aria":"Ads card, Meta and TikTok. Ad spend EGP 438,100. ROAS 2.37x, up 3.3%. Cost per purchase EGP 527. Press Enter for details.","c_aria":"Courier card, Bosta. Cash to collect EGP 58,300. 38 in transit, 498 delivered, 31 returned, EGP 38k stuck 7+ days. Press Enter for details."},"tone":{"profit":"g","orders":"g","rev":"g","roas":"g","spend":"w","now":"w"},"flip":{"rev":false,"roas":false,"spend":false},"w":{"ok":94.1,"f_cogs":290600,"f_sp":438100,"f_comm":72639,"f_fees":36977,"f_profit":199384,"web":660,"admin":58},"s":{"x":["Oct 1","Oct 2","Oct 3","Oct 4","Oct 5","Oct 6","Oct 7","Oct 8","Oct 9","Oct 10","Oct 11","Oct 12","Oct 13","Oct 14","Oct 15","Oct 16","Oct 17","Oct 18","Oct 19","Oct 20","Oct 21","Oct 22","Oct 23","Oct 24","Oct 25","Oct 26","Oct 27","Oct 28","Oct 29","Oct 30"],"rev":[33363,36683,34122,31493,35587,34375,32281,38933,35852,34124,37016,36290,31080,34341,37386,36471,32043,33740,32804,31338,30736,31919,32610,32640,34915,36702,38388,35551,39600,35317],"sp":[13928,14905,14189,13661,14518,14597,14184,14950,14400,14558,14837,14795,13566,14100,14965,14663,14309,14319,14621,14328,14080,14313,14507,14186,14912,15327,16093,15384,16796,14109],"od":[22,25,24,21,25,24,21,26,25,24,24,26,22,25,25,24,22,23,24,22,22,23,24,22,24,25,27,24,29,24],"roas":[2.395,2.461,2.405,2.305,2.451,2.355,2.276,2.604,2.49,2.344,2.495,2.453,2.291,2.436,2.498,2.487,2.239,2.356,2.244,2.187,2.183,2.23,2.248,2.301,2.341,2.395,2.385,2.311,2.358,2.503],"unit":"day"}}};
+PER.cur='7d';
+window.perSet=function(key){
+  var P=PER[key];if(!P)return;PER.cur=key;
+  var call=function(f,a){if(typeof window[f]==='function'){try{window[f](a)}catch(e){console.warn(f,e)}}};
+  call('pv2SetPeriod',key);call('cv2SetPeriod',P);call('puSetPeriod',P);call('accSetPeriod',P);
+  var all=function(s){return [].slice.call(document.querySelectorAll(s))};
+  all('[data-per-t]').forEach(function(e){var v=P.t[e.getAttribute('data-per-t')];if(v==null)return;e.textContent=v;if(e.hasAttribute('data-count'))e.setAttribute('data-count',v.replace(/[^0-9.]/g,''))});
+  all('[data-per-cls]').forEach(function(e){var a=e.getAttribute('data-per-cls').split(':'),g=P.tone[a[0]]==='g';e.classList.toggle(a[1],g);e.classList.toggle(a[2],!g)});
+  all('[data-per-flip]').forEach(function(e){e.toggleAttribute('data-per-down',!!P.flip[e.getAttribute('data-per-flip')])});
+  all('[data-per-w]').forEach(function(e){var v=P.w[e.getAttribute('data-per-w')];if(v!=null)e.style.flex=String(v)});
+  document.dispatchEvent(new CustomEvent('per:change',{detail:{key:key,P:P}}));
+};
+/* === PERIODS v1 END === */
+</script>
+</head>
+<body data-page="competitors">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="landG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a1670" stop-opacity=".55"/><stop offset="1" stop-color="#1a0b33" stop-opacity=".35"/></linearGradient>
+    <radialGradient id="dotG"><stop offset="0" stop-color="#f2eafb"/><stop offset=".35" stop-color="#a275e0"/><stop offset="1" stop-color="#7c3fc1" stop-opacity="0"/></radialGradient>
+    <linearGradient id="vanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b5ce0"/><stop offset=".5" stop-color="#550da6"/><stop offset="1" stop-color="#2c0661"/></linearGradient>
+    <linearGradient id="beamG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6e7c0" stop-opacity=".55"/><stop offset="1" stop-color="#f6e7c0" stop-opacity="0"/></linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <symbol id="dress" viewBox="0 0 46 70"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+  <symbol id="i-meta" viewBox="0 0 24 24"><path d="M3 15c0-5 3-9 5.5-9S12 10 12 12s2.5 6 4.5 6S21 16 21 13s-2-7-4.5-7S12 10 12 12 9.5 18 7.5 18 3 17 3 15z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-cardi" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-flip" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.5M20 4v4.5h-4.5"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M8 8.5a5 5 0 0 1 0 7M11.5 6a8.5 8.5 0 0 1 0 12M15 3.5a12 12 0 0 1 0 17"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11V6a3 3 0 0 1 6 0v5M5 11h14l-1 10H6z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="12" rx="3"/><path d="M5 9V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2M7 5V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-carousel" viewBox="0 0 24 24"><rect x="7" y="5" width="10" height="14" rx="2"/><path d="M4 7v10M20 7v10"/></symbol>
+</svg>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="logo"><div class="mark">FN</div>Scale Trick</div>
+    <button class="switch"><span class="dot"></span><b>Frill N Wear</b><svg class="i"><use href="#i-chev"/></svg></button>
+    <nav>
+      <div class="grp"><h6>Operate</h6>
+        <a href="#" data-cp-go="overview"><svg class="i"><use href="#i-home"/></svg>Overview</a>
+        <a href="#" data-cp-go="brands"><svg class="i"><use href="#i-grid"/></svg>All brands</a>
+        <a href="#" data-cp-go="sales"><svg class="i"><use href="#i-bag"/></svg>Orders</a>
+        <a href="#" data-cp-go="orders"><svg class="i"><use href="#i-truck"/></svg>Shipping</a>
+        <a href="#" data-cp-go="inventory"><svg class="i"><use href="#i-box"/></svg>Inventory</a>
+        <a href="#" data-cp-go="products"><svg class="i"><use href="#i-tag"/></svg>Products</a>
+      </div>
+      <div class="grp"><h6>Grow</h6>
+        <a href="#" data-cp-go="ads"><svg class="i"><use href="#i-meta"/></svg>Meta Ads</a>
+        <a href="#" data-cp-go="adsmanager"><svg class="i"><use href="#i-sliders"/></svg>Ads Manager</a>
+        <a href="#" data-cp-go="assistant"><svg class="i"><use href="#i-spark"/></svg>Tricky</a>
+        <a class="on" href="#" aria-current="page" data-cp-go="competitors"><svg class="i"><use href="#i-eye"/></svg>Competitors</a>
+      </div>
+      <div class="grp"><h6>Workspace</h6>
+        <a href="#" data-cp-go="connections"><svg class="i"><use href="#i-plug"/></svg>Connections</a>
+        <a href="#" data-cp-go="settings"><svg class="i"><use href="#i-gear"/></svg>Workspace settings</a>
+        <a href="#" data-cp-go="admin"><svg class="i"><use href="#i-shield"/></svg>Admin</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="content">
+  <main>
+    <!-- === NAV v2 START === -->
+    <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
+    <header class="nv2-top" data-nv2-store="n-theme">
+      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
+          <div class="nv2-pop" data-nv2-id="me" role="menu">
+            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
+            <button type="button" class="nv2-mi" role="menuitemcheckbox" data-nv2-theme aria-checked="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dark mode<span class="nv2-tog" aria-hidden="true"></span></button>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-refresh><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>Refresh data<small class="nv2-rt">synced 2 min ago</small></button>
+            <div class="nv2-hr"></div>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
+          </div></div>
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small>→</small></button></div></div>
+      <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
+        <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
+      <div class="nv2-right">
+        <div class="nv2-anc nv2-datew"><button type="button" class="nv2-date" data-nv2-pop="date" aria-haspopup="menu" aria-expanded="false"><svg class="nv2-i nv2-cal" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="nv2-dl">Last 7 days</span><span class="nv2-ds">7 days</span><small class="nv2-dr">· Oct 24–30</small><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop" data-nv2-id="date" role="menu" aria-label="Date range"></div></div>
+        <div class="nv2-anc nv2-bellw"><button type="button" class="nv2-ib" data-nv2-pop="bell" aria-haspopup="true" aria-expanded="false" aria-label="Notifications, 3 new"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="nv2-dot"></span></button>
+          <div class="nv2-pop nv2-bellpop" data-nv2-id="bell" role="region" aria-label="Notifications">
+            <button type="button" class="nv2-note" data-nv2-go="sales" style="--c:#45d09a"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span><span class="nv2-nt"><b>Revenue grew 12.4% vs the week before</b><small><span>2h ago</span><span class="nv2-nl">Review orders <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="ads" style="--c:#f2b64f"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><span class="nv2-nt"><b>Meta spend up 6.3% · profit ROAS 1.44x</b><small><span>5h ago</span><span class="nv2-nl">Review Meta <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+            <button type="button" class="nv2-note" data-nv2-go="products" style="--c:#f06571"><span class="nv2-ni"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="nv2-nt"><b>9 variants running low · 1 sold out</b><small><span>Yesterday</span><span class="nv2-nl">Open products <svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></small></span></button>
+          </div></div>
+      </div>
+    </header>
+    <!-- === NAV v2 END === -->
+    <div class="cp" id="cp">
+      <header class="cp-head">
+        <div><h1>Competitors</h1><p id="cb-sub"></p></div>
+        <div class="cp-hl">
+          <button type="button" class="cp-btn" id="cb-check"></button>
+          <button type="button" class="cp-btn" id="cb-edit"></button>
+        </div>
+      </header>
+      <p class="cb-msg" id="cb-msg" role="status" aria-live="polite"></p>
+
+      <section class="cp-panel" aria-labelledby="cb-att-h" id="cb-attp">
+        <div class="cp-ph"><h3 id="cb-att-h">Worth a look</h3></div>
+        <div class="cp-att" id="cb-att"></div>
+      </section>
+
+      <div class="tabs-anchor" id="cb-anchor"></div>
+      <div class="tabbar" id="cb-tabbar"><div class="seg" role="tablist" aria-label="Competitor watch" id="cb-seg"></div></div>
+      <section class="cp-panel pane cb-pane" id="cb-pane" role="tabpanel" tabindex="-1"></section>
+    </div>
+  </main>
+  </div>
+</div>
+<!-- === NAV v2 START (dock + sheets) === -->
+<nav class="nv2-dock" aria-label="Quick navigation">
+  <div class="nv2-pill">
+    <a href="#" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="#" data-nv2-go="sales"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span></a>
+    <a href="#" data-nv2-go="products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span></a>
+    <button type="button" data-nv2-open="menu" aria-haspopup="dialog" aria-current="page"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button>
+  </div>
+  <button type="button" class="nv2-ai" data-nv2-open="ai" aria-label="Ask the assistant" aria-haspopup="dialog"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg></button>
+</nav>
+<div class="nv2-scrim"></div>
+<section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
+  <nav class="nv2-ml" aria-label="Sections">
+    <a href="#" class="nv2-mr" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" data-nv2-go="products">Products</a><a href="#" data-nv2-go="inventory">Inventory</a></div></div>
+    </div>
+    <div class="nv2-mg">
+      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
+    </div>
+    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
+    <a href="#" class="nv2-mr" aria-current="page" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
+    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
+  </nav>
+  <div class="nv2-mbar">
+    <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
+    <button type="button" class="nv2-mbtn" data-nv2-close aria-label="Close menu"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+</section>
+<section class="nv2-sheet" data-nv2-sheet="ai" role="dialog" aria-modal="true" aria-label="Ask the assistant">
+  <div class="nv2-grab" aria-hidden="true"></div>
+  <div class="nv2-sh"><span class="nv2-mark" style="width:34px;height:34px;border-radius:10px"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg></span><h2>Ask the assistant</h2><button type="button" class="nv2-x" data-nv2-close aria-label="Close"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <form class="nv2-ask"><input type="text" placeholder="Ask about sales, ads, stock…" aria-label="Your question"><button type="submit" aria-label="Send"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+  <p class="nv2-sugh">Try asking</p>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Why is profit ROAS below break-even?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>Which campaign should I cut this week?</button>
+  <button type="button" class="nv2-sug"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>What should I restock before the weekend?</button>
+  <p class="nv2-sent" aria-live="polite"></p>
+</section>
+<!-- === NAV v2 END (dock + sheets) === -->
+<script>
+/* === NAV v2 START === */
+/* Nav v2 behaviour: popovers (date, bell, account, brand), date periods → window.perSet (Periods v1; else pv2SetPeriod) + "nv2:period",
+   theme switch (sets <html data-theme>, stores under .nv2-top[data-nv2-store]), Ctrl/⌘+K search, the dock
+   (hides on scroll down, back on scroll up), and the Menu / Assistant sheets. Navigation fires "nv2:nav" (detail.go).
+   Round 8: the Menu is full screen (Shopify-like): its groups open in place (accordion), the page behind does not
+   scroll, and it closes on ✕, Esc, the browser's back (one history entry while open), a swipe down from the top of
+   the list, or a tap on an item. */
+(function(){
+  var top=document.querySelector('.nv2-top');if(!top)return;
+  var $$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fire=function(n,d){document.dispatchEvent(new CustomEvent(n,{detail:d||{}}))};
+  var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
+  var period='7d';
+  /* ---- popovers ---- */
+  var openPop=null;
+  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');var t=top.querySelector('[data-nv2-pop="'+openPop.dataset.nv2Id+'"]');if(t)t.setAttribute('aria-expanded','false');openPop=null}
+  $$('[data-nv2-pop]',top).forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=top.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openPop===p;closePop();
+    if(!was){p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;var f=p.querySelector('button');if(f)f.focus({preventScroll:true})}})});
+  document.addEventListener('click',function(e){if(openPop&&!openPop.contains(e.target))closePop()});
+  /* ---- date menu ---- */
+  function paintDates(){
+    $$('[data-nv2-id^="date"]',top).forEach(function(m){m.innerHTML=PERIODS.map(function(p){return '<button type="button" class="nv2-mi" role="menuitemradio" data-nv2-period="'+p[0]+'" aria-checked="'+(p[0]===period)+'">'+p[1]+'<small>'+p[2]+'</small></button>'}).join('')});
+    var cur=PERIODS.filter(function(p){return p[0]===period})[0];
+    $$('.nv2-dl',top).forEach(function(s){s.textContent=cur[1]});$$('.nv2-ds',top).forEach(function(s){s.textContent=cur[3]});$$('.nv2-date',top).forEach(function(b){b.setAttribute('aria-label','Date range: '+cur[1]+', '+cur[2])});$$('.nv2-dr',top).forEach(function(s){s.textContent='· '+cur[2]});
+  }
+  paintDates();
+  top.addEventListener('click',function(e){var b=e.target.closest('[data-nv2-period]');if(!b)return;period=b.dataset.nv2Period;paintDates();closePop();
+    if(window.perSet)window.perSet(period);else if(window.pv2SetPeriod)window.pv2SetPeriod(period);fire('nv2:period',{key:period})});
+  /* ---- theme ---- */
+  var key=top.dataset.nv2Store||'theme',html=document.documentElement;
+  function syncTheme(){var dark=html.dataset.theme!=='light';$$('[data-nv2-theme]').forEach(function(b){b.setAttribute('aria-checked',String(dark))})}
+  $$('[data-nv2-theme]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var t=html.dataset.theme==='light'?'dark':'light';html.dataset.theme=t;try{localStorage.setItem(key,t)}catch(err){}syncTheme();fire('nv2:theme',{theme:t})})});
+  syncTheme();
+  $$('[data-nv2-refresh]').forEach(function(b){b.addEventListener('click',function(){var i=b.querySelector('svg');if(i&&!reduce)i.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:700});var s=b.querySelector('.nv2-rt');if(s)s.textContent='synced just now';fire('nv2:refresh')})});
+  /* ---- navigation (top + dock + sheets) ---- */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet'))return;e.preventDefault();closePop();closeSheet();
+    var go=a.dataset.nv2Go;if(a.closest('.nv2-pill')){$$('.nv2-pill > *').forEach(function(x){x.removeAttribute('aria-current')});a.setAttribute('aria-current','page')}
+    fire('nv2:nav',{go:go})});
+  /* ---- search (desktop) ---- */
+  var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
+  var IDX=[['Overview','overview','Page'],['Account · where the money went','account','Tab'],['Sales · buyer cities, recent orders','sales','Tab'],['Ads · ads funnel, campaigns','ads','Tab'],['Orders · Bosta shipping','orders','Tab'],['Products · top products, low stock','products','Tab'],
+    ['Layla Tiered Ruffle Maxi Dress','products','Product'],['Nour Satin Slip Dress','products','Product'],['Jasmine Wrap Midi Dress','products','Product'],['Salma Puff-Sleeve Mini Dress','products','Product'],
+    ['Satin Edit · Advantage+','ads','Campaign'],['Retarget · 30 days','ads','Campaign'],['Broad · Women 25–44','ads','Ad set'],['Ads Manager','adsmanager','Page'],['Competitors','competitors','Page'],['Connections','connections','Page']];
+  var hits=[],hl=0;
+  function search(){var q=sIn.value.trim().toLowerCase();hits=q?IDX.filter(function(x){return x[0].toLowerCase().indexOf(q)>=0}).slice(0,7):[];hl=0;
+    sRes.innerHTML=hits.length?hits.map(function(h,i){return '<button type="button" role="option" class="'+(i?'':'nv2-hl')+'" data-i="'+i+'">'+h[0]+'<small>'+h[2]+'</small></button>'}).join(''):(q?'<button type="button" disabled>No matches<small></small></button>':'');
+    sRes.classList.toggle('nv2-on',!!q)}
+  function pick(i){var h=hits[i];if(!h)return;sIn.value='';search();sIn.blur();fire('nv2:nav',{go:h[1],q:h[0]})}
+  if(sIn){sIn.addEventListener('input',search);
+    sIn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();pick(hl)}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();hl=(hl+(e.key==='ArrowDown'?1:-1)+hits.length)%Math.max(1,hits.length);$$('button',sRes).forEach(function(b,i){b.classList.toggle('nv2-hl',i===hl)})}else if(e.key==='Escape'){sIn.value='';search()}});
+    sRes.addEventListener('mousedown',function(e){var b=e.target.closest('[data-i]');if(b){e.preventDefault();pick(+b.dataset.i)}});
+    sIn.addEventListener('blur',function(){setTimeout(function(){sRes.classList.remove('nv2-on')},100)});
+    document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'&&sIn.offsetParent){e.preventDefault();sIn.focus();sIn.select()}});
+    var kb=top.querySelector('.nv2-kbd');if(kb&&/Mac|iPhone|iPad/.test(navigator.platform||''))kb.textContent='⌘K';}
+  /* ---- sheets ---- */
+  var scrim=document.querySelector('.nv2-scrim'),sheetOpen=null,lastFocus=null,pushed=false,skipPop=false;
+  function openSheet(name){closePop();closeSheet();var s=document.querySelector('[data-nv2-sheet="'+name+'"]');if(!s)return;lastFocus=document.activeElement;sheetOpen=s;s.classList.add('nv2-on');
+    var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
+    if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
+    var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+    document.documentElement.classList.remove('nv2-lock');
+    if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
+    if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
+  window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
+  /* menu: groups open in place; a swipe down from the top of the list closes it */
+  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
+    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
+    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
+    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
+  document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
+  if(scrim)scrim.addEventListener('click',closeSheet);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
+  window.nv2Open=openSheet;
+  /* assistant */
+  var ai=document.querySelector('[data-nv2-sheet="ai"]');
+  if(ai){var inp=ai.querySelector('input'),sent=ai.querySelector('.nv2-sent');
+    $$('.nv2-sug',ai).forEach(function(b){b.addEventListener('click',function(){inp.value=b.textContent.trim();inp.focus()})});
+    ai.querySelector('form').addEventListener('submit',function(e){e.preventDefault();var q=inp.value.trim();if(!q)return;sent.textContent='Sent to the assistant: “'+q+'”';inp.value='';fire('nv2:ask',{q:q})})}
+  /* ---- dock: hide on scroll down, show on scroll up ---- */
+  var dock=document.querySelector('.nv2-dock');
+  if(dock){document.documentElement.classList.add('nv2-docked');var ly=window.scrollY,acc=0;
+    window.addEventListener('scroll',function(){var y=window.scrollY,d=y-ly;ly=y;acc=(d>0)===(acc>0)?acc+d:d;
+      if(y<80||acc<-24)dock.classList.remove('nv2-hide');else if(acc>40&&!sheetOpen)dock.classList.add('nv2-hide')},{passive:true})}
+})();
+/* === NAV v2 END === */
+</script>
+<script>
+/* ===== CP DATA — sample competitor watch for Frill N Wear (mock today = Fri Oct 30, last check 9:40 AM) =====
+   Mirrors what the real screen gets from the API: per store {name,url,platform,lastScrapedAt,lastStatus}; per product
+   {variants, soldOut, onSaleAvailable, minPrice, maxCompare, imageUrl}; events {eventType, variantTitle, oldPrice,
+   newPrice, detectedAt}. Store names are invented. `like` links a competitor product to one of OUR products (new: the
+   app has no product matching yet). Our prices = 7-day revenue / units of the Overview's PRODUCTS v2 data. */
+var CP=(function(){
+  var fmt=function(n){return Math.round(n).toLocaleString('en-US')};
+  /* ours — price + stock left, from the Products / Inventory mockups */
+  var OURS={
+    layla:{n:'Layla Tiered Ruffle Maxi',price:1474,stock:30,sz:[2,1,9,7,6,5]},
+    nour:{n:'Nour Satin Slip',price:1274,stock:46,sz:[3,8,12,10,7,6]},
+    jasmine:{n:'Jasmine Wrap Midi',price:1394,stock:23,sz:[6,0,2,2,8,5]},
+    salma:{n:'Salma Puff-Sleeve Mini',price:973,stock:35,sz:[7,6,3,9,5,5]},
+    farida:{n:'Farida Linen Shirt Dress',price:1212,stock:51,sz:[6,9,12,10,8,6]},
+    mariam:{n:'Mariam Pleated Chiffon',price:1656,stock:31,sz:[5,6,4,4,7,5]},
+    lina:{n:'Lina Embroidered Kaftan',price:1450,stock:64,note:'no sale since Aug 21',sz:[10,12,14,12,9,7]},
+    nadia:{n:'Nadia Silk Scarf',price:450,stock:11,sz:[11],one:true},
+    rana:{n:'Rana Knit Cardigan',price:900,stock:41,sz:[5,9,11,10,6,null]},
+    yasmin:{n:'Yasmin Ribbed Maxi',price:1200,stock:0,sz:[0,0,0,0,0,0]},
+    mona:{n:'Mona Tulle Midi Skirt',price:850,stock:41,note:'no sale since Oct 9',sz:[6,8,9,8,6,4]},
+    reem:{n:'Reem Velvet Blazer',price:1900,stock:31,sz:[3,7,8,6,5,2]},
+    dalia:{n:'Dalia Linen Wide-Leg Set',price:1650,stock:null,sz:[null,null,null,null,null,null]}
+  };
+  /* p(title, colours, variants, soldOut, onSaleAvailable, price, compareAt, like, img=false for no photo) */
+  function p(t,c,v,so,osa,pr,cmp,like,noimg){return {t:t,c:c,v:v,so:so,osa:osa,pr:pr,cmp:cmp||null,like:like||null,img:!noimg}}
+
+  /* per-size rows (the app stores one row per size: price, old price, in stock) + the product facts Shopify's
+     public products.json also carries (type, colours, date added, photos, description — not saved by the app today) */
+  var SZ6=['XS','S','M','L','XL','XXL'],SZ5=['XS','S','M','L','XL'],SZ4=['S','M','L','XL'];
+  var TYPE=[[/Skirt/,'Skirt'],[/Trousers|Pants/,'Trousers'],[/Top|Blouse|Cami/,'Top'],[/Scarf/,'Scarf'],[/Cardigan/,'Knitwear'],[/Blazer/,'Jacket'],[/Set|Co-ord/,'Set'],[/Kaftan/,'Kaftan'],[/Cover-up/,'Beachwear'],[/./,'Dress']];
+  var DESC={
+    'Rosette Tiered Maxi Dress':'Three soft tiers of cotton voile with a rosette print, a square neck and tie straps. Lined to the knee.',
+    'Satin Bias Slip Dress – Champagne':'Bias-cut satin slip with adjustable straps and a cowl neck. Falls to mid-calf.',
+    'Sage Wrap Midi Dress':'Wrap midi in crinkled crepe with a self-tie waist and flutter sleeves.',
+    'Puff-Sleeve Poplin Mini – Ivory':'Crisp cotton poplin mini with puff sleeves, smocked back and a square neck.',
+    'Embroidered Kaftan – Teal':'Loose kaftan in cotton-linen with hand-finished embroidery at the neck and cuffs.',
+    'Tulle Midi Skirt – Blush':'Layered tulle midi skirt on an elastic waist, lined in soft jersey.',
+    'Ribbed Maxi Dress – Black':'Fitted rib-knit maxi with a scoop neck and side slit.'};
+  var ADDED=['Sep 2','Sep 14','Sep 21','Sep 28','Oct 3','Oct 9','Oct 12','Oct 16','Oct 20','Oct 23'];
+  function detail(x,i){
+    var names=x.v===1?['One size']:x.v===4?SZ4:x.v===5?SZ5:SZ6;
+    /* sold-out sizes: the smallest and the most popular go first */
+    var order=x.v===1?[0]:x.v===4?[0,1,3,2]:[1,2,0,4,3,5];
+    var out={};order.slice(0,x.so).forEach(function(j){out[j]=1});
+    var saleLeft=x.osa;
+    x.sizes=names.map(function(n,j){var avail=!out[j];var sale=!!(x.cmp&&(avail?saleLeft-->0:true));
+      return {n:n,avail:avail,pr:sale||!x.cmp?x.pr:x.cmp,was:sale?x.cmp:null}});
+    x.type=(TYPE.filter(function(t){return t[0].test(x.t)})[0]||[0,'Dress'])[1];
+    x.colour=x.t.split(' – ')[1]||null;
+    x.added=ADDED[(i*7+x.t.length)%ADDED.length];
+    x.photos=x.img?3+(x.t.length%4):0;
+    x.desc=DESC[x.t]||null;
+  }
+  var STORES=[
+    {id:'lilas',name:'Maison Lilas',url:'https://maisonlilas.com',platform:'Shopify',status:'ok',read:'Today 9:40 AM',count:186,
+     products:[
+      p('Rosette Tiered Maxi Dress',['#e2a6b4','#a35a6f'],5,1,4,1290,1750,'layla'),
+      p('Satin Bias Slip Dress – Champagne',['#ead3a8','#a98a5c'],6,0,5,1150,1450,'nour'),
+      p('Sage Wrap Midi Dress',['#b8caae','#6a8461'],5,2,3,1190,1590,'jasmine'),
+      p('Linen Utility Shirt Dress',['#d8c8ac','#8f7c60'],6,0,6,990,1290,'farida'),
+      p('Pleated Satin Midi Skirt',['#c9b6e8','#6d4aa0'],6,0,5,790,1050),
+      p('Ruched Mesh Top',['#4a4652','#1e1c24'],4,0,4,450,650,null,true),
+      p('Puff-Sleeve Poplin Mini – Ivory',['#f0e9da','#b9ab8e'],5,5,0,1050,null,'salma'),
+      p('Velvet Slip Dress – Bordeaux',['#a8475e','#5a1a2c'],6,6,0,1390),
+      p('Crochet Beach Cover-up',['#e9dcc0','#b39d72'],1,1,0,690),
+      p('Tiered Cotton Maxi – Rose',['#e7b7c0','#b06d7f'],5,3,0,1350,null,'layla'),
+      p('Chiffon Pleated Gown – Navy',['#4b5a8f','#232b4d'],6,2,0,1890,null,'mariam'),
+      p('Smocked Midi – Rust',['#d99a7a','#9a4e33'],5,1,0,1250),
+      p('Linen Wide-Leg Trousers',['#cfd2b0','#7d8656'],6,2,0,850)
+     ],
+     events:[
+      ['SALE_STARTED','Rosette Tiered Maxi Dress','M',1750,1290,'Oct 30','9:40 AM'],
+      ['SOLD_OUT','Puff-Sleeve Poplin Mini – Ivory','S',null,1050,'Oct 30','9:40 AM'],
+      ['PRICE_DROP','Pleated Satin Midi Skirt','S',1050,790,'Oct 29','9:40 PM'],
+      ['RESTOCKED','Chiffon Pleated Gown – Navy','L',null,1890,'Oct 28','3:40 PM'],
+      ['SALE_STARTED','Satin Bias Slip Dress – Champagne','M',1450,1150,'Oct 27','9:40 AM'],
+      ['SALE_ENDED','Linen Midi Skirt – Sand','',890,1190,'Oct 25','3:40 PM'],
+      ['SOLD_OUT','Velvet Slip Dress – Bordeaux','XS',null,1390,'Oct 24','9:40 PM'],
+      ['SALE_STARTED','Sage Wrap Midi Dress','S',1590,1190,'Oct 19','9:40 AM'],
+      ['SALE_STARTED','Linen Utility Shirt Dress','L',1290,990,'Oct 14','3:40 PM']
+     ]},
+    {id:'zamalek',name:'Rue Zamalek',url:'https://ruezamalek.com',platform:'Shopify',status:'ok',read:'Today 9:42 AM',count:94,
+     products:[
+      p('Embroidered Kaftan – Teal',['#5fa3a3','#24585c'],4,1,3,1150,1600,'lina'),
+      p('Silk Square Scarf – Garden',['#c9a6e6','#6d3fa0'],1,0,1,320,420,'nadia'),
+      p('Longline Knit Cardigan',['#e3d8c4','#a8987c'],5,0,4,790,990,'rana'),
+      p('Ribbed Maxi Dress – Black',['#55505e','#1d1b22'],5,3,2,899,1200,'yasmin'),
+      p('Tulle Midi Skirt – Blush',['#f0c4cf','#b67a8a'],4,4,0,780,null,'mona'),
+      p('Lace Cami Blouse',['#f2eee8','#b8b0a4'],5,5,0,620),
+      p('Velvet Blazer – Wine',['#9b3f55','#521827'],5,2,0,1950,null,'reem'),
+      p('Linen Co-ord Set – Olive',['#a6ad80','#5e6740'],6,1,0,1590,null,'dalia'),
+      p('Pleated Chiffon Midi – Navy',['#40508a','#1e2647'],6,4,0,1490,null,'mariam')
+     ],
+     events:[
+      ['SALE_STARTED','Ribbed Maxi Dress – Black','M',1200,899,'Oct 30','9:42 AM'],
+      ['SOLD_OUT','Tulle Midi Skirt – Blush','S',null,780,'Oct 29','3:42 PM'],
+      ['SALE_STARTED','Embroidered Kaftan – Teal','L',1600,1150,'Oct 28','9:42 AM'],
+      ['RESTOCKED','Longline Knit Cardigan','M',null,790,'Oct 26','9:42 PM'],
+      ['SOLD_OUT','Lace Cami Blouse','M',null,620,'Oct 24','3:42 PM'],
+      ['PRICE_DROP','Velvet Blazer – Wine','L',2200,1950,'Oct 18','9:42 AM']
+     ]},
+    {id:'selene',name:'Selene Cairo',url:'https://selenecairo.com',platform:'Shopify',status:'timed out',read:'Oct 28, 9:10 PM',tried:'Today 9:40 AM',count:142,
+     products:[
+      p('Satin Slip Dress – Pearl',['#efe6da','#b5a48c'],6,0,5,1050,1400,'nour'),
+      p('Draped Jersey Midi',['#c6a9cf','#6f4a7d'],5,0,5,850,1100),
+      p('Puff-Sleeve Mini – Cream',['#f3ecdc','#bcae90'],5,5,0,990,null,'salma'),
+      p('Wrap Midi – Olive',['#b0b98c','#626b3f'],5,2,0,1290,null,'jasmine',true)
+     ],
+     events:[
+      ['SALE_STARTED','Satin Slip Dress – Pearl','M',1400,1050,'Oct 28','9:10 PM'],
+      ['SOLD_OUT','Puff-Sleeve Mini – Cream','L',null,990,'Oct 26','3:10 PM']
+     ]}
+  ];
+  /* day index for the period filter: Oct 30 = 0 */
+  var DAY={'Oct 30':0,'Oct 29':1,'Oct 28':2,'Oct 27':3,'Oct 26':4,'Oct 25':5,'Oct 24':6,'Oct 23':7,'Oct 22':8,'Oct 19':11,'Oct 18':12,'Oct 14':16};
+  var WEEK={'Oct 30':'Today','Oct 29':'Yesterday','Oct 28':'Wed, Oct 28','Oct 27':'Tue, Oct 27','Oct 26':'Mon, Oct 26','Oct 25':'Sun, Oct 25','Oct 24':'Sat, Oct 24','Oct 19':'Mon, Oct 19','Oct 18':'Sun, Oct 18','Oct 14':'Wed, Oct 14'};
+  var LABEL={SALE_STARTED:['Went on sale','g'],PRICE_DROP:['Price drop','g'],SALE_ENDED:['Sale ended','n'],SOLD_OUT:['Sold out','r'],RESTOCKED:['Back in stock','p']};
+  STORES.forEach(function(s){
+    s.host=s.url.replace('https://','');
+    s.ok=s.status==='ok';
+    s.onSale=[];s.soldOut=[];s.lowStock=[];
+    s.products.forEach(function(x,i){x.store=s;detail(x,i);x.key=s.id+'-'+i;
+      if(x.so===x.v)s.soldOut.push(x);else if(x.so>0)s.lowStock.push(x);
+      if(x.osa>0&&x.cmp&&x.cmp>x.pr){x.off=Math.round((1-x.pr/x.cmp)*100);s.onSale.push(x)}});
+    var byT={};s.products.forEach(function(x){byT[x.t]=x});
+    s.events=s.events.map(function(e){var pr=byT[e[1]];return {type:e[0],label:LABEL[e[0]][0],tone:LABEL[e[0]][1],t:e[1],size:e[2],old:e[3],nw:e[4],
+      mins:(function(t){var m=t.match(/(\d+):(\d+) (AM|PM)/);return (+m[1]%12+(m[3]==='PM'?12:0))*60+ +m[2]})(e[6]),day:e[5],dayName:WEEK[e[5]]||e[5],ago:DAY[e[5]],time:e[6],store:s,p:pr||null,c:pr?pr.c:['#bdb3cc','#6d6480'],like:pr?pr.like:null}});
+  });
+  var ALL_EVENTS=[].concat.apply([],STORES.map(function(s){return s.events})).sort(function(a,b){return a.ago-b.ago||b.mins-a.mins});
+  /* how many days back each date-picker period reaches (Oct 30 = 0) */
+  var SPAN={today:[0,0],yesterday:[1,1],'7d':[0,6],'30d':[0,29],month:[0,29]};
+  return {fmt:fmt,OURS:OURS,STORES:STORES,EVENTS:ALL_EVENTS,SPAN:SPAN,LABEL:LABEL,MAX:3,EVERY:6};
+})();
+
+/* ===== CP COMMON — helpers shared by Competitors A + B =====
+   CPU.toast(msg) · CPU.open(html)/close() drawer · CPU.thumb(x,big) · CPU.vs(x) your-product line · CPU.worth() · CPU.form(el)
+   CPU.checkAll() · CPU.events(store) (follows the date picker) · CPU.onChange = page re-render.
+   Nothing here talks to a server: Test, Save and Check all now are simulated with the same wording as the app. */
+var CPU=(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt=CP.fmt;
+  var ARW='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var EXT='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+  var XI='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var WARN='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
+  var SYNC='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>';
+  var PEN='<svg class="cp-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg>';
+  var DRESS='<svg viewBox="0 0 46 70" aria-hidden="true"><path d="M17 2c1 4 2 6 6 6s5-2 6-6l4 2-2 10c-1 4-1 6 1 9l10 41c-8 4-16 5-19 5s-12-1-20-5l10-41c2-3 2-5 1-9L12 4z" fill="rgba(255,255,255,.88)"/><path d="M15 23h16" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/><path d="M23 26v40M17 30l-6 32M29 30l6 32" stroke="rgba(0,0,0,.08)" stroke-width="1"/></svg>';
+  var MARK={lilas:['#c58ad8','#6d3fa0'],zamalek:['#5fa3a3','#24585c'],selene:['#d99a7a','#8c4a33']};
+  var NAMES={overview:'the Overview',brands:'All brands',sales:'Orders',orders:'Shipping',inventory:'Inventory',products:'Products',ads:'the Ads report',adsmanager:'Ads Manager',assistant:'Tricky',connections:'Connections',settings:'Settings',workspace:'Workspace',admin:'Admin',profile:'your profile',signout:'Sign out',account:'the Overview',brand:'that brand'};
+  function esc(x){return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+
+  /* ---- toast ---- */
+  var toastEl=null,toastT=null;
+  function toast(msg){if(!toastEl){toastEl=document.createElement('div');toastEl.className='cp-toast';toastEl.setAttribute('role','status');document.body.appendChild(toastEl)}
+    toastEl.textContent=msg;toastEl.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('on')},3400)}
+
+  /* ---- navigation: this mockup is the Competitors page; everything else answers with a toast ---- */
+  function go(where){
+    if(where==='competitors'){window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
+    toast('This mockup is the Competitors page. In the app this opens '+(NAMES[where]||'that page')+'.')}
+  document.addEventListener('nv2:nav',function(e){go(e.detail.go)});
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-cp-go]');if(!a)return;e.preventDefault();go(a.dataset.cpGo)});
+  /* product cards open the competitor's product page in the app */
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-cp-ext]');if(!a)return;e.preventDefault();
+    toast('In the app this opens the product on '+a.dataset.cpExt+' in a new tab.')});
+
+  /* ---- drawer ---- */
+  var sheet,scrim,back;
+  function ensure(){if(sheet)return;scrim=document.createElement('div');scrim.className='cp-scrim';
+    sheet=document.createElement('section');sheet.className='cp-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');
+    document.body.appendChild(scrim);document.body.appendChild(sheet);scrim.addEventListener('click',close);
+    sheet.addEventListener('click',function(e){if(e.target.closest('.cp-x'))close()})}
+  function open(html,from,label){ensure();sheet.setAttribute('aria-label',label||'Edit stores');back=from||document.activeElement;sheet.innerHTML='<div class="cp-grab"></div>'+html;sheet.scrollTop=0;sheet.classList.add('on');scrim.classList.add('on');
+    document.documentElement.style.overflow='hidden';setTimeout(function(){var f=sheet.querySelector('input,button');if(f)f.focus({preventScroll:true})},60)}
+  function close(){if(!sheet||!sheet.classList.contains('on'))return;sheet.classList.remove('on');scrim.classList.remove('on');document.documentElement.style.overflow='';if(back&&back.focus)back.focus({preventScroll:true})}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+
+  /* ---- pieces ---- */
+  function mark(s,cls){var m=MARK[s.id]||['#a275e0','#550da6'];return '<span class="cp-mark '+(cls||'')+'" style="--m1:'+m[0]+';--m2:'+m[1]+'" aria-hidden="true">'+esc(s.name[0])+'</span>'}
+  function thumb(x,big){var c=x.c||['#bdb3cc','#6d6480'];var img=x.p?x.p.img:x.img!==false;
+    if(!img)return '<span class="cp-th ini'+(big?' big':'')+'" aria-hidden="true">'+esc(x.t[0])+'</span>';
+    return '<span class="cp-th'+(big?' big':'')+'" style="--c1:'+c[0]+';--c2:'+c[1]+'" aria-hidden="true">'+DRESS+'</span>'}
+  function money(n){return 'EGP '+fmt(n)}
+  function price(x){return '<span class="cp-pr">'+money(x.pr)+'</span>'+(x.cmp&&x.cmp>x.pr?'<s class="cp-was"><span class="sr">was </span>'+fmt(x.cmp)+'</s>':'')}
+  function sizes(x,kind){
+    if(kind==='sale')return x.osa+' of '+x.v+' '+(x.v===1?'size':'sizes')+' on sale'+(x.so?' · '+x.so+' sold out':'');
+    if(kind==='out')return x.v===1?'the only size is gone':'all '+x.v+' sizes gone';
+    return x.so+' of '+x.v+' sizes sold out'}
+  /* the line that ties a competitor product to ours (new: needs product matching in the app) */
+  function vs(x,kind){var o=x.like&&CP.OURS[x.like];if(!o)return '';
+    var who='<span>Your <b>'+esc(o.n)+'</b>';
+    if(kind==='out'||kind==='low'){
+      if(o.stock===0)return '<span class="cp-vs">'+who+' is sold out too</span></span>';
+      if(o.stock==null)return '<span class="cp-vs">'+who+' · stock not tracked</span></span>';
+      return '<span class="cp-vs">'+who+' · '+o.stock+' left</span>'+(kind==='out'?'<span class="cp-tag g">Your chance</span>':'')+'</span>'}
+    if(o.stock===0)return '<span class="cp-vs">'+who+' · '+money(o.price)+' — sold out at yours</span></span>';
+    var gap=x.pr-o.price;
+    var tag=Math.abs(gap)<25?'<span class="cp-tag n">Same as yours</span>':gap<0?'<span class="cp-tag w">'+money(-gap)+' under yours</span>':'<span class="cp-tag p">'+money(gap)+' above yours</span>';
+    return '<span class="cp-vs">'+who+' · '+money(o.price)+'</span>'+tag+'</span>'}
+  function status(s){
+    if(s.status==='pending')return {dot:'wait',short:'Reading now',line:'Reading this store for the first time…'};
+    if(CPU.checking&&s.status!=='pending')return {dot:'wait',short:'Checking',line:'Checking now…'};
+    if(s.ok)return {dot:'',short:'Up to date',line:'Read '+s.read.replace('Today','today')};
+    return {dot:'bad',short:'Last check '+s.status,line:'Last check '+s.status+' · showing '+s.read};
+  }
+  function stale(s,short){if(s.ok||s.status==='pending')return '';
+    var act=' Press <b>Check all now</b> to try again, or <b>Test</b> its address in Edit stores.';
+    if(short)return '<div class="cp-note" role="note">'+WARN+'<span>Prices and stock below are from that last good read, not from now.'+act+'</span></div>';
+    return '<div class="cp-note" role="note">'+WARN+'<span>The last check of '+esc(s.name)+' '+s.status+' ('+s.tried.replace('Today','today')+'). What you see is its last good read from <b>'+s.read+'</b>.'+act+'</span></div>'}
+
+  /* ---- product sheet: everything we know about one competitor product ----
+     Sizes + History come from what the app already stores (one row per size; the change log).
+     Photos count, type, colour, date added and description are public in Shopify's products.json but not saved today. */
+  var SZ=['XS','S','M','L','XL','XXL'];
+  function byKey(k){var r=null;CP.STORES.forEach(function(s){s.products.forEach(function(x){if(x.key===k)r=x})});return r}
+  function product(x){var s=x.store,o=x.like&&CP.OURS[x.like];
+    var state=x.so===x.v?'<span class="cp-tag r">Sold out</span>':x.osa?'<span class="cp-tag g">'+x.off+'% off</span>':x.so?'<span class="cp-tag w">'+x.so+' of '+x.v+' sizes gone</span>':'<span class="cp-tag n">Full price</span>';
+    var h='<div class="cp-sh"><div class="cp-pd-top">'+thumb(x,true)+'<span class="cp-pd-ph">'+(x.photos?x.photos+' photos on their page':'No photo on their page')+'</span></div>'+
+      '<button type="button" class="cp-x" aria-label="Close">'+XI+'</button></div>';
+    h+='<div class="cp-pd-id"><h2>'+esc(x.t)+'</h2><p>'+esc(s.name)+' · '+x.type+(x.colour?' · '+esc(x.colour):'')+'</p>'+
+      '<div class="cp-pd-pr">'+price(x)+state+'</div>'+
+      '<button type="button" class="cp-btn sm" data-cp-ext="'+esc(s.host)+'">Open on '+esc(s.host)+EXT+'</button></div>';
+    h+='<section class="cp-pd-s"><h3>Sizes</h3><div class="cp-pd-sz">'+x.sizes.map(function(z){
+      return '<div class="cp-pd-row'+(z.avail?'':' out')+'"><b>'+z.n+'</b><span class="cp-pr">'+money(z.pr)+(z.was?'<s class="cp-was"><span class="sr">was </span>'+fmt(z.was)+'</s>':'')+'</span>'+
+        (z.avail?(z.was?'<span class="cp-tag g">On sale</span>':'<span class="cp-tag n">In stock</span>'):'<span class="cp-tag r">Sold out</span>')+'</div>'}).join('')+'</div></section>';
+    if(o){var gap=x.pr-o.price;
+      var gapT=o.stock===0?'<span class="cp-tag n">Sold out at yours</span>':Math.abs(gap)<25?'<span class="cp-tag n">Same as yours</span>':gap<0?'<span class="cp-tag w">Theirs is '+money(-gap)+' cheaper</span>':'<span class="cp-tag p">Theirs is '+money(gap)+' dearer</span>';
+      var outs=x.sizes.filter(function(z){return !z.avail}).map(function(z){var j=o.one?0:SZ.indexOf(z.n),n=j<0?null:o.sz[j];
+        return '<li><b>'+z.n+'</b> '+(n==null?'your stock isn’t tracked':n===0?'you’re out too':'you have <b>'+n+'</b>')+'</li>'}).join('');
+      h+='<section class="cp-pd-s"><h3>Next to yours</h3><button type="button" class="cp-pd-our" data-cp-go="products"><span><b>'+esc(o.n)+'</b><small>'+money(o.price)+' · '+(o.stock==null?'stock not tracked':o.stock+' left')+'</small></span>'+gapT+'</button>'+
+        (outs?'<p class="cp-pd-k">Sizes they’re out of</p><ul class="cp-pd-outs">'+outs+'</ul>':'')+'</section>'}
+    var hist=CP.EVENTS.filter(function(e){return e.p===x}).map(function(e){
+      return '<li><span class="cp-tag '+e.tone+'">'+e.label+'</span><span>'+(e.size?'Size '+esc(e.size)+' · ':'')+(e.old!=null?fmt(e.old)+' → ':'')+money(e.nw)+'</span><time>'+e.day+', '+e.time+'</time></li>'}).join('');
+    h+='<section class="cp-pd-s"><h3>History</h3><ul class="cp-pd-hist">'+hist+'<li><span class="cp-tag n">Added</span><span>Put on their store at '+money(x.cmp||x.pr)+'</span><time>'+x.added+'</time></li></ul></section>';
+    h+='<section class="cp-pd-s"><h3>On their page</h3><p class="cp-pd-d">'+(x.desc?esc(x.desc):'No description on their page.')+'</p></section>';
+    return h}
+
+  /* ---- changes, following the date picker ---- */
+  var period=(window.PER&&PER.cur)||'7d';
+  function events(store){var sp=CP.SPAN[period]||[0,6];return CP.EVENTS.filter(function(e){return (!store||e.store===store)&&e.ago>=sp[0]&&e.ago<=sp[1]&&CP.STORES.indexOf(e.store)>=0})}
+  document.addEventListener('per:change',function(e){period=e.detail.key;changed()});
+  function periodWord(){return {today:'today',yesterday:'yesterday','7d':'in the last 7 days','30d':'in the last 30 days',month:'this month'}[period]||''}
+
+  /* ---- worth a look: their move next to your product ---- */
+  function worth(){var out=[];
+    CP.STORES.forEach(function(s){
+      s.soldOut.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(o&&o.stock>0)out.push({w:3+o.stock/100,x:x,s:s,tone:'g',
+        b:esc(s.name)+' sold out of their '+esc(x.t.split(' – ')[0]),
+        sm:'Your '+esc(o.n)+' has '+o.stock+' left'+(o.note?' and '+o.note:'')+' — a good week to push it.'})});
+      s.onSale.forEach(function(x){var o=x.like&&CP.OURS[x.like];if(o&&o.stock!==0&&o.price-x.pr>=150)out.push({w:2+(o.price-x.pr)/1000,x:x,s:s,tone:'w',
+        b:esc(s.name)+' cut their '+esc(x.t.split(' – ')[0])+' to '+money(x.pr),
+        sm:money(o.price-x.pr)+' under your '+esc(o.n)+' ('+money(o.price)+')'+(o.note?', which has had '+o.note:'')+'.'})});
+    });
+    var seen={};return out.sort(function(a,b){return b.w-a.w}).filter(function(r){var k=r.x.like;if(seen[k])return false;seen[k]=1;return true}).slice(0,4)}
+
+  /* ---- check all now ---- */
+  var listeners=[];
+  function changed(){listeners.forEach(function(f){f()})}
+  function checkAll(){if(CPU.checking)return;CPU.checking=true;CPU.msg={t:'Checking every store now…',k:''};changed();
+    setTimeout(function(){CPU.checking=false;var bad=[];
+      CP.STORES.forEach(function(s){if(s.status==='pending')return;if(s.id==='selene'){s.tried='Just now';bad.push(s.name)}else{s.read='Just now';s.status='ok';s.ok=true}});
+      CPU.msg=bad.length?{t:'Checked. '+bad.join(', ')+' timed out again — its last good read is still shown.',k:'bad'}:{t:'Checked. Every store is up to date.',k:'ok'};
+      changed()},2600)}
+
+  /* ---- edit stores form (same fields as the app: 3 × name + URL with Test / Clear, alert email, Save) ---- */
+  var alertEmail='sam@frillnwear.com';
+  function rows(){var r=CP.STORES.map(function(s){return {name:s.name,url:s.url,id:s.id}});while(r.length<CP.MAX)r.push({name:'',url:'',id:null});return r}
+  function formHtml(){var R=rows();
+    return '<div class="cp-form" data-cp-form>'+R.map(function(r,i){var filled=r.name||r.url;
+      return '<fieldset class="cp-fs'+(filled?' on':'')+'" data-i="'+i+'" data-id="'+(r.id||'')+'"><legend>Competitor '+(i+1)+(filled?'':'<span class="cp-opt">optional</span>')+'</legend>'+
+        '<div class="cp-f"><label for="cpn'+i+'">Store name</label><input class="cp-in" id="cpn'+i+'" data-k="name" value="'+esc(r.name)+'" placeholder="Store name" autocomplete="off"></div>'+
+        '<div class="cp-f"><label for="cpu'+i+'">Store home page</label><div class="cp-url"><input class="cp-in" id="cpu'+i+'" type="url" data-k="url" value="'+esc(r.url)+'" placeholder="https://www.store.com" autocomplete="off" aria-describedby="cpr'+i+'">'+
+        '<button type="button" class="cp-btn" data-cp-test'+(r.url?'':' disabled')+'>Test</button><button type="button" class="cp-btn'+(filled?'':' hide')+'" data-cp-clear aria-label="Clear competitor '+(i+1)+'">Clear</button></div></div>'+
+        '<p class="cp-res" id="cpr'+i+'" role="status" aria-live="polite"></p></fieldset>'}).join('')+
+      '<p class="cp-hint">Use each store’s home page, then press Test — it checks that prices can be read before you save.</p>'+
+      '<div class="cp-f"><label for="cpmail">Alert email <span class="cp-opt">optional</span></label><input class="cp-in" id="cpmail" type="email" value="'+esc(alertEmail)+'" placeholder="you@store.com"><p class="cp-hint">Gets an email when a watched store starts a sale, sells out or drops a price. Leave empty for none.</p></div>'+
+      '<div class="cp-save"><button type="button" class="cp-btn pri" data-cp-save>Save competitors</button><span class="cp-stat" role="status" aria-live="polite" data-cp-stat></span></div>'+
+      '<p class="cp-warn">Clearing a store and saving <b>stops watching it and deletes its history</b>. This cannot be undone.</p></div>'}
+  function known(url){return CP.STORES.filter(function(s){return url.replace(/\/+$/,'').replace('://www.','://')===s.url})[0]}
+  document.addEventListener('input',function(e){var fs=e.target.closest('[data-cp-form] .cp-fs');if(!fs)return;
+    var url=$('[data-k=url]',fs).value.trim(),nm=$('[data-k=name]',fs).value.trim();$('[data-cp-test]',fs).disabled=!url;$('[data-cp-clear]',fs).classList.toggle('hide',!url&&!nm);fs.classList.toggle('on',!!(url||nm));$('.cp-res',fs).textContent=''});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-cp-test]');
+    if(t){var fs=t.closest('.cp-fs'),res=$('.cp-res',fs),url=$('[data-k=url]',fs).value.trim();t.disabled=true;t.textContent='Testing…';res.className='cp-res wait';res.textContent='Testing this address…';
+      setTimeout(function(){t.disabled=false;t.textContent='Test';var k=known(url);
+        if(!/^https?:\/\/[^\s.]+\.[^\s]+$/.test(url)||/instagram|facebook|tiktok/.test(url)){res.className='cp-res bad';res.textContent='Can’t read prices from this address. Use the store’s own home page, for example https://www.store.com — not an Instagram or Facebook page.';return}
+        res.className='cp-res ok';res.textContent='Readable — '+(k?k.platform+', '+k.count:'Shopify, 60')+'+ products found.'},1100);return}
+    var c=e.target.closest('[data-cp-clear]');
+    if(c){var f2=c.closest('.cp-fs');$$('.cp-in',f2).forEach(function(i){i.value=''});$('[data-cp-test]',f2).disabled=true;c.classList.add('hide');f2.classList.remove('on');
+      $('.cp-res',f2).className='cp-res';$('.cp-res',f2).textContent=f2.dataset.id?'Will stop being watched when you save.':'';$('[data-k=name]',f2).focus();return}
+    var sv=e.target.closest('[data-cp-save]');
+    if(sv){var form=sv.closest('[data-cp-form]'),stat=$('[data-cp-stat]',form),ok=true,next=[],added=0;
+      $$('.cp-fs',form).forEach(function(fs){var nm=$('[data-k=name]',fs).value.trim(),url=$('[data-k=url]',fs).value.trim(),res=$('.cp-res',fs);
+        if(!nm&&!url)return;
+        if(!nm||!url){ok=false;res.className='cp-res bad';res.textContent='Add both a store name and its home page.';return}
+        var old=fs.dataset.id&&CP.STORES.filter(function(s){return s.id===fs.dataset.id})[0];
+        if(old&&old.url===url.replace(/\/+$/,'')){old.name=nm;next.push(old);return}
+        added++;next.push({id:'new'+Date.now()+next.length,name:nm,url:url.replace(/\/+$/,''),host:url.replace(/^https?:\/\/(www\.)?/,'').replace(/\/.*$/,''),platform:'Shopify',status:'pending',ok:false,read:'',count:60,products:[],events:[],onSale:[],soldOut:[],lowStock:[]})});
+      if(!ok){stat.className='cp-stat bad';stat.textContent='Fix the highlighted store first.';return}
+      alertEmail=$('#cpmail',form).value.trim();
+      sv.disabled=true;sv.textContent='Saving…';
+      setTimeout(function(){CP.STORES.length=0;next.forEach(function(s){CP.STORES.push(s)});sv.disabled=false;sv.textContent='Save competitors';
+        stat.className='cp-stat ok';stat.textContent=added?'Saved. Reading each new store for the first time…':'Saved.';
+        CPU.msg=added?{t:'Saved. Reading each new store for the first time — this usually takes under a minute.',k:''}:null;changed();
+        if(added)setTimeout(function(){CP.STORES.forEach(function(s){if(s.status==='pending'){s.status='ok';s.ok=true;s.read='Just now';s.count=60}});
+          CPU.msg={t:'Done. The new store has been read — nothing on sale, sold out or running low there yet.',k:'ok'};changed()},3600);
+        if(typeof CPU.afterSave==='function')CPU.afterSave(added)},700)}
+  });
+
+  /* ---- "i" tips (Shipping B's OS.tip, verbatim behaviour) ---- */
+  function tip(t){return '<button type="button" class="tip" data-tip="'+esc(t)+'" aria-label="'+esc(t)+'">i</button>'}
+  (function(){
+    var b=document.createElement('div');b.className='tipb';b.setAttribute('role','tooltip');b.setAttribute('aria-hidden','true');document.body.appendChild(b);
+    var cur=null,pin=false;
+    function place(el){var r=el.getBoundingClientRect(),w=Math.min(300,innerWidth-24);b.style.width=w+'px';
+      var x=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));b.style.left=x+'px';
+      var below=r.bottom+8,h=b.offsetHeight;b.style.top=(below+h>innerHeight-8&&r.top-h-8>8?r.top-h-8:below)+'px'}
+    function open(el){cur=el;b.textContent=el.dataset.tip;b.classList.add('on');place(el)}
+    function close(){cur=null;pin=false;b.classList.remove('on')}
+    document.addEventListener('mouseover',function(e){var t=e.target.closest('.tip');if(t&&!pin)open(t)});
+    document.addEventListener('mouseout',function(e){var t=e.target.closest('.tip');if(t&&!pin&&!t.contains(e.relatedTarget))close()});
+    document.addEventListener('focusin',function(e){var t=e.target.closest('.tip');if(t)open(t)});
+    document.addEventListener('focusout',function(e){if(e.target.closest('.tip')&&!pin)close()});
+    document.addEventListener('click',function(e){var t=e.target.closest('.tip');
+      if(t){e.preventDefault();e.stopPropagation();if(pin&&cur===t){close();return}open(t);pin=true;return}
+      if(pin)close()},true);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cur)close()});
+    addEventListener('scroll',function(){if(cur)place(cur)},{passive:true});addEventListener('resize',function(){if(cur)place(cur)});
+  })();
+
+  return {$:$,$$:$$,esc:esc,reduce:reduce,toast:toast,go:go,open:open,close:close,mark:mark,thumb:thumb,money:money,price:price,sizes:sizes,vs:vs,status:status,stale:stale,
+    events:events,periodWord:periodWord,worth:worth,checkAll:checkAll,formHtml:formHtml,tip:tip,product:product,byKey:byKey,checking:false,msg:null,
+    onChange:function(f){listeners.push(f)},ARW:ARW,EXT:EXT,XI:XI,SYNC:SYNC,PEN:PEN,WARN:WARN};
+})();
+
+/* ===== Competitors B behaviour ===== */
+(function(){
+  var $=CPU.$,$$=CPU.$$,esc=CPU.esc;
+  var tab='chg',only=null,shown=10;
+  var KIND={sale:'onSale',out:'soldOut',low:'lowStock'};
+  var EMPTY={sale:'Nothing on sale at these stores right now.',out:'No fully sold-out products.',low:'No products with sizes sold out.'};
+  function stores(){return CP.STORES.filter(function(s){return !only||s.id===only})}
+  function list(k){var L=[].concat.apply([],stores().map(function(s){return s[KIND[k]]}));
+    if(k==='sale')L.sort(function(a,b){return b.off-a.off});
+    else L.sort(function(a,b){return (b.like?1:0)-(a.like?1:0)||b.so/b.v-a.so/a.v});return L}
+  function evs(){return CPU.events(null).filter(function(e){return !only||e.store.id===only})}
+
+  function head(){
+    $('#cb-sub').textContent=CP.STORES.length+' of '+CP.MAX+' stores watched · checked every '+CP.EVERY+' hours';
+    var b=$('#cb-check');b.disabled=CPU.checking;b.innerHTML=CPU.checking?'<span class="cp-spin" aria-hidden="true"></span>Checking…':CPU.SYNC+'Check all now';
+    $('#cb-edit').innerHTML=CPU.PEN+(CP.STORES.length?'Edit stores':'Add stores');
+    var m=$('#cb-msg');m.className='cb-msg'+(CPU.msg&&CPU.msg.k?' '+CPU.msg.k:'');
+    m.innerHTML=CPU.msg?(!CPU.msg.k?'<span class="cp-spin" aria-hidden="true"></span>':'')+esc(CPU.msg.t):''}
+  function worth(){var w=CPU.worth();$('#cb-attp').hidden=!w.length;
+    $('#cb-att').innerHTML=w.map(function(r){return '<button type="button" class="cp-arow" data-cb-go="'+(r.tone==='g'?'out':'sale')+'" data-cb-only="'+r.s.id+'">'+CPU.thumb(r.x)+
+      '<span><b>'+r.b+'</b><small>'+r.sm+'</small></span><span class="cp-link">See it '+CPU.ARW+'</span></button>'}).join('')}
+  function tabs(){
+    var T=[['chg','What changed',evs().length],['sale','On sale',list('sale').length],['out','Sold out',list('out').length],['low','Low stock',list('low').length],['stores','Stores',null]];
+    $('#cb-seg').innerHTML='<span class="ind" aria-hidden="true"></span>'+T.map(function(t){var bad=t[0]==='stores'&&CP.STORES.some(function(s){return !s.ok&&s.status!=='pending'});
+      return '<button type="button" role="tab" data-cb-tab="'+t[0]+'" aria-selected="'+(tab===t[0])+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+(t[2]!=null?' <span class="n">'+t[2]+'</span>':bad?' <span class="n r" aria-label="one store needs a look">!</span>':'')+'</button>'}).join('');
+    requestAnimationFrame(ind)}
+  function ind(){var on=$('#cb-seg button.on'),i=$('#cb-seg .ind');if(!on||!i)return;i.style.width=on.offsetWidth+'px';i.style.transform='translateX('+on.offsetLeft+'px)';
+    var seg=$('#cb-seg');if(seg.scrollWidth>seg.clientWidth)seg.scrollTo({left:on.offsetLeft-(seg.clientWidth-on.offsetWidth)/2,behavior:CPU.reduce?'auto':'smooth'})}
+
+  function chips(){return '<div class="cb-tools"><div class="cp-chips swipe" role="group" aria-label="Store">'+
+    '<button type="button" class="cp-chip" data-cb-only="" aria-pressed="'+!only+'">All stores</button>'+
+    CP.STORES.map(function(s){var st=CPU.status(s);return '<button type="button" class="cp-chip" data-cb-only="'+s.id+'" aria-pressed="'+(only===s.id)+'"><span class="cp-dot '+st.dot+'" aria-hidden="true"></span>'+esc(s.name)+'<span class="sr">, '+st.short+'</span></button>'}).join('')+'</div></div>'}
+  function staleNotes(){return stores().map(function(s){return CPU.stale(s)}).join('')}
+  function row(x,k){var meta=esc(x.store.name)+' · '+CPU.sizes(x,k);
+    var pz=k==='sale'?'<span class="cb-pz"><span>'+CPU.price(x)+'</span><span class="cp-tag g">'+x.off+'% off</span></span>':'<span class="cb-pz"><span>'+CPU.price(x)+'</span></span>';
+    return '<a href="#" class="cb-row" data-cp-ext="'+esc(x.store.host)+'" aria-label="Open '+esc(x.t)+' on '+esc(x.store.host)+'">'+CPU.thumb(x)+
+      '<span class="cb-nm"><b>'+esc(x.t)+'</b><small>'+meta+'</small></span>'+pz+(CPU.vs(x,k)||'<span class="cb-none">Nothing like it in your store</span>')+'</a>'}
+  function products(k){var L=list(k);
+    if(!L.length)return '<p class="cp-empty">'+EMPTY[k]+'</p>';
+    return '<div class="cb-rows"><div class="cb-hd"><span>Their product</span><span>Their price</span><span>Yours</span></div>'+L.map(function(x){return row(x,k)}).join('')+'</div>'}
+  function changes(){var E=evs();if(!E.length)return '<p class="cp-empty">No changes found '+CPU.periodWord()+'. Pick a longer period in the date picker to see older ones.</p>';
+    var out='<div class="cb-rows">',day='';E.slice(0,shown).forEach(function(e){if(e.day!==day){day=e.day;out+='<h4 class="cb-day">'+e.dayName+'</h4>'}
+      var pr=e.old!=null?'<span class="cp-pr"><s class="cp-was" style="margin:0"><span class="sr">was </span>'+CP.fmt(e.old)+'</s><span class="cb-arrow" aria-hidden="true">→</span>'+CPU.money(e.nw)+'</span>':'<span class="cp-pr">'+CPU.money(e.nw)+'</span>';
+      var x=e.p?Object.assign({},e.p,{pr:e.nw}):null;
+      out+='<a href="#" class="cb-ch" data-cp-ext="'+esc(e.store.host)+'">'+CPU.thumb(e)+'<span class="cb-nm"><b>'+esc(e.t)+'</b><small>'+esc(e.store.name)+(e.size?' · size '+esc(e.size):'')+' · <span class="cp-tag '+e.tone+'">'+e.label+'</span></small></span>'+
+        '<span class="cb-ch-r">'+pr+'<time>'+e.time+'</time></span>'+(x?CPU.vs(x,e.type==='SOLD_OUT'?'out':e.type==='RESTOCKED'?'low':'sale'):'')+'</a>'});
+    out+='</div>';
+    if(E.length>shown)out+='<div class="cb-more"><button type="button" class="cp-btn sm" data-cb-more>Show '+Math.min(10,E.length-shown)+' more · '+(E.length-shown)+' left</button></div>';
+    return out+'<p class="cb-foot">Only the newest 100 changes across all stores are kept'+CPU.tip('Every check compares each product with the check before it. We keep the newest 100 changes across your watched stores; older ones drop off this list.')+'</p>'}
+  function storeList(){
+    var rows=CP.STORES.map(function(s){var st=CPU.status(s);
+      return '<div class="cb-st">'+CPU.mark(s)+'<div class="cb-st-m"><b>'+esc(s.name)+'</b><small><span class="cp-dot '+st.dot+'" aria-hidden="true"></span>'+st.line+'</small><small>'+s.platform+' store · <a href="#" data-cp-ext="'+esc(s.host)+'">'+esc(s.host)+CPU.EXT+'</a></small></div>'+
+        (s.status==='pending'?'':'<div class="cb-st-n"><span><b>'+s.onSale.length+'</b>on sale</span><span><b>'+s.soldOut.length+'</b>sold out</span><span><b>'+s.lowStock.length+'</b>low stock</span></div>')+'</div>'}).join('')||'<p class="cp-empty">No stores watched yet.</p>';
+    return '<div class="cp-ph"><h3>Watched stores</h3></div>'+rows}
+  function storesTab(){
+    return '<div class="cb-split"><div id="cb-stl">'+storeList()+
+      '</div><div><div class="cp-ph"><h3 id="cb-form-h">'+(CP.STORES.length?'Edit stores':'Add stores')+'</h3></div>'+CPU.formHtml()+'</div></div>'}
+  function pane(){var p=$('#cb-pane'),h='';
+    if(tab==='stores'){p.innerHTML=storesTab();return}
+    if(!CP.STORES.length){p.innerHTML='<p class="cp-empty">No competitor stores are watched yet. Open <b>Stores</b> to add up to three.</p>';return}
+    h+=chips()+staleNotes();
+    if(tab==='chg')h+=changes();
+    else h+=products(tab);
+    if(tab!=='chg'&&tab!=='stores')h+='<p class="cb-foot">A product can sit in more than one list'+CPU.tip('A discounted dress with a size gone is both on sale and low stock. The counts are not meant to add up to the whole store.')+'</p>';
+    p.innerHTML=h}
+  function all(){head();worth();tabs();pane()}
+  function goTab(t,scroll){tab=t;shown=10;tabs();pane();var a=$('#cb-anchor');if(scroll||a.getBoundingClientRect().top<0)a.scrollIntoView({behavior:scroll&&!CPU.reduce?'smooth':'auto'})}
+
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-cb-tab]');if(t){goTab(t.dataset.cbTab);return}
+    var g=e.target.closest('[data-cb-go]');if(g){only=g.dataset.cbOnly||null;goTab(g.dataset.cbGo,true);return}
+    var o=e.target.closest('[data-cb-only]');if(o){only=o.dataset.cbOnly||null;shown=10;tabs();pane();var nb=$('#cb-pane [data-cb-only="'+(only||'')+'"]');if(nb)nb.focus({preventScroll:true});return}
+    if(e.target.closest('[data-cb-more]')){shown+=10;pane();return}
+  });
+  $('#cb-check').addEventListener('click',CPU.checkAll);
+  $('#cb-edit').addEventListener('click',function(){goTab('stores',true);setTimeout(function(){var i=$('#cpn0');if(i)i.focus({preventScroll:true})},400)});
+  CPU.afterSave=function(){};
+  CPU.onChange(function(){head();worth();tabs();var l=$('#cb-stl');if(tab==='stores'&&l){l.innerHTML=storeList();$('#cb-form-h').textContent=CP.STORES.length?'Edit stores':'Add stores'}else pane()});
+  addEventListener('resize',ind);
+  var anc=$('#cb-anchor');if('IntersectionObserver' in window)new IntersectionObserver(function(en){$('#cb-tabbar').classList.toggle('stuck',!en[0].isIntersecting)},{rootMargin:'-12px 0px 0px 0px'}).observe(anc);
+  all();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ind);
+})();
+</script>
+<script src="/overview-looks/app/local/glue.js"></script></body>
+</html>
