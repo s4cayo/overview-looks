@@ -78,31 +78,46 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .tag.r{color:var(--bad);background:rgba(240,101,113,.1)}
 .tag.p{color:var(--pl);background:rgba(162,117,224,.12)}
 .tag.n{color:var(--muted);background:var(--track)}
-/* ================= 4 · STICKY TABS ================= */
-.tabs-anchor{height:0;margin-bottom:-22px}
+/* === TABS v1 START === */
+/* Tabs v1 (round 16, audit fix 6): THE one tab style for every page that has sections — the Overview's sticky pill bar.
+   A dark (white in light mode) frosted pill, centred, max 780px wide, that sticks 12px under the top of the screen;
+   the active tab is a purple gradient pill (#7c3fc1 → #550da6) that SLIDES under the labels (span.ind, moved by
+   script); inactive labels are muted 15px/500 (14px on phones), an optional count chip (.n, .n.r = red) sits after a
+   label and hides on phones. On a phone the bar runs edge to edge and scrolls sideways; every tab is ≥44px tall.
+   Markup:  <div class="tabs-anchor" id="tabsAnchor" aria-hidden="true"></div>
+            <div class="tabbar" id="tabbar"><div class="seg" role="tablist" aria-label="…" id="seg">
+              <span class="ind" id="ind" aria-hidden="true"></span>
+              <button role="tab" id="t-x" aria-controls="p-x" aria-selected="true" class="on" data-tab="x">X</button> …
+            </div></div>   + one <section class="pane" id="p-x" role="tabpanel"> per tab.
+   Behaviour: the "sticky tabs" part of the page script (place() sizes .ind to the .on tab; ←/→/Home/End move; the
+   IntersectionObserver on #tabsAnchor adds .stuck). Tokens used: --line2 --muted --text --pl --bad --lt-line. */
 .tabbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);z-index:30;display:flex;justify-content:center}
 .seg{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(max-content,1fr);width:min(100%,780px);padding:5px;border-radius:99px;
   background:rgba(13,12,18,.93);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   box-shadow:0 18px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;transition:box-shadow .3s,border-color .3s}
 .seg::-webkit-scrollbar{display:none}
 .tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
-:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);box-shadow:0 18px 40px -26px rgba(40,20,80,.45)}
-:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 18px 36px -18px rgba(40,20,80,.5),0 0 0 4px rgba(244,242,248,.75)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
   box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
-.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
+.seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:15px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
 .seg button:focus-visible{outline:2px solid var(--pl);outline-offset:-2px}
-.seg .n{font-size:10.5px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:17px;font-variant-numeric:tabular-nums}
-:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+.seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
 .seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
 .seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
-.pane{scroll-margin-top:80px;min-height:var(--pane-min,0px)}
-.pane[hidden]{display:none}
-.pane:not([hidden]){animation:paneIn .45s cubic-bezier(.2,.8,.2,1)}
-.pane:focus{outline:none}
-@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
+:root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
+:root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
+@media (max-width:1023px){.seg button{min-height:44px}}
+@media (max-width:600px){
+  .tabbar{margin:0 -16px;padding:0 16px}
+  .seg{width:100%}
+  .seg button{padding:9px 13px;font-size:14px}
+  .seg .n{display:none}
+}
+/* === TABS v1 END === */
 /* === NAV v2 START === */
 /* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
    and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
@@ -776,11 +791,7 @@ main{max-width:1240px}
 }
 /* === PSHEET v1 END === */
 
-/* sticky tabs: N's .seg, sized for these pages */
-.ip .tabbar{top:calc(env(safe-area-inset-top,0px) + 10px)}
-.ip .seg{width:auto;max-width:100%}
-.ip .seg button{padding:10px 18px}
-@media (max-width:600px){.ip .tabbar{margin:0 -16px;padding:0 16px}.ip .seg{width:100%}.ip .seg button{padding:9px 12px;font-size:13px}.ip .seg .n{display:none}}
+/* sticky tabs: TABS v1 from the Overview, unchanged (round 16) */
 .ip .pane{scroll-margin-top:84px}
 
 /* "i" tips — the ONE info icon used on every page (.redesign/shared/INFO-ICON.md, copied from Shipping B) */
@@ -844,7 +855,6 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:24px}
 :root .pv2-ph{margin-bottom:16px}
 :root .pv2-ph h3{font-size:20px;font-weight:650;line-height:1.3;letter-spacing:-.015em}
-:root .ip .seg button{font-size:15px}
 :root .ip-meta,:root .pv2-per{font-size:13px}
 /* products A: revenue is the biggest thing on a card */
 :root .pa-cards .pv2-mv{font-size:32px;line-height:1.15;letter-spacing:-.02em}
@@ -878,7 +888,6 @@ html.nv2-lock{scrollbar-gutter:stable}
   :root .ip{gap:16px}
   :root .pv2-panel,:root .ia-panes .pv2-panel,:root .ib-panes .pv2-panel{padding:20px}
   :root .pv2-ph h3{font-size:18px}
-  :root .ip .seg button{font-size:14px}
   :root .pa-cards .pv2-mv,:root .pb-g b,:root .ia-t .pa-n,:root .ia-big,:root .ib-big{font-size:26px}
   :root .pa-cards .pv2-mv.u{font-size:18px}
   :root .pa-sz > b{font-size:18px}
@@ -904,16 +913,13 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:1023px){
   :root .ip-link,:root .ip-btn,:root .ip-chip,:root .pv2-copy{height:44px}
   :root .ip-search{height:46px}
-  :root .ip .seg button{min-height:44px}
   :root .ip .pv2-sort button{height:44px}
   :root .ip .pv2-seg button{height:44px;min-width:48px}
   :root .ip-more::after{content:"";position:absolute;inset:-7px}
   :root :is(.ia-skip,.ib-out,.pa-foot) button{position:relative}
   :root :is(.ia-skip,.ib-out,.pa-foot) button::after{content:"";position:absolute;inset:-12px}
 }
-/* the "i" keeps its 18px look; an invisible 44px box around it takes the tap */
-:root .tip{position:relative}
-:root .tip::after{content:"";position:absolute;inset:-13px}
+/* the "i" icons: TAP v1 gives them their 44px hit box */
 /* #3 contrast >= 4.5:1: darker red/amber text on light tints; dark text on the bright badges in dark mode */
 :root[data-theme="light"] :is(.ia-c.w,.ip-tag.w,.ia-sz.w b,.ip .pv2-tbl td.w){color:#7a5208}
 :root[data-theme="light"] :is(.ia-c.r,.ip-tag.r,.ia-sz.o b,.ia-sz.o em,.ip .pv2-tbl td.r){color:#a32a37}
@@ -936,7 +942,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 :root .ia-szs{gap:8px}
 :root .ia-t{gap:8px;padding:16px}
 :root .ia-t .pa-go{padding-top:8px;gap:4px}
-:root :is(.ip-chip,.ip-btn,.pv2-copy,.ip .seg button){gap:8px}
+:root :is(.ip-chip,.ip-btn,.pv2-copy){gap:8px}
 :root .ip-chip{padding:0 12px}
 :root .ip-btn{padding:0 16px}
 /* one box fewer: the restock plan sits in its panel on a hairline, not in a second bordered box */
@@ -1073,6 +1079,39 @@ html.nv2-lock{scrollbar-gutter:stable}
 @media (max-width:700px){.ia-li .ia-act{grid-column:1 / -1;grid-row:auto;order:2;justify-content:flex-start;padding-left:58px}.ia-sz{min-width:0;flex:1 1 0;padding:0 2px}}
 .ia-how{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--pv2-bg2);font-size:13.5px;line-height:1.55;color:var(--pv2-mut)}
 .ia-how b{color:var(--pv2-fg);font-weight:600}
+/* === TAP v1 START === */
+/* Tap v1 (round 16, audit fix 2): below 1024px every tappable thing has a hit area of at least 44×44px (Apple HIG,
+   WCAG 2.5.5). Paste this block AS-IS after a page's other CSS: it only names shared classes (NAV v2, TABS v1, CARDS v2,
+   PRODUCTS v2, CITIES v2, the "i" icon, .lnk text links), so a class the page doesn't use costs nothing.
+   Two techniques, never mixed on one element:
+   · real size where the control already reads as a bar or a chip (top bar, tabs, segment buttons, chips, dots);
+   · an invisible ::after hit box where growing it would change the look — the 18px "i" icons keep their circle and get
+     inset:-14px (its 16px inner box + 28 = 44 with the 1px ring), text links keep their line and get a 44px-tall box, small pills a centred ≥44 box.
+   Don't add an element here that already draws its own ::after. Desktop (mouse) sizes are untouched, except the
+   Ctrl K hint, which follows the 12px minimum everywhere. */
+.nv2-kbd{font-size:12px}
+@media (max-width:1023px){
+  /* NAV v2 top bar: avatar, brand switch, date picker, bell */
+  :root .nv2-av,:root .nv2-ib{width:44px;height:44px}
+  :root .nv2-brand,:root .nv2-date{min-height:44px;height:44px}
+  /* TABS v1 (also in that block) */
+  :root .seg button{min-height:44px}
+  /* chips and segment buttons: sort tabs, cover / delivery days, "show more", copy */
+  :root .pv2-sort button,:root .pv2-seg button,:root .pv2-copy,:root .ct2 .ct2-tog{min-height:44px;height:auto}
+  :root .pv2-seg button{min-width:44px}
+  /* CARDS v2 carousel dots: a 44×44 button, the dot itself stays 6px (16px when on) */
+  :root .cv2-dots button{min-width:44px;height:44px;padding:0}
+  /* the "i" icons (.xp-b, Shipping B's button.tip, PSHEET's .ip-tip): same 18px circle, 44×44 hit box */
+  :root :is(.xp-b,button.tip,.ip-tip){position:relative}
+  :root :is(.xp-b,button.tip,.ip-tip)::after{content:"";position:absolute;inset:-14px;border-radius:50%}
+  /* text links ("All orders", "Recover", "Top up", "See details", back-links): 44px tall, no layout change */
+  :root :is(.lnk,.ph .lnk){position:relative}
+  :root :is(.lnk,.ph .lnk)::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:44px;transform:translateY(-50%)}
+  /* small pills on the card backs (Close, Ads Manager, …): a centred box of at least 44×44 */
+  :root :is(.cv2-close,.cv2-lnk){position:relative}
+  :root :is(.cv2-close,.cv2-lnk)::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+}
+/* === TAP v1 END === */
 </style>
 <script>
 /* === PERIODS v1 START === */
