@@ -756,8 +756,8 @@ html.nv2-lock{scrollbar-gutter:stable}
 .ip-swipew{position:relative}
 .ip-more{display:none}
 @media (max-width:600px){
-  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,transparent,var(--pv2-bg) 70%);transition:opacity .2s}
-  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,transparent,var(--pv2-bg) 80%)}
+  .ip-swipew::after{content:"";position:absolute;top:0;bottom:0;right:-16px;width:64px;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--pv2-bg) 0%,transparent),var(--pv2-bg) 70%);transition:opacity .2s}
+  .ip-swipew.start::before{content:"";position:absolute;top:0;bottom:0;left:-16px;width:40px;z-index:1;pointer-events:none;background:linear-gradient(270deg,color-mix(in srgb,var(--pv2-bg) 0%,transparent),var(--pv2-bg) 80%)}
   .ip-more{display:grid;place-items:center;position:absolute;right:-4px;top:50%;transform:translateY(-50%);z-index:2;width:30px;height:30px;border-radius:50%;
     color:var(--pv2-acc);background:var(--pv2-bg);border:1px solid var(--pv2-line2)!important;box-shadow:0 4px 12px -4px rgba(0,0,0,.4);transition:opacity .2s}
   .ip-more .ip-i{width:15px;height:15px}
@@ -849,8 +849,15 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* GLOW v1 additions for these pages: the same dark-mode halo on this page's section titles and key figures */
 :root:not([data-theme="light"]) :is(.pv2-ph h3,.pa-cards .pv2-mv,.pb-g b,.ia-t .pa-n,.ia-big,.ib-big){
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) :is(.pv2-ph h3,.pa-cards .pv2-mv,.pb-g b,.ia-t .pa-n,.ia-big,.ib-big){text-shadow:none}}
 @media (prefers-contrast:more){:root :is(.pv2-ph h3,.pa-cards .pv2-mv,.pb-g b,.ia-t .pa-n,.ia-big,.ib-big){text-shadow:none}}
+
+/* === LIGHT v1 START === */
+/* Light v1 (round 15): light mode never reuses the dark-mode shadows. Cool, light shadows instead. */
+:root[data-theme="light"] .tipb{box-shadow:0 12px 28px -12px rgba(40,20,80,.16),0 1px 2px rgba(40,20,80,.06)}
+:root[data-theme="light"] .ip-more{box-shadow:0 4px 12px -4px rgba(40,20,80,.14)}
+:root[data-theme="light"] .seg .ind{box-shadow:0 2px 6px -2px rgba(85,13,166,.35),inset 0 1px 0 rgba(255,255,255,.22)}
+:root[data-theme="light"] .ip-th svg,:root[data-theme="light"] .pa-face svg{filter:drop-shadow(0 2px 4px rgba(40,20,80,.18))}
+/* === LIGHT v1 END === */
 /* === PERIODS v1 START === */
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
