@@ -16,15 +16,16 @@
     admin: BASE + "pages/brands-admin/admin-D.html",
     ads: BASE + "pages/ads/ads-A.html",
     adsmanager: BASE + "pages/ads/manager-A.html",
-    settings: BASE + "pages/settings/workspace-settings.html"
+    settings: BASE + "pages/settings/workspace-settings.html",
+    brands: BASE + "pages/all-brands/all-brands.html"
   };
   var LABEL = { overview: "overview", home: "overview", orders: "orders", shipping: "shipping",
     products: "products", inventory: "inventory", assistant: "assistant", tricky: "assistant", "ask ai": "assistant", "ask tricky": "assistant", competitors: "competitors", connections: "connections", admin: "admin",
-    "meta ads": "ads", "ads report": "ads", "ads": "ads", "ads manager": "adsmanager", settings: "settings", "workspace settings": "settings", workspace: "settings" };
+    "meta ads": "ads", "ads report": "ads", "ads": "ads", "ads manager": "adsmanager", settings: "settings", "workspace settings": "settings", workspace: "settings", "all brands": "brands" };
   // data-*-go keys used by the pages (Orders pages call Orders "sales" and Shipping "orders").
   var KEY = { overview: "overview", sales: "orders", orders: "shipping", products: "products",
-    inventory: "inventory", assistant: "assistant", competitors: "competitors", connections: "connections", admin: "admin", ads: "ads", adsmanager: "adsmanager", settings: "settings", workspace: "settings" };
-  var SOON = /^(all brands|brands|elsewhere)$/;
+    inventory: "inventory", assistant: "assistant", competitors: "competitors", connections: "connections", admin: "admin", ads: "ads", adsmanager: "adsmanager", settings: "settings", workspace: "settings", brands: "brands" };
+  var SOON = /^(elsewhere)$/;
 
   var here = Object.keys(URL).find(function (k) { return location.pathname === URL[k]; });
 

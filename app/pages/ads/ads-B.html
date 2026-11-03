@@ -1105,7 +1105,7 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
    key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
 :root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
   .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
-  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,.sh h2,.sh h3,.ph h2,.ob-sh h3,.mg-way h3,.mb-sum h3,.rb-dh h2,.rb-jt h2,.os-dh h2,.md h2,.jc-h,.os-nums b,.ad-facts b,.rb-facts b,.cc .cc-r b,.cc-tot > b,.ad-jy b){
+  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,.sh h2,.sh h3,.ph h2,.ob-sh h3,.mg-way h3,.mb-sum h3,.rb-dh h2,.rb-jt h2,.os-dh h2,.md h2,.jc-h,.os-nums b,.ad-facts b,.rb-facts b,.cc .cc-r b,.cc-tot > b,.ad-jy b,.ah-big,.ah-mid,.wf-vp,.pd-r b){
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
 @media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
 /* === GLOW v1 END === */
@@ -1391,6 +1391,40 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
   .wf-tb td:nth-child(3){grid-area:s}
   .wf-tb td:nth-child(4){grid-area:c;font-size:13px}
 }
+/* Ads report headline (mirrors the Overview's R17 ADS v1 .r17-hl) */
+.ah{display:flex;flex-direction:column;gap:20px;min-width:0}
+.ah-figs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px 40px}
+.ah-fig{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1 1 220px}
+.ah-fig.ah-plat{flex:1 1 200px;max-width:360px}
+.ah-k{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:600;line-height:1.4;color:var(--muted)}
+.ah-k .tip{margin-left:0}
+.ah-dot{width:10px;height:10px;border-radius:50%;flex:none;background:linear-gradient(135deg,#a275e0,#550da6)}
+.ah-dot.ring{background:none;border:2px dashed var(--muted)}
+.ah-big{font-size:32px;font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ah-big small{font-size:14px;font-weight:500;letter-spacing:0;color:var(--muted);margin-right:6px}
+.ah-big.gold{color:var(--gold)}
+.ah-mid{font-size:24px;font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:6px}
+.ah-sub{font-size:13px;line-height:1.45;color:var(--muted);max-width:48ch}
+.ah-sub b{color:var(--text);font-weight:600;white-space:nowrap}
+.ah-sub .dl{font-weight:600}
+.ah-sub button{color:var(--pl);font-weight:600}
+.ah-sc{position:relative;padding:6px 0 24px}
+.ah-tr{position:relative;display:block;height:10px;border-radius:99px;background:var(--track)}
+.ah-tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#550da6,#7c3fc1 55%,#a275e0);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.ah-tr em{position:absolute;width:0;transform:translateX(-1px);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.ah-tr em.be{top:-4px;bottom:-4px;border-left:2px solid var(--muted)}
+.ah-tr em.pm{top:-7px;bottom:-7px;border-left:2px dashed var(--text)}
+.ah-bel{position:absolute;top:24px;transform:translateX(-50%);font-size:12px;line-height:1.3;color:var(--muted);white-space:nowrap;transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.ah-ord{font-size:15px;color:var(--muted);display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.ah-ord b{color:var(--text);font-weight:600}
+.ah-bal{display:flex;flex-direction:column;gap:6px;min-width:0;padding-top:20px;border-top:1px solid var(--line)}
+.ah-pill{font-size:12px;font-weight:600;line-height:1.5;color:var(--warn);padding:1px 10px;border-radius:99px;white-space:nowrap;
+  background:color-mix(in srgb,var(--warn) 12%,var(--panel));border:1px solid color-mix(in srgb,var(--warn) 30%,var(--panel))}
+.ah-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:280px;margin-top:8px}
+.ah-days i{display:block;height:6px;border-radius:99px;background:var(--track)}
+.ah-days i.on{background:linear-gradient(90deg,#a87a33,#e3c98f)}
+.ah-days i.on.last{background:var(--warn)}
+@media (max-width:600px){.ah-big{font-size:26px}.ah-mid{font-size:20px}}
 /* === ROUND 17 (Ads) END === */
 
 </style>
@@ -2279,33 +2313,36 @@ OS.page='Ads report';
     eye:ic('<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>'),
     clock:ic('<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>')};
   var STOP=[I.store,I.dress,I.bag,I.form,I.gift],N=STOP.length;
-  var BASE=[11020,7720,1240,520,161];
-  var R=[1,.7006,.1606,.4194,.3096];
+  /* visits and store orders per period = the Overview's conversion rate (7 days: 175 orders from 12,480 visits, 1.40%) */
+  var VIS={today:[1690,24],yesterday:[2010,29],'7d':[12480,175],'30d':[52300,718],month:[52300,718]};
+  var R=[1,.7006,.1606,.4194,0];
+  function vis(){return VIS[AD.key()]||VIS['7d']}
   var SRC=[['all','Everyone',1,null,1,'var(--pl)',I.globe],['ads','Ads',.66,.82,.82,'#a275e0',I.ads],['ig','Instagram, not ads',.15,.55,1.15,'#e07aa5',I.ig],['direct','Typed the address',.10,.48,1.6,'#d8b46c',I.key],['google','Google search',.06,.62,1.3,'#5aa9e6',I.google],['other','Other sites',.03,.5,1,'#8d8a9b',I.globe]];
   var DEV=[['all','Phones and computers',1,1],['phone','Phones',.84,.95],['desk','Computers',.16,1.25]];
   /* p = OS.PR index; land = visits that STARTED on the dress page (landing_page_path); bounce = share of those visits that
      left from that page (bounce_rate); orders = 7-day orders containing the dress (Shopify orders) */
-  var PRODS=[{p:1,land:1900,bounce:.48,orders:58},{p:0,land:1650,bounce:.52,orders:44},{p:2,land:1100,bounce:.55,orders:30},
-    {p:3,land:900,bounce:.44,orders:33},{p:4,land:520,bounce:.58,orders:14},{p:5,land:430,bounce:.50,orders:9}];
+  var PRODS=[{p:1,land:1900,bounce:.48,orders:49},{p:0,land:1650,bounce:.52,orders:37},{p:2,land:1100,bounce:.55,orders:26},
+    {p:3,land:900,bounce:.44,orders:28},{p:4,land:520,bounce:.58,orders:12},{p:5,land:430,bounce:.50,orders:8}];
   var st={s:'all',d:'all'},V=[];
   var sec=function(s){s=Math.round(s);return s<60?s+' s':Math.floor(s/60)+' min'+(s%60?' '+(s%60)+' s':'')};
   var pc=function(a,b){return b?Math.round(a/b*100)+'%':'—'};
-  function F(){var t=PER[AD.key()].t;return +String(t.av_od).replace(/\D/g,'')/203}
+  function F(){return vis()[0]/12480}
   function pick(L,k){return L.filter(function(x){return x[0]===k})[0]}
 
 
   /* ---- the five numbers for the current filters ---- */
-  function stages(){var f=F(),s=pick(SRC,st.s),d=pick(DEV,st.d),v=[];
-    if(st.s==='all'&&st.d==='all')return BASE.map(function(x){return Math.round(x*f)});
-    var r=R.slice();v[0]=BASE[0]*f*s[2]*d[2];if(s[3]!=null)r[1]=s[3];r[2]=Math.min(.9,R[2]*s[4]*d[3]);
+  function stages(){var W=vis(),s=pick(SRC,st.s),d=pick(DEV,st.d),v=[];
+    var r=R.slice();r[4]=W[1]/(W[0]*R[1]*R[2]*R[3]);
+    if(st.s==='all'&&st.d==='all'){v[0]=W[0];for(var j=1;j<N-1;j++)v[j]=v[j-1]*R[j];v[N-1]=W[1];return v.map(function(x){return Math.round(x)})}
+    v[0]=W[0]*s[2]*d[2];if(s[3]!=null)r[1]=s[3];r[2]=Math.min(.9,R[2]*s[4]*d[3]);
     for(var i=1;i<N;i++)v[i]=v[i-1]*r[i];return v.map(function(x){return Math.max(0,Math.round(x))})}
   function label(i){return ['Came to the store','Opened a dress','Added to bag','Started checkout','Bought'][i]}
   function EX(i){return ['Never opened a dress','Looked, didn’t add','Left items in the bag','Left during checkout'][i]}
   function subs(v){return ['visits',pc(v[1],v[0])+' of visits',pc(v[2],v[1])+' of them',pc(v[3],v[2])+' of bags','1 in '+(v[4]?Math.round(v[0]/v[4]):'—')+' visits']}
 
   /* ---- one-line summary ---- */
-  function crowd(v){var b=Math.round(v[N-1]/(v[0]||1)*100);
-    $('#jyCrowdH').innerHTML='Out of every <em>100 people</em> who came, <em style="color:var(--good)">'+(b||'under 1')+'</em> bought.'}
+  function crowd(v){var b=v[N-1]/(v[0]||1)*100;
+    $('#jyCrowdH').innerHTML='Out of every <em>100 people</em> who came, <em style="color:var(--good)">'+(b>=0.1?b.toFixed(1):'under 0.1')+'</em> bought: a <em>'+b.toFixed(2)+'%</em> conversion rate.'}
 
   /* ---- the walk ---- */
   var geo=null;

@@ -1134,7 +1134,7 @@ button.cc:hover .cc-go svg{transform:translateX(3px)}
    key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
 :root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
   .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
-  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,.sh h2,.sh h3,.ph h2,.ob-sh h3,.mg-way h3,.mb-sum h3,.rb-dh h2,.rb-jt h2,.os-dh h2,.md h2,.jc-h,.os-nums b,.ad-facts b,.rb-facts b,.cc .cc-r b,.cc-tot > b,.ad-jy b){
+  .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,.sh h2,.sh h3,.ph h2,.ob-sh h3,.mg-way h3,.mb-sum h3,.rb-dh h2,.rb-jt h2,.os-dh h2,.md h2,.jc-h,.os-nums b,.ad-facts b,.rb-facts b,.cc .cc-r b,.cc-tot > b,.ad-jy b,.ah-big,.ah-mid,.wf-vp,.pd-r b){
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
 @media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
 /* === GLOW v1 END === */
@@ -1420,6 +1420,40 @@ button.cc:hover .cc-go svg{transform:translateX(3px)}
   .wf-tb td:nth-child(3){grid-area:s}
   .wf-tb td:nth-child(4){grid-area:c;font-size:13px}
 }
+/* Ads report headline (mirrors the Overview's R17 ADS v1 .r17-hl) */
+.ah{display:flex;flex-direction:column;gap:20px;min-width:0}
+.ah-figs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px 40px}
+.ah-fig{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1 1 220px}
+.ah-fig.ah-plat{flex:1 1 200px;max-width:360px}
+.ah-k{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:600;line-height:1.4;color:var(--muted)}
+.ah-k .tip{margin-left:0}
+.ah-dot{width:10px;height:10px;border-radius:50%;flex:none;background:linear-gradient(135deg,#a275e0,#550da6)}
+.ah-dot.ring{background:none;border:2px dashed var(--muted)}
+.ah-big{font-size:32px;font-weight:600;line-height:1.1;letter-spacing:-.025em;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ah-big small{font-size:14px;font-weight:500;letter-spacing:0;color:var(--muted);margin-right:6px}
+.ah-big.gold{color:var(--gold)}
+.ah-mid{font-size:24px;font-weight:500;line-height:1.1;letter-spacing:-.02em;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:6px}
+.ah-sub{font-size:13px;line-height:1.45;color:var(--muted);max-width:48ch}
+.ah-sub b{color:var(--text);font-weight:600;white-space:nowrap}
+.ah-sub .dl{font-weight:600}
+.ah-sub button{color:var(--pl);font-weight:600}
+.ah-sc{position:relative;padding:6px 0 24px}
+.ah-tr{position:relative;display:block;height:10px;border-radius:99px;background:var(--track)}
+.ah-tr i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#550da6,#7c3fc1 55%,#a275e0);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.ah-tr em{position:absolute;width:0;transform:translateX(-1px);transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.ah-tr em.be{top:-4px;bottom:-4px;border-left:2px solid var(--muted)}
+.ah-tr em.pm{top:-7px;bottom:-7px;border-left:2px dashed var(--text)}
+.ah-bel{position:absolute;top:24px;transform:translateX(-50%);font-size:12px;line-height:1.3;color:var(--muted);white-space:nowrap;transition:left .6s cubic-bezier(.2,.8,.2,1)}
+.ah-ord{font-size:15px;color:var(--muted);display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.ah-ord b{color:var(--text);font-weight:600}
+.ah-bal{display:flex;flex-direction:column;gap:6px;min-width:0;padding-top:20px;border-top:1px solid var(--line)}
+.ah-pill{font-size:12px;font-weight:600;line-height:1.5;color:var(--warn);padding:1px 10px;border-radius:99px;white-space:nowrap;
+  background:color-mix(in srgb,var(--warn) 12%,var(--panel));border:1px solid color-mix(in srgb,var(--warn) 30%,var(--panel))}
+.ah-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:280px;margin-top:8px}
+.ah-days i{display:block;height:6px;border-radius:99px;background:var(--track)}
+.ah-days i.on{background:linear-gradient(90deg,#a87a33,#e3c98f)}
+.ah-days i.on.last{background:var(--warn)}
+@media (max-width:600px){.ah-big{font-size:26px}.ah-mid{font-size:20px}}
 /* === ROUND 17 (Ads) END === */
 
 </style>

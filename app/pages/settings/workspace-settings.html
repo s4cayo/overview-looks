@@ -793,25 +793,32 @@ html.st-lock,html.st-lock body{overflow:hidden}
 .nv2-datew{display:none!important}
 
 /* === SETTINGS SUBNAV v1 (round 17): one level of navigation for the Settings area ===
-   ≥1200px: a sticky left column beside the page. Narrower: one "Settings · <section>" button that opens the same list.
+   ≥1200px  sticky left column beside the page.
+   761–1199 one "Settings · <section>" picker that opens the same list.
+   ≤760     phone: the Settings LIST is the hub (html.sx-home: grouped rows, icon tile, summary, chevron);
+            inside a section only a "‹ Settings" back link shows above the page title.
    Tokens: --line --line2 --muted --text --pl --panel. */
 .sx{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
 .sx-main{display:flex;flex-direction:column;gap:24px;min-width:0}
 .sx-nav{position:relative;z-index:20;display:block;overflow:visible}  /* a shared nav{} rule makes navs scroll; the list must spill out */
 .sx-t{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;padding:0 12px 8px;display:none}
-.sx-grp{display:flex;flex-direction:column;gap:2px}
 .sx-grp + .sx-grp{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-.sx-h{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:4px 12px 4px}
+.sx-h{display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:4px 12px}
+.sx-rows{display:flex;flex-direction:column;gap:2px}
 .sx-list a{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:12px;font-size:15px;font-weight:500;color:var(--muted);
   transition:background .2s,color .2s}
 .sx-list a:hover{color:var(--text);background:color-mix(in srgb,var(--text) 5%,transparent)}
 .sx-list a.on{color:var(--text);font-weight:600;background:color-mix(in srgb,var(--pl) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pl) 30%,transparent)}
 .sx-list a.on .sx-i{color:var(--pl)}
-.sx-list a:focus-visible,.sx-pick:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
+.sx-list a:focus-visible,.sx-pick:focus-visible,.sx-back:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
+.sx-ic{display:grid;place-items:center;flex:none}
+.sx-tx{display:flex;flex-direction:column;min-width:0;flex:1}
+.sx-d,.sx-go{display:none}
 .sx-i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 :root[data-theme="light"] .sx-list a.on{background:#f4edfc;box-shadow:inset 0 0 0 1px rgba(85,13,166,.16)}
 :root[data-theme="light"] .sx-list a.on .sx-i{color:#550da6}
-/* the picker (narrow screens) */
+.sx-back{display:none}
+/* the picker (tablet widths) */
 .sx-pick{display:flex;align-items:center;gap:8px;width:100%;min-height:52px;padding:0 16px;border-radius:16px;border:1px solid var(--line2);
   background:var(--panel);color:var(--text);font:inherit;text-align:left;cursor:pointer}
 .sx-pick .sx-k{font-size:13px;color:var(--muted)}
@@ -828,6 +835,31 @@ html.st-lock,html.st-lock body{overflow:hidden}
   .sx-pick{display:none}
   .sx-list,.sx-nav.open .sx-list{display:block;position:static;padding:0;border:0;background:none;box-shadow:none}
   .sx-t{display:block}
+}
+/* phone */
+@media (max-width:760px){
+  .sx{gap:8px}
+  .sx-pick{display:none}
+  .sx-back{display:inline-flex;align-items:center;gap:4px;min-height:44px;margin-left:-8px;padding:0 8px;border-radius:10px;font-size:15px;font-weight:500;color:var(--pl)}
+  .sx-back .sx-i{width:20px;height:20px}
+  :root[data-theme="light"] .sx-back{color:#550da6}
+  /* the hub: the list IS the page */
+  html.sx-home .sx-back,html.sx-home .sx-main{display:none}
+  html.sx-home .sx-list{display:flex;flex-direction:column;gap:24px;position:static;padding:0;border:0;background:none;box-shadow:none}
+  html.sx-home .sx-t{display:block;padding:4px 0 0;font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--text);line-height:1.15}
+  html.sx-home .sx-grp + .sx-grp{margin-top:0;padding-top:0;border-top:0}
+  html.sx-home .sx-h{padding:0 4px 8px}
+  html.sx-home .sx-rows{gap:0;background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+  html.sx-home .sx-list a{min-height:64px;padding:12px 16px;gap:14px;border-radius:0;color:var(--text);background:none;box-shadow:none;font-weight:500}
+  html.sx-home .sx-list a + a{border-top:1px solid var(--line)}
+  html.sx-home .sx-list a.on,html.sx-home[data-theme="light"] .sx-list a.on{background:none;box-shadow:none;font-weight:500}
+  html.sx-home .sx-list a:active{background:color-mix(in srgb,var(--text) 6%,transparent)}
+  html.sx-home .sx-ic{width:36px;height:36px;border-radius:11px;color:var(--pl);background:color-mix(in srgb,var(--pl) 14%,transparent)}
+  html.sx-home[data-theme="light"] .sx-ic{color:#550da6;background:#f4edfc}
+  html.sx-home .sx-list a .sx-i{color:inherit}
+  html.sx-home .sx-l{font-size:16px;font-weight:600}
+  html.sx-home .sx-d{display:block;font-size:13px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  html.sx-home .sx-go{display:block;width:18px;height:18px;flex:none;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 }
 /* === SETTINGS SUBNAV v1 END === */
 
@@ -927,6 +959,8 @@ html.st-lock,html.st-lock body{overflow:hidden}
 .ws-up input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .ws-up:focus-within{outline:2px solid var(--pl);outline-offset:2px}
 .pane{min-height:0}
+.ws-gen{display:flex;flex-direction:column;gap:16px}
+.ws-gen .fld{max-width:480px}
 
 /* === TYPE v1 (round 14) — settings pages. Same scale as previews/N-final.html TYPE v1 + STYLE-GUIDE.md:
    section title 20/650 (18 phone) · key figure 32 (26) · small stat 20 (18) · row/field name 15 · amount 16 ·
@@ -999,6 +1033,16 @@ html.st-lock,html.st-lock body{overflow:hidden}
 /* #10 paragraphs stop at about 65 characters (the panel sub-line still wraps under its title) */
 :root .ph > p{max-width:none;padding-right:max(0px,calc(100% - 65ch))}
 :root :is(.hint,.st-head p,.conf p,.note > div,.st-dialog p,.da-form p,.mut,.dsec-h p){max-width:65ch}
+/* phone (round 17): a panel's side note sits under its title, left-aligned, instead of floating right */
+@media (max-width:600px){:root .ph .r{margin-left:0;flex-basis:100%;text-align:left;justify-content:flex-start}}
+@media (max-width:760px){
+  /* the sub-menu's back link replaces the page's own back link on phones */
+  :root .sx-main .st-back{display:none}
+  /* label / value rows stack instead of squeezing a long value against its label */
+  :root .facts > div{flex-direction:column;align-items:flex-start;gap:4px}
+  :root .facts dt{max-width:none}
+  :root .facts dd{margin-left:0;text-align:left}
+}
 
 /* === GLOW v1 START === */
 /* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
@@ -1176,12 +1220,37 @@ html.st-lock,html.st-lock body{overflow:hidden}
       </div>
     </header>
     <!-- === NAV v2 END === -->
-<div class="sx"><nav class="sx-nav" aria-label="Settings" data-sx-cur="team"><button type="button" class="sx-pick" aria-expanded="false" aria-controls="sxList"><span class="sx-k">Settings</span><b>Team</b><svg class="sx-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="sx-list" id="sxList"><p class="sx-t">Settings</p><div class="sx-grp"><span class="sx-h">Workspace</span><a href="workspace-settings.html" data-st-go="team" class="on" aria-current="page"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6M17.5 14.3c1.7.6 2.7 2.2 3 4.7"/></svg><span>Team</span></a><a href="workspace-settings.html#roles" data-st-go="roles"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Roles</span></a><a href="workspace-settings.html#profit" data-st-go="commission"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg><span>Commission</span></a><a href="workspace-settings.html#logos" data-st-go="logos"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8 8.5"/></svg><span>Logos</span></a></div><div class="sx-grp"><span class="sx-h">Store</span><a href="connections-B.html" data-st-go="connections"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg><span>Connections</span></a><a href="billing.html" data-st-go="billing"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg><span>Billing</span></a><a href="../brands-admin/admin-D.html" data-st-go="admin"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span>Brands & admin</span></a></div><div class="sx-grp"><span class="sx-h">You</span><a href="account.html" data-st-go="account"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg><span>Your account</span></a></div></div></nav><div class="sx-main">    <header class="st-head rise" style="--d:.02s">
+<div class="sx"><nav class="sx-nav" aria-label="Settings" data-sx-cur="general"><a class="sx-back" href="workspace-settings.html#settings" data-st-go="hub"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Settings</a><button type="button" class="sx-pick" aria-expanded="false" aria-controls="sxList"><span class="sx-k">Settings</span><b>General</b><svg class="sx-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="sx-list" id="sxList"><h1 class="sx-t">Settings</h1><div class="sx-grp"><span class="sx-h">Workspace</span><div class="sx-rows"><a href="workspace-settings.html#general" data-st-go="general" class="on" aria-current="page"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span><span class="sx-tx"><span class="sx-l">General</span><span class="sx-d">Name, currency and time zone</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="workspace-settings.html#team" data-st-go="team"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6M17.5 14.3c1.7.6 2.7 2.2 3 4.7"/></svg></span><span class="sx-tx"><span class="sx-l">Team</span><span class="sx-d">3 people · 1 invite waiting</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="workspace-settings.html#roles" data-st-go="roles"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><span class="sx-tx"><span class="sx-l">Roles</span><span class="sx-d">What each role can see and change</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="workspace-settings.html#profit" data-st-go="commission"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></span><span class="sx-tx"><span class="sx-l">Commission</span><span class="sx-d">10% of profit</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="workspace-settings.html#logos" data-st-go="logos"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M20.5 16l-5-5-8 8.5"/></svg></span><span class="sx-tx"><span class="sx-l">Logos</span><span class="sx-d">Brand mark, wordmark and tab icon</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div></div><div class="sx-grp"><span class="sx-h">Store</span><div class="sx-rows"><a href="connections-B.html" data-st-go="connections"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5v4M15 3.5v4M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0zM12 16.5v4"/></svg></span><span class="sx-tx"><span class="sx-l">Connections</span><span class="sx-d">4 services · 1 needs attention</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="billing.html" data-st-go="billing"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span><span class="sx-tx"><span class="sx-l">Billing</span><span class="sx-d">Growth · renews Nov 28</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="../brands-admin/admin-D.html" data-st-go="admin"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg></span><span class="sx-tx"><span class="sx-l">Brands & admin</span><span class="sx-d">Every brand in the workspace</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div></div><div class="sx-grp"><span class="sx-h">You</span><div class="sx-rows"><a href="account.html" data-st-go="account"><span class="sx-ic"><svg class="sx-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></span><span class="sx-tx"><span class="sx-l">Your account</span><span class="sx-d">Sign-in, support visits, delete account</span></span><svg class="sx-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></div></div></div></nav><div class="sx-main">    <header class="st-head rise" style="--d:.02s">
       <div><h1 id="wsH">Team</h1><p id="wsP">Who works on Frill N Wear and what each person can reach.</p></div>
     </header>
 
+
+    <!-- ===== General ===== -->
+    <section class="pane" id="p-general" hidden>
+      <div class="panel">
+        <div class="ph"><h2>Workspace</h2><p>The name people see when they sign in and in the emails we send them.</p></div>
+        <form class="ws-gen" id="genF" novalidate>
+          <div class="fld"><label for="gName">Workspace name</label><input class="inp" id="gName" value="Frill N Wear" autocomplete="organization"></div>
+          <dl class="facts">
+            <div><dt>Web address</dt><dd>frillnwear.scaletrick.com<small>Ask us to change it, the sign-in link changes with it</small></dd></div>
+            <div><dt>Brand in links</dt><dd class="mono">frill-n-wear</dd></div>
+          </dl>
+          <div class="ws-acts"><button type="submit" class="ob pri" id="gSave" disabled>Save name</button></div>
+        </form>
+      </div>
+      <div class="panel">
+        <div class="ph"><h2>Money and time</h2><p>Read from your Shopify store, so every figure matches what Shopify shows.</p></div>
+        <dl class="facts">
+          <div><dt>Currency</dt><dd>EGP · Egyptian pound</dd></div>
+          <div><dt>Time zone</dt><dd>Cairo (GMT+2)<small>A day’s orders run from midnight to midnight Cairo time</small></dd></div>
+          <div><dt>Week starts</dt><dd>Saturday</dd></div>
+        </dl>
+        <p class="hint">To change these, change them in Shopify. They update here on the next sync.</p>
+      </div>
+    </section>
+
     <!-- ===== Team ===== -->
-    <section class="pane" id="p-team">
+    <section class="pane" id="p-team" hidden>
       <div class="panel">
         <div class="ph"><h2>People on Frill N Wear</h2><span class="r" id="seats"></span></div>
         <form class="ws-add" id="addForm" novalidate>
@@ -1509,9 +1578,9 @@ ST.busy=function(btn,label,ms){return new Promise(function(res){var t=btn.innerH
 ST.files=/\.html$/.test(location.pathname);
 ST.NAMES={overview:'the Overview',sales:'Orders',orders:'Shipping',products:'Products',inventory:'Inventory',ads:'the Ads report',adsmanager:'Ads Manager',assistant:'the Assistant',
   competitors:'Competitors',connections:'Connections',settings:'Workspace settings',admin:'Admin',brands:'All brands',profile:'your profile',signout:'sign-out',workspace:'Workspace settings',
-  billing:'Billing',visits:'Support visits',delete:'Delete account',account:'Your account',team:'Team',roles:'Roles',commission:'Commission',logos:'Logos'};
+  billing:'Billing',visits:'Support visits',delete:'Delete account',account:'Your account',general:'General',hub:'Settings',team:'Team',roles:'Roles',commission:'Commission',logos:'Logos'};
 ST.FILES={connections:'connections-B.html',settings:'workspace-settings.html',workspace:'workspace-settings.html',billing:'billing.html',visits:'support-visits.html',delete:'delete-account.html',account:'account.html',
-  team:'workspace-settings.html',roles:'workspace-settings.html#roles',commission:'workspace-settings.html#profit',logos:'workspace-settings.html#logos',admin:'../brands-admin/admin-D.html'};
+  team:'workspace-settings.html',roles:'workspace-settings.html#roles',commission:'workspace-settings.html#profit',logos:'workspace-settings.html#logos',admin:'../brands-admin/admin-D.html',general:'workspace-settings.html#general',hub:'workspace-settings.html#settings'};
 ST.PAGEKEY={'connections-B':'connections','workspace-settings':'settings','billing':'billing','support-visits':'visits','delete-account':'delete','account':'account'}[document.body.dataset.stPage];
 ST.go=function(go,label){
   if(go==='assistant'&&window.nv2Open){window.nv2Open('ai');return}
@@ -1536,11 +1605,14 @@ document.addEventListener('click',function(e){
   document.addEventListener('click',function(e){if(!nav.contains(e.target))set(false)});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&nav.classList.contains('open')){set(false);btn.focus()}});
   window.sxMark=function(key){nav.querySelectorAll('.sx-list a').forEach(function(a){var on=a.dataset.stGo===key;a.classList.toggle('on',on);
-      if(on){a.setAttribute('aria-current','page');lab.textContent=a.textContent.trim()}else a.removeAttribute('aria-current')});nav.dataset.sxCur=key};
-  nav.addEventListener('click',function(e){var a=e.target.closest('.sx-list a');if(!a)return;set(false);
+      if(on){a.setAttribute('aria-current','page');lab.textContent=a.querySelector('.sx-l').textContent}else a.removeAttribute('aria-current')});nav.dataset.sxCur=key};
+  nav.addEventListener('click',function(e){var a=e.target.closest('.sx-list a,.sx-back');if(!a)return;set(false);
     var ev=new CustomEvent('sx:show',{detail:{key:a.dataset.stGo},cancelable:true});
     if(!document.dispatchEvent(ev)){e.preventDefault();e.stopPropagation()}},true);
 })();
+/* phone hub: html.sx-home shows the Settings list as the page (only ever set by a page that holds the hub) */
+window.sxPhone=function(){return matchMedia('(max-width:760px)').matches};
+window.sxHome=function(on){document.documentElement.classList.toggle('sx-home',!!on);if(on)document.title='Settings'};
 /* === SETTINGS SUBNAV v1 END === */
 
 </script>
@@ -1699,20 +1771,31 @@ document.addEventListener('click',function(e){
     if(t.hasAttribute('data-ln')){t.closest('[data-lc]').innerHTML='';return}
     if(t.dataset.ly){var s2=slot(t.dataset.ly);s2.set=false;s2.src=null;logos();ST.toast(s2.label+' removed')}});
 
-  /* sections: the Settings sub-menu is the only navigation (round 17). Menu keys -> pane ids */
-  var PANE={team:'team',roles:'roles',commission:'profit',logos:'logos'},
-      HEAD={team:['Team','Who works on Frill N Wear and what each person can reach.'],
+  /* sections: the Settings sub-menu is the only navigation (round 17). Menu keys -> pane ids.
+     On a phone, "#settings" (or no hash) is the hub: the Settings list fills the page. */
+  var PANE={general:'general',team:'team',roles:'roles',commission:'profit',logos:'logos'},
+      HEAD={general:['General','The workspace name, its web address, and the currency and time zone figures use.'],
+        team:['Team','Who works on Frill N Wear and what each person can reach.'],
         roles:['Roles','Ready-made sets of access you give people.'],
         commission:['Commission','What your marketing agency takes, and how it changes profit.'],
         logos:['Logos','The marks the workspace shows in place of initials.']};
-  function show(key,push){if(!PANE[key])return;
+  function show(key,push){if(!PANE[key])return;window.sxHome(false);
     ST.$$('.pane').forEach(function(p){p.hidden=p.id!=='p-'+PANE[key]});
     $('#wsH').textContent=HEAD[key][0];$('#wsP').textContent=HEAD[key][1];
     document.title=HEAD[key][0]+' · Settings';
     if(window.sxMark)window.sxMark(key);
-    if(push){try{history.replaceState(null,'',key==='team'?location.pathname:'#'+PANE[key])}catch(e){}window.scrollTo({top:0,behavior:ST.reduce?'auto':'smooth'})}}
-  document.addEventListener('sx:show',function(e){if(PANE[e.detail.key]){e.preventDefault();show(e.detail.key,true)}});
-  var h=location.hash.slice(1),k=Object.keys(PANE).filter(function(x){return PANE[x]===h})[0];show(k||'team',false);
+    if(push){try{history.replaceState(null,'','#'+PANE[key])}catch(e){}window.scrollTo({top:0,behavior:'auto'})}}
+  function home(){window.sxHome(true);try{history.replaceState(null,'','#settings')}catch(e){}window.scrollTo({top:0,behavior:'auto'})}
+  document.addEventListener('sx:show',function(e){var k=e.detail.key;
+    if(k==='hub'){e.preventDefault();if(window.sxPhone())home();else show('general',true);return}
+    if(PANE[k]){e.preventDefault();show(k,true)}});
+  var h=location.hash.slice(1),k=Object.keys(PANE).filter(function(x){return PANE[x]===h})[0];
+  if(k)show(k,false);else{show('general',false);if(window.sxPhone())home()}
+  addEventListener('resize',function(){if(!window.sxPhone()&&document.documentElement.classList.contains('sx-home'))window.sxHome(false)});
+  /* General: the name is the only thing you change here */
+  var gN=$('#gName'),gS=$('#gSave'),gOld=gN.value;
+  gN.addEventListener('input',function(){gS.disabled=!gN.value.trim()||gN.value.trim()===gOld});
+  $('#genF').addEventListener('submit',function(e){e.preventDefault();if(gS.disabled)return;gOld=gN.value.trim();gS.disabled=true;ST.toast('Workspace name saved')});
 })();
 
 </script>

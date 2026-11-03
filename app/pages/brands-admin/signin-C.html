@@ -449,11 +449,17 @@ body button,body input{font-family:inherit}
    Dark mode only: a soft halo in the text's OWN colour (white text glows white, green glows green) on section titles,
    key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
 :root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
-  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
+  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,.r17-big,.r17-mid,
   .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b,
   .pg-head h1,.sh h2,.sh h3,.dh h2,.bti .bh b,.gf-h b,.bk-h h3,.tb-h b,.bc-h h3,.deck-h h2,.f-h b,.tm b,.plan-h b,.mcard h2,.hero b,.dhero b,.hero strong,.gg .v){
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
 @media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
+/* round 17: a halo is painted outside the text box, so an overflow:hidden box cut it into a rectangle. Give it room:
+   · .pv2-mv clips itself (ellipsis): 20px of padding for the 14px bloom, taken back by a negative margin (same layout);
+   · Store pulse tiles (.pu-kt) clipped their left-column figures at the tile edge; the tiles no longer draw the corner
+     orb that needed the clip (::before is display:none), so they stop clipping. */
+:root .pv2 .pv2-mv{padding:20px;margin:-16px -20px -20px}
+:root .pu .pu-kt{overflow:visible}
 /* === GLOW v1 END === */
 /* === LIGHT v1 (brands / admin / sign-in) START === */
 /* Round 15 light-mode clean-up (STYLE-GUIDE "Round 15"): no dark shadows or glows carried over from dark mode — cool,
