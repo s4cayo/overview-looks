@@ -2312,7 +2312,7 @@ OS.page='Ads report';
   /* visits and store orders per period = the Overview's conversion rate (7 days: 175 orders from 12,480 visits, 1.40%) */
   var VIS={today:[1690,24],yesterday:[2010,29],'7d':[12480,175],'30d':[52300,718],month:[52300,718]};
   var R=[1,.7006,.1606,.4194,0];
-  function vis(){return VIS[AD.key()]||VIS['7d']}
+  function visits(){return VIS[AD.key()]||VIS['7d']}
   var SRC=[['all','Everyone',1,null,1,'var(--pl)',I.globe],['ads','Ads',.66,.82,.82,'#a275e0',I.ads],['ig','Instagram, not ads',.15,.55,1.15,'#e07aa5',I.ig],['direct','Typed the address',.10,.48,1.6,'#d8b46c',I.key],['google','Google search',.06,.62,1.3,'#5aa9e6',I.google],['other','Other sites',.03,.5,1,'#8d8a9b',I.globe]];
   var DEV=[['all','Phones and computers',1,1],['phone','Phones',.84,.95],['desk','Computers',.16,1.25]];
   /* p = OS.PR index; land = visits that STARTED on the dress page (landing_page_path); bounce = share of those visits that
@@ -2322,12 +2322,12 @@ OS.page='Ads report';
   var st={s:'all',d:'all'},V=[];
   var sec=function(s){s=Math.round(s);return s<60?s+' s':Math.floor(s/60)+' min'+(s%60?' '+(s%60)+' s':'')};
   var pc=function(a,b){return b?Math.round(a/b*100)+'%':'—'};
-  function F(){return vis()[0]/12480}
+  function F(){return visits()[0]/12480}
   function pick(L,k){return L.filter(function(x){return x[0]===k})[0]}
 
 
   /* ---- the five numbers for the current filters ---- */
-  function stages(){var W=vis(),s=pick(SRC,st.s),d=pick(DEV,st.d),v=[];
+  function stages(){var W=visits(),s=pick(SRC,st.s),d=pick(DEV,st.d),v=[];
     var r=R.slice();r[4]=W[1]/(W[0]*R[1]*R[2]*R[3]);
     if(st.s==='all'&&st.d==='all'){v[0]=W[0];for(var j=1;j<N-1;j++)v[j]=v[j-1]*R[j];v[N-1]=W[1];return v.map(function(x){return Math.round(x)})}
     v[0]=W[0]*s[2]*d[2];if(s[3]!=null)r[1]=s[3];r[2]=Math.min(.9,R[2]*s[4]*d[3]);
