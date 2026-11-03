@@ -119,9 +119,10 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 }
 /* === TABS v1 END === */
 /* === NAV v2 START === */
-/* Nav v2 — top bar, ONE row at every width: avatar · brand + status dot · (search, desktop) · date pill · bell
+/* Nav v2 — top bar, ONE row at every width: brand chip + status dot (phone/tablet only; its menu = brand list + account)
+   · (search, desktop) · date pill · bell
    and the floating bottom dock on phone/tablet (< 1024px): pill [Home · Ads Manager · Competitors · Menu] + round AI.
-   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the avatar menu's switch sets that
+   Self-contained, nv2- prefix. THEME: light when <html data-theme="light">; the account menu's switch sets that
    attribute itself and stores it under the key in data-nv2-store on .nv2-top (N uses "n-theme").
    Page hooks: "nv2:period" (detail.key; also calls window.perSet, else window.pv2SetPeriod), "nv2:nav" (detail.go), "nv2:refresh",
    "nv2:ask" (detail.q). The page should hide its own sidebar below 1024px — the Menu sheet replaces it. */
@@ -163,16 +164,21 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-ib{position:relative;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--nv2-panel);border:1px solid var(--nv2-line2)!important;transition:border-color .2s}
 .nv2-ib:hover{border-color:var(--nv2-acc)!important}
 .nv2-dot{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--nv2-bad);box-shadow:0 0 0 2px var(--nv2-panel)}
-.nv2-avw{flex:none}
-.nv2-av{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:99px}
-.nv2-av b{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);color:#fff;box-shadow:0 0 0 2px var(--nv2-line2)}
+/* round 17: ONE brand + account control. The brand chip's menu holds the brand list AND the account items.
+   Desktop (>= 1024px) hides the chip: the sidebar's brand card and footer open the same menu (see R17 NAV v1). */
 .nv2-brandw{min-width:0;flex:none}
+@media (min-width:1024px){.nv2-top .nv2-brandw{display:none}}
 .nv2-brand{display:flex;align-items:center;gap:8px;height:44px;padding:0 8px;border-radius:12px;font-size:15.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-width:0;max-width:100%;transition:background .2s}
 .nv2-brand:hover{background:var(--nv2-panel2)}
 .nv2-bn{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:10.5px;font-weight:700}
+.nv2-mark{flex:none;width:28px;height:28px;border-radius:8px;background:linear-gradient(140deg,#7c3fc1,#550da6 60%,#3d0880);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:700}
 .nv2-brand .nv2-i{width:15px;height:15px;color:var(--nv2-mut)}
-.nv2-avw .nv2-pop{right:auto;left:0;transform-origin:top left}
+/* the one menu: brand section + account section; data-nv2-mode="brand"|"me" (set by the opener) shows one of them */
+.nv2-acct{min-width:256px}
+.nv2-plab{padding:8px 11px 4px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--nv2-mut)}
+.nv2-acct .nv2-mark{width:26px;height:26px;border-radius:8px;font-size:12px}
+.nv2-acct[data-nv2-mode="brand"] [data-nv2-sec="me"],.nv2-acct[data-nv2-mode="brand"] .nv2-psep,
+.nv2-acct[data-nv2-mode="me"] [data-nv2-sec="brand"],.nv2-acct[data-nv2-mode="me"] .nv2-psep{display:none}
 /* popovers */
 .nv2-pop{position:absolute;top:calc(100% + 8px);right:0;z-index:60;min-width:240px;padding:6px;border-radius:16px;background:var(--nv2-panel);border:1px solid var(--nv2-line2);box-shadow:var(--nv2-shadow);
   opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .18s,transform .22s cubic-bezier(.2,.8,.2,1)}
@@ -222,14 +228,13 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 @media (max-width:480px){
   .nv2-top{gap:6px}
   .nv2-right{gap:6px}
-  .nv2-av,.nv2-ib{width:40px;height:40px}
-  .nv2-av b{width:38px;height:38px}
+  .nv2-ib{width:40px;height:40px}
   .nv2-dot{top:9px;right:10px}
   .nv2-brand{padding:0 4px;gap:7px;font-size:15px}
   .nv2-date{height:40px;padding:0 12px;gap:6px}
   .nv2-date .nv2-cal{display:none}
 }
-@media (max-width:400px){.nv2-bchev{display:none}}
+/* the brand chip is the only way into brand + account on a phone, so its chevron always shows */
 
 /* ---- bottom dock ---- */
 .nv2-dock{display:none}
@@ -279,49 +284,43 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .nv2-sug .nv2-i{color:var(--nv2-acc)}
 .nv2-sent{font-size:13px;color:var(--nv2-mut);min-height:18px;margin-top:4px}
 @media (prefers-reduced-motion:reduce){.nv2-top *,.nv2-dock,.nv2-dock *,.nv2-sheet,.nv2-scrim,.nv2-pop{transition:none!important}}
-/* ---- Menu (round 8): full screen, like Shopify's phone menu. Page-coloured, big airy rows (24px icon · 18px label ·
-   56px), accordion groups with a chevron, the current page as a filled pill, a "Workspace ›" section row, and a
-   floating bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock while it is open.
-   Closes on ✕, Esc, the browser's back, a swipe down from the top of the list, or a tap on an item. ---- */
+/* ---- Menu: full screen, with a bottom bar in thumb reach — Settings · Ask AI · Close — that stands in for the dock
+   while it is open. Closes on ✕, Esc, the browser's back, a swipe down (the panel follows the finger), or a tap on an item. ---- */
 .nv2-sheet.nv2-menu{top:0;bottom:0;left:0;right:0;width:auto;margin:0;max-height:none;height:100%;height:100dvh;overflow:hidden;border:0;border-radius:0;padding:0;
   background:var(--nv2-bg);display:flex;flex-direction:column;transform:translateY(28px);opacity:0;visibility:hidden;
   transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .22s,visibility 0s .32s}
 .nv2-sheet.nv2-menu.nv2-on{transform:none;opacity:1;visibility:visible;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .22s}
-.nv2-ml{display:block;gap:0;flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
-  padding:calc(14px + env(safe-area-inset-top,0px)) 12px calc(112px + env(safe-area-inset-bottom,0px))}
-.nv2-mr{display:flex;align-items:center;gap:16px;width:100%;min-height:56px;padding:0 16px 0 18px;border-radius:16px;font-size:18px;font-weight:500;letter-spacing:-.01em;color:var(--nv2-fg);text-align:left;
-  -webkit-tap-highlight-color:transparent;transition:background .2s}
-.nv2-menu .nv2-mr .nv2-i{width:24px;height:24px;stroke-width:1.7;color:var(--nv2-fg);flex:none}
-.nv2-mr > span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.nv2-mr:active{background:color-mix(in srgb,var(--nv2-fg) 6%,transparent)}
-@media (hover:hover){.nv2-mr:hover{background:var(--nv2-panel2)}.nv2-msub a:hover{background:var(--nv2-panel2);color:var(--nv2-fg)}}
-.nv2-mr[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);font-weight:600}
-.nv2-menu .nv2-mr .nv2-mchev{width:20px;height:20px;color:var(--nv2-mut);transition:transform .25s}
-.nv2-mr[aria-expanded="true"] .nv2-mchev{transform:rotate(180deg)}
-.nv2-msub{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.2,.8,.2,1)}
-.nv2-mr[aria-expanded="true"] + .nv2-msub{grid-template-rows:1fr}
-.nv2-msub > div{overflow:hidden;display:flex;flex-direction:column}
-.nv2-msub a{display:flex;align-items:center;min-height:48px;padding:0 16px 0 58px;border-radius:14px;font-size:16px;color:var(--nv2-mut);-webkit-tap-highlight-color:transparent}
-.nv2-msub a:active{background:var(--nv2-panel2);color:var(--nv2-fg)}
-.nv2-msub a[aria-current="page"]{background:color-mix(in srgb,var(--nv2-fg) 9%,transparent);color:var(--nv2-fg);font-weight:600}
-.nv2-mr[aria-expanded="false"] + .nv2-msub a{visibility:hidden}
-.nv2-mh{display:flex;align-items:center;gap:4px;margin:18px 0 4px;padding:6px 18px;font-size:14px;font-weight:600;color:var(--nv2-mut)}
-.nv2-mh .nv2-i{width:16px;height:16px}
-.nv2-mbar{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;pointer-events:none}
-.nv2-mbar > *{pointer-events:auto;box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+/* round 17: the Menu IS the sidebar. Same items in the same order (brand card · Operate · Grow · Workspace · profile),
+   same icons, badges and glowing current-page pill, drawn with SIDEBAR v3's own classes inside a floating glass panel
+   (.nv2-mpanel.sb3 — needs SIDEBAR v3's CSS on the page). No accordion groups. The panel is only as tall as its
+   content and the bottom bar follows it, so there is no empty band; a longer list scrolls inside the panel. */
+.nv2-menu .nv2-mpanel{position:relative;isolation:isolate;flex:0 1 auto;min-height:0;display:flex;flex-direction:column;gap:12px;
+  margin:calc(12px + env(safe-area-inset-top,0px)) 12px 0;padding:12px 10px 10px;border-radius:22px;
+  background:var(--sb3-panel);box-shadow:var(--sb3-shadow);color:var(--sb3-fg);font-family:var(--nv2-font);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
+.nv2-menu .nv2-mpanel .nv2-ml{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.nv2-menu .nv2-mpanel .sb3-nav a{min-height:44px;font-size:16px;-webkit-tap-highlight-color:transparent}
+.nv2-menu .nv2-mpanel .sb3-nav a:active{background:var(--sb3-hov)}
+.nv2-mpanel .sb3-nav a[aria-current="page"]::before{content:"";position:absolute;left:-1px;top:50%;width:3px;height:20px;margin-top:-10px;border-radius:3px;background:var(--sb3-bar);box-shadow:var(--sb3-barglow)}
+.nv2-mpanel .sb3-brand,.nv2-mpanel .sb3-foot{flex:none}
+.nv2-mbar{flex:none;display:flex;align-items:center;justify-content:center;gap:12px;padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.nv2-mbar > *{box-shadow:var(--nv2-shadow),0 0 0 1px var(--nv2-line2)}
+/* while a swipe-close slides the menu away, its list must not fade on its own */
+.nv2-sheet.nv2-menu[data-nv2-drag] .nv2-ml{opacity:1!important;transform:none!important;transition:none!important}
 .nv2-mbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--nv2-glass);color:var(--nv2-fg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .nv2-mbtn .nv2-i{width:22px;height:22px}
 .nv2-mask{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:56px;padding:0 26px;border-radius:99px;flex:1 1 auto;max-width:200px;font-size:16px;font-weight:600;color:#fff;
   background:linear-gradient(135deg,#7c3fc1,#550da6)}
 .nv2-mask .nv2-i{width:20px;height:20px}
 html.nv2-lock,html.nv2-lock body{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.nv2-msub,.nv2-mchev{transition:none!important}}
 /* === NAV v2 END === */
 /* === SIDEBAR v3 START === */
 /* Sidebar v3 (sb3- prefix): a floating glass panel with a fine luminous edge, a brand card on top, a glowing active pill
    with a light bar that slides between items, a hover glider, and a compact footer (user, plan, collapse to a rail).
-   Desktop only (>= 1024px); below that Nav v2's dock + Menu sheet replace it. Light + dark from <html data-theme>. */
-.app>.side.sb3{
+   Desktop only (>= 1024px); below that Nav v2's dock + Menu sheet replace it. Light + dark from <html data-theme>.
+   Round 17: the colour tokens sit on .sb3 (not only the aside) so NAV v2's phone Menu panel (.nv2-mpanel.sb3) wears
+   the same look; the brand card and the footer open NAV v2's brand + account menu (data-nv2-pop="acct"). */
+.sb3{
   --sb3-w:264px; --sb3-gap:12px; --sb3-ease:cubic-bezier(.22,.8,.24,1);
   --sb3-fg:#eceaf3; --sb3-mut:#a29eb2; --sb3-dim:#77728a; --sb3-ic:#8f8aa1;
   --sb3-panel:linear-gradient(180deg,rgba(32,22,52,.9) 0%,rgba(18,15,27,.94) 30%,rgba(12,11,17,.96) 100%);
@@ -335,7 +334,8 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
   --sb3-on-shadow:0 10px 26px -12px rgba(124,63,193,.85),inset 0 1px 0 rgba(255,255,255,.08);
   --sb3-bar:linear-gradient(180deg,#e2cdff,#a275e0 55%,#7c3fc1); --sb3-barglow:0 0 12px 1px rgba(162,117,224,.85);
   --sb3-gold:#d8c49a; --sb3-goldbg:rgba(216,196,154,.10); --sb3-goldln:rgba(216,196,154,.28);
-  --sb3-good:#45d09a; --sb3-ring:#15111f;
+  --sb3-good:#45d09a; --sb3-ring:#15111f}
+.app>.side.sb3{
   position:sticky;top:var(--sb3-gap);align-self:flex-start;flex:none;z-index:5;
   width:var(--sb3-w);height:calc(100vh - 2 * var(--sb3-gap));margin:var(--sb3-gap) 0 var(--sb3-gap) var(--sb3-gap);
   padding:12px 10px 10px;display:flex;flex-direction:column;gap:12px;
@@ -343,7 +343,7 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
   -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
   font-family:Geist,"Inter","Segoe UI",system-ui,sans-serif;color:var(--sb3-fg);isolation:isolate;
   transition:width .35s var(--sb3-ease)}
-:root[data-theme="light"] .app>.side.sb3{
+:root[data-theme="light"] .sb3{
   --sb3-fg:#17141f; --sb3-mut:#575266; --sb3-dim:#8a8598; --sb3-ic:#7a7489;
   --sb3-panel:linear-gradient(180deg,#fbf8ff 0%,#ffffff 22%,#ffffff 100%);
   --sb3-edge:linear-gradient(180deg,rgba(124,63,193,.28),rgba(124,63,193,.08) 24%,rgba(20,10,40,.07) 55%,rgba(168,132,60,.20) 100%);
@@ -359,7 +359,7 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
   --sb3-good:#14935f; --sb3-ring:#fff;
   -webkit-backdrop-filter:none;backdrop-filter:none}
 /* fine luminous edge: a 1px gradient ring */
-.app>.side.sb3::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--sb3-edge);pointer-events:none;
+.app>.side.sb3::before,.sb3.nv2-mpanel::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--sb3-edge);pointer-events:none;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 .sb3 .sb3-glow{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none;z-index:-1}
 .sb3 .sb3-glow::before{content:"";position:absolute;left:-30%;right:-30%;top:-100px;height:240px;background:radial-gradient(50% 50% at 50% 50%,var(--sb3-glowc),transparent 70%)}
@@ -424,18 +424,28 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
 .sb3 .sb3-col:hover{background:var(--sb3-hov);color:var(--sb3-fg)}
 .sb3 .sb3-brand:focus-visible,.sb3 .sb3-col:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
 .sb3 .sb3-col .sb3-i{transition:transform .35s var(--sb3-ease)}
+/* round 17: the brand card and the profile open NAV v2's brand + account menu (the top bar's copies are gone) */
+.sb3 .sb3-banc{flex:none}
+.sb3 .sb3-foot{gap:8px}
+.sb3 .sb3-me{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;flex:1;min-width:0;min-height:44px;padding:2px 8px 2px 0;border-radius:12px;cursor:pointer;transition:background .2s}
+.sb3 .sb3-me:hover{background:var(--sb3-hov)}
+.sb3 .sb3-me:hover .sb3-ud,.sb3 [aria-expanded="true"] .sb3-ud{color:var(--sb3-fg)}
+.sb3 .sb3-me:focus-visible{outline:2px solid var(--pl,#a275e0);outline-offset:2px}
+.sb3 .sb3-me .sb3-ud{width:16px;height:16px;flex:none}
+.sb3 .sb3-pl{color:var(--sb3-good);font-weight:600}
 
 /* collapsed rail */
 .app>.side.sb3.sb3-mini{--sb3-w:80px}
-.sb3.sb3-mini .sb3-bt,.sb3.sb3-mini .sb3-ud,.sb3.sb3-mini .sb3-nav a>span,.sb3.sb3-mini .sb3-kbd,.sb3.sb3-mini .sb3-who,.sb3.sb3-mini .sb3-av{display:none}
+.sb3.sb3-mini .sb3-bt,.sb3.sb3-mini .sb3-ud,.sb3.sb3-mini .sb3-nav a>span,.sb3.sb3-mini .sb3-kbd,.sb3.sb3-mini .sb3-who{display:none}
 .sb3.sb3-mini .sb3-brand{padding:8px;justify-content:center}
 .sb3.sb3-mini .sb3-grp h6{font-size:0;padding:6px 12px 8px}
 .sb3.sb3-mini .sb3-nav a{justify-content:center;padding:0}
 .sb3.sb3-mini .sb3-badge{position:absolute;top:0;right:4px;min-width:18px;height:18px;padding:0 4px}
-.sb3.sb3-mini .sb3-foot{justify-content:center;padding:8px}
+.sb3.sb3-mini .sb3-foot{justify-content:center;padding:8px;flex-direction:column;gap:6px}
+.sb3.sb3-mini .sb3-me{flex:none;padding:2px;justify-content:center}
 .sb3.sb3-mini .sb3-col .sb3-i{transform:scaleX(-1)}
 
-@media (max-width:1180px){.app>.side.sb3{--sb3-w:224px;--sb3-gap:10px}}
+@media (max-width:1180px){.app>.side.sb3{--sb3-w:224px;--sb3-gap:10px}.app>.side.sb3 .sb3-me .sb3-ud{display:none}}
 /* short screens: tighten the chrome, never the 40px items */
 @media (max-height:820px){.app>.side.sb3{gap:8px;padding-top:10px}
   .sb3 .sb3-brand,.sb3 .sb3-foot{min-height:48px;padding-block:6px}.sb3 .sb3-mark{width:36px;height:36px}.sb3 .sb3-av{width:32px;height:32px}
@@ -447,10 +457,16 @@ html.nv2-lock,html.nv2-lock body{overflow:hidden}
    Dark mode only: a soft halo in the text's OWN colour (white text glows white, green glows green) on section titles,
    key figures, the page title and the logo. Two layers: a tight 1px lift and a wide faint bloom. Never on body text. */
 :root:not([data-theme="light"]) :is(.ph h3,.osec .ph h3,.acc .acc-h2,.rc .rc-h2,.av2-root.rc .rc-h2,.pv2-ttl h3,h1,
-  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,
+  .pu-v,.fd-big,.pv2 .pv2-mv,.cv2-amt,.cv2-fhero,.acc-swb b,.at11-v,.mini .v,.rc .rc-total .rc-am,.ip-four b,.pv2-sht b,.r17-big,.r17-mid,
   .side .on,.side [aria-current="page"],.logo,.mark,.onums b,.acc-total .acc-am,.oline b){
   text-shadow:0 0 1px color-mix(in srgb,currentColor 35%,transparent),0 0 14px color-mix(in srgb,currentColor 28%,transparent)}
 @media (prefers-contrast:more){:root :is(.ph h3,.pu-v,.fd-big,.pv2 .pv2-mv){text-shadow:none}}
+/* round 17: a halo is painted outside the text box, so an overflow:hidden box cut it into a rectangle. Give it room:
+   · .pv2-mv clips itself (ellipsis): 20px of padding for the 14px bloom, taken back by a negative margin (same layout);
+   · Store pulse tiles (.pu-kt) clipped their left-column figures at the tile edge; the tiles no longer draw the corner
+     orb that needed the clip (::before is display:none), so they stop clipping. */
+:root .pv2 .pv2-mv{padding:20px;margin:-16px -20px -20px}
+:root .pu .pu-kt{overflow:visible}
 /* === GLOW v1 END === */
 /* === PRODUCTS v2 START === */
 /* Products v2 — top products (Revenue / Profit / Margin / Returns, sizes, units per period, "why it ranks" sheet)
@@ -769,6 +785,7 @@ main{max-width:1240px}
 .pv2.ip-sheet .pv2-sht b{font-size:20px;font-weight:650;letter-spacing:-.015em;line-height:1.3}
 .pv2.ip-sheet .pv2-verdict{font-size:17px}
 .pv2.ip-sheet .ip-four b{font-size:28px;letter-spacing:-.015em}
+.pv2.ip-sheet .ip-four b{padding:20px;margin:-20px}
 .pv2.ip-sheet .ip-four span{font-size:14px}
 .pv2.ip-sheet .ip-sech{font-size:15px}
 .pv2.ip-sheet .ip-sz{font-size:15px}
@@ -871,7 +888,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* inventory A */
 :root .ia-t .pa-n{font-size:32px}
 :root .ia-t .pa-n small{font-size:15px}
-:root .ia-gn b{font-size:15px}
+:root .ia-gn b{font-size:16px}
 :root .ia-tot,:root .ia-ro b{font-size:16px}
 :root .ia-tot small{font-size:13px}
 :root .ia-big{font-size:32px;letter-spacing:-.02em}
@@ -948,6 +965,58 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* paragraphs stay readable: about 65 characters a line */
 :root :is(.ip-head p,.ia-intro,.ia-skip,.pa-szsum,.ib-out,.pa-foot){max-width:65ch}
 /* === AUDIT v1 END === */
+
+/* === R17 START === */
+/* Round 17 (Sam, 2026-11-03). */
+/* Inventory A: product names a step bigger (they read too small) */
+:root .ia-prods .pv2-pn,:root .ia-name b{font-size:17px}
+/* "Order 107" read as a button: it is a suggestion, so plain bold text with a small label, no pill */
+:root .ia-prods .pv2-ord.ia-sug{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:0;border-radius:0;background:none;color:var(--pv2-fg);font-weight:600;text-align:right}
+.ia-sug small{font-size:12px;font-weight:500;color:var(--pv2-mut);white-space:nowrap}
+.ia-sug span{font-size:13px;color:var(--pv2-mut);font-weight:500;white-space:nowrap}
+.ia-sug b{font-size:20px;font-weight:700;color:var(--pv2-fg);letter-spacing:-.01em;margin-right:3px}
+/* status colours, vivid and readable: red runs out soon, amber getting low, green fine, hatched not tracked */
+:root .ia-c.r{background:color-mix(in srgb,var(--pv2-bad) 24%,var(--pv2-bg));color:var(--pv2-bad);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-bad) 70%,var(--pv2-bg))}
+:root .ia-c.w{background:color-mix(in srgb,var(--pv2-warn) 22%,var(--pv2-bg));color:var(--pv2-warn);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-warn) 70%,var(--pv2-bg))}
+:root .ia-c.g{background:color-mix(in srgb,var(--pv2-good) 14%,var(--pv2-bg));color:var(--pv2-good);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pv2-good) 45%,var(--pv2-bg))}
+:root .ia-c.u{background:repeating-linear-gradient(135deg,var(--pv2-bg2) 0 5px,var(--pv2-bg) 5px 10px);color:var(--pv2-fg);box-shadow:inset 0 0 0 1.5px var(--pv2-line2)}
+.ia-legend i{box-shadow:inset 0 0 0 1.5px var(--k);background:color-mix(in srgb,var(--k) 30%,var(--pv2-bg))}
+.ia-legend i.r{--k:var(--pv2-bad)}.ia-legend i.w{--k:var(--pv2-warn)}.ia-legend i.g{--k:var(--pv2-good)}
+.ia-legend i.u{--k:var(--pv2-line2);background:repeating-linear-gradient(135deg,var(--pv2-line2) 0 3px,var(--pv2-bg) 3px 6px)}
+.ia-legend span{color:var(--pv2-fg)}
+/* dark mode: a soft glow in each status colour */
+:root:not([data-theme="light"]) :is(.ia-c.r,.ia-c.w,.ia-c.g){text-shadow:0 0 10px color-mix(in srgb,currentColor 55%,transparent)}
+:root:not([data-theme="light"]) .ia-c.r{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-bad) 70%,var(--pv2-bg)),0 0 16px -4px color-mix(in srgb,var(--pv2-bad) 75%,transparent)}
+:root:not([data-theme="light"]) .ia-c.w{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-warn) 70%,var(--pv2-bg)),0 0 16px -4px color-mix(in srgb,var(--pv2-warn) 70%,transparent)}
+:root:not([data-theme="light"]) .ia-legend i:not(.u){box-shadow:inset 0 0 0 1.5px var(--k),0 0 10px -2px var(--k)}
+:root:not([data-theme="light"]) .ia-prods .pv2-run i{box-shadow:0 0 10px -1px var(--c)}
+:root[data-theme="light"] .ia-c.g{color:#0d6b48}
+/* the size header of the All stock grid stays in view under the tab bar while the list scrolls */
+.ia-gh{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px);z-index:5;background:var(--pv2-bg);padding-top:10px;margin-top:-10px;box-shadow:0 1px 0 var(--pv2-line)}
+/* while stuck, a band of panel colour fills the gap up to the tab bar, so rows never show above the header */
+.ia-gh.stuck::before{content:"";position:absolute;left:-24px;right:-24px;bottom:100%;height:96px;background:var(--pv2-bg)}
+/* the restock summary: a clear callout (icon, tinted panel, big numbers); red when sizes run out before delivery */
+.ia-call{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;border-radius:16px;--k:var(--pv2-acc);
+  background:color-mix(in srgb,var(--k) 10%,var(--pv2-bg));border:1px solid color-mix(in srgb,var(--k) 38%,var(--pv2-bg))}
+.ia-call.late{--k:var(--pv2-bad)}
+.ia-call.none{--k:var(--pv2-good)}
+.ia-ci{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 18%,var(--pv2-bg))}
+.ia-ci svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.ia-cb{min-width:0;flex:1}
+.ia-call .ia-sum b{font-size:22px;letter-spacing:-.01em}
+.ia-call .ia-sum > span.r{font-size:15px;margin-top:6px}
+.ia-call .ia-sum > span.r b{font-size:17px}
+.ia-call .ia-sumrow{margin-top:12px}
+:root:not([data-theme="light"]) .ia-call{box-shadow:0 0 28px -12px color-mix(in srgb,var(--k) 60%,transparent)}
+:root:not([data-theme="light"]) .ia-ci{box-shadow:0 0 16px -4px color-mix(in srgb,var(--k) 70%,transparent)}
+@media (max-width:600px){.ia-call{padding:16px;gap:12px}.ia-ci{width:40px;height:40px}.ia-call .ia-sum b{font-size:20px}}
+/* product cards: the revenue's "…" cut (overflow:hidden) sliced its glow into a box; give the halo room */
+:root .pa-cards .pv2-mv{padding:20px;margin:-16px -20px -20px}
+/* Inventory B supplier list: the product picture beside its name */
+:root .ib-ol{grid-template-columns:36px minmax(0,1fr) auto;column-gap:12px;align-items:center}
+:root .ib-ol .ip-th{width:36px;height:36px;border-radius:10px;grid-row:1 / span 2;grid-column:1}:root .ib-ol .ip-th svg{width:15px;height:23px}
+:root .ib-ol b{grid-column:2;grid-row:1}:root .ib-ol em{grid-column:3;grid-row:1}:root .ib-ol > span{grid-column:2 / -1;grid-row:2}
+/* === R17 END === */
 
 /* ===== Products B — ranked list + detail pane ===== */
 /* glance: four plain numbers that are also the filters */
@@ -1127,11 +1196,11 @@ window.perSet=function(key){
 <!-- === SIDEBAR v3 START === -->
   <aside class="side sb3" id="side" aria-label="Main navigation">
     <div class="sb3-glow" aria-hidden="true"></div>
-    <button type="button" class="sb3-brand" aria-haspopup="menu" aria-label="Switch brand, current: Frill N Wear">
+    <div class="nv2-anc sb3-banc"><button type="button" class="sb3-brand" data-nv2-pop="acct" data-nv2-mode="brand" aria-haspopup="menu" aria-expanded="false" aria-label="Switch brand, current: Frill N Wear, profitable this period" title="Profitable this period">
       <span class="sb3-mark" aria-hidden="true">FN<i class="sb3-live"></i></span>
-      <span class="sb3-bt"><b>Frill N Wear</b><small>Scale Trick · Live</small></span>
+      <span class="sb3-bt"><b>Frill N Wear</b><small><span class="sb3-pl">Profitable</span> · Live</small></span>
       <svg class="sb3-i sb3-ud" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg>
-    </button>
+    </button></div>
     <nav class="sb3-nav" aria-label="Sections">
       <span class="sb3-ind" aria-hidden="true"></span><span class="sb3-hov" aria-hidden="true"></span>
       <div class="sb3-grp"><h6>Operate</h6>
@@ -1154,9 +1223,12 @@ window.perSet=function(key){
         <a href="#" data-nv2-go="admin" title="Admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
       </div>
     </nav>
-    <div class="sb3-foot">
-      <span class="sb3-av" aria-hidden="true">SA</span>
-      <span class="sb3-who"><b>Sam Anwar</b><small>Growth plan</small></span>
+    <div class="sb3-foot nv2-anc">
+      <button type="button" class="sb3-me" data-nv2-pop="acct" data-nv2-mode="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu, Sam Anwar, Growth plan" title="Account">
+        <span class="sb3-av" aria-hidden="true">SA</span>
+        <span class="sb3-who"><b>Sam Anwar</b><small>Growth plan</small></span>
+        <svg class="sb3-i sb3-ud" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg>
+      </button>
       <button type="button" class="sb3-col" aria-label="Collapse sidebar" aria-pressed="false" title="Collapse sidebar"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><path d="M9.5 4.5v15M15.5 10l-2 2 2 2"/></svg></button>
     </div>
   </aside>
@@ -1166,17 +1238,23 @@ window.perSet=function(key){
     <!-- === NAV v2 START === -->
     <!-- Nav v2: top bar, one row at every width. The dock + sheets part of this block sits at the end of the body. -->
     <header class="nv2-top" data-nv2-store="n-theme">
-      <div class="nv2-anc nv2-avw"><button type="button" class="nv2-av" data-nv2-pop="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu"><b>SA</b></button>
-          <div class="nv2-pop" data-nv2-id="me" role="menu">
-            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com</span></div><div class="nv2-hr"></div>
+      <!-- round 17: ONE brand + account control. Phone/tablet: this chip; desktop: hidden, the sidebar's brand card and
+           profile open the same menu (data-nv2-pop="acct" + data-nv2-mode="brand" | "me"). -->
+      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="acct" aria-haspopup="menu" aria-expanded="false" aria-label="Frill N Wear, profitable this period. Brand and account menu"><span class="nv2-mark" aria-hidden="true">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
+          <div class="nv2-pop nv2-l nv2-acct" data-nv2-id="acct" role="menu" aria-label="Brand and account">
+            <div data-nv2-sec="brand"><p class="nv2-plab">Brand</p>
+            <button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true"><span class="nv2-mark" aria-hidden="true">FN</span>Frill N Wear</button>
+            <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg>All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div>
+            <div class="nv2-hr nv2-psep"></div>
+            <div data-nv2-sec="me">
+            <div class="nv2-who"><b>Sam Anwar</b><span>sam@frillnwear.com · Growth plan</span></div><div class="nv2-hr"></div>
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="profile"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profile</button>
             <button type="button" class="nv2-mi" role="menuitemcheckbox" data-nv2-theme aria-checked="false"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>Dark mode<span class="nv2-tog" aria-hidden="true"></span></button>
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-refresh><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.5-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.5 4.5L20 16M20 20v-4h-4"/></svg>Refresh data<small class="nv2-rt">synced 2 min ago</small></button>
             <div class="nv2-hr"></div>
             <button type="button" class="nv2-mi" role="menuitem" data-nv2-go="signout"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 17l5-5-5-5M15 12H3"/></svg>Sign out</button>
+            </div>
           </div></div>
-      <div class="nv2-anc nv2-brandw"><button type="button" class="nv2-brand" data-nv2-pop="brand" aria-haspopup="menu" aria-expanded="false"><span class="nv2-mark">FN</span><span class="nv2-bn">Frill N Wear</span><span class="nv2-sdot" role="img" aria-label="Profitable this period" title="Profitable this period"></span><svg class="nv2-i nv2-bchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-        <div class="nv2-pop nv2-l" data-nv2-id="brand" role="menu"><button type="button" class="nv2-mi" role="menuitemradio" aria-checked="true">Frill N Wear</button><div class="nv2-hr"></div><button type="button" class="nv2-mi" role="menuitem" data-nv2-go="brands">All brands<small><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><path d="M9 6l6 6-6 6"/></svg></small></button></div></div>
       <div class="nv2-search" role="search"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
         <input type="search" placeholder="Search sections, products, campaigns" aria-label="Search" autocomplete="off"><span class="nv2-kbd" aria-hidden="true">Ctrl K</span>
         <div class="nv2-res" role="listbox" aria-label="Search results"></div></div>
@@ -1236,27 +1314,42 @@ window.perSet=function(key){
 </nav>
 <div class="nv2-scrim"></div>
 <section class="nv2-sheet nv2-menu" data-nv2-sheet="menu" role="dialog" aria-modal="true" aria-label="Menu">
-  <nav class="nv2-ml" aria-label="Sections">
-    <a href="#" class="nv2-mr" data-nv2-go="overview"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
-    <div class="nv2-mg">
-      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-orders"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>Orders</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-      <div class="nv2-msub" id="nv2-mg-orders"><div><a href="#" data-nv2-go="sales">Orders</a><a href="#" data-nv2-go="orders">Shipping</a></div></div>
+  <!-- round 17: the same items, order, icons and badges as the sidebar (SIDEBAR v3 classes inside a glass panel) -->
+  <div class="nv2-mpanel sb3">
+    <div class="sb3-glow" aria-hidden="true"></div>
+    <div class="nv2-anc sb3-banc"><button type="button" class="sb3-brand" data-nv2-pop="acct" data-nv2-mode="brand" aria-haspopup="menu" aria-expanded="false" aria-label="Switch brand, current: Frill N Wear, profitable this period">
+      <span class="sb3-mark" aria-hidden="true">FN<i class="sb3-live"></i></span>
+      <span class="sb3-bt"><b>Frill N Wear</b><small><span class="sb3-pl">Profitable</span> · Live</small></span>
+      <svg class="sb3-i sb3-ud" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg>
+    </button></div>
+    <nav class="nv2-ml sb3-nav" aria-label="Sections">
+      <div class="sb3-grp"><h6>Operate</h6>
+        <a href="#" data-nv2-go="overview" aria-current="page"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg><span>Overview</span></a>
+        <a href="#" data-nv2-go="brands"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><span>All brands</span></a>
+        <a href="#" data-nv2-go="sales"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 8h13l-1 12h-11z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg><span>Orders</span></a>
+        <a href="#" data-nv2-go="orders"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5h11v10H3zM14 9.5h4l3 3.5v3.5h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></svg><span>Shipping</span></a>
+        <a href="#" data-nv2-go="inventory"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7.5 12 3.5l-8 4 8 4 8-4zM4 7.5v9l8 4 8-4v-9M12 11.5v9"/></svg><span>Inventory</span><em class="sb3-badge" data-n="9" title="9 running low" aria-hidden="true"></em></a>
+        <a href="#" data-nv2-go="products"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12V4.5H11l9.5 9.5-7 7z"/><circle cx="7.8" cy="8.8" r="1.4"/></svg><span>Products</span></a>
+      </div>
+      <div class="sb3-grp"><h6>Grow</h6>
+        <a href="#" data-nv2-go="ads"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg><span>Ads report</span></a>
+        <a href="#" data-nv2-go="adsmanager"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3l7 4.5v-14L7 9.5z"/><path d="M17.5 9a4 4 0 0 1 0 6"/></svg><span>Ads Manager</span></a>
+        <a href="#" class="sb3-ai" data-nv2-go="assistant" data-nv2-open="ai"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3.5l1.9 5.1L18 10.5l-5.1 1.9L11 17.5l-1.9-5.1L4 10.5l5.1-1.9z"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg><span>Tricky</span><kbd class="sb3-kbd" data-k="Ask" aria-hidden="true"></kbd></a>
+        <a href="#" data-nv2-go="competitors"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
+      </div>
+      <div class="sb3-grp"><h6>Workspace</h6>
+        <a href="#" data-nv2-go="settings"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
+        <a href="#" data-nv2-go="admin"><svg class="sb3-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.5c0 4.2-3 7.6-7 9-4-1.4-7-4.8-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Admin</span></a>
+      </div>
+    </nav>
+    <div class="sb3-foot nv2-anc">
+      <button type="button" class="sb3-me" data-nv2-pop="acct" data-nv2-mode="me" aria-haspopup="menu" aria-expanded="false" aria-label="Account menu, Sam Anwar, Growth plan">
+        <span class="sb3-av" aria-hidden="true">SA</span>
+        <span class="sb3-who"><b>Sam Anwar</b><small>Growth plan</small></span>
+        <svg class="sb3-i sb3-ud" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9.5l4-4 4 4M8 14.5l4 4 4-4"/></svg>
+      </button>
     </div>
-    <div class="nv2-mg">
-      <button type="button" class="nv2-mr" aria-expanded="true" aria-controls="nv2-mg-products"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg><span>Products</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-      <div class="nv2-msub" id="nv2-mg-products"><div><a href="#" aria-current="page" data-nv2-go="products">Products</a><a href="#" data-nv2-go="inventory">Inventory</a></div></div>
-    </div>
-    <div class="nv2-mg">
-      <button type="button" class="nv2-mr" aria-expanded="false" aria-controls="nv2-mg-ads"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span>Ads</span><svg class="nv2-i nv2-mchev" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10l4 4 4-4"/></svg></button>
-      <div class="nv2-msub" id="nv2-mg-ads"><div><a href="#" data-nv2-go="ads">Ads report</a><a href="#" data-nv2-go="adsmanager">Ads Manager</a></div></div>
-    </div>
-    <a href="#" class="nv2-mr" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg><span>Tricky</span></a>
-    <a href="#" class="nv2-mr" data-nv2-go="competitors"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span>Competitors</span></a>
-    <a href="#" class="nv2-mh" data-nv2-go="workspace">Workspace<svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 7l5 5-5 5"/></svg></a>
-    <a href="#" class="nv2-mr" data-nv2-go="connections"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><span>Connections</span></a>
-    <a href="#" class="nv2-mr" data-nv2-go="settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Settings</span></a>
-    <a href="#" class="nv2-mr" data-nv2-go="admin"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>Admin</span></a>
-  </nav>
+  </div>
   <div class="nv2-mbar">
     <button type="button" class="nv2-mbtn" data-nv2-go="settings" aria-label="Settings"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     <button type="button" class="nv2-mask" data-nv2-open="ai"><svg class="nv2-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>Ask AI</button>
@@ -1290,10 +1383,16 @@ window.perSet=function(key){
   var PERIODS=[['today','Today','Oct 30','Today'],['yesterday','Yesterday','Oct 29','Yesterday'],['7d','Last 7 days','Oct 24–30','7 days'],['30d','Last 30 days','Oct 1–30','30 days'],['month','This month','Oct 1–30','Month']];
   var period='7d';
   /* ---- popovers ---- */
-  var openPop=null;
-  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');var t=top.querySelector('[data-nv2-pop="'+openPop.dataset.nv2Id+'"]');if(t)t.setAttribute('aria-expanded','false');openPop=null}
-  $$('[data-nv2-pop]',top).forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=top.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openPop===p;closePop();
-    if(!was){p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;var f=p.querySelector('button');if(f)f.focus({preventScroll:true})}})});
+  /* round 17: an opener may sit anywhere (top bar, sidebar, Menu panel). The popover moves into the opener's .nv2-anc,
+     and data-nv2-mode on the opener ("brand" | "me") shows one section of the brand + account menu; none shows both. */
+  var openPop=null,openBtn=null;
+  function closePop(){if(!openPop)return;openPop.classList.remove('nv2-on');if(openBtn)openBtn.setAttribute('aria-expanded','false');openPop=openBtn=null}
+  $$('[data-nv2-pop]').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();var p=document.querySelector('[data-nv2-id="'+b.dataset.nv2Pop+'"]'),was=openBtn===b;closePop();
+    if(was||!p)return;
+    var anc=b.closest('.nv2-anc');if(anc&&p.parentNode!==anc){anc.appendChild(p);void p.offsetWidth}
+    if(b.dataset.nv2Mode)p.setAttribute('data-nv2-mode',b.dataset.nv2Mode);else p.removeAttribute('data-nv2-mode');
+    p.classList.add('nv2-on');b.setAttribute('aria-expanded','true');openPop=p;openBtn=b;
+    var f=[].filter.call(p.querySelectorAll('button'),function(x){return x.offsetParent!==null})[0];if(f)f.focus({preventScroll:true})})});
   document.addEventListener('click',function(e){if(openPop&&!openPop.contains(e.target))closePop()});
   /* ---- date menu ---- */
   function paintDates(){
@@ -1311,8 +1410,9 @@ window.perSet=function(key){
   syncTheme();
   $$('[data-nv2-refresh]').forEach(function(b){b.addEventListener('click',function(){var i=b.querySelector('svg');if(i&&!reduce)i.animate([{transform:'rotate(0)'},{transform:'rotate(360deg)'}],{duration:700});var s=b.querySelector('.nv2-rt');if(s)s.textContent='synced just now';fire('nv2:refresh')})});
   /* ---- navigation (top + dock + sheets) ---- */
-  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet'))return;e.preventDefault();closePop();closeSheet();
+  document.addEventListener('click',function(e){var a=e.target.closest('[data-nv2-go]');if(!a||a.hasAttribute('data-nv2-open')||!a.closest('.nv2-top,.nv2-dock,.nv2-sheet,.nv2-pop'))return;e.preventDefault();closePop();closeSheet();
     var go=a.dataset.nv2Go;if(a.closest('.nv2-pill')){$$('.nv2-pill > *').forEach(function(x){x.removeAttribute('aria-current')});a.setAttribute('aria-current','page')}
+    if(a.closest('.nv2-menu .sb3-nav'))$$('.nv2-menu .sb3-nav a').forEach(function(x){if(x===a)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});
     fire('nv2:nav',{go:go})});
   /* ---- search (desktop) ---- */
   var sIn=top.querySelector('.nv2-search input'),sRes=top.querySelector('.nv2-res');
@@ -1336,17 +1436,27 @@ window.perSet=function(key){
     var full=s.classList.contains('nv2-menu');if(scrim&&!full)scrim.classList.add('nv2-on');
     if(full){document.documentElement.classList.add('nv2-lock');var ml=s.querySelector('.nv2-ml');if(ml)ml.scrollTop=0;try{history.pushState({nv2:'menu'},'');pushed=true}catch(err){}}
     var f=s.querySelector('input')||s.querySelector('[data-nv2-close]');setTimeout(function(){f&&f.focus({preventScroll:true})},reduce?0:350)}
-  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
+  function closeSheet(fromPop){if(!sheetOpen)return;sheetOpen.classList.remove('nv2-on');if(!sheetOpen.dataset.nv2Drag)sheetOpen.style.transform='';if(scrim)scrim.classList.remove('nv2-on');sheetOpen=null;
     document.documentElement.classList.remove('nv2-lock');
     if(pushed){pushed=false;if(fromPop!==true){skipPop=true;history.back()}}
     if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true})}
   window.addEventListener('popstate',function(){if(skipPop){skipPop=false;return}if(pushed&&sheetOpen){pushed=false;closeSheet(true)}});
-  /* menu: groups open in place; a swipe down from the top of the list closes it */
-  document.addEventListener('click',function(e){var g=e.target.closest('.nv2-menu button.nv2-mr[aria-expanded]');if(!g)return;g.setAttribute('aria-expanded',String(g.getAttribute('aria-expanded')!=='true'))});
-  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),y0=null,dy=0;if(!ml)return;
-    ml.addEventListener('touchstart',function(e){y0=ml.scrollTop<=0?e.touches[0].clientY:null;dy=0},{passive:true});
-    ml.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy>0){m.style.transition='none';m.style.transform='translateY('+Math.min(dy*.6,160)+'px)'}},{passive:true});
-    ml.addEventListener('touchend',function(){if(y0===null)return;m.style.transition='';m.style.transform='';if(dy>90)closeSheet();y0=null;dy=0})});
+  /* menu: a swipe down (from the top of the list) drags the whole screen with the finger, 1:1. Past 90px it keeps
+     going and leaves the screen — fully opaque, from where the finger let go, with visibility held until it is gone
+     (round 17: it used to snap back to 0 and then fade, which read as a flicker). Short of 90px it eases back. */
+  $$('.nv2-menu').forEach(function(m){var ml=m.querySelector('.nv2-ml'),zone=m.querySelector('.nv2-mpanel')||ml,y0=null,dy=0;if(!ml)return;
+    zone.addEventListener('touchstart',function(e){if(m.dataset.nv2Drag)return;y0=(!ml.contains(e.target)||ml.scrollTop<=0)?e.touches[0].clientY:null;dy=0},{passive:true});
+    zone.addEventListener('touchmove',function(e){if(y0===null)return;dy=e.touches[0].clientY-y0;if(dy<0&&ml.contains(e.target)&&ml.scrollTop>0){y0=null;dy=0;m.style.transform='';return}
+      m.style.transition='none';m.style.transform='translateY('+Math.max(0,dy)+'px)'},{passive:true});
+    function end(){if(y0===null)return;var d=Math.max(0,dy);y0=null;dy=0;if(!d)return;
+      if(d>90&&!reduce){var ms=Math.round(Math.min(320,Math.max(180,(innerHeight-d)*.45)));
+        m.dataset.nv2Drag='1';m.style.opacity='1';
+        m.style.transition='transform '+ms+'ms cubic-bezier(.3,.6,.4,1),visibility 0s '+ms+'ms';
+        m.style.transform='translateY('+(innerHeight+40)+'px)';closeSheet();
+        setTimeout(function(){m.style.transition='none';m.style.transform='';m.style.opacity='';void m.offsetWidth;m.style.transition='';delete m.dataset.nv2Drag},ms+40)}
+      else if(d>90){m.style.transition='';m.style.transform='';closeSheet()}
+      else{m.style.transition='transform .22s cubic-bezier(.2,.8,.2,1)';m.style.transform='';setTimeout(function(){if(!m.dataset.nv2Drag)m.style.transition=''},240)}}
+    zone.addEventListener('touchend',end);zone.addEventListener('touchcancel',end)});
   document.addEventListener('click',function(e){var o=e.target.closest('[data-nv2-open]');if(o){e.preventDefault();openSheet(o.dataset.nv2Open);return}if(e.target.closest('[data-nv2-close]'))closeSheet()});
   if(scrim)scrim.addEventListener('click',closeSheet);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();closeSheet()}});
@@ -1529,7 +1639,16 @@ var PSHEET=(function(){
     sheet=document.createElement('section');sheet.className='pv2 ip-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-labelledby','ip-st');
     document.body.appendChild(scrim);document.body.appendChild(sheet);scrim.addEventListener('click',close);
     sheet.addEventListener('click',function(e){if(e.target.closest('[data-ip-close]'))close()});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()})}
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()});
+    /* phone: pull the sheet down from its top to close it. It follows the finger; past 90px it closes, else it springs back */
+    var y0=null,dy=0,mob=matchMedia('(max-width:767px)');
+    sheet.addEventListener('touchstart',function(e){if(!mob.matches||e.touches.length>1)return;
+      if(sheet.scrollTop>0&&!e.target.closest('.pv2-grab'))return;y0=e.touches[0].clientY;dy=0},{passive:true});
+    sheet.addEventListener('touchmove',function(e){if(y0==null)return;dy=e.touches[0].clientY-y0;
+      if(dy<=0){sheet.style.transform='';sheet.style.transition='';scrim.style.opacity='';return}
+      if(e.cancelable)e.preventDefault();sheet.style.transition='none';sheet.style.transform='translateY('+dy+'px)';scrim.style.opacity=String(Math.max(0,1-dy/400))},{passive:false});
+    function drop(){if(y0==null)return;y0=null;sheet.style.transition='';sheet.style.transform='';scrim.style.opacity='';if(dy>90)close();dy=0}
+    sheet.addEventListener('touchend',drop);sheet.addEventListener('touchcancel',drop)}
   function open(html,from){ensure();back=from||document.activeElement;sheet.innerHTML=html;sheet.scrollTop=0;sheet.classList.add('on');scrim.classList.add('on');
     var c=sheet.querySelector('[data-ip-close]');if(c)setTimeout(function(){c.focus({preventScroll:true})},reduce?0:60);
     document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:true}}))}

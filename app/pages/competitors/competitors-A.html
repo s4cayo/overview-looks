@@ -106,7 +106,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .seg::-webkit-scrollbar{display:none}
 .tabbar.stuck .seg{border-color:rgba(162,117,224,.38);box-shadow:0 22px 44px -16px rgba(0,0,0,.95),0 0 0 4px rgba(6,5,9,.6),inset 0 1px 0 rgba(255,255,255,.05)}
 .seg .ind{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:99px;background:linear-gradient(140deg,#7c3fc1,#550da6 70%);
-  box-shadow:0 8px 20px -8px rgba(85,13,166,.95),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+  box-shadow:0 2px 6px -2px rgba(85,13,166,.7),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
 .seg button{position:relative;z-index:1;padding:10px 22px;border-radius:99px;font-size:15px;font-weight:500;color:var(--muted);white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:color .25s}
 .seg button:hover{color:var(--text)}
 .seg button.on{color:#fff}
@@ -114,7 +114,7 @@ main{max-width:1160px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 .seg .n{font-size:12px;padding:0 6px;border-radius:99px;background:rgba(255,255,255,.07);color:var(--muted);line-height:18px;font-variant-numeric:tabular-nums}
 .seg button.on .n{background:rgba(255,255,255,.2);color:#fff}
 .seg .n.r{background:rgba(240,101,113,.14);color:var(--bad)}
-:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line);box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
+:root[data-theme="light"] .seg{background:rgba(255,255,255,.95);border-color:var(--lt-line,rgba(40,20,70,.12));box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 20px -14px rgba(40,20,80,.20)}
 :root[data-theme="light"] .tabbar.stuck .seg{box-shadow:0 1px 2px rgba(40,20,80,.06),0 10px 24px -14px rgba(40,20,80,.24),0 0 0 4px rgba(244,242,248,.8)}
 :root[data-theme="light"] .seg .ind{box-shadow:0 4px 12px -5px rgba(85,13,166,.5),inset 0 1px 0 rgba(255,255,255,.22)}
 :root[data-theme="light"] .seg .n{background:rgba(20,10,40,.06)}
@@ -1063,7 +1063,7 @@ window.perSet=function(key){
       <p class="ca-msg" id="ca-msg" role="status" aria-live="polite"></p>
 
       <section class="cp-panel" aria-labelledby="ca-att-h" id="ca-attp">
-        <div class="cp-ph"><h3 id="ca-att-h">Worth a look</h3></div>
+        <div class="cp-ph"><h3 id="ca-att-h">What are they doing? <span aria-hidden="true">👀</span></h3></div>
         <div class="ca-att" id="ca-att"></div>
       </section>
 
@@ -1301,7 +1301,7 @@ var CP=(function(){
       p('Sage Wrap Midi Dress',['#b8caae','#6a8461'],5,2,3,1190,1590,'jasmine'),
       p('Linen Utility Shirt Dress',['#d8c8ac','#8f7c60'],6,0,6,990,1290,'farida'),
       p('Pleated Satin Midi Skirt',['#c9b6e8','#6d4aa0'],6,0,5,790,1050),
-      p('Ruched Mesh Top',['#4a4652','#1e1c24'],4,0,4,450,650,null,true),
+      p('Ruched Mesh Top',['#4a4652','#1e1c24'],4,0,4,450,650,null),
       p('Puff-Sleeve Poplin Mini – Ivory',['#f0e9da','#b9ab8e'],5,5,0,1050,null,'salma'),
       p('Velvet Slip Dress – Bordeaux',['#a8475e','#5a1a2c'],6,6,0,1390),
       p('Crochet Beach Cover-up',['#e9dcc0','#b39d72'],1,1,0,690),
@@ -1346,7 +1346,7 @@ var CP=(function(){
       p('Satin Slip Dress – Pearl',['#efe6da','#b5a48c'],6,0,5,1050,1400,'nour'),
       p('Draped Jersey Midi',['#c6a9cf','#6f4a7d'],5,0,5,850,1100),
       p('Puff-Sleeve Mini – Cream',['#f3ecdc','#bcae90'],5,5,0,990,null,'salma'),
-      p('Wrap Midi – Olive',['#b0b98c','#626b3f'],5,2,0,1290,null,'jasmine',true)
+      p('Wrap Midi – Olive',['#b0b98c','#626b3f'],5,2,0,1290,null,'jasmine')
      ],
      events:[
       ['SALE_STARTED','Satin Slip Dress – Pearl','M',1400,1050,'Oct 28','9:10 PM'],

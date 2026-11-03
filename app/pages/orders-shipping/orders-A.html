@@ -730,7 +730,7 @@ main{gap:24px}
   .ob,.ob.sm,.os-sel,.os-search input,.os-filt button{min-height:44px}
   .os-filt button{min-width:44px;justify-content:center}
   .ob.sm.ic{min-width:44px}
-  .ob-a .m,.ob-c .m{min-height:44px;display:flex;flex-direction:column;justify-content:center}
+  .ob-a .m,.ob-c .m{min-height:44px}
   .sb-ch button{min-height:44px}
 }
 /* #3 contrast in light mode: 12px status chips + tags were 3.9–4.4:1 on their own tint; darken the text, keep the tint */
@@ -1343,6 +1343,10 @@ window.perSet=function(key){
   OS.SOURCE=function(o){return o.web?'Web':'Admin'};
   OS.when=function(o){var hh=o.h%12||12;return 'Oct '+(o.pday||o.day)+', '+hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
   OS.whenShort=function(o){var hh=o.h%12||12;return hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  /* product thumbnail (round 17: wherever a product is shown, show its image): the first item's dress tile, "+N" for more */
+  OS.thumb=function(p,more){return '<span class="sw th" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'" aria-hidden="true">'+OS.DRESS+(more>0?'<em>+'+more+'</em>':'')+'</span>'};
+  OS.thumbOf=function(o){return OS.thumb(OS.PR[o.items[0].p],o.items.length-1)};
+  OS.thumbByName=function(txt){var parts=txt.split(', '),p=OS.PR.filter(function(x){return parts[0].indexOf(x.s)===0})[0]||OS.PR[0];return OS.thumb(p,parts.length-1)};
   OS.itemsTxt=function(o){return o.items.map(function(i){return i.t+' · '+i.size+(i.q>1?' × '+i.q:'')}).join(', ')};
 
   /* ---------- periods (driven by NAV v2 → PERIODS v1 perSet → "per:change") ---------- */

@@ -1199,8 +1199,166 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
 :root button.jp-c:hover .jp-top b{color:var(--pl)}
 :root .jp-c[aria-pressed="true"]{background:none;border-color:var(--line);box-shadow:inset 3px 0 0 var(--pl);padding-left:12px}
 :root .sh p,:root .ad-head p,:root .os-head p,:root .note,:root .md > p,:root .panel > p,:root .jy-came{max-width:65ch}
-:root .bk .mo{white-space:normal;max-width:18ch;line-height:1.35}
 /* === FLAT (Ads) END === */
+
+/* === ROUND 17 (Ads) START === */
+/* store-counted return with the ad platform's own figure beside it */
+:root .ad-facts .plat{display:flex;align-items:center;gap:4px;margin-top:6px;color:var(--muted);font-size:13px}
+:root .ad-facts .plat b{font-size:13px;font-weight:600;color:var(--text);letter-spacing:0;line-height:1.4;text-shadow:none}
+/* every product shows its picture */
+.sw.xs{width:24px;height:28px;border-radius:7px}
+.sw.xs svg{width:12px;height:18px}
+.cc-pd{display:inline-flex;align-items:center;gap:8px}
+
+/* Who & where rows: name + return, the bar, then "Spent · brought" on its own line — nothing shares a line it can collide with */
+.bk2{display:flex;flex-direction:column}
+.bk2-r{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"nm ro" "t t" "mo mo";gap:8px 16px;align-items:center;padding:16px 0;border-top:1px solid var(--line);min-height:64px}
+.bk2-r:first-child{border-top:0;padding-top:4px}
+.bk2 .nm{grid-area:nm;display:flex;align-items:center;gap:8px;min-width:0;font-size:15px}
+.bk2 .nm svg{width:16px;height:16px;flex:none}
+.bk2 .nm > span:not(.tc){min-width:0}
+.bk2 .ro{grid-area:ro;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.bk2 .t{grid-area:t;height:8px;border-radius:8px;background:var(--track);overflow:hidden}
+.bk2 .t i{display:block;height:100%;border-radius:8px;background:var(--pl);opacity:.7}
+.bk2 .mo{grid-area:mo;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bk2 .mo b{color:var(--text);font-weight:500}
+.bk2 .best .nm > span:not(.tc){font-weight:600}
+.bk2 .best .ro{color:var(--good)}
+.bk2 .best .t i{background:var(--good);opacity:1}
+
+/* winning ads: podium (top three, medals) + ranked rows; neutral bars, green only on the best ad */
+.pd{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:end}
+.pd-2{order:1}.pd-1{order:2}.pd-3{order:3}
+.pd-c{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden;text-align:left;color:inherit;font:inherit;cursor:pointer;transition:border-color .2s,transform .2s}
+.pd-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,var(--line));transform:translateY(-2px)}
+.pd-1{border-color:color-mix(in srgb,var(--good) 45%,var(--line))}
+.pd-th{position:relative;aspect-ratio:16/10;display:grid;place-items:center;background:linear-gradient(160deg,var(--c1),var(--c2))}
+.pd-1 .pd-th{aspect-ratio:16/12}
+.pd-th > svg{width:24%;height:auto}
+.pd-m{position:absolute;left:12px;top:12px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:17px;font-weight:700;color:#21180a;
+  box-shadow:0 0 0 3px rgba(255,255,255,.55),0 6px 14px -6px rgba(20,10,40,.5)}
+.pd-1 .pd-m{background:linear-gradient(145deg,#f7dc8a,#c99a3a)}
+.pd-2 .pd-m{background:linear-gradient(145deg,#eef0f5,#a8adbb)}
+.pd-3 .pd-m{background:linear-gradient(145deg,#ebbb92,#a9693c)}
+.pd-th .kd{position:absolute;right:12px;top:12px;display:inline-flex;align-items:center;gap:4px;height:28px;padding:0 12px;border-radius:99px;background:rgba(10,8,16,.62);color:#fff;font-size:12px;font-weight:500}
+.pd-th .kd svg{width:12px;height:12px;fill:#fff;stroke:none}
+.pd-bd{display:flex;flex-direction:column;gap:4px;padding:16px 20px 20px;min-width:0}
+.pd-nm{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pd-bd > small{font-size:13px;color:var(--muted)}
+.pd-r{display:flex;align-items:baseline;gap:8px;margin-top:8px}
+.pd-r b{font-size:26px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pd-1 .pd-r b{font-size:32px;color:var(--good)}
+.pd-r small{font-size:13px;color:var(--muted)}
+.pd-r .tc{margin-left:auto;align-self:center}
+.pd-mo{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rb{position:relative;display:block;height:8px;border-radius:8px;background:var(--track);margin:6px 0}
+.rb i{display:block;height:100%;border-radius:8px;background:var(--muted);opacity:.7}
+.rb.win i{background:var(--good);opacity:1}
+.rb em{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;border-radius:2px;background:var(--text);opacity:.55}
+.rk-h{font-size:15px;font-weight:600;margin:32px 0 4px}
+.rk{display:flex;flex-direction:column}
+.rk-r{display:grid;grid-template-columns:28px 40px minmax(0,1fr) minmax(180px,260px);gap:16px;align-items:center;min-height:72px;padding:12px 0;border-top:1px solid var(--line);text-align:left;color:inherit;font:inherit;width:100%;cursor:pointer}
+.rk-r:first-child{border-top:0}
+.rk-r:hover .rk-nm b{color:var(--pl)}
+.rk-n{font-size:15px;font-weight:600;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.rk-nm{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rk-nm b{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-nm small{font-size:13px;color:var(--muted)}
+.rk-v{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center}
+.rk-v b{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.rk-v small{grid-column:1 / -1;font-size:13px;color:var(--muted)}
+@media (max-width:760px){
+  .pd{grid-template-columns:1fr;gap:16px}
+  .pd-1,.pd-2,.pd-3{order:0}
+  .pd-c{flex-direction:row}
+  .pd-th,.pd-1 .pd-th{aspect-ratio:auto;width:112px;flex:none;min-height:150px}
+  .pd-th .kd{display:none}
+  .pd-bd{padding:16px}
+  .pd-r b{font-size:22px}.pd-1 .pd-r b{font-size:26px}
+}
+@media (max-width:600px){
+  .rk-r{grid-template-columns:24px 40px minmax(0,1fr);gap:8px 12px}
+  .rk-v{grid-column:2 / -1}
+}
+
+/* Ads Manager: the ad account balance */
+.ma-bal{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 16px;border-radius:16px;border:1px solid var(--line);background:var(--panel);font-size:15px;color:var(--muted)}
+.ma-bal > svg{width:20px;height:20px;flex:none;color:var(--pl);fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ma-bal b{color:var(--text);font-weight:600}
+.ma-bal .lnk{margin-left:auto;font-size:15px}
+.ma-src{margin-bottom:16px}
+
+/* What if: the sale simulator */
+.wf{display:grid;grid-template-columns:minmax(300px,400px) minmax(0,1fr);gap:40px;align-items:start}
+.wf-in-col{display:flex;flex-direction:column;gap:24px;min-width:0}
+.wf-g{border:0;padding:0;margin:0;min-width:0}
+.wf-g legend{padding:0;margin-bottom:12px;font-size:15px;font-weight:600}
+.wf-pr{display:flex;flex-wrap:wrap;gap:8px}
+.wf-pr button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 8px;border-radius:99px;border:1px solid var(--line2);font-size:13px;color:var(--muted);transition:border-color .2s,color .2s,background .2s}
+.wf-pr button[data-wf-all]{padding:0 16px}
+.wf-pr button[aria-pressed="true"]{border-color:var(--pl);color:var(--text);background:color-mix(in srgb,var(--pl) 12%,var(--panel))}
+.wf-lift{display:flex;align-items:center;gap:16px}
+.wf-lift input{flex:1;min-width:0;height:44px;accent-color:#7c3fc1}
+.wf-lift b{font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+.wf-guess{display:block;font-size:13px;color:var(--muted)}
+.wf-costs summary{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;font-weight:600;cursor:pointer;list-style:none}
+.wf-costs summary::-webkit-details-marker{display:none}
+.wf-costs summary svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;transition:transform .2s}
+.wf-costs[open] summary svg{transform:rotate(90deg)}
+.wf-costs .note{margin-top:12px}
+.wf-f{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.wf-in{position:relative;display:flex;align-items:center}
+.wf-in input{padding-right:36px}
+.wf-in.pre input{padding-left:48px}
+.wf-in em{position:absolute;right:12px;font-style:normal;color:var(--muted);font-size:14px;pointer-events:none}
+.wf-f small{font-size:13px;color:var(--muted)}
+.wf-out{display:flex;flex-direction:column;gap:24px;min-width:0}
+.wf-v{padding:20px 24px;border-radius:18px;border:1px solid var(--line)}
+.wf-v.g{background:color-mix(in srgb,var(--good) 9%,var(--panel));border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.wf-v.w{background:color-mix(in srgb,var(--warn) 9%,var(--panel));border-color:color-mix(in srgb,var(--warn) 35%,var(--line))}
+.wf-v.b{background:color-mix(in srgb,var(--bad) 8%,var(--panel));border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.wf-vh{display:block;font-size:15px;font-weight:600}
+.wf-vp{display:block;margin:4px 0 8px;font-size:32px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.wf-v.g .wf-vh,.wf-v.g .wf-vp{color:var(--good)}
+.wf-v.w .wf-vh,.wf-v.w .wf-vp{color:var(--warn)}
+.wf-v.b .wf-vh,.wf-v.b .wf-vp{color:var(--bad)}
+.wf-v p{font-size:15px;line-height:1.5}
+.wf-tbw{overflow-x:auto}
+.wf-tb{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums}
+.wf-tb th,.wf-tb td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.wf-tb thead th{font-size:13px;font-weight:500;color:var(--muted)}
+.wf-tb tbody th{text-align:left;font-weight:400;padding-left:0;white-space:normal}
+.wf-tb td.g{color:var(--good)} .wf-tb td.b{color:var(--bad)}
+.wf-tb tbody tr:last-child th,.wf-tb tbody tr:last-child td{font-weight:600;border-bottom:0}
+.wf-chh{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;margin-bottom:8px}
+.wf-chh h4{font-size:15px;font-weight:600}
+.wf-chh small{font-size:13px;color:var(--muted)}
+#wfChart svg{display:block;width:100%;height:auto}
+.wf-ch .ax{font-size:12px;fill:var(--muted);font-family:Geist,system-ui,sans-serif}
+.wf-z{stroke:var(--line2);stroke-width:1}
+.wf-now{stroke:var(--muted);stroke-width:1.5;stroke-dasharray:4 4}
+.wf-dot{fill:var(--panel);stroke:var(--text);stroke-width:2.5}
+.wf-leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:8px;font-size:13px;color:var(--muted)}
+.wf-leg i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.wf-leg i.g{background:var(--good)} .wf-leg i.w{background:var(--warn)} .wf-leg i.b{background:var(--bad)}
+.wf-leg i.ln{height:0;border-top:2px dashed var(--muted);border-radius:0}
+.wf-even{font-size:15px;line-height:1.5;max-width:65ch}
+@media (max-width:1023px){.wf{grid-template-columns:1fr;gap:32px}}
+@media (max-width:600px){
+  .wf-v{padding:16px}.wf-vp{font-size:26px}
+  /* phone: each number is two lines — name and the new figure, then "Now …" and the change */
+  .wf-tb thead{display:none}
+  .wf-tb,.wf-tb tbody{display:block}
+  .wf-tb tr{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n s" "o c";gap:2px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .wf-tb tbody tr:last-child{border-bottom:0}
+  .wf-tb th,.wf-tb td{padding:0;border:0}
+  .wf-tb tbody th{grid-area:n;display:flex;align-items:center}
+  .wf-tb td:nth-child(2){grid-area:o;text-align:left;font-size:13px;color:var(--muted)}
+  .wf-tb td:nth-child(2)::before{content:"Now "}
+  .wf-tb td:nth-child(3){grid-area:s}
+  .wf-tb td:nth-child(4){grid-area:c;font-size:13px}
+}
+/* === ROUND 17 (Ads) END === */
 
 </style>
 </head>
@@ -1344,6 +1502,7 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
         <button type="button" role="tab" id="t-best" data-tab="best" aria-controls="p-best" aria-selected="false" tabindex="-1">Best ads</button>
         <button type="button" role="tab" id="t-who" data-tab="who" aria-controls="p-who" aria-selected="false" tabindex="-1">Who &amp; where</button>
         <button type="button" role="tab" id="t-jr" data-tab="jr" aria-controls="p-jr" aria-selected="false" tabindex="-1">Shop journey</button>
+        <button type="button" role="tab" id="t-wf" data-tab="wf" aria-controls="p-wf" aria-selected="false" tabindex="-1">What if</button>
         <button type="button" role="tab" id="t-all" data-tab="all" aria-controls="p-all" aria-selected="false" tabindex="-1">All numbers</button>
       </div>
     </div>
@@ -1366,9 +1525,10 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
 
     <section class="pane" id="p-best" role="tabpanel" aria-labelledby="t-best" hidden>
       <div class="panel">
-        <div class="sh"><div><h3>Which ads won</h3><p>Every ad that ran in this period, best return first. Tap one to see it.</p></div></div>
+        <div class="sh"><div><h3>Which ads won</h3><p>Every ad that ran in this period, ranked by return. Tap one to see it.</p></div></div>
         <div class="os-filt" id="raVf" role="group" aria-label="Show ads" style="margin-bottom:18px"></div>
-        <div class="cr-grid" id="raAds"></div>
+        <div id="raAds"></div>
+        <p class="note" style="margin-top:16px">The tick on each bar is your break-even, 1.65x. Return here is counted by your store.</p>
       </div>
     </section>
 
@@ -1404,6 +1564,13 @@ button.jp-c:hover{border-color:color-mix(in srgb,var(--pl) 50%,transparent);tran
       <p class="note" style="margin-top:14px">The short notes are hints, not facts. Shopify shows what people did, never why.</p>
     </section>
 
+      </div>
+    </section>
+
+    <section class="pane" id="p-wf" role="tabpanel" aria-labelledby="t-wf" hidden>
+      <div class="panel">
+        <div class="sh"><div><h3>What if you ran a sale?</h3><p>Pick a discount and see what it does to orders, sales and profit. Costs are filled in from your last 7 days, and you can change any of them.</p></div></div>
+        <div id="wf"></div>
       </div>
     </section>
 
@@ -1865,7 +2032,7 @@ OS.page='Ads report';
     else h+='<span class="cc-mn"><span><small>Spent</small><b>'+E(c.spend)+'</b></span><span><small>Brought in sales</small><b>'+E(c.sales)+'</b></span>'+
       '<span class="cc-r"><small>Return</small><b class="'+c2+'">'+X(r)+'</b></span></span>'+AR.retBar(r,t,o.tip);
     if(o.warn)h+='<span class="cc-warn">'+o.warn+'</span>';
-    if(c.spend)h+='<span class="cc-ft"><span><b>'+c.orders+'</b> orders</span><span><b>'+E(c.orders?c.spend/c.orders:0)+'</b> per order</span>'+(P?'<span>Top dress <b>'+P.n.split(' ')[0]+'</b>, size <b>'+W.size+'</b></span>':'')+'</span>';
+    if(c.spend)h+='<span class="cc-ft"><span><b>'+c.orders+'</b> orders</span><span><b>'+E(c.orders?c.spend/c.orders:0)+'</b> per order</span>'+(P?'<span class="cc-pd">'+AR.sw(W.p,'xs')+'<span>Top dress <b>'+P.n.split(' ')[0]+'</b>, size <b>'+W.size+'</b></span></span>':'')+'</span>';
     return h};
   AR.campCards=function(V){var t=V.T;
     return '<div class="cc-grid">'+V.camps.map(function(c){var tn=AR.toneOf(c);
@@ -2042,6 +2209,44 @@ OS.page='Ads report';
   });
 })();
 
+/* ===== round 17: store vs ad-platform return, breakdown rows, ranked ads ===== */
+(function(){
+  var E=AD.egp,X=AD.x,be=AD.BASE.be;
+  var num=function(s){return +String(s).replace(/[^0-9.]/g,'')};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  /* the ad platform counts more sales than the store keeps (it can't see returns or cancellations) */
+  AR.platK=function(V){return num(V.t.h_roas)/num(V.t.a_roas)||1};
+  AR.platRoas=function(V){return num(V.t.h_roas)};
+  AR.T.plat='The ad platform counts a sale as soon as someone orders after seeing an ad. It can’t see returns or cancelled orders, so its number is higher than what your store kept.';
+  AR.T.roas='Return on ad spend, counted by your store: the sales you kept from ad orders divided by what the ads cost. Spending EGP 10,000 to keep EGP 23,700 is 2.37x. Under 1.65x, your break-even, the ads lose money once the dresses and delivery are paid.';
+
+  /* breakdown rows (Who & where): name and return, then the bar, then "Spent · brought" on its own line */
+  AR.bars=function(rows){var mx=Math.max.apply(null,rows.map(function(r){return r.sa}))||1,
+      best=rows.reduce(function(b,r){return r.sp>2000&&AD.roas(r.sa,r.sp)>AD.roas(b.sa,b.sp)?r:b},rows[0]);
+    return '<div class="bk2">'+rows.map(function(r){var ro=AD.roas(r.sa,r.sp),win=r===best;
+      return '<div class="bk2-r'+(win?' best':'')+'"><span class="nm">'+(r.ic||'')+'<span>'+esc(r.n)+'</span>'+(win?'<span class="tc g">Best</span>':'')+'</span>'+
+        '<span class="ro">'+(r.sp?X(ro):'—')+'</span><span class="t"><i style="width:'+(r.sa/mx*100).toFixed(1)+'%"></i></span>'+
+        '<span class="mo">Spent <b>'+E(r.sp)+'</b> · brought <b>'+E(r.sa)+'</b>'+(r.sp&&ro<be?' · below break-even':'')+'</span></div>'}).join('')+'</div>'};
+
+  /* winning ads: a podium for the top three, ranked rows for the rest. One neutral bar per ad with the break-even tick;
+     green only marks the best ad */
+  var bar=function(r,mx,win){return '<span class="rb'+(win?' win':'')+'" aria-hidden="true"><i style="width:'+Math.min(100,r/mx*100).toFixed(1)+'%"></i><em style="left:'+(be/mx*100).toFixed(1)+'%"></em></span>'};
+  var kind=function(a){return a.kind==='video'?AR.IC.play+'Video':a.kind==='carousel'?'Carousel':'Photo'};
+  var early=function(a){return a.test||a.spend<2000};
+  AR.rankMax=function(A){return Math.max(be*1.5,Math.max.apply(null,A.map(function(a){return AD.roas(a.sales,a.spend)})))};
+  AR.podium=function(L,rank,mx){return '<div class="pd">'+L.map(function(a){var P=OS.PR[a.p],r=AD.roas(a.sales,a.spend),n=rank[a.id];
+      return '<button type="button" class="pd-c pd-'+n+'" data-ad="'+a.id+'"><span class="pd-th" style="--c1:'+P.c[0]+';--c2:'+P.c[1]+'">'+OS.DRESS+
+        '<span class="pd-m" aria-label="Rank '+n+'">'+n+'</span><span class="kd">'+kind(a)+'</span></span>'+
+        '<span class="pd-bd"><b class="pd-nm">'+esc(a.n)+'</b><small>'+esc(P.s)+'</small>'+
+        '<span class="pd-r"><b>'+X(r)+'</b><small>return</small>'+(n===1?'<span class="tc g">Best ad</span>':'')+'</span>'+bar(r,mx,n===1)+
+        '<small class="pd-mo">Spent '+E(a.spend)+' · brought '+E(a.sales)+'</small></span></button>'}).join('')+'</div>'};
+  AR.rankRows=function(L,rank,mx){return '<div class="rk">'+L.map(function(a){var P=OS.PR[a.p],r=AD.roas(a.sales,a.spend),n=rank[a.id],e=early(a);
+      return '<button type="button" class="rk-r" data-ad="'+a.id+'"><span class="rk-n">'+n+'</span>'+AR.sw(a.p)+
+        '<span class="rk-nm"><b>'+esc(a.n)+'</b><small>'+esc(P.s)+' · spent '+E(a.spend)+', brought '+E(a.sales)+'</small></span>'+
+        '<span class="rk-v">'+(e?'<small>Too early to judge</small>':bar(r,mx,n===1)+'<b>'+X(r)+'</b>')+
+        (!e&&r<be?'<small>below break-even</small>':'')+'</span></button>'}).join('')+'</div>'};
+})();
+
 </script>
 <script>
 
@@ -2215,6 +2420,133 @@ OS.page='Ads report';
 
 </script>
 <script>
+/* Ads report · "What if": a sale simulator (round 17).
+   Base = the Overview's last 7 days: revenue 253,113 from 203 orders, stock cost 72,897, commission 7% (17,718),
+   delivery 9,020, ad spend 106,807, return rate 4.2%. With no discount the model gives back exactly those figures
+   (profit 46,671, revenue ROI 1.23x), so "Now" always matches the Overview.
+   revenue = orders × price after discount × (1 − return rate)
+   costs   = kept dresses × product cost + orders × delivery + 7% commission + ad spend */
+(function(){
+  var $=OS.$,$$=OS.$$,E=AD.egp,X=AD.x,R=Math.round,PR=OS.PR;
+  var B={orders:203,rev:253113,cogs:72897,comm:0.07,fees:9020,spend:106807,ret:0.042};
+  var sum=function(a){return a.reduce(function(x,y){return x+y},0)};
+  var wAll=sum(PR.map(function(p){return p.w})),pwAll=sum(PR.map(function(p){return p.p*p.w}));
+  var S={d:20,dc:false,prods:PR.map(function(_,i){return i}),extra:0,xc:false,lift:30,cost:null,del:null,ret:null};
+
+  /* the chosen products' share of this week (orders by how often each sells, money by price × how often) */
+  function scope(){var w=sum(S.prods.map(function(i){return PR[i].w})),pw=sum(S.prods.map(function(i){return PR[i].p*PR[i].w}));
+    var o=B.orders*w/wAll,rev=B.rev*pw/pwAll,ret=S.ret==null?B.ret:S.ret/100,kept=o*(1-ret);
+    return {o:o,rev:rev,price:rev/kept,ads:B.spend*w/wAll,ret:ret,
+      cost:S.cost==null?B.cogs*pw/pwAll/kept:S.cost,del:S.del==null?B.fees/B.orders:S.del}}
+  /* one product group under a discount d (0–1), more orders (lift, 0–1) and extra ad money */
+  function run(k,d,lift,extra){var o=k.o*(1+lift),kept=o*(1-k.ret),rev=kept*k.price*(1-d);
+    var cogs=kept*k.cost,del=o*k.del,comm=rev*B.comm,ads=k.ads+extra;
+    return {o:o,rev:rev,cogs:cogs,del:del,comm:comm,ads:ads,profit:rev-cogs-del-comm-ads}}
+  function add(a,b){var o={};for(var x in a)o[x]=a[x]+b[x];return o}
+  function sub(a,b){var o={};for(var x in a)o[x]=a[x]-b[x];return o}
+  function model(){var k=scope(),lift=S.lift/100;
+    var all=run({o:B.orders,rev:B.rev,price:B.rev/(B.orders*(1-k.ret)),ads:B.spend,ret:k.ret,
+                 cost:S.cost==null?B.cogs/(B.orders*(1-k.ret)):S.cost,del:k.del},0,0,0);
+    var mine0=run(k,0,0,0),other=sub(all,mine0);
+    var at=function(d){return add(other,run(k,d,lift,S.extra))};
+    /* profit is a straight line in the discount, so both break-even points have an exact answer */
+    var m1=run(k,0,lift,S.extra),A=m1.rev*(1-B.comm),C=m1.cogs+m1.del+m1.ads;
+    var dEven=1-(all.profit-other.profit+C)/A,dZero=1-(C-other.profit)/A;
+    return {now:all,sim:at(S.d/100),at:at,dEven:dEven,dZero:dZero,k:k}}
+
+  function chips(name,list,cur){return list.map(function(x){return '<button type="button" data-wf-'+name+'="'+x[0]+'" aria-pressed="'+(String(cur)===String(x[0]))+'">'+x[1]+'</button>'}).join('')}
+  function field(id,label,val,unit,src){return '<label class="fl wf-f"><span>'+label+'</span><span class="wf-in'+(unit==='EGP'?' pre':'')+'">'+
+    '<input type="number" inputmode="decimal" min="0" step="1" data-wf-n="'+id+'" value="'+val+'">'+(unit==='%'?'<em>%</em>':'')+'</span><small>'+src+'</small></label>'}
+  function inputs(m){var k=m.k,all=S.prods.length===PR.length;
+    return '<div class="wf-in-col">'+
+      '<fieldset class="wf-g"><legend>Discount</legend><div class="os-filt" role="group" aria-label="Discount">'+
+        chips('d',[[10,'10% off'],[20,'20% off'],[30,'30% off'],['c','Other']],S.dc?'c':S.d)+'</div>'+
+        (S.dc?'<label class="fl wf-f" style="margin-top:12px"><span>Your discount</span><span class="wf-in"><input type="number" min="0" max="90" step="1" data-wf-n="d" value="'+S.d+'"><em>%</em></span></label>':'')+'</fieldset>'+
+      '<fieldset class="wf-g"><legend>On which dresses</legend><div class="wf-pr" role="group" aria-label="Dresses on sale">'+
+        '<button type="button" data-wf-all aria-pressed="'+all+'">All dresses</button>'+
+        PR.map(function(p,i){return '<button type="button" data-wf-p="'+i+'" aria-pressed="'+(!all&&S.prods.indexOf(i)>=0)+'">'+AR.sw(i,'xs')+p.s+'</button>'}).join('')+'</div></fieldset>'+
+      '<fieldset class="wf-g"><legend>Extra ad budget for the week</legend><div class="os-filt" role="group" aria-label="Extra ad budget">'+
+        chips('x',[[0,'None'],[10000,'+ EGP 10,000'],[25000,'+ EGP 25,000'],['c','Other']],S.xc?'c':S.extra)+'</div>'+
+        (S.xc?'<label class="fl wf-f" style="margin-top:12px"><span>Extra ad budget</span><span class="wf-in pre"><input type="number" min="0" step="500" data-wf-n="extra" value="'+S.extra+'"></span></label>':'')+'</fieldset>'+
+      '<fieldset class="wf-g"><legend>How many more orders you expect</legend>'+
+        '<div class="wf-lift"><input type="range" min="0" max="100" step="5" value="'+S.lift+'" data-wf-n="lift" aria-label="More orders, in percent"><b>+'+S.lift+'%</b></div>'+
+        '<small class="wf-guess">Your guess. Nobody can know this in advance, so try a few.</small></fieldset>'+
+      '<details class="wf-g wf-costs"><summary>Your costs, filled in from your store'+OS.IC.arrow+'</summary>'+
+        field('cost','Product cost per dress',R(k.cost),'EGP','from your stock costs this week')+
+        field('del','Delivery per order',R(k.del),'EGP','EGP 9,020 over 203 orders this week')+
+        field('ret','Return rate',+(k.ret*100).toFixed(1),'%','7 of 166 delivered orders came back')+
+        '<p class="note">Payment and platform commission stays at 7% of sales.</p></details></div>'}
+
+  function row(n,a,b,f,up){var dl=b-a,good=up?dl>=0:dl<=0;
+    return '<tr><th scope="row">'+n+'</th><td>'+f(a)+'</td><td><b>'+f(b)+'</b></td><td class="'+(Math.abs(dl)<0.005?'':good?'g':'b')+'">'+
+      (Math.abs(dl)<0.005?'same':(dl>0?'+':'−')+f(Math.abs(dl)).replace('−',''))+'</td></tr>'}
+  function results(m){var a=m.now,b=m.sim,dP=b.profit-a.profit,tone=b.profit<0?'b':dP<0?'w':'g';
+    var roi=function(x){return x.rev/(x.cogs+x.del+x.comm+x.ads)},cpo=function(x){return x.ads/x.o};
+    var head=tone==='g'?'You would make more money':tone==='w'?'Still profitable, but you would make less':'You would lose money';
+    var line=tone==='b'?'The week would end at <b>'+E(b.profit)+'</b>, '+E(Math.abs(dP))+' below what you make now.':
+      'Profit for the week: <b>'+E(b.profit)+'</b>, '+(dP>=0?E(dP)+' more':E(-dP)+' less')+' than without the sale.';
+    var ev=m.dEven,zr=m.dZero,evt=ev<=0.005?'At these numbers any discount makes less than now. More orders or less ad money would change that.':
+      'Up to <b>'+(ev*100).toFixed(1)+'% off</b>, you make at least what you make now. Above <b>'+(Math.min(zr,1)*100).toFixed(1)+'% off</b>, you lose money.';
+    return '<div class="wf-out">'+
+      '<div class="wf-v '+tone+'"><span class="wf-vh">'+head+'</span><b class="wf-vp">'+(dP>=0?'+ ':'− ')+E(Math.abs(dP)).replace('EGP ','EGP ')+'</b><p>'+line+'</p></div>'+
+      '<div class="wf-tbw"><table class="wf-tb"><thead><tr><th scope="col"><span class="sr">Number</span></th><th scope="col">Now</th><th scope="col">With the sale</th><th scope="col">Change</th></tr></thead><tbody>'+
+        row('Orders',a.o,b.o,function(v){return R(v).toLocaleString('en-US')},true)+
+        row('Sales',a.rev,b.rev,E,true)+
+        row('Ad spend',a.ads,b.ads,E,false)+
+        row('Ad return'+AR.tip('roas'),a.rev/a.ads,b.rev/b.ads,X,true)+
+        row('Each order cost in ads',cpo(a),cpo(b),E,false)+
+        row('Revenue ROI'+OS.tip('Sales divided by everything they cost: the dresses, delivery, commission and the ads. Above 1x the week makes money.'),roi(a),roi(b),X,true)+
+        row('Profit',a.profit,b.profit,E,true)+
+      '</tbody></table></div>'+
+      '<div class="wf-ch"><div class="wf-chh"><h4>Profit at every discount</h4><small>With +'+S.lift+'% orders'+(S.extra?' and '+E(S.extra)+' more on ads':'')+'</small></div><div id="wfChart"></div></div>'+
+      '<p class="wf-even">'+evt+'</p>'+
+      '<p class="note">An estimate from your last 7 days, not a promise. Returns, delivery and dress costs are your averages; change them under “Your costs”.</p></div>'}
+
+  /* profit (y) against discount 0–50% (x): green above today's profit, amber between it and zero, red below zero */
+  function chart(m){var el=$('#wfChart');if(!el)return;var W=Math.max(260,el.clientWidth||520),H=200,L=58,Rr=12,T=14,Bm=28,mxD=50;
+    var pts=[];for(var d=0;d<=mxD;d+=2.5)pts.push([d,m.at(d/100).profit]);
+    var ys=pts.map(function(p){return p[1]}).concat([0,m.now.profit]),y0=Math.min.apply(null,ys),y1=Math.max.apply(null,ys),pad=(y1-y0)*.08;y0-=pad;y1+=pad;
+    var x=function(d){return L+d/mxD*(W-L-Rr)},y=function(v){return T+(1-(v-y0)/(y1-y0))*(H-T-Bm)};
+    var k=function(v){var a=Math.abs(v);return (v<0?'−':'')+'EGP '+(a>=1000?R(a/1000)+'k':R(a))};
+    var stop=function(v){return Math.max(0,Math.min(100,(y(v)-T)/(H-T-Bm)*100)).toFixed(2)};
+    var g='<defs><linearGradient id="wfG" gradientUnits="userSpaceOnUse" x1="0" y1="'+T+'" x2="0" y2="'+(H-Bm)+'">'+
+      '<stop offset="'+stop(m.now.profit)+'%" stop-color="var(--good)"/><stop offset="'+stop(m.now.profit)+'%" stop-color="var(--warn)"/>'+
+      '<stop offset="'+stop(0)+'%" stop-color="var(--warn)"/><stop offset="'+stop(0)+'%" stop-color="var(--bad)"/></linearGradient></defs>';
+    [0,10,20,30,40,50].forEach(function(d){g+='<text class="ax" x="'+x(d)+'" y="'+(H-8)+'" text-anchor="middle">'+d+'%</text>'});
+    g+='<line class="wf-z" x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(0)+'" y2="'+y(0)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y(0)+4)+'" text-anchor="end">EGP 0</text>';
+    g+='<line class="wf-now" x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(m.now.profit)+'" y2="'+y(m.now.profit)+'"/><text class="ax" x="'+(L-8)+'" y="'+(y(m.now.profit)+4)+'" text-anchor="end">'+k(m.now.profit)+'</text>';
+    g+='<polyline fill="none" stroke="url(#wfG)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" points="'+pts.map(function(p){return x(p[0]).toFixed(1)+','+y(p[1]).toFixed(1)}).join(' ')+'"/>';
+    var cd=Math.min(S.d,mxD),cp=m.at(cd/100).profit;
+    g+='<circle class="wf-dot" cx="'+x(cd)+'" cy="'+y(cp)+'" r="6"/>';
+    el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Profit for the week at discounts from 0 to 50 percent. Today: '+E(m.now.profit)+'. At '+S.d+'% off: '+E(cp)+'.">'+g+'</svg>'+
+      '<div class="wf-leg"><span><i class="g"></i>more than now</span><span><i class="w"></i>less than now</span><span><i class="b"></i>a loss</span><span><i class="ln"></i>what you make now</span></div>'}
+
+  function draw(keep){var m=model(),root=$('#wf');if(!root)return;
+    var f=keep&&document.activeElement&&document.activeElement.dataset.wfN,pos=f&&document.activeElement.selectionStart;
+    root.innerHTML='<div class="wf">'+inputs(m)+results(m)+'</div>';$$('#wf [data-tip]').length;chart(m);
+    if(f){var el=root.querySelector('[data-wf-n="'+f+'"]');if(el){el.focus();try{if(pos!=null)el.setSelectionRange(pos,pos)}catch(e){}}}
+    if(S.open){var dt=root.querySelector('.wf-costs');if(dt)dt.open=true}}
+  var root=$('#wf');if(!root)return;
+  root.addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;var v;
+    if((v=t.dataset.wfD)!=null){if(v==='c'){S.dc=true}else{S.dc=false;S.d=+v}draw()}
+    else if((v=t.dataset.wfX)!=null){if(v==='c'){S.xc=true}else{S.xc=false;S.extra=+v}draw()}
+    else if(t.hasAttribute('data-wf-all')){S.prods=PR.map(function(_,i){return i});S.cost=null;draw()}
+    else if((v=t.dataset.wfP)!=null){var i=+v,all=S.prods.length===PR.length;
+      if(all)S.prods=[i];else{var at=S.prods.indexOf(i);if(at>=0)S.prods.splice(at,1);else S.prods.push(i)}
+      if(!S.prods.length)S.prods=PR.map(function(_,j){return j});S.cost=null;draw()}});
+  root.addEventListener('toggle',function(e){if(e.target.classList.contains('wf-costs'))S.open=e.target.open},true);
+  root.addEventListener('input',function(e){var t=e.target,k=t.dataset.wfN;if(!k)return;var v=parseFloat(t.value);
+    if(k==='lift'){S.lift=+t.value;var b=t.parentNode.querySelector('b');if(b)b.textContent='+'+S.lift+'%';clearTimeout(S.tm);S.tm=setTimeout(function(){draw(true)},60);return}
+    if(isNaN(v)||v<0)return;
+    if(k==='d')S.d=Math.min(90,v);else if(k==='extra')S.extra=v;else if(k==='cost')S.cost=v;else if(k==='del')S.del=v;else if(k==='ret')S.ret=Math.min(90,v);
+    clearTimeout(S.tm);S.tm=setTimeout(function(){draw(true)},250)});
+  var lw=0;addEventListener('resize',function(){var c=$('#wfChart');if(c&&Math.abs(c.clientWidth-lw)>20){lw=c.clientWidth;chart(model())}});
+  document.addEventListener('click',function(e){if(e.target.closest('#t-wf'))setTimeout(function(){chart(model())},60)});
+  draw();
+})();
+
+</script>
+<script>
 /* Ads report · A — hero + sticky tabs; a campaign or ad opens its detail in the side drawer */
 (function(){
   var $=OS.$,$$=OS.$$,E=AD.egp,X=AD.x,V,vf='all',tableR=null;
@@ -2222,15 +2554,18 @@ OS.page='Ads report';
     $('#raJy').innerHTML=AR.journey(T.spend,T.sales);
     $('#raFacts').innerHTML=AR.facts([
       ['Orders from ads'+AR.tip('cnt'),T.orders,'each cost '+E(T.spend/T.orders)],
-      ['Return'+AR.tip('roas'),'<span class="'+AD.tone(r)+'">'+X(r)+'</span>','<span class="dl '+(/▼/.test(t.a_droas)?'b':'g')+'">'+t.a_droas+'</span> '+t.vs],
+      ['Return'+AR.tip('roas'),'<span class="'+AD.tone(r)+'">'+X(r)+'</span>','<span class="dl '+(/▼/.test(t.a_droas)?'b':'g')+'">'+t.a_droas+'</span> '+t.vs+'<span class="plat">Ad platform says <b>'+X(AR.platRoas(V))+'</b>'+AR.tip('plat')+'</span>'],
       ['Break-even'+AR.tip('be'),'1.65x','above it you make money']]);
-    $('#raBal').innerHTML='<b>'+E(AD.BASE.balance)+'</b> left in the ad account — lasts about 6 days. <button type="button" data-topup>Top up</button>';
+    $('#raBal').innerHTML='<b>'+E(AD.BASE.balance)+'</b> left in the ad account — lasts about 6 days, runs out <b>'+AD.BASE.runsOut+'</b>. <button type="button" data-topup>Top up</button>';
     AR.chart($('#raChart'),V)}
   function adsGrid(){var A=Object.keys(V.ads).map(function(k){return V.ads[k]}).filter(function(a){return a.spend>0});
     var G={all:A.length,Winning:0,'Needs work':0,'Still testing':0,Losing:0};A.forEach(function(a){G[AR.verdict(a)[1]]++});
     $('#raVf').innerHTML=[['all','All'],['Winning','Winning'],['Needs work','Needs work'],['Still testing','Still testing'],['Losing','Losing']].map(function(x){return '<button type="button" data-vf="'+x[0]+'" aria-pressed="'+(vf===x[0])+'">'+x[1]+' <b>'+G[x[0]]+'</b></button>'}).join('');
-    var L=A.filter(function(a){return vf==='all'||AR.verdict(a)[1]===vf}).sort(function(a,b){return AD.roas(b.sales,b.spend)-AD.roas(a.sales,a.spend)});
-    $('#raAds').innerHTML=L.length?L.map(function(a){return AR.creative(a)}).join(''):'<p class="note">No ads in this group. <button type="button" class="lnk" data-vf="all">Show all</button></p>'}
+    var by=function(a,b){return AD.roas(b.sales,b.spend)-AD.roas(a.sales,a.spend)},rank={},mx=AR.rankMax(A);
+    A.slice().sort(by).forEach(function(a,i){rank[a.id]=i+1});
+    var L=A.filter(function(a){return vf==='all'||AR.verdict(a)[1]===vf}).sort(by);
+    $('#raAds').innerHTML=!L.length?'<p class="note">No ads in this group. <button type="button" class="lnk" data-vf="all">Show all</button></p>':
+      vf==='all'?AR.podium(L.slice(0,3),rank,mx)+(L.length>3?'<h4 class="rk-h">The rest, best first</h4>'+AR.rankRows(L.slice(3),rank,mx):''):AR.rankRows(L,rank,mx)}
   function render(){V=AD.now();hero();
     $('#raNeeds').innerHTML=AR.needs(V);$('#raNeedN').textContent=$$('#raNeeds .rl-r').length;$('#raMoney').innerHTML=AR.balance(V);
     $('#raCamps').innerHTML=AR.campCards(V);

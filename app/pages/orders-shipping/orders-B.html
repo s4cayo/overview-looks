@@ -670,7 +670,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 .ip-four{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .ip-four > div{position:relative;display:flex;flex-direction:column;gap:6px;padding:14px 16px 14px 60px;min-height:76px;justify-content:center;border-radius:14px;background:var(--pv2-bg2);border:1px solid var(--pv2-line);min-width:0}
 .ip-four span{font-size:13px;color:var(--pv2-mut)}
-.ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-four b{font-size:22px;font-weight:600;letter-spacing:-.015em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:12px 16px;margin:-12px -16px}
 .ip-four b small{font-size:13px;font-weight:500;color:var(--pv2-mut);letter-spacing:0}
 .ip-ni{position:absolute;left:14px;top:16px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 15%,transparent)}
 .ip-ni svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -826,7 +826,7 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* inventory A */
 :root .ia-t .pa-n{font-size:32px}
 :root .ia-t .pa-n small{font-size:15px}
-:root .ia-gn b{font-size:15px}
+:root .ia-gn b{font-size:16px}
 :root .ia-tot,:root .ia-ro b{font-size:16px}
 :root .ia-tot small{font-size:13px}
 :root .ia-big{font-size:32px;letter-spacing:-.02em}
@@ -903,6 +903,56 @@ html.nv2-lock{scrollbar-gutter:stable}
 /* paragraphs stay readable: about 65 characters a line */
 :root :is(.ip-head p,.ia-intro,.ia-skip,.pa-szsum,.ib-out,.pa-foot){max-width:65ch}
 /* === AUDIT v1 END === */
+
+/* === R17 START === */
+/* Round 17 (Sam, 2026-11-03). */
+/* Inventory A: product names a step bigger (they read too small) */
+:root .ia-prods .pv2-pn,:root .ia-name b{font-size:17px}
+/* "Order 107" read as a button: it is a suggestion, so plain bold text with a small label, no pill */
+:root .ia-prods .pv2-ord.ia-sug{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:0;border-radius:0;background:none;color:var(--pv2-fg);font-weight:600;text-align:right}
+.ia-sug small{font-size:12px;font-weight:500;color:var(--pv2-mut);white-space:nowrap}
+.ia-sug span{font-size:13px;color:var(--pv2-mut);font-weight:500;white-space:nowrap}
+.ia-sug b{font-size:20px;font-weight:700;color:var(--pv2-fg);letter-spacing:-.01em;margin-right:3px}
+/* status colours, vivid and readable: red runs out soon, amber getting low, green fine, hatched not tracked */
+:root .ia-c.r{background:color-mix(in srgb,var(--pv2-bad) 24%,var(--pv2-bg));color:var(--pv2-bad);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-bad) 70%,var(--pv2-bg))}
+:root .ia-c.w{background:color-mix(in srgb,var(--pv2-warn) 22%,var(--pv2-bg));color:var(--pv2-warn);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-warn) 70%,var(--pv2-bg))}
+:root .ia-c.g{background:color-mix(in srgb,var(--pv2-good) 14%,var(--pv2-bg));color:var(--pv2-good);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--pv2-good) 45%,var(--pv2-bg))}
+:root .ia-c.u{background:repeating-linear-gradient(135deg,var(--pv2-bg2) 0 5px,var(--pv2-bg) 5px 10px);color:var(--pv2-fg);box-shadow:inset 0 0 0 1.5px var(--pv2-line2)}
+.ia-legend i{box-shadow:inset 0 0 0 1.5px var(--k);background:color-mix(in srgb,var(--k) 30%,var(--pv2-bg))}
+.ia-legend i.r{--k:var(--pv2-bad)}.ia-legend i.w{--k:var(--pv2-warn)}.ia-legend i.g{--k:var(--pv2-good)}
+.ia-legend i.u{--k:var(--pv2-line2);background:repeating-linear-gradient(135deg,var(--pv2-line2) 0 3px,var(--pv2-bg) 3px 6px)}
+.ia-legend span{color:var(--pv2-fg)}
+/* dark mode: a soft glow in each status colour */
+:root:not([data-theme="light"]) :is(.ia-c.r,.ia-c.w,.ia-c.g){text-shadow:0 0 10px color-mix(in srgb,currentColor 55%,transparent)}
+:root:not([data-theme="light"]) .ia-c.r{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-bad) 70%,var(--pv2-bg)),0 0 16px -4px color-mix(in srgb,var(--pv2-bad) 75%,transparent)}
+:root:not([data-theme="light"]) .ia-c.w{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--pv2-warn) 70%,var(--pv2-bg)),0 0 16px -4px color-mix(in srgb,var(--pv2-warn) 70%,transparent)}
+:root:not([data-theme="light"]) .ia-legend i:not(.u){box-shadow:inset 0 0 0 1.5px var(--k),0 0 10px -2px var(--k)}
+:root:not([data-theme="light"]) .ia-prods .pv2-run i{box-shadow:0 0 10px -1px var(--c)}
+:root[data-theme="light"] .ia-c.g{color:#0d6b48}
+/* the size header of the All stock grid stays in view under the tab bar while the list scrolls */
+.ia-gh{position:sticky;top:calc(env(safe-area-inset-top,0px) + 78px);z-index:5;background:var(--pv2-bg);padding-top:10px;margin-top:-10px;box-shadow:0 1px 0 var(--pv2-line)}
+/* the restock summary: a clear callout (icon, tinted panel, big numbers); red when sizes run out before delivery */
+.ia-call{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;border-radius:16px;--k:var(--pv2-acc);
+  background:color-mix(in srgb,var(--k) 10%,var(--pv2-bg));border:1px solid color-mix(in srgb,var(--k) 38%,var(--pv2-bg))}
+.ia-call.late{--k:var(--pv2-bad)}
+.ia-call.none{--k:var(--pv2-good)}
+.ia-ci{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;color:var(--k);background:color-mix(in srgb,var(--k) 18%,var(--pv2-bg))}
+.ia-ci svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.ia-cb{min-width:0;flex:1}
+.ia-call .ia-sum b{font-size:22px;letter-spacing:-.01em}
+.ia-call .ia-sum > span.r{font-size:15px;margin-top:6px}
+.ia-call .ia-sum > span.r b{font-size:17px}
+.ia-call .ia-sumrow{margin-top:12px}
+:root:not([data-theme="light"]) .ia-call{box-shadow:0 0 28px -12px color-mix(in srgb,var(--k) 60%,transparent)}
+:root:not([data-theme="light"]) .ia-ci{box-shadow:0 0 16px -4px color-mix(in srgb,var(--k) 70%,transparent)}
+@media (max-width:600px){.ia-call{padding:16px;gap:12px}.ia-ci{width:40px;height:40px}.ia-call .ia-sum b{font-size:20px}}
+/* product cards: the revenue's "…" cut (overflow:hidden) sliced its glow into a box; give the halo room */
+:root .pa-cards .pv2-mv{padding:10px 12px;margin:-10px -12px}
+/* Inventory B supplier list: the product picture beside its name */
+.ib-ol{grid-template-columns:36px minmax(0,1fr) auto;align-items:center}
+.ib-ol .ip-th{width:36px;height:36px;border-radius:10px;grid-row:1 / span 2}.ib-ol .ip-th svg{width:15px;height:23px}
+.ib-ol em{grid-column:3}.ib-ol span{grid-column:2 / -1}
+/* === R17 END === */
 /* === PERIODS v1 START === */
 /* Periods v1: an arrow icon in a "Needs attention" row points down while that figure went down */
 [data-per-down] > span:first-child svg{transform:scaleY(-1)}
@@ -1219,7 +1269,7 @@ main{gap:24px}
   .ob,.ob.sm,.os-sel,.os-search input,.os-filt button{min-height:44px}
   .os-filt button{min-width:44px;justify-content:center}
   .ob.sm.ic{min-width:44px}
-  .ob-a .m,.ob-c .m{min-height:44px;display:flex;flex-direction:column;justify-content:center}
+  .ob-a .m,.ob-c .m{min-height:44px}
   .sb-ch button{min-height:44px}
 }
 /* #3 contrast in light mode: 12px status chips + tags were 3.9–4.4:1 on their own tint; darken the text, keep the tint */
@@ -1431,6 +1481,48 @@ main{gap:24px}
 /* AUDIT v1 #10: paragraphs ≤65ch */
 .ob-gh p,.ob-note{max-width:65ch}
 
+/* === ROUND 17 === */
+/* status filters, sticky right under the tab bar while the Orders view is open (--obtabh = the bar's height, set by script) */
+.ob-fbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px + var(--obtabh,52px));z-index:29;display:flex;justify-content:center;margin-bottom:16px;pointer-events:none}
+.ob-chips{display:flex;gap:8px;max-width:100%;overflow-x:auto;scrollbar-width:none;padding:2px;pointer-events:auto}
+.ob-chips::-webkit-scrollbar{display:none}
+.ob-chip{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:99px;border:1px solid var(--line2);flex:none;
+  background:rgba(13,12,18,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--muted);font-size:14px;font-weight:500;white-space:nowrap;
+  box-shadow:0 10px 24px -16px rgba(0,0,0,.9);transition:color .2s,border-color .2s,background .2s}
+.ob-chip i{width:8px;height:8px;border-radius:50%;background:var(--dc)}
+.ob-chip .n{font-size:12px;font-weight:600;line-height:20px;padding:0 8px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--text);font-variant-numeric:tabular-nums}
+.ob-chip:hover{color:var(--text);border-color:var(--pl)}
+.ob-chip:focus-visible{outline:2px solid var(--pl);outline-offset:2px}
+.ob-chip.on{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);border-color:transparent;color:#fff;box-shadow:0 8px 20px -10px rgba(85,13,166,.9)}
+.ob-chip.on .n{background:rgba(255,255,255,.22);color:#fff}
+.ob-chip.on i{box-shadow:0 0 0 2px rgba(255,255,255,.75)}
+.ob-chip.clr{color:var(--text)}
+.ob-chip.clr svg{width:16px;height:16px}
+:root[data-theme="light"] .ob-chip{background:rgba(255,255,255,.95);border-color:var(--lt-line,rgba(60,20,110,.12));box-shadow:0 1px 2px rgba(40,20,80,.05),0 8px 18px -14px rgba(40,20,80,.22)}
+:root[data-theme="light"] .ob-chip .n{background:rgba(20,10,40,.06)}
+:root[data-theme="light"] .ob-chip.on{background:linear-gradient(140deg,#7c3fc1,#550da6 70%);border-color:transparent;box-shadow:0 4px 12px -5px rgba(85,13,166,.5)}
+:root[data-theme="light"] .ob-chip.on .n{background:rgba(255,255,255,.22)}
+@media (max-width:1023px){.ob-chip{min-height:44px;height:44px}}
+@media (max-width:600px){.ob-fbar{margin:0 -16px 16px;justify-content:flex-start}.ob-chips{padding:2px 16px}}
+
+/* product thumbnails (app-wide rule: wherever a product is shown, show its image) */
+.sw.th{position:relative;width:40px;height:48px;flex:none}
+.sw.th svg{width:20px;height:30px}
+.sw.th em{position:absolute;right:-6px;bottom:-6px;font-style:normal;font-size:12px;font-weight:600;line-height:18px;padding:0 5px;border-radius:99px;background:var(--panel);border:1px solid var(--line2);color:var(--text)}
+.ob-a .m,.ob-c .m{display:flex;align-items:center;gap:12px;min-width:0}
+.ob-a .mt,.ob-c .mt{min-width:0}
+.ob-a .mt b,.ob-c .mt b{display:block}
+@media (max-width:600px){.ob-o{grid-template-columns:40px minmax(0,1fr) auto}.selmode .ob-o{grid-template-columns:auto 40px minmax(0,1fr) auto}}
+
+/* an order row lifts a little under the mouse, so it reads as clickable */
+@media (hover:hover){
+  .ob-o{position:relative;transition:transform .15s ease,box-shadow .15s ease,background .15s}
+  .ob-o:hover{z-index:1;transform:translateY(-2px);box-shadow:0 0 0 1px var(--line2),0 12px 24px -16px rgba(0,0,0,.8)}
+  :root[data-theme="light"] .ob-o:hover{box-shadow:0 0 0 1px rgba(60,20,110,.10),0 1px 2px rgba(40,20,80,.06),0 10px 22px -14px rgba(40,20,80,.25)}
+}
+@media (hover:hover) and (prefers-reduced-motion:reduce){.ob-o:hover{transform:none}}
+/* === ROUND 17 END === */
+
 /* === GLOW v1 START === */
 /* Glow v1 (round 15, Sam: "a little bit of glow on the important white text makes it feel futuristic — just right").
    Dark mode only: a soft halo in the text's OWN colour (white text glows white, green glows green) on section titles,
@@ -1621,6 +1713,7 @@ main{gap:24px}
 
     <!-- ORDERS -->
     <section class="pane" id="p-list" role="tabpanel" aria-labelledby="t-list">
+      <div class="ob-fbar" role="group" aria-label="Filter orders by status"><div class="ob-chips" id="obChips"></div><span class="sr" id="obChipsS" aria-live="polite"></span></div>
       <div class="panel">
         <div class="ob-tools">
           <label class="os-search" id="obSearchW"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
@@ -1630,7 +1723,6 @@ main{gap:24px}
           <button type="button" class="ob" id="obSelBtn" aria-pressed="false">Select</button>
           <button type="button" class="ob" id="obCsv"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span id="obCsvT">Export CSV</span></button>
         </div>
-        <p class="ob-filt" id="obFilt" hidden></p>
         <div id="obDays"></div>
         <div class="ob-more"><span id="obCount" class="mut"></span><button type="button" class="ob" id="obMore">Show 20 more</button></div>
       </div>
@@ -2030,7 +2122,16 @@ var PSHEET=(function(){
     sheet=document.createElement('section');sheet.className='pv2 ip-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-modal','true');sheet.setAttribute('aria-labelledby','ip-st');
     document.body.appendChild(scrim);document.body.appendChild(sheet);scrim.addEventListener('click',close);
     sheet.addEventListener('click',function(e){if(e.target.closest('[data-ip-close]'))close()});
-    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()})}
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sheet.classList.contains('on'))close()});
+    /* phone: pull the sheet down from its top to close it. It follows the finger; past 90px it closes, else it springs back */
+    var y0=null,dy=0,mob=matchMedia('(max-width:767px)');
+    sheet.addEventListener('touchstart',function(e){if(!mob.matches||e.touches.length>1)return;
+      if(sheet.scrollTop>0&&!e.target.closest('.pv2-grab'))return;y0=e.touches[0].clientY;dy=0},{passive:true});
+    sheet.addEventListener('touchmove',function(e){if(y0==null)return;dy=e.touches[0].clientY-y0;
+      if(dy<=0){sheet.style.transform='';sheet.style.transition='';scrim.style.opacity='';return}
+      if(e.cancelable)e.preventDefault();sheet.style.transition='none';sheet.style.transform='translateY('+dy+'px)';scrim.style.opacity=String(Math.max(0,1-dy/400))},{passive:false});
+    function drop(){if(y0==null)return;y0=null;sheet.style.transition='';sheet.style.transform='';scrim.style.opacity='';if(dy>90)close();dy=0}
+    sheet.addEventListener('touchend',drop);sheet.addEventListener('touchcancel',drop)}
   function open(html,from){ensure();back=from||document.activeElement;sheet.innerHTML=html;sheet.scrollTop=0;sheet.classList.add('on');scrim.classList.add('on');
     var c=sheet.querySelector('[data-ip-close]');if(c)setTimeout(function(){c.focus({preventScroll:true})},reduce?0:60);
     document.dispatchEvent(new CustomEvent('ip:sheet',{detail:{open:true}}))}
@@ -2308,6 +2409,10 @@ var IPU=(function(){
   OS.SOURCE=function(o){return o.web?'Web':'Admin'};
   OS.when=function(o){var hh=o.h%12||12;return 'Oct '+(o.pday||o.day)+', '+hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
   OS.whenShort=function(o){var hh=o.h%12||12;return hh+':'+(o.m<10?'0':'')+o.m+(o.h<12?' am':' pm')};
+  /* product thumbnail (round 17: wherever a product is shown, show its image): the first item's dress tile, "+N" for more */
+  OS.thumb=function(p,more){return '<span class="sw th" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'" aria-hidden="true">'+OS.DRESS+(more>0?'<em>+'+more+'</em>':'')+'</span>'};
+  OS.thumbOf=function(o){return OS.thumb(OS.PR[o.items[0].p],o.items.length-1)};
+  OS.thumbByName=function(txt){var parts=txt.split(', '),p=OS.PR.filter(function(x){return parts[0].indexOf(x.s)===0})[0]||OS.PR[0];return OS.thumb(p,parts.length-1)};
   OS.itemsTxt=function(o){return o.items.map(function(i){return i.t+' · '+i.size+(i.q>1?' × '+i.q:'')}).join(', ')};
 
   /* ---------- periods (driven by NAV v2 → PERIODS v1 perSet → "per:change") ---------- */
@@ -2500,12 +2605,20 @@ OS.page='Orders';
   }
 
   /* ---------- day-grouped list ---------- */
-  function orow(o){var p=OS.PR[o.items[0].p],ini=o.name.split(' ').map(function(x){return x[0]}).join('');
+  function orow(o){
     return '<div class="ob-o'+(S.sel[o.id]?' sel':'')+'" data-id="'+o.id+'" tabindex="0" role="button" aria-label="Order '+o.id+', '+esc(o.name)+', EGP '+fmt(o.total)+', '+OS.ST[o.st]+'">'+
       '<span class="cbw"><input type="checkbox" class="cb" data-pick="'+o.id+'" aria-label="Select order '+o.id+'"'+(S.sel[o.id]?' checked':'')+'></span>'+
-      '<span class="av" style="--c1:'+p.c[0]+';--c2:'+p.c[1]+'" aria-hidden="true">'+ini+'</span>'+
+      OS.thumbOf(o)+
       '<span class="m"><b>'+esc(o.name)+'<span>'+o.city+'</span></b><p>#'+o.id+' · '+OS.whenShort(o)+(o.web?'':' · Admin')+' · '+esc(OS.itemsTxt(o))+'</p></span>'+
       '<span class="rt"><b>'+fmt(o.total)+'</b><span class="chip '+o.st+'">'+OS.ST[o.st]+'</span></span></div>'}
+  /* status filters under the sticky tabs (round 17): the on chip is filled, every chip carries its count, "Clear" shows while one is on */
+  function paintChips(n){var c=counts(),on=S.st!=='all';
+    $('#obChips').innerHTML=['all','paid','pending','cancelled','returned'].map(function(s){var a=S.st===s;
+      return '<button type="button" class="ob-chip'+(a?' on':'')+'" data-chip="'+s+'" aria-pressed="'+a+'">'+(s==='all'?'All':'<i style="--dc:'+DOT[s]+'"></i>'+OS.ST[s])+'<span class="n">'+c[s]+'</span></button>'}).join('')+
+      (on?'<button type="button" class="ob-chip clr" data-chip="clear" aria-label="Clear filter, show all orders">'+IC.x+'Clear</button>':'');
+    var row=$('#obChips'),onb=row.querySelector('.on');if(onb&&row.scrollWidth>row.clientWidth)row.scrollLeft=Math.max(0,onb.offsetLeft-(row.clientWidth-onb.offsetWidth)/2);
+    $('#obChipsS').textContent=on?n+' '+OS.ST[S.st].toLowerCase()+' order'+(n===1?'':'s')+' shown':'';
+  }
   function paintList(){
     var r=rows(),view=r.slice(0,S.n),g=[],cur=null;
     view.forEach(function(o){if(S.sort==='new'||S.sort==='old'){if(!cur||cur.d!==o.day){cur={d:o.day,o:[]};g.push(cur)}cur.o.push(o)}else{if(!cur){cur={d:0,o:[]};g.push(cur)}cur.o.push(o)}});
@@ -2517,7 +2630,7 @@ OS.page='Orders';
       :'<div class="ob-empty">No orders match '+(S.q?'“'+esc(S.q)+'”':'this filter')+'.<br><button type="button" class="ob sm" id="obReset">Clear search and filter</button></div>';
     $('#obCount').textContent=r.length?'Showing '+view.length+' of '+r.length+' orders':'';
     var more=$('#obMore');more.hidden=view.length>=r.length;more.textContent='Show '+Math.min(20,r.length-view.length)+' more';
-    var f=$('#obFilt');f.hidden=S.st==='all';if(S.st!=='all')f.innerHTML='Showing '+OS.ST[S.st].toLowerCase()+' orders only <button type="button" class="lnk" id="obAllBtn">Show all</button>';
+    paintChips(r.length);
     $('#obCsvT').textContent='Export '+r.length;
     $('#p-list .panel').classList.toggle('selmode',S.selmode);paintBulk();
   }
@@ -2530,7 +2643,7 @@ OS.page='Orders';
     var sum=function(l){return l.reduce(function(a,o){return a+o.total},0)};
     $('#obAttN').textContent=nophone.length+ret2.length+canc.length;
     var tag=function(t,c){return '<span class="ob-tag'+(c?' '+c:'')+'">'+t+'</span>'};
-    function row(o,tags,v,vs,acts){return '<div class="ob-a"><span class="m" data-open="'+o.id+'" role="button" tabindex="0"><b>'+esc(o.name)+'</b><small>#'+o.id+' · '+o.city+' · '+esc(OS.itemsTxt(o))+'</small></span>'+
+    function row(o,tags,v,vs,acts){return '<div class="ob-a"><span class="m" data-open="'+o.id+'" role="button" tabindex="0">'+OS.thumbOf(o)+'<span class="mt"><b>'+esc(o.name)+'</b><small>#'+o.id+' · '+o.city+' · '+esc(OS.itemsTxt(o))+'</small></span></span>'+
       '<span class="tg">'+tags+'</span><span class="v">EGP '+fmt(v)+'<small>'+vs+'</small></span><span class="acts">'+acts+'</span></div>'}
     var call=function(o){return o.phone?'<a class="ob sm" href="tel:'+o.phone.replace(/ /g,'')+'" data-call="'+o.phone+'">'+IC.phone+'Call</a><button type="button" class="ob sm" data-wa="'+o.phone+'">'+IC.wa+'WhatsApp</button>':'<span class="ob-nop">No phone on file</span>'};
     var G=[
@@ -2608,7 +2721,7 @@ OS.page='Orders';
     $('#obCartN').innerHTML='<div><span class="k">Still open</span><b>'+fmt(A[0])+'</b></div><div><span class="k">Left in carts</span><b><small>EGP</small>'+fmt(A[1])+'</b></div><div><span class="k">Came back and paid</span><b class="g">'+A[2]+'</b></div><div><span class="k">Reachable</span><b>'+A[3]+'</b><span class="s">phone on file</span></div>';
     var list=CARTS.filter(function(c){return c[3]>=r[0]&&c[3]<=r[1]});
     $('#obCarts').innerHTML=list.map(function(c){var sent=S.sent[c[0]];
-      return '<div class="ob-c"><span class="m"><b>'+c[1]+'</b><small>'+c[2]+' · '+dayName(c[3])+', '+c[4]+' · '+c[5]+'</small></span><span class="v">'+fmt(c[6])+'</span>'+
+      return '<div class="ob-c"><span class="m">'+OS.thumbByName(c[5])+'<span class="mt"><b>'+c[1]+'</b><small>'+c[2]+' · '+dayName(c[3])+', '+c[4]+' · '+c[5]+'</small></span></span><span class="v">'+fmt(c[6])+'</span>'+
         '<button type="button" class="ob sm'+(sent?' done':'')+'" data-remind="'+c[0]+'">'+(sent?IC.check+'Reminder ready':IC.wa+'Send reminder')+'</button></div>'}).join('')||'<p class="mut" style="padding:16px 0">No reachable carts in this period.</p>';
   }
 
@@ -2622,6 +2735,9 @@ OS.page='Orders';
     var y=sh.scrollTop;sh.innerHTML=IPU.detail(p,c.dataset.ipRank,{noRestock:true});sh.scrollTop=y;var b=sh.querySelector('[data-ip-rank="'+c.dataset.ipRank+'"]');if(b)b.focus({preventScroll:true})});
   function all(){paintHero();paintList();paintAtt();paintLost();paintCarts()}
   var show=OS.tabs();
+  /* the status filters stick right under the tab bar: follow its real height */
+  function tabh(){var g=$('#seg');if(g)document.documentElement.style.setProperty('--obtabh',g.offsetHeight+'px')}
+  tabh();addEventListener('resize',tabh);
 
   /* ---------- events ---------- */
   function setSt(s){S.st=S.st===s?'all':s;S.n=20;paintHero();paintList()}
@@ -2638,7 +2754,7 @@ OS.page='Orders';
     if(S.selmode){if(S.sel[r.dataset.id])delete S.sel[r.dataset.id];else S.sel[r.dataset.id]=1;paintList();return}
     OS.openOrder(find(r.dataset.id))});
   $('#obDays').addEventListener('keydown',function(e){var r=e.target.closest('.ob-o');if(r&&e.target===r&&(e.key==='Enter'||e.key===' ')){e.preventDefault();r.click()}});
-  $('#p-list').addEventListener('click',function(e){if(e.target.id==='obAllBtn')setSt('all')});
+  $('#obChips').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var s=b.dataset.chip;S.st=(s==='clear'||s==='all')?'all':s;S.n=20;paintHero();paintList()});
   $('#obCsv').addEventListener('click',function(){OS.csv(rows(),'frill-n-wear-orders.csv')});
   $('#obBulkCsv').addEventListener('click',function(){OS.csv(selected(),'frill-n-wear-selected-orders.csv')});
   $('#obBulkAll').addEventListener('click',function(){rows().forEach(function(o){S.sel[o.id]=1});paintList()});
